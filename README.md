@@ -1,5 +1,11 @@
 # BL Studio
 
+Használt Unity verzió: Unity 6.3 6000.3.7f1
+
+
+
+
+
 
 
 ## Getting started
