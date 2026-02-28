@@ -60,12 +60,12 @@ public class Grid<T>
 
     #region GetCoordinatesXYOrLocation
 
-        private void GetXY(Vector3 worldPosition, out int x, out int y) {
+        public void GetXY(Vector3 worldPosition, out int x, out int y) {
             x = (int)MathF.Floor((worldPosition - originPosition).X / CellSize);
             y = (int)MathF.Floor((worldPosition - originPosition).Y / CellSize);
         }
         
-        private Location GetXY(Vector3 worldPosition)
+        public Location GetXY(Vector3 worldPosition)
         {
             GetXY(worldPosition, out int x, out int y);
             return new Location(x, y);
