@@ -121,5 +121,28 @@ public class GridTests
         
     }
 
+
+    [Test]
+    public void GetXYWorks()
+    {
+        Grid<IntGridObject> grid = new Grid<IntGridObject>(new Size(3, 3), 10, Vector3.Zero,
+            (Grid<IntGridObject> g, Location l) => new IntGridObject(g,l));
+
+        int x, y;
+        grid.GetXY(new Vector3(5, 5, 0), out x, out y);
+        Assert.AreEqual(0, x);
+        Assert.AreEqual(0, y);
+        
+        grid.GetXY(new Vector3(25, 25, 0), out x, out y);
+        Assert.AreEqual(2, x);
+        Assert.AreEqual(2, y);
+        
+        grid.GetXY(new Vector3(15, 25, 0), out x, out y);
+        Assert.AreEqual(1, x);
+        Assert.AreEqual(2, y);
+        
+        
+    }
+
     
 }

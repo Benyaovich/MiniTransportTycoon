@@ -14,7 +14,7 @@ public class CellTests
         Assert.AreEqual(0, poslist[0].X);
         Assert.AreEqual(0, poslist[0].Y);
         
-        Cell c2 = new Cell(new Location(0, 0));
+        Cell c2 = new Cell(new Location(0, 0), new Size(3,3));
         poslist = c2.GetGridPositionList();
         
         Assert.AreEqual(9, poslist.Count);

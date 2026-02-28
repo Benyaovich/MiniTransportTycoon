@@ -11,7 +11,7 @@ public class GridObjectTests
     public void SetValue()
     {
         GridObject g1 = new GridObject(grid, new Location(0, 0));
-        Assert.IsNull(g1.Value);
+        Assert.IsInstanceOf<Field>(g1.Value);
         Cell cell = new Cell(new Location(0, 0));
         g1.SetValue(cell);
         Assert.AreEqual(cell, g1.Value);
