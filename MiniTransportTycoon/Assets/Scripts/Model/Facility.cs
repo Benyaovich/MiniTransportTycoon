@@ -17,7 +17,7 @@ public abstract class Facility : Cell, IAdvancable
         productionTimer = new Timer(prodInterval);
         this.rch = rch ?? new RateChangeHandler();
         
-        productionTimer.OnTimerEllapsed += Produce;
+        productionTimer.OnTimerElapsed += Produce;
     }
 
     protected abstract void Produce(object sender, EventArgs e);
