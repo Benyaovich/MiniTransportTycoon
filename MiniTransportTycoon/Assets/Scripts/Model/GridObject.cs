@@ -29,5 +29,9 @@ public class GridObject
         Value = null;
         Grid.InvokeOnGridObjectChanged(Location);
     }
-    
+
+    public override string ToString()
+    {
+        return Location.X + " - " + Location.Y;
+    }
 }

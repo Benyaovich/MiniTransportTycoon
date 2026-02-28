@@ -7,11 +7,6 @@ public class Grid<T>
     #region Events
 
     public event EventHandler<OnGridObjectChangedEventArgs> OnGridObjectChanged;
-    public class OnGridObjectChangedEventArgs : EventArgs
-    {  
-        public Location location;
-    }
-    
 
     #endregion
 
@@ -124,4 +119,9 @@ public class Grid<T>
     
     #endregion
 
+}
+
+public class OnGridObjectChangedEventArgs : EventArgs
+{  
+    public Location location;
 }
