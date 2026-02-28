@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 50;
+    [SerializeField] private float moveSpeed = 70;
     
     [SerializeField] private Camera mainCamera;
     [SerializeField] private float zoomSpeed = 5;
@@ -26,7 +26,8 @@ public class Player : MonoBehaviour
         Vector2 inputVector = GameInput.Instance.GetMovementVectorNormalized();
         Vector3 moveDir = new Vector3(inputVector.x,inputVector.y, 0f);
 
-        transform.position += moveDir * (moveSpeed * Time.deltaTime);
+        float moveSpeedBasedOnCameraZoom = mainCamera.orthographicSize / maxCameraSize * moveSpeed;
+        transform.position += moveDir * (moveSpeedBasedOnCameraZoom * Time.deltaTime);
     }
     
     private void HandleCameraZoom()
