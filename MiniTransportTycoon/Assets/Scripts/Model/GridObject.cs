@@ -8,14 +8,14 @@ public class GridObject
     
     [CanBeNull] public Cell Value { get; private set; }
     
-    public bool CanBuild => Value == null;
+    public bool CanBuild => Value is Field or null;
     
     
     public GridObject(Grid<GridObject> grid, Location loc)
     {
         Grid = grid;
         Location = loc;
-        Value = null;
+        Value = new Field(Location);
     }
 
     public void SetValue(Cell cell)
@@ -29,5 +29,9 @@ public class GridObject
         Value = null;
         Grid.InvokeOnGridObjectChanged(Location);
     }
-    
+
+    public override string ToString()
+    {
+        return Value!.ToString();
+    }
 }
