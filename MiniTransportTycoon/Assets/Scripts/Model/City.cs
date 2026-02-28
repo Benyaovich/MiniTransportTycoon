@@ -23,7 +23,7 @@ public class City : Cell, IAdvancable
     public void RemovePeople(int num)
     {
         if (NumOfPeople - num < 0) NumOfPeople = 0;
-        NumOfPeople -= num;
+        else NumOfPeople -= num;
     }
 
     public void AddPeople(int num)
