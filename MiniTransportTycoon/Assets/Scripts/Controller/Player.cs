@@ -1,11 +1,12 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 50;
     
-    [SerializeField] private Camera camera;
+    [SerializeField] private Camera mainCamera;
     [SerializeField] private float zoomSpeed = 5;
     [SerializeField] private float maxCameraSize = 50;
     [SerializeField] private float minCameraSize = 30;
@@ -31,19 +32,19 @@ public class Player : MonoBehaviour
     private void HandleCameraZoom()
     {
         float scrollAxis = GameInput.Instance.GetScrollAxis();
-        float newSize = camera.orthographicSize - scrollAxis * zoomSpeed;
+        float newSize = mainCamera.orthographicSize - scrollAxis * zoomSpeed;
         
         if (newSize >= maxCameraSize)
         {
-            camera.orthographicSize = maxCameraSize;
+            mainCamera.orthographicSize = maxCameraSize;
         }
         else if (newSize <= minCameraSize)
         {
-            camera.orthographicSize = minCameraSize;
+            mainCamera.orthographicSize = minCameraSize;
         }
         else
         {
-            camera.orthographicSize = newSize;
+            mainCamera.orthographicSize = newSize;
         }
     }
     

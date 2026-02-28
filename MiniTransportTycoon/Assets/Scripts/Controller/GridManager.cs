@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UniVector3 = UnityEngine.Vector3;
@@ -12,11 +13,12 @@ public class GridManager : MonoBehaviour
 
     [SerializeField] private int gridSizeX = 10;
     [SerializeField] private int gridSizeY = 10;
-    [SerializeField] private Size gridSize;
+    private Size gridSize = new Size(10,10);
     [SerializeField] private float gridCellSize = 10f;
     [SerializeField] private UniVector3 gridOriginPosition = new UniVector3(0, 0, 0);
 
-    private Grid<GridObject> grid;
+    private Grid<GridObject> grid = new Grid<GridObject>(new Size(1,1), 1, new SysVector3(0,0,0), 
+    (g, l) => new GridObject(g, l));
 
     private void Start()
     {
@@ -89,7 +91,7 @@ public class GridManager : MonoBehaviour
 
         for (int x = 0; x < grid.Size.Width; x++) {
             for (int y = 0; y < grid.Size.Height; y++) {
-                debugTextArray[x][y] = Utils.CreateWorldText(grid.GetGridObject(x,y)?.ToString(), null, grid.GetWorldPosition(x, y).UV3() + new Vector3(gridCellSize, gridCellSize) * .5f, 20, Color.white, TextAnchor.MiddleCenter, TextAlignment.Center);
+                debugTextArray[x][y] = Utils.CreateWorldText(grid.GetGridObject(x,y)?.ToString(), null, grid.GetWorldPosition(x, y).UV3() + new UniVector3(gridCellSize, gridCellSize) * .5f, 20, Color.white, TextAnchor.MiddleCenter, TextAlignment.Center);
                 Debug.DrawLine(grid.GetWorldPosition(x, y).UV3(), grid.GetWorldPosition(x, y + 1).UV3(), Color.white, 100f);
                 Debug.DrawLine(grid.GetWorldPosition(x, y).UV3(), grid.GetWorldPosition(x + 1, y).UV3(), Color.white, 100f);
             }
