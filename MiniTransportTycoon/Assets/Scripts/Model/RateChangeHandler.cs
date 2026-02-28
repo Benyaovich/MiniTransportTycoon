@@ -1,4 +1,3 @@
-using UnityEngine;
 using System;
 
 public class RateChangeHandler : IAdvancable
@@ -13,7 +12,7 @@ public class RateChangeHandler : IAdvancable
     private float rateChangeInterval; //masodperc 
     private System.Random rnd;
 
-    public RateChangeHandler(int minRate, int maxRate, int rateChange, float rateChangeInterval, int currentRate = -1)
+    public RateChangeHandler(int minRate = 0, int maxRate = 100, int rateChange = 10, float rateChangeInterval = 120, int currentRate = -1)
     {
         rnd = new System.Random();
         
