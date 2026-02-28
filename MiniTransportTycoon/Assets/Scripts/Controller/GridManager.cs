@@ -20,6 +20,8 @@ public class GridManager : MonoBehaviour
 
     private void Start()
     {
+        GameInput.Instance.OnLeftClickPressed += GameInputOnOnLeftClickPressed;
+        
         gridSize = new Size(gridSizeX, gridSizeY);
         grid = new Grid<GridObject>(gridSize, gridCellSize, gridOriginPosition.SV3(), 
             (g, l) => new GridObject(g, l));
@@ -29,43 +31,52 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        
-        // if (Input.GetKeyDown(KeyCode.Mouse0))
-        // {
-        //     UniVector3 mousePos = Utils.GetMouseWorldPosition();
-        //     grid.GetXY(mousePos.SV3(), out int x, out int y);
-        //     
-        //     // cell to build
-        //     Cell cell = new Cell(new Location(x, y), new Size(3,3));
-        //
-        //     List<Location> gridPositionList = cell.GetGridPositionList();
-        //
-        //     // Check if can build
-        //     bool canBuild = true;
-        //     foreach (Location position in gridPositionList)
-        //     {
-        //         GridObject? go = grid.GetGridObject(position.X, position.Y);
-        //         if (go is null || !go.CanBuild)
-        //         {
-        //             canBuild = false;
-        //             Debug.Log("Cant build here");
-        //             break;
-        //         }
-        //     }
-        //     
-        //     if(!canBuild){ return; }
-        //     // Build
-        //     foreach (Location position in gridPositionList)
-        //     {
-        //         GridObject go = grid.GetGridObject(position.X, position.Y);
-        //         go.SetValue(cell);
-        //     }
-        //     
-        // }
+        GameInput.Instance.OnLeftClickPressed -= GameInputOnOnLeftClickPressed;
     }
-    
+
+
+    private void GameInputOnOnLeftClickPressed(object sender, EventArgs e)
+    {
+        UniVector3 mousePos = Utils.GetMouseWorldPosition();
+        grid.GetXY(mousePos.SV3(), out int x, out int y);
+            
+        // cell to build
+        Cell cell = new Cell(new Location(x, y), new Size(3,3));
+        List<Location> gridPositionList = cell.GetGridPositionList();
+        
+        if(!CheckIfCanBuild(gridPositionList)){ return; }
+        
+        // Build
+        Build(cell, gridPositionList);
+    }
+
+    public bool CheckIfCanBuild(List<Location> gridPositionList)
+    {
+        bool canBuild = true;
+        foreach (Location position in gridPositionList)
+        {
+            GridObject? go = grid.GetGridObject(position.X, position.Y);
+            if (go is null || !go.CanBuild)
+            {
+                canBuild = false;
+                Debug.Log("Cant build here");
+                break;
+            }
+        }
+
+        return canBuild;
+    }
+
+    public void Build(Cell cell, List<Location> gridPositionList)
+    {
+        foreach (Location position in gridPositionList)
+        {
+            GridObject go = grid.GetGridObject(position.X, position.Y);
+            go.SetValue(cell);
+        }
+    }
     
 
     private void DebugGridData()
