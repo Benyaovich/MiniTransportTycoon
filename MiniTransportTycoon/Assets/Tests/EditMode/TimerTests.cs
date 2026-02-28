@@ -31,7 +31,7 @@ public class TimerTests
     {
         Timer timer = new Timer(1f);
         bool eventFired = false;
-        timer.OnTimerEllapsed += (sender, args) => eventFired = true;
+        timer.OnTimerElapsed += (sender, args) => eventFired = true;
         
         timer.Tick(0.5f);
         Assert.IsFalse(eventFired);

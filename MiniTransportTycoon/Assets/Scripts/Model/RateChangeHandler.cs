@@ -29,7 +29,7 @@ public class RateChangeHandler : IAdvancable
         this.rateChangeInterval = rateChangeInterval;
 
         rateChangeTimer = new Timer(rateChangeInterval);
-        rateChangeTimer.OnTimerEllapsed += (UpdateCurrentRate);
+        rateChangeTimer.OnTimerElapsed += (UpdateCurrentRate);
     }
     
 

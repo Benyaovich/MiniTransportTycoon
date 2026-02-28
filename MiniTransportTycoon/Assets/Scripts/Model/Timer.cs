@@ -6,7 +6,7 @@ public class Timer : IAdvancable
     public float Interval { get; private set; }
     public float RemainingTime { get; private set; }
 
-    public event EventHandler OnTimerEllapsed;
+    public event EventHandler OnTimerElapsed;
 
     public Timer(float interval) {
         Interval = interval;
@@ -17,7 +17,7 @@ public class Timer : IAdvancable
         RemainingTime -= deltaTime;
 
         if(RemainingTime <= 0) {
-            OnTimerEllapsed?.Invoke(this, EventArgs.Empty);
+            OnTimerElapsed?.Invoke(this, EventArgs.Empty);
             RemainingTime = RemainingTime + Interval;
         }
     }
