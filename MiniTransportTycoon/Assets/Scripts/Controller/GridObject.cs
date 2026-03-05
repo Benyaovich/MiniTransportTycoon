@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using JetBrains.Annotations;
-using NUnit.Framework.Constraints;
+using Unity.VisualScripting;
+using UnityEngine;
 
 public class GridObject
 {
@@ -8,7 +8,7 @@ public class GridObject
     public Location Location { get; private set; }
     
     public Cell Value { get; private set; }
-    private UnityEngine.Transform cellPrefab = null;
+    [CanBeNull] public Transform CellPrefab { get; private set; } = null;
     
     
     public GridObject(Grid<GridObject> grid, Location loc)
@@ -24,15 +24,26 @@ public class GridObject
         Grid.InvokeOnGridObjectChanged(Location);
     }
 
+    public void SetCellPrefab(Transform prefab)
+    {
+        CellPrefab = prefab;
+    }
+    
+    
     public void ClearValue()
     {
-        Value = null;
+        Value = new Field(Location);
         Grid.InvokeOnGridObjectChanged(Location);
+    }
+
+    private void ClearCellPrefab()
+    {
+        CellPrefab = null;
     }
 
     public override string ToString()
     {
-        return Value!.ToString();
+        return $"{Location.X} - {Location.Y}\n{Value}";
     }
 
     public bool CanBuild()
