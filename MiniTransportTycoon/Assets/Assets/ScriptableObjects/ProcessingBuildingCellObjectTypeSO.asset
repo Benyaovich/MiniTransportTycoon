@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5067642281c31f47abd8c68ad6a92cc, type: 3}
-  m_Name: FieldCellObjectTypeSO
+  m_Name: ProcessingBuildingCellObjectTypeSO
   m_EditorClassIdentifier: Assembly-CSharp::CellObjectTypeSO
-  nameOfCellType: Field
-  prefab: {fileID: 1345655593194378012, guid: 42e6f8d0f519b4f46af0d7ade11691af, type: 3}
+  nameOfCellType: ProcessingBuilding
+  prefab: {fileID: 5794051533596227549, guid: 1eaed373c414a9a419a2560dc2670a27, type: 3}
   visual: {fileID: 0}
