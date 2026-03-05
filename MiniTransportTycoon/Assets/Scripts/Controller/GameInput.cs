@@ -32,6 +32,7 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.Move.performed -= MoveOnPerformed;
         playerInputActions.Player.LeftClick.performed -= LeftClickOnPerformed;
         playerInputActions.Player.Scroll.performed -= ScrollOnPerformed;
+        playerInputActions.Player.Disable();
         playerInputActions.Dispose();
     }
     
