@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UniVector3 = UnityEngine.Vector3;
 using SysVector3 = System.Numerics.Vector3;
 
@@ -60,7 +59,7 @@ public class GridManager : MonoBehaviour
         foreach (Location position in gridPositionList)
         {
             GridObject? go = grid.GetGridObject(position.X, position.Y);
-            if (go is null || !go.CanBuild)
+            if (go is null || !go.CanBuild())
             {
                 canBuild = false;
                 Debug.Log("Cant build here");

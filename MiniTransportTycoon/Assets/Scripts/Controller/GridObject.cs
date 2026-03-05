@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using NUnit.Framework.Constraints;
 
 public class GridObject
 {
     public Grid<GridObject> Grid { get; private set; }
     public Location Location { get; private set; }
     
-    [CanBeNull] public Cell Value { get; private set; }
-    
-    public bool CanBuild => Value is Field or null;
+    public Cell Value { get; private set; }
+    private UnityEngine.Transform cellPrefab = null;
     
     
     public GridObject(Grid<GridObject> grid, Location loc)
@@ -33,5 +33,10 @@ public class GridObject
     public override string ToString()
     {
         return Value!.ToString();
+    }
+
+    public bool CanBuild()
+    {
+        return Value is null or Field;
     }
 }
