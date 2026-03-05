@@ -15,7 +15,7 @@ public class GridObject
     {
         Grid = grid;
         Location = loc;
-        Value = new Field(Location);
+        Value = null;
     }
 
     public void SetValue(Cell cell)
@@ -32,7 +32,7 @@ public class GridObject
     
     public void ClearValue()
     {
-        Value = new Field(Location);
+        Value = null;
         Grid.InvokeOnGridObjectChanged(Location);
     }
 
@@ -48,6 +48,6 @@ public class GridObject
 
     public bool CanBuild()
     {
-        return Value is null or Field;
+        return Value is null;
     }
 }

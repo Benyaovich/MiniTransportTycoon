@@ -32,6 +32,8 @@ public class GridManager : MonoBehaviour
         grid = new Grid<GridObject>(gridSize, gridCellSize, gridOriginPosition.SV3(), 
             (g, l) => new GridObject(g, l));
 
+        Location firstGridObjectsLocation = grid.GetGridObject(0, 0).Location;
+        mapFloor!.position = new UniVector3(firstGridObjectsLocation.X, -0.001f, firstGridObjectsLocation.Y);
         mapFloor!.localScale = new UniVector3(grid.Size.Width, 0, grid.Size.Height);
         
         GenerateCellPrefabsForExistingGrid();
@@ -119,6 +121,9 @@ public class GridManager : MonoBehaviour
         for (int x = 0; x < grid.Size.Width; x++) {
             for (int y = 0; y < grid.Size.Height; y++) {
                 GridObject gridObject = grid.GetGridObject(x, y);
+                
+                if(gridObject.Value is null) continue;
+                
                 if (x == gridObject.Value.Origin.X
                     && y == gridObject.Value.Origin.Y)
                 {
