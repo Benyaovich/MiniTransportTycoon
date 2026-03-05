@@ -165,6 +165,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   moveSpeed: 7
+  mainCamera: {fileID: 0}
+  zoomSpeed: 5
+  maxCameraSize: 50
+  minCameraSize: 30
 --- !u!1 &1205279722
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,7 +230,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 170
-  orthographic: 1
+  orthographic: 0
   orthographic size: 110
   m_Depth: -1
   m_CullingMask:
@@ -410,6 +414,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e63d2cd3fa24a4c9bbd05cc7e7d6a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridManager
+  showDebug: 1
+  gridSizeX: 10
+  gridSizeY: 10
+  gridCellSize: 10
+  gridOriginPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &1514503208
 Transform:
   m_ObjectHideFlags: 0
