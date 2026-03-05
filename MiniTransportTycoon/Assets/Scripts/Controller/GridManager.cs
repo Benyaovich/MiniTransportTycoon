@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UniVector3 = UnityEngine.Vector3;
 using SysVector3 = System.Numerics.Vector3;
@@ -18,7 +19,7 @@ public class GridManager : MonoBehaviour
 
     [SerializeField] private List<CellObjectTypeSO>? cellObjectTypeSos;
 
-    [SerializeField] private Transform mapFloor; 
+    [SerializeField] private Transform? mapFloor; 
     private Grid<GridObject> grid = new Grid<GridObject>(new Size(1,1), 1, new SysVector3(0,0,0), 
     (g, l) => new GridObject(g, l));
     
@@ -26,12 +27,12 @@ public class GridManager : MonoBehaviour
     private void Start()
     {
         GameInput.Instance.OnLeftClickPressed += GameInputOnOnLeftClickPressed;
-        
+
         gridSize = new Size(gridSizeX, gridSizeY);
         grid = new Grid<GridObject>(gridSize, gridCellSize, gridOriginPosition.SV3(), 
             (g, l) => new GridObject(g, l));
 
-        mapFloor.localScale = new UniVector3(grid.Size.Width, 0, grid.Size.Height);
+        mapFloor!.localScale = new UniVector3(grid.Size.Width, 0, grid.Size.Height);
         
         GenerateCellPrefabsForExistingGrid();
         
