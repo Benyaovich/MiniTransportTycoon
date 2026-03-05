@@ -377,7 +377,7 @@ MonoBehaviour:
     AngularDampingMode: 0
     RotationDamping: {x: 0, y: 0, z: 0}
     QuaternionDamping: 1
-  FollowOffset: {x: 0, y: 50, z: -80}
+  FollowOffset: {x: 0, y: 34.2, z: -25}
 --- !u!114 &795215429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,7 +402,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 60.000004
+    FieldOfView: 80
     OrthographicSize: 110
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -429,8 +429,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 795215426}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2756825, y: -0.000000033657575, z: 0.000000009652865, w: 0.9612488}
-  m_LocalPosition: {x: 50, y: 50, z: -50}
+  m_LocalRotation: {x: 0.45269477, y: -5.3651337e-16, z: -9.370611e-16, w: 0.8916656}
+  m_LocalPosition: {x: 50, y: 34.2, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -480,10 +480,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b9ddfad0a3a054438dc14f33f22db7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  moveSpeed: 40
-  zoomSpeed: 10
-  maxFOV: 90
-  minFOV: 40
+  moveSpeed: 100
+  zoomSpeed: 5
+  maxFOV: 100
+  minFOV: 70
   cinemachineCamera: {fileID: 795215429}
 --- !u!1 &1205279722
 GameObject:
@@ -546,7 +546,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60.000004
+  field of view: 80
   orthographic: 0
   orthographic size: 110
   m_Depth: -1
@@ -572,8 +572,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1205279722}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.27568254, y: -0.000000033657578, z: 0.000000009652866, w: 0.96124876}
-  m_LocalPosition: {x: 50, y: 50, z: -50}
+  m_LocalRotation: {x: 0.45269483, y: -1.3637753e-15, z: 6.923829e-16, w: 0.8916656}
+  m_LocalPosition: {x: 50, y: 34.2, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -764,8 +764,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridManager
   showDebug: 1
-  gridSizeX: 10
-  gridSizeY: 10
+  gridSizeX: 100
+  gridSizeY: 100
   gridCellSize: 10
   gridOriginPosition: {x: 0, y: 0, z: 0}
   cellObjectTypeSos:

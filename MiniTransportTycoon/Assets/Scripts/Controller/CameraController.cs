@@ -25,7 +25,10 @@ public class CameraController : MonoBehaviour
 
         Transform t = transform;
         Vector3 moveDir = t.forward * inputDir.z + t.right * inputDir.x;
-        t.position += moveDir * (moveSpeed * Time.deltaTime);
+
+        float finalMoveSpeed = moveSpeed * cinemachineCamera.Lens.FieldOfView / maxFOV;
+        
+        t.position += moveDir * (finalMoveSpeed * Time.deltaTime);
     }
 
     private void HandleCameraZoom()
