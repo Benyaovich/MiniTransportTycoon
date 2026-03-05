@@ -1,7 +1,7 @@
 using System;
 using JetBrains.Annotations;
 
-public class ForestCell : Cell, IAdvancable
+public class Forest : Cell, IAdvancable
 {
 
     public int NumOfTrees { get; private set; } = 1;
@@ -11,7 +11,7 @@ public class ForestCell : Cell, IAdvancable
     [CanBeNull] public EventHandler<Location> OnSpread;
     [CanBeNull] public EventHandler<Location> OnGrow;
 
-    public ForestCell(Location origin, Size size = null, bool destroyable = true,float growthInterval = 60, float spreadInterval = 60) : base(origin, size, destroyable)
+    public Forest(Location origin, Size size = null, bool destroyable = true,float growthInterval = 60, float spreadInterval = 60) : base(origin, size, destroyable)
     {
         growthTimer = new Timer(growthInterval);
         growthTimer.OnTimerElapsed += GrowTree;
