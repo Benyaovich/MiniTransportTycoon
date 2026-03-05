@@ -32,6 +32,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "MouseMove",
+                    "type": "Value",
+                    "id": "64d5c80c-6cec-45e2-aa10-513c5163ac5f",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RightClick",
+                    "type": "Button",
+                    "id": "f0e35e89-2057-458a-94d2-40e2436605fb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -47,7 +65,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "up",
+                    "name": "Up",
                     "id": "69d85bda-2a5e-4df3-aa97-965ec365e315",
                     "path": "<Keyboard>/w",
                     "interactions": "",
@@ -58,7 +76,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "down",
+                    "name": "Down",
                     "id": "015383f8-93a1-4496-ab70-1473ef216aec",
                     "path": "<Keyboard>/s",
                     "interactions": "",
@@ -69,7 +87,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "left",
+                    "name": "Left",
                     "id": "4e2907ae-4f6d-4cb4-b345-5dc3c2f49efa",
                     "path": "<Keyboard>/a",
                     "interactions": "",
@@ -80,7 +98,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "right",
+                    "name": "Right",
                     "id": "52458704-b38a-4c50-bb04-e3b2ef7f6321",
                     "path": "<Keyboard>/d",
                     "interactions": "",
@@ -109,6 +127,28 @@
                     "processors": "",
                     "groups": ";KeyboardAndMouse",
                     "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "35add628-58df-4624-a462-430cfdad91b8",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardAndMouse",
+                    "action": "MouseMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "af460ea8-4bcd-41a2-b8ad-62e5ae48c118",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": ";KeyboardAndMouse",
+                    "action": "RightClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

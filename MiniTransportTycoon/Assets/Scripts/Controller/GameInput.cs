@@ -6,12 +6,14 @@ using UnityEngine.InputSystem;
 public class GameInput : MonoBehaviour
 {
     public static GameInput Instance { get; private set; }
+    public bool IsRightClickPressed { get; private set; } = false;
 
     public event EventHandler OnMovePerformed;
     public event EventHandler OnLeftClickPressed;
     public event EventHandler OnScrollPerformed;
-
+    
     private PlayerInputActions playerInputActions;
+
 
     private void Awake()
     {
@@ -22,18 +24,41 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.Move.performed += MoveOnPerformed;
         playerInputActions.Player.LeftClick.performed += LeftClickOnPerformed;
         playerInputActions.Player.Scroll.performed += ScrollOnPerformed;
-        
+        playerInputActions.Player.RightClick.started += RightClickOnStarted;
+        playerInputActions.Player.RightClick.canceled += RightClickOnCanceled;
+
     }
 
     
 
+
     private void OnDisable()
     {
+        playerInputActions.Player.RightClick.canceled += RightClickOnCanceled;
+        playerInputActions.Player.RightClick.performed -= RightClickOnStarted;
         playerInputActions.Player.Move.performed -= MoveOnPerformed;
         playerInputActions.Player.LeftClick.performed -= LeftClickOnPerformed;
         playerInputActions.Player.Scroll.performed -= ScrollOnPerformed;
+        playerInputActions.Player.Disable();
         playerInputActions.Dispose();
     }
+
+    private void RightClickOnCanceled(InputAction.CallbackContext obj)
+    {
+        IsRightClickPressed = false;
+    }
+
+    private void RightClickOnStarted(InputAction.CallbackContext obj)
+    {
+        IsRightClickPressed = true;
+    }
+
+
+    public Vector2 GetMousePosition()
+    {
+        return Mouse.current.position.ReadValue();
+    }
+
     
     private void ScrollOnPerformed(InputAction.CallbackContext obj)
     {
