@@ -788,14 +788,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e63d2cd3fa24a4c9bbd05cc7e7d6a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridManager
-  showDebug: 1
+  showDebug: 0
   gridSizeX: 50
   gridSizeY: 50
   gridCellSize: 10
   gridOriginPosition: {x: 0, y: 0, z: 0}
   cellObjectTypeSos:
-  - {fileID: 11400000, guid: 73ab1dd15e5708e469d0942c4e8dfafd, type: 2}
   - {fileID: 11400000, guid: 865e254ef083dbe49b256c1ad61b104b, type: 2}
+  - {fileID: 11400000, guid: 91e2b6ac4d6801b498608034380fcdcf, type: 2}
   mapFloor: {fileID: 1627260197}
 --- !u!4 &1514503208
 Transform:

@@ -1,9 +1,9 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using System.Numerics;
-using Unity.VisualScripting;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UniVector3 = UnityEngine.Vector3;
 using SysVector3 = System.Numerics.Vector3;
 
@@ -18,12 +18,14 @@ public class GridManager : MonoBehaviour
     [SerializeField] private UniVector3 gridOriginPosition = new UniVector3(0, 0, 0);
 
     [SerializeField] private List<CellObjectTypeSO>? cellObjectTypeSos;
+    private CellObjectTypeSO? itemToBuild;
 
     [SerializeField] private Transform? mapFloor; 
     private Grid<GridObject> grid = new Grid<GridObject>(new Size(1,1), 1, new SysVector3(0,0,0), 
     (g, l) => new GridObject(g, l));
-    
 
+    private List<IAdvancable> _advancables = new List<IAdvancable>();
+    
     private void Start()
     {
         GameInput.Instance.OnLeftClickPressed += GameInputOnOnLeftClickPressed;
@@ -31,7 +33,7 @@ public class GridManager : MonoBehaviour
         gridSize = new Size(gridSizeX, gridSizeY);
         grid = new Grid<GridObject>(gridSize, gridCellSize, gridOriginPosition.SV3(), 
             (g, l) => new GridObject(g, l));
-
+        
         Location firstGridObjectsLocation = grid.GetGridObject(0, 0).Location;
         mapFloor!.position = new UniVector3(firstGridObjectsLocation.X, -0.001f, firstGridObjectsLocation.Y);
         mapFloor!.localScale = new UniVector3(grid.Size.Width, 0, grid.Size.Height);
@@ -49,6 +51,25 @@ public class GridManager : MonoBehaviour
     }
 
 
+    private void Update()
+    {
+        foreach (IAdvancable advancable in _advancables)
+        {
+            advancable.Tick(Time.deltaTime);
+        }
+
+
+        if (Keyboard.current.digit1Key.wasPressedThisFrame)
+        {
+            itemToBuild = cellObjectTypeSos![0]!;
+        }
+        else if(Keyboard.current.digit2Key.wasPressedThisFrame)
+        {
+            itemToBuild = cellObjectTypeSos![1]!;
+        }    
+    }
+
+
     private void GameInputOnOnLeftClickPressed(object sender, EventArgs e)
     {
         UniVector3 mousePos = Utils.GetMouseWorldPosition();
@@ -56,13 +77,19 @@ public class GridManager : MonoBehaviour
         
         // cell to build
         // Cell cell = new Cell(new Location(x, y), new Size(3,3));
-        Cell cell = new ProcessingBuilding(Resource.Steel, Resource.Iron, 100, new Location(x, y), size: new Size(2,2));
+        // Cell cell = new ProcessingBuilding(Resource.Steel, Resource.Iron, 100, new Location(x, y), size: new Size(2,2));
+        // Cell cell = new Forest(new Location(x, y), growthInterval: 2);
+        if (itemToBuild is null) return;
+        
+        Cell cell = CreateCellByClassName(itemToBuild, new Location(x,y));
         List<Location> gridPositionList = cell.GetGridPositionList();
         
         if(!CheckIfCanBuild(gridPositionList)){ return; }
         
         Build(cell, gridPositionList);
     }
+
+    
 
     public bool CheckIfCanBuild(List<Location> gridPositionList)
     {
@@ -81,23 +108,60 @@ public class GridManager : MonoBehaviour
         return canBuild;
     }
 
-    public void Build(Cell cell, List<Location> gridPositionList)
+    private void Build(Cell cell, List<Location> gridPositionList)
     {
         if (gridPositionList.Count == 0) return;
         
+        // set all values in the gridobjects
         foreach (Location position in gridPositionList)
         {
             GridObject go = grid.GetGridObject(position.X, position.Y);
-            go.SetValue(cell);
+            go.SetModel(cell);
         }
         
+        // create the visual prefab, and link it to the cell
         GridObject origin = grid.GetGridObject(cell.Origin.X, cell.Origin.Y);
-        origin.SetCellPrefab(InstantiateCellPrefab(origin));
+        origin.SetVisual(InstantiateCellPrefab(origin));
+        LinkVisualToValue(origin);
+
+        if (origin.Model is IAdvancable advancable)
+        {
+            _advancables.Add(advancable);
+        }
     }
 
-    private Transform? InstantiateCellPrefab(GridObject go)
+    private Cell CreateCellByClassName(CellObjectTypeSO co, Location location)
     {
-        Transform prefab = GetCellPrefab(go.Value);
+        Cell cell = new Cell(location);
+        switch (co.nameOfCellType)
+        {
+            case "Forest":
+                cell = new Forest(location, growthInterval: 3);
+                break;
+            case "ProcessingBuildingSteel":
+                cell = new ProcessingBuildingSteel(location);
+                break;
+        }
+
+        return cell;
+    }
+    
+    private void LinkVisualToValue(GridObject origin)
+    {
+        switch (origin.Model!.GetType().Name)
+        {
+            case "Forest":
+                ForestVisual fv = origin.Visual!.GetComponent<ForestVisual>();
+                fv.Setup(origin.Model as Forest);
+                break;
+            case "ProcessingBuildingSteel":
+                break;
+        }
+    }
+
+    private Transform InstantiateCellPrefab(GridObject go)
+    {
+        Transform prefab = GetCellPrefab(go.Model!);
         return Instantiate(prefab, 
             go.Grid.GetWorldPosition(go.Location.X, go.Location.Y).UVXZ3(),
             UnityEngine.Quaternion.identity, transform);
@@ -122,13 +186,13 @@ public class GridManager : MonoBehaviour
             for (int y = 0; y < grid.Size.Height; y++) {
                 GridObject gridObject = grid.GetGridObject(x, y);
                 
-                if(gridObject.Value is null) continue;
+                if(gridObject.Model is null) continue;
+
+                if (x != gridObject.Model.Origin.X
+                    || y != gridObject.Model.Origin.Y) continue;
                 
-                if (x == gridObject.Value.Origin.X
-                    && y == gridObject.Value.Origin.Y)
-                {
-                    gridObject.SetCellPrefab(InstantiateCellPrefab(gridObject));
-                }
+                gridObject.SetVisual(InstantiateCellPrefab(gridObject));
+                LinkVisualToValue(gridObject);
             }
         }
     }
@@ -155,5 +219,6 @@ public class GridManager : MonoBehaviour
             debugTextArray[eventArgs.location.X][eventArgs.location.Y].text = grid.GetGridObject(eventArgs.location.X, eventArgs.location.Y).ToString();
         };
     }
+
     
 }

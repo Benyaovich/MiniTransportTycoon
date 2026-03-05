@@ -6,48 +6,43 @@ public class GridObject
 {
     public Grid<GridObject> Grid { get; private set; }
     public Location Location { get; private set; }
-    
-    public Cell Value { get; private set; }
-    [CanBeNull] public Transform CellPrefab { get; private set; } = null;
+
+    [CanBeNull] public Cell Model { get; private set; } = null;
+    [CanBeNull] public Transform Visual { get; private set; } = null;
     
     
     public GridObject(Grid<GridObject> grid, Location loc)
     {
         Grid = grid;
         Location = loc;
-        Value = null;
     }
 
-    public void SetValue(Cell cell)
+    public void SetModel(Cell cell)
     {
-        Value = cell;
+        Model = cell;
         Grid.InvokeOnGridObjectChanged(Location);
     }
 
-    public void SetCellPrefab(Transform prefab)
+    public void SetVisual(Transform visual)
     {
-        CellPrefab = prefab;
+        Visual = visual;
     }
     
     
-    public void ClearValue()
+    public void ClearModel()
     {
-        Value = null;
+        Model = null;
         Grid.InvokeOnGridObjectChanged(Location);
     }
-
-    private void ClearCellPrefab()
-    {
-        CellPrefab = null;
-    }
+    
 
     public override string ToString()
     {
-        return $"{Location.X} - {Location.Y}\n{Value}";
+        return $"{Location.X} - {Location.Y}\n{Model}";
     }
 
     public bool CanBuild()
     {
-        return Value is null;
+        return Model is null;
     }
 }

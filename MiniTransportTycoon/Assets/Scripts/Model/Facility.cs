@@ -16,6 +16,7 @@ public abstract class Facility : Cell, IAdvancable
         maxCapacity = maxCap;
         productionTimer = new Timer(prodInterval);
         this.rch = rch ?? new RateChangeHandler();
+        Size = size ?? new Size(2, 2);
         
         productionTimer.OnTimerElapsed += Produce;
     }

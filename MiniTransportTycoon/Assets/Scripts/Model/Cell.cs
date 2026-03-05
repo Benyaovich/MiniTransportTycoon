@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class Cell
 {
     public Location Origin { get; private set; }
-    public Size Size { get; private set; }
+    public Size Size { get; protected set; }
     public bool Destroyable { get; private set; }
     public bool Highlighted { get; private set; } = false;
     
