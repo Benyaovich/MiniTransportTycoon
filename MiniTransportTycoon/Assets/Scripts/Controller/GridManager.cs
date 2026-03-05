@@ -33,7 +33,7 @@ public class GridManager : MonoBehaviour
 
         mapFloor.localScale = new UniVector3(grid.Size.Width, 0, grid.Size.Height);
         
-        // GenerateCellPrefabsForExistingGrid();
+        GenerateCellPrefabsForExistingGrid();
         
         if (showDebug) {
             DebugGridData();
