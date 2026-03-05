@@ -346,14 +346,14 @@ MonoBehaviour:
     ScreenPosition: {x: 0, y: 0}
     DeadZone:
       Enabled: 0
-      Size: {x: 0.2, y: 0.2}
+      Size: {x: 1.26, y: 0.2}
     HardLimits:
       Enabled: 0
-      Size: {x: 0.8, y: 0.8}
-      Offset: {x: 0, y: 0}
+      Size: {x: 3, y: 0.7}
+      Offset: {x: -0.7, y: 0}
   CenterOnActivate: 0
-  TargetOffset: {x: 0, y: 0, z: 0}
-  Damping: {x: 0.2, y: 0.2}
+  TargetOffset: {x: 0, y: -9, z: 0}
+  Damping: {x: 0, y: 0}
   Lookahead:
     Enabled: 0
     Time: 0.559
@@ -377,7 +377,7 @@ MonoBehaviour:
     AngularDampingMode: 0
     RotationDamping: {x: 0, y: 0, z: 0}
     QuaternionDamping: 1
-  FollowOffset: {x: 0, y: 34.2, z: -25}
+  FollowOffset: {x: 0, y: 35, z: -25}
 --- !u!114 &795215429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,7 +402,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 80
+    FieldOfView: 100
     OrthographicSize: 110
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -429,8 +429,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 795215426}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.45269477, y: -5.3651337e-16, z: -9.370611e-16, w: 0.8916656}
-  m_LocalPosition: {x: 50, y: 34.2, z: 5}
+  m_LocalRotation: {x: 0.5029864, y: -0.0000000117588925, z: 0.0000000068432313, w: 0.86429435}
+  m_LocalPosition: {x: 50, y: 35, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -484,6 +484,7 @@ MonoBehaviour:
   zoomSpeed: 5
   maxFOV: 100
   minFOV: 70
+  rotationSensitivity: 0.2
   cinemachineCamera: {fileID: 795215429}
 --- !u!1 &1205279722
 GameObject:
@@ -546,7 +547,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 80
+  field of view: 100
   orthographic: 0
   orthographic size: 110
   m_Depth: -1
@@ -572,8 +573,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1205279722}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.45269483, y: -1.3637753e-15, z: 6.923829e-16, w: 0.8916656}
-  m_LocalPosition: {x: 50, y: 34.2, z: 5}
+  m_LocalRotation: {x: 0.5029864, y: -0.00000001175889, z: 0.0000000068432247, w: 0.8642944}
+  m_LocalPosition: {x: 50, y: 35, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -764,8 +765,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridManager
   showDebug: 1
-  gridSizeX: 100
-  gridSizeY: 100
+  gridSizeX: 50
+  gridSizeY: 50
   gridCellSize: 10
   gridOriginPosition: {x: 0, y: 0, z: 0}
   cellObjectTypeSos:

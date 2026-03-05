@@ -9,13 +9,34 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float zoomSpeed = 10;
     [SerializeField] private float maxFOV = 90;
     [SerializeField] private float minFOV = 40;
+    [SerializeField] private float rotationSensitivity = 10;
     
     [SerializeField] private CinemachineCamera cinemachineCamera;
+
+    private Vector2 previousMousePos = Vector2.zero;
     
     private void Update()
     {
         HandleMovement();
         HandleCameraZoom();
+        HandleRotation();
+    }
+
+    private void HandleRotation()
+    {
+        if (!GameInput.Instance.IsRightClickPressed)
+        {
+            previousMousePos = GameInput.Instance.GetMousePosition();
+            return;
+        }
+
+        Vector2 mousePos = GameInput.Instance.GetMousePosition();
+        float deltaX = mousePos.x - previousMousePos.x;
+
+        float amountToRotate = deltaX * rotationSensitivity;
+        transform.Rotate(Vector3.up, amountToRotate, Space.World);
+
+        previousMousePos = mousePos;
     }
 
     private void HandleMovement()
