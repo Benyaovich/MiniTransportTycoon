@@ -1,9 +1,9 @@
 # BL Studio
 
-Használt Unity verzió: Unity 6.3 6000.3.7f1
 
 
-Irányítás:
+## Irányítás:
+
     - Mozgás : WASD
     - Kamera forgatás : Jobb klikkelve egér mozgatás
     - Épület választás: 1,2,3
@@ -11,7 +11,14 @@ Irányítás:
     - Épület törlés: Del
 
 
+Használt Unity verzió: Unity 6.3 6000.3.7f1
 
+
+---
+---
+---
+---
+---
 
 ## Getting started
 
