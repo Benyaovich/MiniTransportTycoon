@@ -8,4 +8,9 @@ public enum BuildingTypes
     
     TwoWayLR,
     TwoWayUD,
+    
+    TwoWayCornerDL,
+    TwoWayCornerDR,
+    TwoWayCornerUL,
+    TwoWayCornerUR,
 }
