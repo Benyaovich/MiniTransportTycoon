@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Edge
 {
-    public Location A;
-    public Location B;
+    public Location A { get; private set; }
+    public Location B { get; private set; }
     public int X; //azt gondolom a az x it a tav??
 
     public Edge(Location a, Location b)
@@ -29,11 +29,6 @@ public class Edge
             }
         } else if (A.Y == B.Y)
         {
-            if (A.X == B.X)
-            {
-                throw new ArgumentException("A két csúcs ugyanaz, így nem lehet út");
-            }
-            
             if (A.X > B.X)
             {
                 X = A.X - B.X;
