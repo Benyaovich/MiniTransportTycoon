@@ -9,6 +9,8 @@ using SysVector3 = System.Numerics.Vector3;
 
 public class GridManager : MonoBehaviour
 {
+    public static GridManager? Instance { get; private set; }
+    public event EventHandler<Transform?>? OnSelectedObjectChanged;
     [SerializeField] private bool showDebug = true;
 
     [SerializeField] private int gridSizeX = 10;
@@ -25,7 +27,12 @@ public class GridManager : MonoBehaviour
     (g, l) => new GridObject(g, l));
 
     private List<IAdvancable> _advancables = new List<IAdvancable>();
-    
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
         GameInput.Instance.OnLeftClickPressed += GameInputOnOnLeftClickPressed;
@@ -62,14 +69,17 @@ public class GridManager : MonoBehaviour
         if (Keyboard.current.digit1Key.wasPressedThisFrame)
         {
             itemToBuild = cellObjectTypeSos![0]!;
+            OnSelectedObjectChanged?.Invoke(this, itemToBuild.prefab);
         }
         else if(Keyboard.current.digit2Key.wasPressedThisFrame)
         {
             itemToBuild = cellObjectTypeSos![1]!;
+            OnSelectedObjectChanged?.Invoke(this, itemToBuild.prefab);
         }    
     }
 
-
+    
+    
     private void GameInputOnOnLeftClickPressed(object sender, EventArgs e)
     {
         UniVector3 mousePos = Utils.GetMouseWorldPosition();
@@ -196,6 +206,14 @@ public class GridManager : MonoBehaviour
             }
         }
     }
+    
+    public UniVector3 GetMousePosSnappedToGrid()
+    {
+        UniVector3 mousePos = Utils.GetMouseWorldPosition();
+        grid.GetXY(mousePos.SV3(), out int x, out int y);
+        GridObject go = grid.GetGridObject(x, y);
+        return go.Grid.GetWorldPosition(go.Location.X, go.Location.Y).UVXZ3();
+    }
 
     private void DebugGridData()
     {
@@ -219,6 +237,7 @@ public class GridManager : MonoBehaviour
             debugTextArray[eventArgs.location.X][eventArgs.location.Y].text = grid.GetGridObject(eventArgs.location.X, eventArgs.location.Y).ToString();
         };
     }
+
 
     
 }
