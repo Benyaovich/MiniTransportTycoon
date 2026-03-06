@@ -11,7 +11,7 @@ public class RoadCell : Cell, IPurchasable
     public TrafficLamp? Lamp { get; private set; }
     public bool HasLamp => Lamp is not null;
     public List<Direction> Directions { get; private set; }
-    public List<Vehicle> Vehicles { get; private set; }
+    public List<Vehicle> Vehicles { get; private set; } = new();
     public int BuildPrice { get; set; }
 
 
