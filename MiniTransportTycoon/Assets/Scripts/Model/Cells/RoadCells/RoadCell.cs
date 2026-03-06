@@ -3,8 +3,9 @@
 using System;
 using System.Collections.Generic;
 using Model.Enumerations;
+using Model.Interfaces;
 
-public class RoadCell : Cell, IPurchasable
+public class RoadCell : Cell, IPurchasable, IDestroyable
 {
     public bool IsVertexPoint { get; private set; }
     public bool IsIntersection { get; private set; }
@@ -43,6 +44,5 @@ public class RoadCell : Cell, IPurchasable
     public void Destroy()
     {
         // Gráfból ki kell szedni a csucsot meg hasonlok
-        throw new NotImplementedException();
     }
 }

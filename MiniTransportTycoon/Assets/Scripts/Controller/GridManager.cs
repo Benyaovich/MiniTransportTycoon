@@ -59,8 +59,6 @@ public class GridManager : MonoBehaviour
 
     private void Start()
     {
-        GameInput.Instance.OnLeftClickPressed += GameInputOnLeftClickPressed;
-
         CollectAllCellObjectTypeSosIntoASingleList();
         
         _gridSize = new Size(gridSizeX, gridSizeY);
@@ -78,10 +76,21 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    #region OnEnable - OnDisable
+
+    private void OnEnable()
+    {
+        GameInput.Instance.OnLeftClickPressed += GameInputOnLeftClickPressed;
+        GameInput.Instance.OnDeleteKeyPressed += GameInputOnDeleteKeyPressed;
+    }
+
     private void OnDisable()
     {
+        GameInput.Instance.OnDeleteKeyPressed -= GameInputOnDeleteKeyPressed;
         GameInput.Instance.OnLeftClickPressed -= GameInputOnLeftClickPressed;
     }
+    
+    #endregion
 
 
     private void Update()
@@ -109,7 +118,7 @@ public class GridManager : MonoBehaviour
         } 
     }
     
-    private void InvokeOnSelectedObjectChanged(){ OnSelectedObjectChanged?.Invoke(this, _itemToBuild!.prefab); }
+    private void InvokeOnSelectedObjectChanged(){ OnSelectedObjectChanged?.Invoke(this, _itemToBuild!.visual); }
 
     private void CycleCellObjectTypesSos(List<CellObjectTypeSO> list)
     {
@@ -157,8 +166,54 @@ public class GridManager : MonoBehaviour
         
         Build(cell, gridPositionList);
     }
-
     
+    private void GameInputOnDeleteKeyPressed(object sender, EventArgs e)
+    {
+        UniVector3 mousePos = Utils.GetMouseWorldPosition();
+        _grid.GetXY(mousePos.SV3(), out int x, out int y);
+        
+        GridObject go = _grid.GetGridObject(x, y);
+        
+        if (go.Model is null) return;
+        if (!go.Model.Destroyable) return;
+
+        List<Location> gridPositionList = go.Model!.GetGridPositionList();
+        Demolish(go, gridPositionList);
+    }
+
+    private void Demolish(GridObject go, List<Location> gridPositionList)
+    {
+        RemoveFromIAdvancablesList(go);
+        DestroyVisualOnModelOrigin(go);
+        go.DestroyModel();
+        ClearModelFromGridObjects(gridPositionList);
+    }
+
+    private void DestroyVisualOnModelOrigin(GridObject go)
+    {
+        GridObject origin = _grid.GetGridObject(go.Model!.Origin.X, go.Model.Origin.Y);
+        Destroy(origin.Visual!.gameObject);
+    }
+
+    private void RemoveFromIAdvancablesList(GridObject go)
+    {
+        if (go.Model is null) return;
+        if (go.Model is IAdvancable advancable && _advancables.Contains(advancable))
+        {
+            Debug.Log("removed form advacneables list");
+            _advancables.Remove(advancable);
+        }
+    }
+
+    private void ClearModelFromGridObjects(List<Location> gridPositionList)
+    {
+        foreach (Location position in gridPositionList)
+        {
+            GridObject go = _grid.GetGridObject(position.X, position.Y);
+            go.ClearModel();
+        }
+    }
+
 
     public bool CheckIfCanBuild(List<Location> gridPositionList)
     {
@@ -177,7 +232,7 @@ public class GridManager : MonoBehaviour
         return canBuild;
     }
 
-    private void SetModelsValueInGridObject(Cell cell, List<Location> gridPositionList)
+    private void SetModelsValueInGridObjects(Cell cell, List<Location> gridPositionList)
     {
         if (gridPositionList.Count == 0) return;
         
@@ -188,7 +243,7 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    private void CreateVisualForCellAndLinkToModel(Cell cell)
+    private void CreateVisualForCellAndLinkToModelOrigin(Cell cell)
     {
         GridObject origin = _grid.GetGridObject(cell.Origin.X, cell.Origin.Y);
         origin.SetVisual(InstantiateCellPrefab(origin));
@@ -197,10 +252,9 @@ public class GridManager : MonoBehaviour
         
     }
 
-    private void AddCellToIAdvancableIfIAdvancable(Cell cell)
+    private void AddCellToIAdvancableListIfIAdvancable(Cell cell)
     {
-        GridObject origin = _grid.GetGridObject(cell.Origin.X, cell.Origin.Y);
-        if (origin.Model is IAdvancable advancable && !_advancables.Contains(advancable))
+        if (cell is IAdvancable advancable && !_advancables.Contains(advancable))
         {
             _advancables.Add(advancable);
         }
@@ -208,9 +262,9 @@ public class GridManager : MonoBehaviour
 
     private void Build(Cell cell, List<Location> gridPositionList)
     {
-        SetModelsValueInGridObject(cell, gridPositionList);
-        CreateVisualForCellAndLinkToModel(cell);
-        AddCellToIAdvancableIfIAdvancable(cell);
+        SetModelsValueInGridObjects(cell, gridPositionList);
+        CreateVisualForCellAndLinkToModelOrigin(cell);
+        AddCellToIAdvancableListIfIAdvancable(cell);
     }
 
     private Cell CreateCellByClassName(CellObjectTypeSO co, Location location)
@@ -220,7 +274,7 @@ public class GridManager : MonoBehaviour
             case BuildingTypes.Forest:
                 return new Forest(location, growthInterval: 3);
             case BuildingTypes.ProcessingBuildingSteel:
-                return new ProcessingBuildingSteel(location);
+                return new ProcessingBuildingSteel(location, prodInterval: 2f, destroyable: true);
             case BuildingTypes.TwoWayUD:
                 return new TwoWayUD(location);
             case BuildingTypes.TwoWayLR:
@@ -283,8 +337,8 @@ public class GridManager : MonoBehaviour
                 if (x != gridObject.Model.Origin.X
                     || y != gridObject.Model.Origin.Y) continue;
                 
-                CreateVisualForCellAndLinkToModel(gridObject.Model);
-                AddCellToIAdvancableIfIAdvancable(gridObject.Model);
+                CreateVisualForCellAndLinkToModelOrigin(gridObject.Model);
+                AddCellToIAdvancableListIfIAdvancable(gridObject.Model);
             }
         }
     }
