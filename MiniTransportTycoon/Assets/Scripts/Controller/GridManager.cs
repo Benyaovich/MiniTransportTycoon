@@ -33,6 +33,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Transform? mapFloor; 
     [SerializeField] private List<CellObjectTypeSO>? cellObjectTypeSos;
     [SerializeField] private List<CellObjectTypeSO>? twoWayRoadCellObjectTypeSos;
+    [SerializeField] private List<CellObjectTypeSO>? twoWayRoadCornerCellObjectTypeSos;
     
     #endregion
 
@@ -90,14 +91,21 @@ public class GridManager : MonoBehaviour
         if (Keyboard.current.digit1Key.wasPressedThisFrame)
         {
             CycleCellObjectTypesSos(cellObjectTypeSos!);
-            OnSelectedObjectChanged?.Invoke(this, _itemToBuild!.prefab);
+            InvokeOnSelectedObjectChanged();
         }
-        else if(Keyboard.current.digit3Key.wasPressedThisFrame)
+        else if(Keyboard.current.digit2Key.wasPressedThisFrame)
         {
             CycleCellObjectTypesSos(twoWayRoadCellObjectTypeSos!);
-            OnSelectedObjectChanged?.Invoke(this, _itemToBuild!.prefab);
-        }    
+            InvokeOnSelectedObjectChanged();
+        }  
+        else if(Keyboard.current.digit3Key.wasPressedThisFrame)
+        {
+            CycleCellObjectTypesSos(twoWayRoadCornerCellObjectTypeSos!);
+            InvokeOnSelectedObjectChanged();
+        } 
     }
+    
+    private void InvokeOnSelectedObjectChanged(){ OnSelectedObjectChanged?.Invoke(this, _itemToBuild!.prefab); }
 
     private void CycleCellObjectTypesSos(List<CellObjectTypeSO> list)
     {
@@ -202,6 +210,18 @@ public class GridManager : MonoBehaviour
                 break;
             case BuildingTypes.TwoWayLR:
                 cell = new TwoWayLR(location);
+                break;
+            case BuildingTypes.TwoWayCornerDL:
+                cell = new TwoWayCornerDL(location);
+                break;
+            case BuildingTypes.TwoWayCornerDR:
+                cell = new TwoWayCornerDR(location);
+                break;
+            case BuildingTypes.TwoWayCornerUL:
+                cell = new TwoWayCornerUL(location);
+                break;
+            case BuildingTypes.TwoWayCornerUR:
+                cell = new TwoWayCornerUR(location);
                 break;
         }
 

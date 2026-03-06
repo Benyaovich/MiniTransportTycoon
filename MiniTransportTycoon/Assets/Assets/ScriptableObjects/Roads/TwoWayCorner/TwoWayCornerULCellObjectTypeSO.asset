@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5067642281c31f47abd8c68ad6a92cc, type: 3}
   m_Name: TwoWayCornerULCellObjectTypeSO
   m_EditorClassIdentifier: Assembly-CSharp::CellObjectTypeSO
-  buildingType: 0
-  prefab: {fileID: 0}
+  buildingType: 7
+  prefab: {fileID: 5510712519550213110, guid: 770dd54bb3f9e1d4ea92ad4a62e56a9e, type: 3}
