@@ -3,7 +3,12 @@
 Használt Unity verzió: Unity 6.3 6000.3.7f1
 
 
-
+Irányítás:
+    - Mozgás : WASD
+    - Kamera forgatás : Jobb klikkelve egér mozgatás
+    - Épület választás: 1,2,3
+    - Épület kategória pörgetése: 1,2,3
+    - Épület törlés: Del
 
 
 
