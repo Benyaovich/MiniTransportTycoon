@@ -842,9 +842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7cb1c9db5b905146ad0b9219fcb635e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildingPreviewManager
-  previewLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
+  previewLayerIndex: 6
 --- !u!4 &1608755515
 Transform:
   m_ObjectHideFlags: 0

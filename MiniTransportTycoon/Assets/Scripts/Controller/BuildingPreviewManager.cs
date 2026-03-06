@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class BuildingPreviewManager : MonoBehaviour
 {
-    [SerializeField] private LayerMask previewLayerMask;
+     [SerializeField] private int previewLayerIndex;
     private Transform _previewObject;
     private Transform _previewObjectPrefab;
 
@@ -37,14 +38,15 @@ public class BuildingPreviewManager : MonoBehaviour
     {
         _previewObject = Instantiate(_previewObjectPrefab, transform.position, transform.rotation,
             transform);
-        // SetPreviewLayerForChildren(_previewObject.gameObject);
+        SetPreviewLayerForChildren(_previewObject.gameObject);
     }
     
     private void SetPreviewLayerForChildren(GameObject preview)
     {
-        preview.layer = previewLayerMask;
-        foreach (Transform child in preview.transform) {
-            SetPreviewLayerForChildren(child.gameObject);
+        preview.layer = previewLayerIndex;
+        for (int i = 0; i < preview.transform.childCount; i++)
+        {
+            SetPreviewLayerForChildren(preview.transform.GetChild(i).gameObject);
         }
     }
 }
