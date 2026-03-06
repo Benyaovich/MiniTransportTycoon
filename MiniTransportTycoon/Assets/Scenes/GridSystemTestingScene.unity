@@ -825,15 +825,9 @@ MonoBehaviour:
   gridCellSize: 10
   gridOriginPosition: {x: 0, y: 0, z: 0}
   mapFloor: {fileID: 1627260197}
-  cellObjectTypeSos:
-  - {fileID: 11400000, guid: 865e254ef083dbe49b256c1ad61b104b, type: 2}
+  buildingCellObjectTypeSos:
   - {fileID: 11400000, guid: 91e2b6ac4d6801b498608034380fcdcf, type: 2}
-  - {fileID: 11400000, guid: 353e1cbf941ed8d4198de6a566de9a8e, type: 2}
-  - {fileID: 11400000, guid: 53e30ca2cb2a94340a305c1e2783e488, type: 2}
-  - {fileID: 11400000, guid: ad60c4b74935593459b37fb2b4f36968, type: 2}
-  - {fileID: 11400000, guid: 2d24aa9ee1395354c864ac0eae740ae7, type: 2}
-  - {fileID: 11400000, guid: 7f79699ec2b07844180a9f32eb6f6401, type: 2}
-  - {fileID: 11400000, guid: cc34fc6c69997d241a74cf4ffd553416, type: 2}
+  - {fileID: 11400000, guid: 865e254ef083dbe49b256c1ad61b104b, type: 2}
   twoWayRoadCellObjectTypeSos:
   - {fileID: 11400000, guid: 353e1cbf941ed8d4198de6a566de9a8e, type: 2}
   - {fileID: 11400000, guid: 53e30ca2cb2a94340a305c1e2783e488, type: 2}
