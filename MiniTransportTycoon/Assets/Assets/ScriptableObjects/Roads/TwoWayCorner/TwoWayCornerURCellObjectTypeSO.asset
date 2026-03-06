@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CellObjectTypeSO
   buildingType: 8
   prefab: {fileID: 6897578005008124103, guid: 9de5b5a3291ad3640970c89bfc5e779a, type: 3}
-  visual: {fileID: 6897578005008124103, guid: 249e498eaa43ef744b2fe1b3e9fee250, type: 3}
+  visual: {fileID: 6897578005008124103, guid: 018d1fbd3833bcf48b521f722b657319, type: 3}

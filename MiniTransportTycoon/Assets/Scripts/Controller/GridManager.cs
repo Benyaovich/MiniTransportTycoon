@@ -200,7 +200,6 @@ public class GridManager : MonoBehaviour
         if (go.Model is null) return;
         if (go.Model is IAdvancable advancable && _advancables.Contains(advancable))
         {
-            Debug.Log("removed form advacneables list");
             _advancables.Remove(advancable);
         }
     }

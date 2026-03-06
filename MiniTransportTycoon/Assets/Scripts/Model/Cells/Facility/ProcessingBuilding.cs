@@ -35,7 +35,6 @@ public class ProcessingBuilding : Facility
     // 1 to 1 conversion when producing resource
     protected override void Produce(object sender, EventArgs e)
     {
-        Debug.Log("termleek csor");
         int amountToProduce = rch.GetValue();
         
         if (amountToProduce >= RequiredResourceAmount)
