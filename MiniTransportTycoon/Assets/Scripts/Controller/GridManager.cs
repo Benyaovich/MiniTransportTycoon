@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Model.Cells.RoadCells;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UniVector3 = UnityEngine.Vector3;
@@ -29,8 +30,9 @@ public class GridManager : MonoBehaviour
     [SerializeField] private int gridSizeY = 10;
     [SerializeField] private float gridCellSize = 10f;
     [SerializeField] private UniVector3 gridOriginPosition = new UniVector3(0, 0, 0);
-    [SerializeField] private List<CellObjectTypeSO>? cellObjectTypeSos;
     [SerializeField] private Transform? mapFloor; 
+    [SerializeField] private List<CellObjectTypeSO>? cellObjectTypeSos;
+    [SerializeField] private List<CellObjectTypeSO>? twoWayRoadCellObjectTypeSos;
     
     #endregion
 
@@ -87,14 +89,29 @@ public class GridManager : MonoBehaviour
 
         if (Keyboard.current.digit1Key.wasPressedThisFrame)
         {
-            _itemToBuild = cellObjectTypeSos![0]!;
-            OnSelectedObjectChanged?.Invoke(this, _itemToBuild.prefab);
+            CycleCellObjectTypesSos(cellObjectTypeSos!);
+            OnSelectedObjectChanged?.Invoke(this, _itemToBuild!.prefab);
         }
-        else if(Keyboard.current.digit2Key.wasPressedThisFrame)
+        else if(Keyboard.current.digit3Key.wasPressedThisFrame)
         {
-            _itemToBuild = cellObjectTypeSos![1]!;
-            OnSelectedObjectChanged?.Invoke(this, _itemToBuild.prefab);
+            CycleCellObjectTypesSos(twoWayRoadCellObjectTypeSos!);
+            OnSelectedObjectChanged?.Invoke(this, _itemToBuild!.prefab);
         }    
+    }
+
+    private void CycleCellObjectTypesSos(List<CellObjectTypeSO> list)
+    {
+        if (list.Count < 1) throw new Exception("A listában nincsenek elemek.\nRakj bele CellObjectTypeSO-kat");
+        if (_itemToBuild is null)
+        {
+            _itemToBuild = list[0];
+            return;
+        }
+        
+        int index = list.IndexOf(_itemToBuild);
+        index = (index + 1) % list.Count;
+        _itemToBuild = list[index];
+        
     }
 
     
@@ -179,6 +196,12 @@ public class GridManager : MonoBehaviour
                 break;
             case BuildingTypes.ProcessingBuildingSteel:
                 cell = new ProcessingBuildingSteel(location);
+                break;
+            case BuildingTypes.TwoWayUD:
+                cell = new TwoWayUD(location);
+                break;
+            case BuildingTypes.TwoWayLR:
+                cell = new TwoWayLR(location);
                 break;
         }
 
