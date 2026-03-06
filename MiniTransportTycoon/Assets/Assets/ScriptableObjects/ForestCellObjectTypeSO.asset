@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5067642281c31f47abd8c68ad6a92cc, type: 3}
   m_Name: ForestCellObjectTypeSO
   m_EditorClassIdentifier: Assembly-CSharp::CellObjectTypeSO
-  nameOfCellType: Forest
+  buildingType: 1
   prefab: {fileID: 825070977300334054, guid: d213d3172c8cf1e4785ee0aa1e099f71, type: 3}
-  visual: {fileID: 0}
