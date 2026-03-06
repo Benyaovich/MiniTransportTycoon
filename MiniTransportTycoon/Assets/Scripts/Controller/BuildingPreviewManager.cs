@@ -8,25 +8,30 @@ public class BuildingPreviewManager : MonoBehaviour
     private Transform _previewObject;
     private Transform _previewObjectPrefab;
 
-    private void Start()
-    {
-        GridManager.Instance!.OnSelectedObjectChanged += GridManagerOnOnSelectedObjectChanged;
-    }
+    #region OnEnable - OnDisable
 
-    private void OnDisable()
-    {
-        GridManager.Instance!.OnSelectedObjectChanged -= GridManagerOnOnSelectedObjectChanged;
-    }
+        private void OnEnable()
+        {
+            GridManager.Instance!.OnSelectedObjectChanged += GridManagerOnSelectedObjectChanged;
+        }
+
+        private void OnDisable()
+        {
+            GridManager.Instance!.OnSelectedObjectChanged -= GridManagerOnSelectedObjectChanged;
+        }
+    
+
+    #endregion
 
     private void LateUpdate()
     {
         Vector3 mousePosSnapped = GridManager.Instance!.GetMousePosSnappedToGrid();
-        mousePosSnapped.y = 0.01f;
+        mousePosSnapped.y = 0.1f;
         transform.position = Vector3.Lerp(transform.position, mousePosSnapped, Time.deltaTime * 15f);
         
     }
 
-    private void GridManagerOnOnSelectedObjectChanged(object sender, Transform previewObjectPrefab)
+    private void GridManagerOnSelectedObjectChanged(object sender, Transform previewObjectPrefab)
     {
         _previewObjectPrefab = previewObjectPrefab;
         if(_previewObject is not null) Destroy(_previewObject.gameObject);
@@ -36,8 +41,9 @@ public class BuildingPreviewManager : MonoBehaviour
 
     private void CreatePreviewObject()
     {
-        _previewObject = Instantiate(_previewObjectPrefab, transform.position, transform.rotation,
-            transform);
+        var t = transform;
+        _previewObject = Instantiate(_previewObjectPrefab, t.position, t.rotation,
+            t);
         SetPreviewLayerForChildren(_previewObject.gameObject);
     }
     
