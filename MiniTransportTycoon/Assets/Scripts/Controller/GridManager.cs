@@ -5,6 +5,7 @@ using System.Linq;
 using Model.Cells.RoadCells;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using UniVector3 = UnityEngine.Vector3;
 using SysVector3 = System.Numerics.Vector3;
 
@@ -31,7 +32,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private float gridCellSize = 10f;
     [SerializeField] private UniVector3 gridOriginPosition = new UniVector3(0, 0, 0);
     [SerializeField] private Transform? mapFloor; 
-    [SerializeField] private List<CellObjectTypeSO>? cellObjectTypeSos;
+    [SerializeField] private List<CellObjectTypeSO>? buildingCellObjectTypeSos;
     [SerializeField] private List<CellObjectTypeSO>? twoWayRoadCellObjectTypeSos;
     [SerializeField] private List<CellObjectTypeSO>? twoWayRoadCornerCellObjectTypeSos;
     
@@ -44,6 +45,7 @@ public class GridManager : MonoBehaviour
     private Grid<GridObject> _grid = new Grid<GridObject>(new Size(1,1), 1, new SysVector3(0,0,0), 
     (g, l) => new GridObject(g, l));
     private List<IAdvancable> _advancables = new List<IAdvancable>();
+    private List<CellObjectTypeSO>? cellObjectTypeSos;
 
     #endregion
 
@@ -59,6 +61,8 @@ public class GridManager : MonoBehaviour
     {
         GameInput.Instance.OnLeftClickPressed += GameInputOnLeftClickPressed;
 
+        CollectAllCellObjectTypeSosIntoASingleList();
+        
         _gridSize = new Size(gridSizeX, gridSizeY);
         _grid = new Grid<GridObject>(_gridSize, gridCellSize, gridOriginPosition.SV3(), 
             (g, l) => new GridObject(g, l));
@@ -87,10 +91,10 @@ public class GridManager : MonoBehaviour
             advancable.Tick(Time.deltaTime);
         }
 
-
+        
         if (Keyboard.current.digit1Key.wasPressedThisFrame)
         {
-            CycleCellObjectTypesSos(cellObjectTypeSos!);
+            CycleCellObjectTypesSos(buildingCellObjectTypeSos!);
             InvokeOnSelectedObjectChanged();
         }
         else if(Keyboard.current.digit2Key.wasPressedThisFrame)
@@ -122,7 +126,22 @@ public class GridManager : MonoBehaviour
         
     }
 
-    
+    private void CollectAllCellObjectTypeSosIntoASingleList()
+    {
+        cellObjectTypeSos = new List<CellObjectTypeSO>();
+        foreach (CellObjectTypeSO cot in buildingCellObjectTypeSos!)
+        {
+            cellObjectTypeSos.Add(cot);
+        }
+        foreach (CellObjectTypeSO cot in twoWayRoadCellObjectTypeSos!)
+        {
+            cellObjectTypeSos.Add(cot);
+        }
+        foreach (CellObjectTypeSO cot in twoWayRoadCornerCellObjectTypeSos!)
+        {
+            cellObjectTypeSos.Add(cot);
+        }
+    }
     
     private void GameInputOnLeftClickPressed(object sender, EventArgs e)
     {
@@ -196,36 +215,27 @@ public class GridManager : MonoBehaviour
 
     private Cell CreateCellByClassName(CellObjectTypeSO co, Location location)
     {
-        Cell cell = new Cell(location);
         switch (co.buildingType)
         {
             case BuildingTypes.Forest:
-                cell = new Forest(location, growthInterval: 3);
-                break;
+                return new Forest(location, growthInterval: 3);
             case BuildingTypes.ProcessingBuildingSteel:
-                cell = new ProcessingBuildingSteel(location);
-                break;
+                return new ProcessingBuildingSteel(location);
             case BuildingTypes.TwoWayUD:
-                cell = new TwoWayUD(location);
-                break;
+                return new TwoWayUD(location);
             case BuildingTypes.TwoWayLR:
-                cell = new TwoWayLR(location);
-                break;
+                return new TwoWayLR(location);
             case BuildingTypes.TwoWayCornerDL:
-                cell = new TwoWayCornerDL(location);
-                break;
+                return new TwoWayCornerDL(location);
             case BuildingTypes.TwoWayCornerDR:
-                cell = new TwoWayCornerDR(location);
-                break;
+                return new TwoWayCornerDR(location);
             case BuildingTypes.TwoWayCornerUL:
-                cell = new TwoWayCornerUL(location);
-                break;
+                return new TwoWayCornerUL(location);
             case BuildingTypes.TwoWayCornerUR:
-                cell = new TwoWayCornerUR(location);
-                break;
+                return new TwoWayCornerUR(location);
+            default:
+                throw new Exception("Nincs ilyen class. Fel kell venni, ahogy feljebb van.");
         }
-
-        return cell;
     }
     
     private void LinkVisualToModel(GridObject origin)
