@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using Model.Interfaces;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -27,12 +28,22 @@ public class GridObject
     {
         Visual = visual;
     }
-    
-    
+
+
     public void ClearModel()
     {
         Model = null;
         Grid.InvokeOnGridObjectChanged(Location);
+    }
+    public void DestroyModel()
+    {
+        if(Model is IDestroyable destroyable){ destroyable.Destroy(); }
+        ClearModel();
+    }
+
+    public void ClearVisual()
+    {
+        Visual = null;
     }
     
 

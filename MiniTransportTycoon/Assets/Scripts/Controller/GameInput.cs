@@ -10,7 +10,7 @@ public class GameInput : MonoBehaviour
 
     public event EventHandler OnMovePerformed;
     public event EventHandler OnLeftClickPressed;
-    public event EventHandler OnScrollPerformed;
+    public event EventHandler OnDeleteKeyPressed;
     
     private PlayerInputActions playerInputActions;
 
@@ -23,26 +23,27 @@ public class GameInput : MonoBehaviour
         playerInputActions.Player.Enable();
         playerInputActions.Player.Move.performed += MoveOnPerformed;
         playerInputActions.Player.LeftClick.performed += LeftClickOnPerformed;
-        playerInputActions.Player.Scroll.performed += ScrollOnPerformed;
         playerInputActions.Player.RightClick.started += RightClickOnStarted;
         playerInputActions.Player.RightClick.canceled += RightClickOnCanceled;
+        playerInputActions.Player.Delete.performed += DeleteOnPerformed;
 
     }
 
-    
-
-
     private void OnDisable()
     {
-        playerInputActions.Player.RightClick.canceled += RightClickOnCanceled;
+        playerInputActions.Player.Delete.performed -= DeleteOnPerformed;
+        playerInputActions.Player.RightClick.canceled -= RightClickOnCanceled;
         playerInputActions.Player.RightClick.performed -= RightClickOnStarted;
         playerInputActions.Player.Move.performed -= MoveOnPerformed;
         playerInputActions.Player.LeftClick.performed -= LeftClickOnPerformed;
-        playerInputActions.Player.Scroll.performed -= ScrollOnPerformed;
         playerInputActions.Player.Disable();
         playerInputActions.Dispose();
     }
 
+    private void DeleteOnPerformed(InputAction.CallbackContext obj)
+    {
+        OnDeleteKeyPressed?.Invoke(this, EventArgs.Empty);
+    }
     private void RightClickOnCanceled(InputAction.CallbackContext obj)
     {
         IsRightClickPressed = false;
@@ -58,12 +59,7 @@ public class GameInput : MonoBehaviour
     {
         return Mouse.current.position.ReadValue();
     }
-
     
-    private void ScrollOnPerformed(InputAction.CallbackContext obj)
-    {
-        OnScrollPerformed?.Invoke(this, EventArgs.Empty);
-    }
     private void LeftClickOnPerformed(InputAction.CallbackContext obj)
     {
         OnLeftClickPressed?.Invoke(this, EventArgs.Empty);

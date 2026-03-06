@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5067642281c31f47abd8c68ad6a92cc, type: 3}
   m_Name: FieldCellObjectTypeSO
   m_EditorClassIdentifier: Assembly-CSharp::CellObjectTypeSO
-  nameOfCellType: Field
+  buildingType: 0
   prefab: {fileID: 1345655593194378012, guid: 42e6f8d0f519b4f46af0d7ade11691af, type: 3}
-  visual: {fileID: 0}
+  visual: {fileID: 1345655593194378012, guid: 7dada0ad9572b744ea6acd459939891a, type: 3}

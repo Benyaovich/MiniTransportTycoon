@@ -13,10 +13,14 @@ public class ForestVisual : MonoBehaviour
         _forest.OnGrow += ForestOnGrow;
     }
 
+    private void OnDisable()
+    {
+        _forest.OnGrow -= ForestOnGrow;
+    }
+
     private void ForestOnGrow(object sender, Location e)
     {
         trees[_forest.NumOfTrees - 1].SetActive(true);
-        
         if (_forest.NumOfTrees == 4)
         {
             _forest.OnGrow -= ForestOnGrow;

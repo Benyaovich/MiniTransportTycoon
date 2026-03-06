@@ -6,7 +6,7 @@ public class BuildingPreviewManager : MonoBehaviour
 {
      [SerializeField] private int previewLayerIndex;
     private Transform _previewObject;
-    private Transform _previewObjectPrefab;
+    private Transform _previewObjectVisual;
 
     #region OnEnable - OnDisable
 
@@ -31,18 +31,18 @@ public class BuildingPreviewManager : MonoBehaviour
         
     }
 
-    private void GridManagerOnSelectedObjectChanged(object sender, Transform previewObjectPrefab)
+    private void GridManagerOnSelectedObjectChanged(object sender, Transform previewObjectVisual)
     {
-        _previewObjectPrefab = previewObjectPrefab;
+        _previewObjectVisual = previewObjectVisual;
         if(_previewObject is not null) Destroy(_previewObject.gameObject);
-        if (_previewObjectPrefab is null) return;
+        if (_previewObjectVisual is null) return;
         CreatePreviewObject();
     }
 
     private void CreatePreviewObject()
     {
         var t = transform;
-        _previewObject = Instantiate(_previewObjectPrefab, t.position, t.rotation,
+        _previewObject = Instantiate(_previewObjectVisual, t.position, t.rotation,
             t);
         SetPreviewLayerForChildren(_previewObject.gameObject);
     }

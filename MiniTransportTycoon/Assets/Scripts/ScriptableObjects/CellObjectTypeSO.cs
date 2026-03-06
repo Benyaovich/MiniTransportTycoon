@@ -5,4 +5,5 @@ public class CellObjectTypeSO : ScriptableObject
 {
     public BuildingTypes buildingType;
     public Transform prefab;
+    public Transform visual;
 }
