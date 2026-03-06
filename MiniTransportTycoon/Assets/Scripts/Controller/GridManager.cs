@@ -7,27 +7,46 @@ using UnityEngine.InputSystem;
 using UniVector3 = UnityEngine.Vector3;
 using SysVector3 = System.Numerics.Vector3;
 
+
 public class GridManager : MonoBehaviour
 {
+    #region Static
+    
     public static GridManager? Instance { get; private set; }
-    public event EventHandler<Transform?>? OnSelectedObjectChanged;
-    [SerializeField] private bool showDebug = true;
 
+    #endregion
+
+    #region Events
+    
+    public event EventHandler<Transform?>? OnSelectedObjectChanged;
+
+    #endregion
+
+    #region Private SerializeFields
+    
+    [SerializeField] private bool showDebug = true;
     [SerializeField] private int gridSizeX = 10;
     [SerializeField] private int gridSizeY = 10;
-    private Size gridSize = new Size(10,10);
     [SerializeField] private float gridCellSize = 10f;
     [SerializeField] private UniVector3 gridOriginPosition = new UniVector3(0, 0, 0);
-
     [SerializeField] private List<CellObjectTypeSO>? cellObjectTypeSos;
-    private CellObjectTypeSO? itemToBuild;
-
     [SerializeField] private Transform? mapFloor; 
-    private Grid<GridObject> grid = new Grid<GridObject>(new Size(1,1), 1, new SysVector3(0,0,0), 
-    (g, l) => new GridObject(g, l));
+    
+    #endregion
 
+    #region Fields
+    
+    private Size _gridSize = new Size(10,10);
+    private CellObjectTypeSO? _itemToBuild;
+    private Grid<GridObject> _grid = new Grid<GridObject>(new Size(1,1), 1, new SysVector3(0,0,0), 
+    (g, l) => new GridObject(g, l));
     private List<IAdvancable> _advancables = new List<IAdvancable>();
 
+    #endregion
+
+
+
+    
     private void Awake()
     {
         Instance = this;
@@ -35,17 +54,17 @@ public class GridManager : MonoBehaviour
 
     private void Start()
     {
-        GameInput.Instance.OnLeftClickPressed += GameInputOnOnLeftClickPressed;
+        GameInput.Instance.OnLeftClickPressed += GameInputOnLeftClickPressed;
 
-        gridSize = new Size(gridSizeX, gridSizeY);
-        grid = new Grid<GridObject>(gridSize, gridCellSize, gridOriginPosition.SV3(), 
+        _gridSize = new Size(gridSizeX, gridSizeY);
+        _grid = new Grid<GridObject>(_gridSize, gridCellSize, gridOriginPosition.SV3(), 
             (g, l) => new GridObject(g, l));
         
-        Location firstGridObjectsLocation = grid.GetGridObject(0, 0).Location;
+        Location firstGridObjectsLocation = _grid.GetGridObject(0, 0).Location;
         mapFloor!.position = new UniVector3(firstGridObjectsLocation.X, -0.001f, firstGridObjectsLocation.Y);
-        mapFloor!.localScale = new UniVector3(grid.Size.Width, 0, grid.Size.Height);
+        mapFloor!.localScale = new UniVector3(_grid.Size.Width, 0, _grid.Size.Height);
         
-        GenerateCellPrefabsForExistingGrid();
+        BuildFromExistingGrid();
         
         if (showDebug) {
             DebugGridData();
@@ -54,7 +73,7 @@ public class GridManager : MonoBehaviour
 
     private void OnDisable()
     {
-        GameInput.Instance.OnLeftClickPressed -= GameInputOnOnLeftClickPressed;
+        GameInput.Instance.OnLeftClickPressed -= GameInputOnLeftClickPressed;
     }
 
 
@@ -68,30 +87,26 @@ public class GridManager : MonoBehaviour
 
         if (Keyboard.current.digit1Key.wasPressedThisFrame)
         {
-            itemToBuild = cellObjectTypeSos![0]!;
-            OnSelectedObjectChanged?.Invoke(this, itemToBuild.prefab);
+            _itemToBuild = cellObjectTypeSos![0]!;
+            OnSelectedObjectChanged?.Invoke(this, _itemToBuild.prefab);
         }
         else if(Keyboard.current.digit2Key.wasPressedThisFrame)
         {
-            itemToBuild = cellObjectTypeSos![1]!;
-            OnSelectedObjectChanged?.Invoke(this, itemToBuild.prefab);
+            _itemToBuild = cellObjectTypeSos![1]!;
+            OnSelectedObjectChanged?.Invoke(this, _itemToBuild.prefab);
         }    
     }
 
     
     
-    private void GameInputOnOnLeftClickPressed(object sender, EventArgs e)
+    private void GameInputOnLeftClickPressed(object sender, EventArgs e)
     {
         UniVector3 mousePos = Utils.GetMouseWorldPosition();
-        grid.GetXY(mousePos.SV3(), out int x, out int y);
+        _grid.GetXY(mousePos.SV3(), out int x, out int y);
         
-        // cell to build
-        // Cell cell = new Cell(new Location(x, y), new Size(3,3));
-        // Cell cell = new ProcessingBuilding(Resource.Steel, Resource.Iron, 100, new Location(x, y), size: new Size(2,2));
-        // Cell cell = new Forest(new Location(x, y), growthInterval: 2);
-        if (itemToBuild is null) return;
+        if (_itemToBuild is null) return;
         
-        Cell cell = CreateCellByClassName(itemToBuild, new Location(x,y));
+        Cell cell = CreateCellByClassName(_itemToBuild, new Location(x,y));
         List<Location> gridPositionList = cell.GetGridPositionList();
         
         if(!CheckIfCanBuild(gridPositionList)){ return; }
@@ -106,49 +121,63 @@ public class GridManager : MonoBehaviour
         bool canBuild = true;
         foreach (Location position in gridPositionList)
         {
-            GridObject? go = grid.GetGridObject(position.X, position.Y);
-            if (go is null || !go.CanBuild())
-            {
-                canBuild = false;
-                Debug.Log("Cant build here");
-                break;
-            }
+            GridObject? go = _grid.GetGridObject(position.X, position.Y);
+            
+            if (go is not null && go.CanBuild()) continue;
+            
+            canBuild = false;
+            Debug.Log("Cant build here");
+            break;
         }
 
         return canBuild;
     }
 
-    private void Build(Cell cell, List<Location> gridPositionList)
+    private void SetModelsValueInGridObject(Cell cell, List<Location> gridPositionList)
     {
         if (gridPositionList.Count == 0) return;
         
-        // set all values in the gridobjects
         foreach (Location position in gridPositionList)
         {
-            GridObject go = grid.GetGridObject(position.X, position.Y);
+            GridObject go = _grid.GetGridObject(position.X, position.Y);
             go.SetModel(cell);
         }
-        
-        // create the visual prefab, and link it to the cell
-        GridObject origin = grid.GetGridObject(cell.Origin.X, cell.Origin.Y);
-        origin.SetVisual(InstantiateCellPrefab(origin));
-        LinkVisualToValue(origin);
+    }
 
-        if (origin.Model is IAdvancable advancable)
+    private void CreateVisualForCellAndLinkToModel(Cell cell)
+    {
+        GridObject origin = _grid.GetGridObject(cell.Origin.X, cell.Origin.Y);
+        origin.SetVisual(InstantiateCellPrefab(origin));
+        LinkVisualToModel(origin);
+
+        
+    }
+
+    private void AddCellToIAdvancableIfIAdvancable(Cell cell)
+    {
+        GridObject origin = _grid.GetGridObject(cell.Origin.X, cell.Origin.Y);
+        if (origin.Model is IAdvancable advancable && !_advancables.Contains(advancable))
         {
             _advancables.Add(advancable);
         }
     }
 
+    private void Build(Cell cell, List<Location> gridPositionList)
+    {
+        SetModelsValueInGridObject(cell, gridPositionList);
+        CreateVisualForCellAndLinkToModel(cell);
+        AddCellToIAdvancableIfIAdvancable(cell);
+    }
+
     private Cell CreateCellByClassName(CellObjectTypeSO co, Location location)
     {
         Cell cell = new Cell(location);
-        switch (co.nameOfCellType)
+        switch (co.buildingType)
         {
-            case "Forest":
+            case BuildingTypes.Forest:
                 cell = new Forest(location, growthInterval: 3);
                 break;
-            case "ProcessingBuildingSteel":
+            case BuildingTypes.ProcessingBuildingSteel:
                 cell = new ProcessingBuildingSteel(location);
                 break;
         }
@@ -156,53 +185,53 @@ public class GridManager : MonoBehaviour
         return cell;
     }
     
-    private void LinkVisualToValue(GridObject origin)
+    private void LinkVisualToModel(GridObject origin)
     {
         switch (origin.Model!.GetType().Name)
         {
-            case "Forest":
+            case nameof(BuildingTypes.Forest):
                 ForestVisual fv = origin.Visual!.GetComponent<ForestVisual>();
                 fv.Setup(origin.Model as Forest);
                 break;
-            case "ProcessingBuildingSteel":
+            case nameof(BuildingTypes.ProcessingBuildingSteel):
                 break;
         }
     }
 
     private Transform InstantiateCellPrefab(GridObject go)
     {
-        Transform prefab = GetCellPrefab(go.Model!);
-        return Instantiate(prefab, 
+        CellObjectTypeSO cellObjectTypeSo = GetCellObjectTypeSoForCell(go.Model!);
+        return Instantiate(cellObjectTypeSo.prefab, 
             go.Grid.GetWorldPosition(go.Location.X, go.Location.Y).UVXZ3(),
             UnityEngine.Quaternion.identity, transform);
     }
 
-    private Transform GetCellPrefab(Cell value)
+    private CellObjectTypeSO GetCellObjectTypeSoForCell(Cell value)
     {
         string nameOfCell = value.GetType().Name;
-        CellObjectTypeSO co = cellObjectTypeSos!.Find(x => x.nameOfCellType == nameOfCell);
+        CellObjectTypeSO co = cellObjectTypeSos!.Find(x => x.buildingType.ToString() == nameOfCell);
         if (co is null)
         {
-            Debug.LogError("CellObjectTypeSO doesnt exist or nameOfCellType is spelled wrong.");
+            Debug.LogError("CellObjectTypeSO doesnt exist.");
             throw new NullReferenceException();
         }
-        return co.prefab;
+        return co;
     }
 
 
-    private void GenerateCellPrefabsForExistingGrid()
+    private void BuildFromExistingGrid()
     {
-        for (int x = 0; x < grid.Size.Width; x++) {
-            for (int y = 0; y < grid.Size.Height; y++) {
-                GridObject gridObject = grid.GetGridObject(x, y);
+        for (int x = 0; x < _grid.Size.Width; x++) {
+            for (int y = 0; y < _grid.Size.Height; y++) {
+                GridObject gridObject = _grid.GetGridObject(x, y);
                 
                 if(gridObject.Model is null) continue;
 
                 if (x != gridObject.Model.Origin.X
                     || y != gridObject.Model.Origin.Y) continue;
                 
-                gridObject.SetVisual(InstantiateCellPrefab(gridObject));
-                LinkVisualToValue(gridObject);
+                CreateVisualForCellAndLinkToModel(gridObject.Model);
+                AddCellToIAdvancableIfIAdvancable(gridObject.Model);
             }
         }
     }
@@ -210,31 +239,30 @@ public class GridManager : MonoBehaviour
     public UniVector3 GetMousePosSnappedToGrid()
     {
         UniVector3 mousePos = Utils.GetMouseWorldPosition();
-        grid.GetXY(mousePos.SV3(), out int x, out int y);
-        GridObject go = grid.GetGridObject(x, y);
-        return go.Grid.GetWorldPosition(go.Location.X, go.Location.Y).UVXZ3();
+        _grid.GetXY(mousePos.SV3(), out int x, out int y);
+        return _grid.GetWorldPosition(x, y).UVXZ3();
     }
 
     private void DebugGridData()
     {
-        TextMesh[][] debugTextArray = new TextMesh[grid.Size.Width][];
-        for (int index = 0; index < grid.Size.Width; index++)
+        TextMesh[][] debugTextArray = new TextMesh[_grid.Size.Width][];
+        for (int index = 0; index < _grid.Size.Width; index++)
         {
-            debugTextArray[index] = new TextMesh[grid.Size.Height];
+            debugTextArray[index] = new TextMesh[_grid.Size.Height];
         }
 
-        for (int x = 0; x < grid.Size.Width; x++) {
-            for (int y = 0; y < grid.Size.Height; y++) {
-                debugTextArray[x][y] = Utils.CreateWorldText(grid.GetGridObject(x,y)?.ToString(), null, grid.GetWorldPosition(x, y).UVXZ3() + new UniVector3(gridCellSize, 0, gridCellSize) * .5f, 20, Color.white, TextAnchor.MiddleCenter, TextAlignment.Center);
-                Debug.DrawLine(grid.GetWorldPosition(x, y).UVXZ3(), grid.GetWorldPosition(x, y + 1).UVXZ3(), Color.white, 100f);
-                Debug.DrawLine(grid.GetWorldPosition(x, y).UVXZ3(), grid.GetWorldPosition(x + 1, y).UVXZ3(), Color.white, 100f);
+        for (int x = 0; x < _grid.Size.Width; x++) {
+            for (int y = 0; y < _grid.Size.Height; y++) {
+                debugTextArray[x][y] = Utils.CreateWorldText(_grid.GetGridObject(x,y)?.ToString(), null, _grid.GetWorldPosition(x, y).UVXZ3() + new UniVector3(gridCellSize, 0, gridCellSize) * .5f, 20, Color.white, TextAnchor.MiddleCenter, TextAlignment.Center);
+                Debug.DrawLine(_grid.GetWorldPosition(x, y).UVXZ3(), _grid.GetWorldPosition(x, y + 1).UVXZ3(), Color.white, 100f);
+                Debug.DrawLine(_grid.GetWorldPosition(x, y).UVXZ3(), _grid.GetWorldPosition(x + 1, y).UVXZ3(), Color.white, 100f);
             }
         }
-        Debug.DrawLine(grid.GetWorldPosition(0, grid.Size.Height).UVXZ3(), grid.GetWorldPosition(grid.Size.Width, grid.Size.Height).UVXZ3(), Color.white, 100f);
-        Debug.DrawLine(grid.GetWorldPosition(grid.Size.Width, 0).UVXZ3(), grid.GetWorldPosition(grid.Size.Width, grid.Size.Height).UVXZ3(), Color.white, 100f);
+        Debug.DrawLine(_grid.GetWorldPosition(0, _grid.Size.Height).UVXZ3(), _grid.GetWorldPosition(_grid.Size.Width, _grid.Size.Height).UVXZ3(), Color.white, 100f);
+        Debug.DrawLine(_grid.GetWorldPosition(_grid.Size.Width, 0).UVXZ3(), _grid.GetWorldPosition(_grid.Size.Width, _grid.Size.Height).UVXZ3(), Color.white, 100f);
 
-        grid.OnGridObjectChanged += (sender, eventArgs) => {
-            debugTextArray[eventArgs.location.X][eventArgs.location.Y].text = grid.GetGridObject(eventArgs.location.X, eventArgs.location.Y).ToString();
+        _grid.OnGridObjectChanged += (sender, eventArgs) => {
+            debugTextArray[eventArgs.location.X][eventArgs.location.Y].text = _grid.GetGridObject(eventArgs.location.X, eventArgs.location.Y).ToString();
         };
     }
 
