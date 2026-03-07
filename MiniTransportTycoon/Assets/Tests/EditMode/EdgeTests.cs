@@ -18,6 +18,8 @@ public class EdgeTests
         
         Assert.AreEqual(e.A, aStart);
         Assert.AreEqual(e.B, bStart);
+        
+        Assert.AreEqual(3, e.W);
     }
     
     [Test]

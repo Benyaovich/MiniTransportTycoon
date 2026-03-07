@@ -5,7 +5,7 @@ public class Edge
 {
     public Location A { get; private set; }
     public Location B { get; private set; }
-    public int X; //azt gondolom a az x it a tav??
+    public int W { get; private set; } // weight - hossz
 
     public Edge(Location a, Location b)
     {
@@ -21,21 +21,21 @@ public class Edge
 
             if (A.Y > B.Y)
             {
-                X = A.Y -  B.Y;
+                W = A.Y -  B.Y;
             }
             else
             {
-                X = B.Y - A.Y;
+                W = B.Y - A.Y;
             }
         } else if (A.Y == B.Y)
         {
             if (A.X > B.X)
             {
-                X = A.X - B.X;
+                W = A.X - B.X;
             }
             else
             {
-                X = B.X - A.X;
+                W = B.X - A.X;
             }
         }
         else
