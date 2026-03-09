@@ -6,7 +6,6 @@ public class BuildingManager
 {
     private readonly Grid<GridObject> _grid;
     private readonly List<IAdvancable> _advancables;
-    private readonly CellFactory _cellFactory;
     private readonly CellVisualService _cellVisualService;
 
     public BuildingManager(
@@ -17,13 +16,12 @@ public class BuildingManager
     {
         _grid = grid;
         _advancables = advancables;
-        _cellFactory = new CellFactory();
         _cellVisualService = new CellVisualService(grid, parentTransform, cellObjectTypeSos);
     }
 
     public bool TryBuild(CellObjectTypeSO cellObjectTypeSo, Location location)
     {
-        Cell cell = _cellFactory.Create(cellObjectTypeSo, location);
+        Cell cell = cellObjectTypeSo.Create(location);
         List<Location> gridPositionList = cell.GetGridPositionList();
 
         if (!CheckIfCanBuild(gridPositionList))

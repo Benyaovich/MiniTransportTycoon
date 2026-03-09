@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5067642281c31f47abd8c68ad6a92cc, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c8de6d68aa048e78934eaf1b0650f84, type: 3}
   m_Name: ProcessingBuildingSteelCellObjectTypeSO
-  m_EditorClassIdentifier: Assembly-CSharp::CellObjectTypeSO
-  buildingType: 2
+  m_EditorClassIdentifier: Assembly-CSharp::ProcessingBuildingSteelCellObjectTypeSO
   prefab: {fileID: 5794051533596227549, guid: 1eaed373c414a9a419a2560dc2670a27, type: 3}
   visual: {fileID: 5794051533596227549, guid: 2048c6e1eade6b043ab7fdaff2c98be0, type: 3}

@@ -826,7 +826,7 @@ MonoBehaviour:
   gridOriginPosition: {x: 0, y: 0, z: 0}
   mapFloor: {fileID: 1627260197}
   buildingCellObjectTypeSos:
-  - {fileID: 11400000, guid: 91e2b6ac4d6801b498608034380fcdcf, type: 2}
+  - {fileID: 11400000, guid: cec95d5cecd92bf4fb81faec4af8e234, type: 2}
   - {fileID: 11400000, guid: 865e254ef083dbe49b256c1ad61b104b, type: 2}
   twoWayRoadCellObjectTypeSos:
   - {fileID: 11400000, guid: 353e1cbf941ed8d4198de6a566de9a8e, type: 2}

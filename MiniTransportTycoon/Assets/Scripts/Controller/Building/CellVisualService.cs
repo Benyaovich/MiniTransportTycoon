@@ -2,13 +2,15 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class CellVisualService
 {
     private readonly Grid<GridObject> _grid;
     private readonly Transform _parentTransform;
     private readonly List<CellObjectTypeSO> _cellObjectTypeSos;
-
+    private Dictionary<Type, CellObjectTypeSO> _cellLookup;
+    
     public CellVisualService(
         Grid<GridObject> grid,
         Transform parentTransform,
@@ -17,6 +19,18 @@ public class CellVisualService
         _grid = grid;
         _parentTransform = parentTransform;
         _cellObjectTypeSos = cellObjectTypeSos;
+        _cellLookup = new();
+        BuildLookup();
+    }
+    
+    private void BuildLookup()
+    {
+        _cellLookup = new Dictionary<Type, CellObjectTypeSO>();
+
+        foreach (var so in _cellObjectTypeSos)
+        {
+            _cellLookup.Add(so.CellType, so);
+        }
     }
 
     public void CreateVisualForCell(Cell cell)
@@ -62,15 +76,14 @@ public class CellVisualService
 
     private CellObjectTypeSO GetCellObjectTypeSoForCell(Cell value)
     {
-        string nameOfCell = value.GetType().Name;
-        CellObjectTypeSO co = _cellObjectTypeSos.Find(x => x.buildingType.ToString() == nameOfCell);
+        CellObjectTypeSO coCellObjectTypeSo = _cellLookup[value.GetType()];
 
-        if (co is null)
+        if (coCellObjectTypeSo is null)
         {
             Debug.LogError("CellObjectTypeSO doesnt exist.");
             throw new NullReferenceException();
         }
 
-        return co;
+        return coCellObjectTypeSo;
     }
 }

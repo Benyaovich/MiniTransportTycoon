@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5067642281c31f47abd8c68ad6a92cc, type: 3}
+  m_Script: {fileID: 11500000, guid: f9bc6dce4f15449187b8cf833715b02a, type: 3}
   m_Name: TwoWayCornerURCellObjectTypeSO
-  m_EditorClassIdentifier: Assembly-CSharp::CellObjectTypeSO
-  buildingType: 8
+  m_EditorClassIdentifier: Assembly-CSharp::TwoWayCornerURCellObjectTypeSO
   prefab: {fileID: 6897578005008124103, guid: 9de5b5a3291ad3640970c89bfc5e779a, type: 3}
   visual: {fileID: 6897578005008124103, guid: 018d1fbd3833bcf48b521f722b657319, type: 3}

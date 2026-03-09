@@ -1,9 +1,10 @@
+using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CellObjectTypeSO", menuName = "Scriptable Objects/CellObjectTypeSO")]
-public class CellObjectTypeSO : ScriptableObject
+public abstract class CellObjectTypeSO : ScriptableObject
 {
-    public BuildingTypes buildingType;
     public Transform prefab;
     public Transform visual;
+    public abstract Cell Create(Location location);
+    public abstract Type CellType { get; }
 }
