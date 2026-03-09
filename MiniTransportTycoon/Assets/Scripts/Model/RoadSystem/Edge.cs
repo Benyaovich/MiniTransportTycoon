@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 public class Edge
 {
@@ -42,5 +41,19 @@ public class Edge
         {
             throw new ArgumentException("A ket csúcs nem egy vonalban van, így nem lehet út");
         }
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is Edge e)
+        {
+            return (A.Equals(e.A) && B.Equals(e.B)) || (A.Equals(e.B) && B.Equals(e.A)) ;
+        }
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(A, B, W);
     }
 }

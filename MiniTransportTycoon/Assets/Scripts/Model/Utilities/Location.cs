@@ -1,3 +1,5 @@
+using System;
+
 public class Location
 {
     public int X { get; private set; }
@@ -17,5 +19,20 @@ public class Location
     public static Location operator -(Location a, Location b)
     {
         return new Location(a.X - b.X, a.Y - b.Y);
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is Location l)
+        {
+            return l.X == X && l.Y == Y;
+        }
+        return false;
+    }
+    
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(X, Y);
     }
 }
