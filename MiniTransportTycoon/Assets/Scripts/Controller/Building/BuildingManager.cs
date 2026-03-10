@@ -1,4 +1,5 @@
 #nullable enable
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,11 +13,11 @@ public class BuildingManager
         Grid<GridObject> grid,
         Transform parentTransform,
         List<IAdvancable> advancables,
-        List<CellObjectTypeSO> cellObjectTypeSos)
+        Dictionary<Type, CellObjectTypeSO> cellLookup)
     {
         _grid = grid;
         _advancables = advancables;
-        _cellVisualService = new CellVisualService(grid, parentTransform, cellObjectTypeSos);
+        _cellVisualService = new CellVisualService(grid, parentTransform, cellLookup);
     }
 
     public bool TryBuild(CellObjectTypeSO cellObjectTypeSo, Location location)

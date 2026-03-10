@@ -46,8 +46,8 @@ public class GridManager : MonoBehaviour
 
     private readonly List<IAdvancable> _advancables = new();
     private readonly BuildSelectionManager _buildSelectionManager = new();
-
-    private List<CellObjectTypeSO>? _cellObjectTypeSos;
+    private Dictionary<Type, CellObjectTypeSO> _cellLookup = new();
+    private List<CellObjectTypeSO> _cellObjectTypeSos = new();
     private BuildingManager? _buildingManager;
 
     #endregion
@@ -62,7 +62,8 @@ public class GridManager : MonoBehaviour
         _buildSelectionManager.OnSelectedObjectChanged += BuildSelectionManagerOnSelectedObjectChanged;
         
         CollectAllCellObjectTypeSosIntoASingleList();
-
+        BuildLookup();
+        
         _gridSize = new Size(gridSizeX, gridSizeY);
         _grid = new Grid<GridObject>(
             _gridSize,
@@ -74,10 +75,10 @@ public class GridManager : MonoBehaviour
             _grid,
             transform,
             _advancables,
-            _cellObjectTypeSos!);
+            _cellLookup!);
 
         Location firstGridObjectsLocation = _grid.GetGridObject(0, 0).Location;
-        mapFloor!.position = new UniVector3(firstGridObjectsLocation.X, -0.001f, firstGridObjectsLocation.Y);
+        mapFloor!.position = new UniVector3(firstGridObjectsLocation.X, -0.01f, firstGridObjectsLocation.Y);
         mapFloor!.localScale = new UniVector3(_grid.Size.Width, 0, _grid.Size.Height);
 
         _buildingManager.BuildFromExistingGrid();
@@ -157,6 +158,16 @@ public class GridManager : MonoBehaviour
         foreach (CellObjectTypeSO cellObjectTypeSo in twoWayRoadCornerCellObjectTypeSos!)
         {
             _cellObjectTypeSos.Add(cellObjectTypeSo);
+        }
+    }
+    
+    private void BuildLookup()
+    {
+        _cellLookup = new Dictionary<Type, CellObjectTypeSO>();
+        
+        foreach (var so in _cellObjectTypeSos)
+        {
+            _cellLookup.Add(so.CellType, so);
         }
     }
 

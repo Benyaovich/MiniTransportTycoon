@@ -2,36 +2,25 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class CellVisualService
 {
     private readonly Grid<GridObject> _grid;
     private readonly Transform _parentTransform;
-    private readonly List<CellObjectTypeSO> _cellObjectTypeSos;
-    private Dictionary<Type, CellObjectTypeSO> _cellLookup;
+    private readonly Dictionary<Type, CellObjectTypeSO> _cellLookup;
+    
     
     public CellVisualService(
         Grid<GridObject> grid,
         Transform parentTransform,
-        List<CellObjectTypeSO> cellObjectTypeSos)
+        Dictionary<Type, CellObjectTypeSO> cellLookup)
     {
         _grid = grid;
         _parentTransform = parentTransform;
-        _cellObjectTypeSos = cellObjectTypeSos;
-        _cellLookup = new();
-        BuildLookup();
+        _cellLookup = cellLookup;
     }
     
-    private void BuildLookup()
-    {
-        _cellLookup = new Dictionary<Type, CellObjectTypeSO>();
-
-        foreach (var so in _cellObjectTypeSos)
-        {
-            _cellLookup.Add(so.CellType, so);
-        }
-    }
+    
 
     public void CreateVisualForCell(Cell cell)
     {
