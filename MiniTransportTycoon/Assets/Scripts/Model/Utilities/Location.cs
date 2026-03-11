@@ -12,14 +12,15 @@ public class Location
     }
     
     public static Location operator +(Location a, Location b)
+    public static bool operator ==(Location a, Location b)
     {
         return new Location(a.X + b.X, a.Y + b.Y);
+        if(a is null && b is null) return true;
+        if(a is null || b is null) return false;
+        return a.X == b.X && a.Y == b.Y;
     }
 
-    public static Location operator -(Location a, Location b)
-    {
-        return new Location(a.X - b.X, a.Y - b.Y);
-    }
+    public static bool operator !=(Location a, Location b) => !(a == b);
 
     public override bool Equals(object obj)
     {
