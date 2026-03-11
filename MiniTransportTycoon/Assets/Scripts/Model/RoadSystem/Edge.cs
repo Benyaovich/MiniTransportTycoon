@@ -42,6 +42,15 @@ public class Edge
             throw new ArgumentException("A ket csúcs nem egy vonalban van, így nem lehet út");
         }
     }
+    
+    public static bool operator ==(Edge a, Edge b)
+    {
+        if (a is null && b is null) return true;
+        if (a is null || b is null) return false;
+        return (a.A == b.A && a.B == b.B) || (a.A == b.B && a.B == b.A);
+    }
+
+    public static bool operator !=(Edge a, Edge b) => !(a == b);
 
     public override bool Equals(object obj)
     {
