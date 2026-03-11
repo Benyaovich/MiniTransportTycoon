@@ -54,15 +54,9 @@ public class Edge
 
     public override bool Equals(object obj)
     {
-        if (obj is Edge e)
-        {
-            return (A.Equals(e.A) && B.Equals(e.B)) || (A.Equals(e.B) && B.Equals(e.A)) ;
-        }
+        if (obj is Edge edge) return edge == this;
         return false;
     }
 
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(A, B, W);
-    }
+    public override int GetHashCode() => HashCode.Combine(A, B, W);
 }
