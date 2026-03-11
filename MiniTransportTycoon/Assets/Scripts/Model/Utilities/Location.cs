@@ -11,10 +11,12 @@ public class Location
         Y = y;
     }
     
-    public static Location operator +(Location a, Location b)
+    public static Location operator +(Location a, Location b) => new Location(a.X + b.X, a.Y + b.Y);
+
+    public static Location operator -(Location a, Location b) => new Location(a.X - b.X, a.Y - b.Y);
+
     public static bool operator ==(Location a, Location b)
     {
-        return new Location(a.X + b.X, a.Y + b.Y);
         if(a is null && b is null) return true;
         if(a is null || b is null) return false;
         return a.X == b.X && a.Y == b.Y;
@@ -24,16 +26,9 @@ public class Location
 
     public override bool Equals(object obj)
     {
-        if (obj is Location l)
-        {
-            return l.X == X && l.Y == Y;
-        }
+        if (obj is Location location) return this == location;
         return false;
     }
     
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(X, Y);
-    }
+    public override int GetHashCode() => HashCode.Combine(X, Y);
 }
