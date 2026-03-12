@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using Model.RoadSystem;
 
 public class PathHandler
@@ -34,19 +33,3 @@ public class PathHandler
         return completedRoute;
     }
 }
-
-public class SearchNode
-{
-    [CanBeNull] public Location Parent { get; set; }
-    public int Distance { get; set; }
-    public Location Vertex { get; }
-
-    public SearchNode(int distance, Location vertex,Location parent = null)
-    {
-        Distance = distance;
-        Vertex = vertex;
-        Parent = parent;
-    }
-}
-
-
