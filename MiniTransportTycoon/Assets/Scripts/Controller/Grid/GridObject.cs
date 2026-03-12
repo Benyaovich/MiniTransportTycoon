@@ -3,7 +3,7 @@ using Model.Interfaces;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class GridObject
+public class GridObject : IHasCellModel
 {
     public Grid<GridObject> Grid { get; private set; }
     public Location Location { get; private set; }
