@@ -3,18 +3,16 @@ using System;
 using System.Collections.Generic;
 using Model.Enumerations;
 
-public class GraphBuilder : IGraphBuilder
+public class GraphBuilder<T> : IGraphBuilder where T : IHasCellModel
 {
-    private readonly IGrid<IHasCellModel> _grid;
+    private readonly IGrid<T> _grid;
     private readonly IGraph _graph;
 
-    public GraphBuilder(IGrid<IHasCellModel> grid, IGraph graph)
+    public GraphBuilder(IGrid<T> grid, IGraph graph)
     {
         _grid = grid;
         _graph = graph;
     }
-
-    
 
     #region Interface Methods
     

@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildingManager
+public class BuildingManager : IBuildingManager
 {
+    public event EventHandler<Location>? OnRoadCellBuilt; 
+    public event EventHandler<Location>? OnRoadCellDemolished; 
+    
     private readonly Grid<GridObject> _grid;
     private readonly List<IAdvancable> _advancables;
     private readonly CellVisualService _cellVisualService;
@@ -31,6 +34,7 @@ public class BuildingManager
         }
 
         Build(cell, gridPositionList);
+        InvokeRoadCellBuilt(cellObjectTypeSo.CellType, location);
         return true;
     }
 
@@ -79,6 +83,18 @@ public class BuildingManager
                 AddCellToIAdvancableListIfIAdvancable(gridObject.Model);
             }
         }
+    }
+
+    public void InvokeRoadCellBuilt(Type type, Location location)
+    {
+        if (type != typeof(RoadCell)) return;
+        OnRoadCellBuilt?.Invoke(this, location);
+    }
+    
+    public void InvokeRoadCellDemolished(Type type, Location location)
+    {
+        if (type != typeof(RoadCell)) return;
+        OnRoadCellDemolished?.Invoke(this, location);
     }
 
     private void Build(Cell cell, List<Location> gridPositionList)
