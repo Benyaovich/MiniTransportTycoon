@@ -8,17 +8,17 @@ using NUnit.Framework.Internal;
 
 public class GraphBuilderTests
 {
-    private GraphBuilder<MockGridObject> _graphBuilder;
-    private Grid<MockGridObject> _grid;
+    private GraphBuilder _graphBuilder;
+    private Grid<IHasCellModel> _grid;
     private PathHandler _pathHandler;
     [SetUp]
     public void Init()
     {
-        _grid= new Grid<MockGridObject>(new Size(5, 5), 10, Vector3.Zero,
-            (g, l) => new MockGridObject(g, l));
+        _grid= new Grid<IHasCellModel>(new Size(5, 5), 10, Vector3.Zero,
+            (g, l) => new MockGridObject(g,l));
         _pathHandler = new PathHandler();
         
-        _graphBuilder = new GraphBuilder<MockGridObject>(_grid, _pathHandler);
+        _graphBuilder = new GraphBuilder(_grid, _pathHandler);
     }
         
     [Test]
@@ -27,7 +27,7 @@ public class GraphBuilderTests
         
         Forest forest = new Forest(new Location(0, 0));
         var gridObject00 = _grid.GetGridObject(0,0);
-        gridObject00.Model = forest;
+        gridObject00.SetModel(forest);
         
         Assert.AreEqual(0, _pathHandler.Graph.Vertices.Count);
         Assert.AreEqual(0, _pathHandler.Graph.Edges.Count);
@@ -35,7 +35,7 @@ public class GraphBuilderTests
         Assert.AreEqual(0, _pathHandler.Graph.Vertices.Count);
         Assert.AreEqual(0, _pathHandler.Graph.Edges.Count);
 
-        gridObject00.Model = null;
+        gridObject00.ClearModel();
         Assert.AreEqual(0, _pathHandler.Graph.Vertices.Count);
         Assert.AreEqual(0, _pathHandler.Graph.Edges.Count);
         _graphBuilder.CreateVertex(new Location(0,0));
@@ -49,7 +49,7 @@ public class GraphBuilderTests
     {
         RoadCell road = new TwoWayCornerDL(new Location(0, 0));
         var gridObject00 = _grid.GetGridObject(0,0);
-        gridObject00.Model = road;
+        gridObject00.SetModel(road);
         
         _graphBuilder.CreateVertex(road.Origin);
         Assert.AreEqual(1, _pathHandler.Graph.Vertices.Count);
@@ -360,7 +360,7 @@ public class GraphBuilderTests
     {
         RoadCell road = new TwoWayCornerDL(location);
         var gridObject = _grid.GetGridObject(location.X, location.Y);
-        gridObject.Model = road;
+        gridObject.SetModel(road);
         return road;
     }
     
@@ -368,7 +368,7 @@ public class GraphBuilderTests
     {
         RoadCell road = new FourWay(location);
         var gridObject = _grid.GetGridObject(location.X, location.Y);
-        gridObject.Model = road;
+        gridObject.SetModel(road);
         return road;
     }
     
@@ -376,7 +376,7 @@ public class GraphBuilderTests
     {
         RoadCell road = new TwoWayCornerUR(location);
         var gridObject = _grid.GetGridObject(location.X, location.Y);
-        gridObject.Model = road;
+        gridObject.SetModel(road);
         return road;
     }
     
@@ -384,7 +384,7 @@ public class GraphBuilderTests
     {
         RoadCell road = new TwoWayUD(location);
         var gridObject = _grid.GetGridObject(location.X, location.Y);
-        gridObject.Model = road;
+        gridObject.SetModel(road);
         return road;
     }
     
@@ -392,14 +392,14 @@ public class GraphBuilderTests
     {
         RoadCell road = new TwoWayLR(location);
         var gridObject = _grid.GetGridObject(location.X, location.Y);
-        gridObject.Model = road;
+        gridObject.SetModel(road);
         return road;
     }
     private Forest CreateForest(Location location)
     {
         Forest forest = new Forest(location);
         var gridObject = _grid.GetGridObject(location.X, location.Y);
-        gridObject.Model = forest;
+        gridObject.SetModel(forest);
         return forest;
     }
     
@@ -407,13 +407,19 @@ public class GraphBuilderTests
     
     private class MockGridObject : IHasCellModel
     {
-        public Grid<MockGridObject> Grid;
         public Cell Model { get; set; }
-        public Location Location;
-        public MockGridObject(Grid<MockGridObject> g, Location l)
+        public void SetModel(Cell cell)
         {
-            Grid = g;
-            Location = l;
+            Model = cell;
+        }
+
+        public void ClearModel()
+        {
+            Model = null;
+        }
+
+        public MockGridObject(Grid<IHasCellModel> g, Location l)
+        {
         }
     }
 
