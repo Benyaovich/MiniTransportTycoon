@@ -1,4 +1,5 @@
 using System;
+using Model.Enumerations;
 
 public class Location
 {
@@ -11,9 +12,22 @@ public class Location
         Y = y;
     }
     
+    
+    
     public static Location operator +(Location a, Location b) => new Location(a.X + b.X, a.Y + b.Y);
 
+    public static Location operator +(Location a, Direction dir)
+    {
+        Location directionAsLocation = dir.ToLocation();
+        return new Location(a.X + directionAsLocation.X, a.Y + directionAsLocation.Y);
+    }
+    
     public static Location operator -(Location a, Location b) => new Location(a.X - b.X, a.Y - b.Y);
+    public static Location operator -(Location a, Direction dir)
+    {
+        Location directionAsLocation = dir.ToLocation();
+        return new Location(a.X - directionAsLocation.X, a.Y - directionAsLocation.Y);
+    }
 
     public static bool operator ==(Location a, Location b)
     {
@@ -31,4 +45,5 @@ public class Location
     }
     
     public override int GetHashCode() => HashCode.Combine(X, Y);
+    
 }
