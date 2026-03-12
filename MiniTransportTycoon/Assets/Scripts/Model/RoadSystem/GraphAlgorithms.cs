@@ -11,11 +11,11 @@ namespace Model.RoadSystem
             Dictionary<Location, SearchNode> dijkstra = new();
             foreach (Location v in reachableGraph.Vertices) dijkstra[v] = new SearchNode(Int32.MaxValue, null);
             dijkstra[startLocation].Distance = 0;
-            List<QueueNode> q = new();
+            List<SearchNode> q = new();
             foreach (Location possibleVertex in reachableGraph.Vertices)
             {
                 if (possibleVertex == startLocation) continue;
-                q.Add(new QueueNode(dijkstra[possibleVertex].Distance, possibleVertex));
+                q.Add(new SearchNode(dijkstra[possibleVertex].Distance, possibleVertex));
             }
             Location u = startLocation;
             while (dijkstra[u].Distance < Int32.MaxValue && q.Count != 0)
@@ -36,7 +36,7 @@ namespace Model.RoadSystem
                         }
                     }
                 }
-                QueueNode min = q.OrderBy(x => x.Distance).First();
+                SearchNode min = q.OrderBy(x => x.Distance).First();
                 u = min.Vertex;
                 q.Remove(min);
             }
