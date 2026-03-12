@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using Model.Enumerations;
 
-public class GraphBuilder<T> : IGraphBuilder where T : IHasCellModel
+public class GraphBuilder : IGraphBuilder
 {
-    private readonly IGrid<T> _grid;
+    private readonly IGrid<IHasCellModel> _grid;
     private readonly PathHandler _pathHandler;
 
-    public GraphBuilder(IGrid<T> grid, PathHandler pathHandler)
+    public GraphBuilder(IGrid<IHasCellModel> grid, PathHandler pathHandler)
     {
         _grid = grid;
         _pathHandler = pathHandler;
@@ -162,7 +162,7 @@ public class GraphBuilder<T> : IGraphBuilder where T : IHasCellModel
     
     private RoadCell? GetCellIfRoad(Location location)
     {
-        T gridObject = _grid.GetGridObject(location.X, location.Y);
+        IHasCellModel gridObject = _grid.GetGridObject(location.X, location.Y);
         if (gridObject is null) return null;
         
         Cell cell = gridObject.Model;
