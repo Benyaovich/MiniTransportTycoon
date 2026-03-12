@@ -1,5 +1,5 @@
 public interface IGraphBuilder
 {
-    public void CreateVertex(Location location);
-    public void RemoveVertex(Location location);
+    public void CreateConnectionsAt(Location location);
+    public void RemoveConnectionsAt(Location location);
 }
