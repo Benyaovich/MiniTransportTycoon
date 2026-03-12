@@ -35,27 +35,18 @@ public class PathHandler
     }
 }
 
-public class QueueNode
-{
-    public int Distance { get; set; }
-    public Location Vertex { get; }
-
-    public QueueNode(int distance, Location vertex)
-    {
-        Distance = distance;
-        Vertex = vertex;
-    }
-}
-
 public class SearchNode
 {
     [CanBeNull] public Location Parent { get; set; }
     public int Distance { get; set; }
+    public Location Vertex { get; }
 
-    public SearchNode(int distance, [CanBeNull] Location parent)
+    public SearchNode(int distance, Location vertex,Location parent = null)
     {
         Distance = distance;
+        Vertex = vertex;
         Parent = parent;
     }
 }
+
 
