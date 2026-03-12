@@ -6,9 +6,10 @@ namespace Model.Cells.RoadCells
 {
     public class TwoWayCornerDR : RoadCell
     {
-        public TwoWayCornerDR([NotNull] Location origin, bool destroyable = true) 
+        public TwoWayCornerDR([NotNull] Location origin, bool destroyable = true, bool isVertexPoint = true) 
             : base(origin, false,
                 new List<Direction>() { Direction.Down , Direction.Right},
+                isVertexPoint,
                 new Size(1,1), destroyable)
         {
         }

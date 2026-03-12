@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb0bf08cab2152942809fa0b43af87fc, type: 3}
+  m_Name: FourWayCellObjectTypeSO
+  m_EditorClassIdentifier: Assembly-CSharp::FourWayCellObjectTypeSO
+  prefab: {fileID: 6776004167518320851, guid: e0585a10d29c22047a79861e0508fbe1, type: 3}
+  visual: {fileID: 4486691290169430237, guid: bf60840370002de4296f0dd006cea68f, type: 3}

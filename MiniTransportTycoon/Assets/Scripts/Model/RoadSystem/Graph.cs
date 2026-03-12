@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-    public class Graph
+    public class Graph : IGraph
     {
         public List<Edge> Edges { get; private set; } = new();
         public List<Location> Vertices { get; private set; } = new();
@@ -37,7 +37,19 @@ using System.Linq;
             if (!Vertices.Contains(vertex)) Vertices.Add(vertex);
         }
 
-        public void RemoveVertex(Location vertex) => Vertices.Remove(vertex);
+        public void RemoveVertex(Location vertex)
+        {
+            Vertices.Remove(vertex);
+            RemoveEdgesConnectedToVertex(vertex);
+        }
+
+        private void RemoveEdgesConnectedToVertex(Location vertex)
+        {
+            foreach (Edge edge in Edges.Where(x=>x.A == vertex || x.B == vertex).ToList())
+            {
+                RemoveEdge(edge);
+            }
+        }
         public bool ContainsVertex(Location vertex) => Vertices.Contains(vertex);
         
     }

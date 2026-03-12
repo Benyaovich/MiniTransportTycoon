@@ -20,6 +20,13 @@ public class GridManager : MonoBehaviour
 
     #endregion
 
+    #region Public Properties
+
+    public IBuildingManager BuildingManager => _buildingManager!;
+    public Grid<GridObject> Grid => _grid;
+    
+    #endregion
+
     #region Private SerializeFields
 
     [SerializeField] private bool showDebug = true;
@@ -45,21 +52,16 @@ public class GridManager : MonoBehaviour
         (g, l) => new GridObject(g, l));
 
     private readonly List<IAdvancable> _advancables = new();
-    private readonly BuildSelectionManager _buildSelectionManager = new();
+    private readonly IBuildSelectionManager _buildSelectionManager = new BuildSelectionManager();
     private Dictionary<Type, CellObjectTypeSO> _cellLookup = new();
     private List<CellObjectTypeSO> _cellObjectTypeSos = new();
-    private BuildingManager? _buildingManager;
+    private IBuildingManager? _buildingManager;
 
     #endregion
 
     private void Awake()
     {
         Instance = this;
-    }
-
-    private void Start()
-    {
-        _buildSelectionManager.OnSelectedObjectChanged += BuildSelectionManagerOnSelectedObjectChanged;
         
         CollectAllCellObjectTypeSosIntoASingleList();
         BuildLookup();
@@ -70,13 +72,13 @@ public class GridManager : MonoBehaviour
             gridCellSize,
             gridOriginPosition.SV3(),
             (g, l) => new GridObject(g, l));
-
+        
         _buildingManager = new BuildingManager(
             _grid,
             transform,
             _advancables,
             _cellLookup!);
-
+        
         Location firstGridObjectsLocation = _grid.GetGridObject(0, 0).Location;
         mapFloor!.position = new UniVector3(firstGridObjectsLocation.X, -0.01f, firstGridObjectsLocation.Y);
         mapFloor!.localScale = new UniVector3(_grid.Size.Width, 0, _grid.Size.Height);
@@ -87,6 +89,11 @@ public class GridManager : MonoBehaviour
         {
             DebugGridData();
         }
+    }
+
+    private void Start()
+    {
+        _buildSelectionManager.OnSelectedObjectChanged += BuildSelectionManagerOnSelectedObjectChanged;
     }
 
     #region OnEnable - OnDisable - OnDestroy

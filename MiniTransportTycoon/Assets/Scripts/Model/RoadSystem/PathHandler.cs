@@ -1,11 +1,18 @@
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
+using System.IO;
 using Model.RoadSystem;
 
 public class PathHandler
 {
-    public Graph Graph { get; private set; } = new Graph();
+    public IGraph Graph { get; private set; } = new Graph();
+    
+    public PathHandler(){}
+
+    public PathHandler(IGraph graph)
+    {
+        Graph = graph;
+    }
 
     public List<Location> GetPathFromRoute(List<Location> vertices)
     {
@@ -15,7 +22,7 @@ public class PathHandler
         
         List<Location> completedRoute = new();
         completedRoute.Add(vertices[0]);
-        Graph reachableGraph = GraphAlgorithms.GetReachableGraphFromBfsTable(Graph, GraphAlgorithms.Bfs(vertices[0], Graph));
+        IGraph reachableGraph = GraphAlgorithms.GetReachableGraphFromBfsTable(Graph, GraphAlgorithms.Bfs(vertices[0], Graph));
         for (int j = 0; j < vertices.Count - 1; j++)
         {
             Dictionary<Location,SearchNode> dijkstra = GraphAlgorithms.Dijkstra(vertices[j],reachableGraph);
@@ -34,19 +41,3 @@ public class PathHandler
         return completedRoute;
     }
 }
-
-public class SearchNode
-{
-    [CanBeNull] public Location Parent { get; set; }
-    public int Distance { get; set; }
-    public Location Vertex { get; }
-
-    public SearchNode(int distance, Location vertex,Location parent = null)
-    {
-        Distance = distance;
-        Vertex = vertex;
-        Parent = parent;
-    }
-}
-
-
