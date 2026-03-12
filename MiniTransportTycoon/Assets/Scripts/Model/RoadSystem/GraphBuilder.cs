@@ -1,35 +1,36 @@
 #nullable enable
+using System;
 using System.Collections.Generic;
 using Model.Enumerations;
 
 public class GraphBuilder : IGraphBuilder
 {
     private readonly IGrid<IHasCellModel> _grid;
-    private readonly PathHandler _pathHandler;
+    private readonly IGraph _graph;
 
-    public GraphBuilder(IGrid<IHasCellModel> grid, PathHandler pathHandler)
+    public GraphBuilder(IGrid<IHasCellModel> grid, IGraph graph)
     {
         _grid = grid;
-        _pathHandler = pathHandler;
+        _graph = graph;
     }
 
     
 
     #region Interface Methods
     
-    public void CreateVertex(Location location)
+    public void CreateConnectionsAt(Location location)
     {
-        RoadCell? roadCell = GetCellIfRoad(location);
+        RoadCell? roadCell = GetRoadCell(location);
         if(roadCell is null) return;
         
-        if(roadCell.IsVertexPoint){ _pathHandler.Graph.AddVertex(roadCell.Origin); }
+        if(roadCell.IsVertexPoint){ _graph.AddVertex(roadCell.Origin); }
         Dictionary<Direction, Location?> vertexInDirectionMap = GetConnectedVertices(roadCell);
         AddEdgesToGraph(roadCell, vertexInDirectionMap);
     }
 
-    public void RemoveVertex(Location location)
+    public void RemoveConnectionsAt(Location location)
     {
-        RoadCell? roadCell = GetCellIfRoad(location);
+        RoadCell? roadCell = GetRoadCell(location);
         if(roadCell is null) return;
         
         Dictionary<Direction, Location?> vertexInDirectionMap = GetConnectedVertices(roadCell);
@@ -56,27 +57,13 @@ public class GraphBuilder : IGraphBuilder
         foreach (Direction key in vertexInDirectionMap.Keys)
         {
             if(vertexInDirectionMap[key] is null) continue;
-            _pathHandler.Graph.AddEdge(new Edge(road.Origin, vertexInDirectionMap[key]));
+            _graph.AddEdge(new Edge(road.Origin, vertexInDirectionMap[key]));
         }
     }
 
-    private void AddEdgeIfRoadIsNotVertex(Dictionary<Direction, Location?> vertexInDirectionMap)
+    private void AddEdgeIfRoadIsNotVertex(Dictionary<Direction, Location?> vertices)
     {
-        if (vertexInDirectionMap[Direction.Up] is not null &&
-            vertexInDirectionMap[Direction.Down] is not null)
-        {
-            _pathHandler.Graph.AddEdge(
-                new Edge(vertexInDirectionMap[Direction.Up],
-                    vertexInDirectionMap[Direction.Down]));
-        }
-            
-        if (vertexInDirectionMap[Direction.Left] is not null &&
-            vertexInDirectionMap[Direction.Right] is not null)
-        {
-            _pathHandler.Graph.AddEdge(
-                new Edge(vertexInDirectionMap[Direction.Left],
-                    vertexInDirectionMap[Direction.Right]));
-        }
+        ConnectOppositeDirections(vertices, _graph.AddEdge);
     }
 
     #endregion
@@ -87,30 +74,16 @@ public class GraphBuilder : IGraphBuilder
     {
         if (road.IsVertexPoint)
         {
-            _pathHandler.Graph.RemoveVertex(road.Origin);
+            _graph.RemoveVertex(road.Origin);
             return;
         }
 
         RemoveEdgeIfRoadIsNotVertex(vertexInDirectionMap);
     }
 
-    private void RemoveEdgeIfRoadIsNotVertex(Dictionary<Direction, Location?> vertexInDirectionMap)
+    private void RemoveEdgeIfRoadIsNotVertex(Dictionary<Direction, Location?> vertices)
     {
-        if (vertexInDirectionMap[Direction.Up] is not null &&
-            vertexInDirectionMap[Direction.Down] is not null)
-        {
-            _pathHandler.Graph.RemoveEdge(
-                new Edge(vertexInDirectionMap[Direction.Up],
-                    vertexInDirectionMap[Direction.Down]));
-        }
-            
-        if (vertexInDirectionMap[Direction.Left] is not null &&
-            vertexInDirectionMap[Direction.Right] is not null)
-        {
-            _pathHandler.Graph.RemoveEdge(
-                new Edge(vertexInDirectionMap[Direction.Left],
-                    vertexInDirectionMap[Direction.Right]));
-        }
+        ConnectOppositeDirections(vertices, _graph.RemoveEdge);
     }
 
     #endregion
@@ -134,23 +107,23 @@ public class GraphBuilder : IGraphBuilder
     public Location? GetNextVertexInDirection(RoadCell road, Direction direction)
     {
         // Kezdo pozicio kezelese
-        if (!CanGoToDirection(road, direction)) return null;
+        if (!HasExitTowards(road, direction)) return null;
         Location origin = road.Origin;
 
         // Tobbi pozicio
         do
         {
             origin += direction;
-            IHasCellModel gridObject = _grid.GetGridObject(origin);
-            if (gridObject?.Model is null) return null;
-            if (gridObject.Model is not RoadCell nextRoad) return null;
-
+            
+            RoadCell? nextRoad = GetRoadCell(origin);
+            if (nextRoad is null) return null;
+            
             if (nextRoad.IsVertexPoint)
             {
                 return nextRoad.Origin;
             }
             
-            if (!CanGoToDirection(nextRoad, direction)) return null;
+            if (!HasExitTowards(nextRoad, direction)) return null;
             
 
         }while (true);
@@ -160,20 +133,36 @@ public class GraphBuilder : IGraphBuilder
 
     #region Private Methods
     
-    private RoadCell? GetCellIfRoad(Location location)
+    private void ConnectOppositeDirections(
+        Dictionary<Direction, Location?> vertexInDirectionMap,
+        Action<Edge> edgeAction)
     {
-        IHasCellModel gridObject = _grid.GetGridObject(location.X, location.Y);
-        if (gridObject is null) return null;
-        
-        Cell cell = gridObject.Model;
-        if (cell is null) return null;
-        if( cell is not RoadCell) return null;
-        
-        RoadCell roadCell = (cell as RoadCell)!;
-        return roadCell;
+        TryApplyEdge(vertexInDirectionMap, Direction.Up, Direction.Down, edgeAction);
+        TryApplyEdge(vertexInDirectionMap, Direction.Left, Direction.Right, edgeAction);
     }
 
-    private bool CanGoToDirection(RoadCell road, Direction direction)
+    private void TryApplyEdge(
+        Dictionary<Direction, Location?> vertexInDirectionMap,
+        Direction first,
+        Direction second,
+        Action<Edge> edgeAction)
+    {
+        Location? from = vertexInDirectionMap[first];
+        Location? to = vertexInDirectionMap[second];
+
+        if (from is null || to is null)
+            return;
+
+        edgeAction(new Edge(from, to));
+    }
+    
+    private RoadCell? GetRoadCell(Location location)
+    {
+        IHasCellModel? gridObject = _grid.GetGridObject(location.X, location.Y);
+        return gridObject?.Model as RoadCell;
+    }
+
+    private bool HasExitTowards(RoadCell road, Direction direction)
     {
         return road.Directions.Contains(direction);
     }

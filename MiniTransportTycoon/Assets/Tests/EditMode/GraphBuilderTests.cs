@@ -10,15 +10,15 @@ public class GraphBuilderTests
 {
     private GraphBuilder _graphBuilder;
     private Grid<IHasCellModel> _grid;
-    private PathHandler _pathHandler;
+    private IGraph _graph;
     [SetUp]
     public void Init()
     {
         _grid= new Grid<IHasCellModel>(new Size(5, 5), 10, Vector3.Zero,
             (g, l) => new MockGridObject(g,l));
-        _pathHandler = new PathHandler();
+        _graph = new Graph();
         
-        _graphBuilder = new GraphBuilder(_grid, _pathHandler);
+        _graphBuilder = new GraphBuilder(_grid, _graph);
     }
         
     [Test]
@@ -29,18 +29,18 @@ public class GraphBuilderTests
         var gridObject00 = _grid.GetGridObject(0,0);
         gridObject00.SetModel(forest);
         
-        Assert.AreEqual(0, _pathHandler.Graph.Vertices.Count);
-        Assert.AreEqual(0, _pathHandler.Graph.Edges.Count);
-        _graphBuilder.CreateVertex(forest.Origin);
-        Assert.AreEqual(0, _pathHandler.Graph.Vertices.Count);
-        Assert.AreEqual(0, _pathHandler.Graph.Edges.Count);
+        Assert.AreEqual(0, _graph.Vertices.Count);
+        Assert.AreEqual(0, _graph.Edges.Count);
+        _graphBuilder.CreateConnectionsAt(forest.Origin);
+        Assert.AreEqual(0, _graph.Vertices.Count);
+        Assert.AreEqual(0, _graph.Edges.Count);
 
         gridObject00.ClearModel();
-        Assert.AreEqual(0, _pathHandler.Graph.Vertices.Count);
-        Assert.AreEqual(0, _pathHandler.Graph.Edges.Count);
-        _graphBuilder.CreateVertex(new Location(0,0));
-        Assert.AreEqual(0, _pathHandler.Graph.Vertices.Count);
-        Assert.AreEqual(0, _pathHandler.Graph.Edges.Count);
+        Assert.AreEqual(0, _graph.Vertices.Count);
+        Assert.AreEqual(0, _graph.Edges.Count);
+        _graphBuilder.CreateConnectionsAt(new Location(0,0));
+        Assert.AreEqual(0, _graph.Vertices.Count);
+        Assert.AreEqual(0, _graph.Edges.Count);
     }
 
 
@@ -51,8 +51,8 @@ public class GraphBuilderTests
         var gridObject00 = _grid.GetGridObject(0,0);
         gridObject00.SetModel(road);
         
-        _graphBuilder.CreateVertex(road.Origin);
-        Assert.AreEqual(1, _pathHandler.Graph.Vertices.Count);
+        _graphBuilder.CreateConnectionsAt(road.Origin);
+        Assert.AreEqual(1, _graph.Vertices.Count);
     }
 
     [Test]
@@ -73,7 +73,7 @@ public class GraphBuilderTests
         CreateTwoWayUDRoad(new Location(0, 2));
         CreateTwoWayUDRoad(new Location(0, 1));
         var vertex = CreateTwoWayCornerURRoad(new Location(0, 0));
-        _pathHandler.Graph.AddVertex(vertex.Origin);
+        _graph.AddVertex(vertex.Origin);
         
         Assert.AreEqual(vertex.Origin, _graphBuilder.GetNextVertexInDirection(road, Direction.Up));
     }
@@ -96,7 +96,7 @@ public class GraphBuilderTests
         CreateTwoWayLRRoad(new Location(1, 1));
         CreateTwoWayLRRoad(new Location(2, 1));
         var vertex = CreateTwoWayCornerDLRoad(new Location(3, 1));
-        _pathHandler.Graph.AddVertex(vertex.Origin);
+        _graph.AddVertex(vertex.Origin);
         
         Assert.AreEqual(vertex.Origin, _graphBuilder.GetNextVertexInDirection(road, Direction.Right));
     }
@@ -151,19 +151,19 @@ public class GraphBuilderTests
         var vertex2 = CreateTwoWayCornerDLRoad(new Location(0, 4));
         
         var map = _graphBuilder.GetConnectedVertices(road);
-        _pathHandler.Graph.AddVertex(vertex1.Origin);
-        _pathHandler.Graph.AddVertex(vertex2.Origin);
-        _pathHandler.Graph.AddVertex(road.Origin);
+        _graph.AddVertex(vertex1.Origin);
+        _graph.AddVertex(vertex2.Origin);
+        _graph.AddVertex(road.Origin);
         
-        Assert.AreEqual(0, _pathHandler.Graph.Edges.Count);
+        Assert.AreEqual(0, _graph.Edges.Count);
         
         _graphBuilder.AddEdgesToGraph(road, map);
         
-        Assert.AreEqual(2, _pathHandler.Graph.Edges.Count);
+        Assert.AreEqual(2, _graph.Edges.Count);
 
-        var edge1 = _pathHandler.Graph.Edges.Find(x => x == new Edge(new Location(0, 0), new Location(0, 2)));
+        var edge1 = _graph.Edges.Find(x => x == new Edge(new Location(0, 0), new Location(0, 2)));
         Assert.IsNotNull(edge1);
-        var edge2 = _pathHandler.Graph.Edges.Find(x => x == new Edge(new Location(0, 2), new Location(0, 4)));
+        var edge2 = _graph.Edges.Find(x => x == new Edge(new Location(0, 2), new Location(0, 4)));
         Assert.IsNotNull(edge2);
     }
     
@@ -177,19 +177,19 @@ public class GraphBuilderTests
         var vertex2 = CreateTwoWayCornerDLRoad(new Location(4,0));
         
         var map = _graphBuilder.GetConnectedVertices(road);
-        _pathHandler.Graph.AddVertex(vertex1.Origin);
-        _pathHandler.Graph.AddVertex(vertex2.Origin);
-        _pathHandler.Graph.AddVertex(road.Origin);
+        _graph.AddVertex(vertex1.Origin);
+        _graph.AddVertex(vertex2.Origin);
+        _graph.AddVertex(road.Origin);
         
-        Assert.AreEqual(0, _pathHandler.Graph.Edges.Count);
+        Assert.AreEqual(0, _graph.Edges.Count);
         
         _graphBuilder.AddEdgesToGraph(road, map);
         
-        Assert.AreEqual(2, _pathHandler.Graph.Edges.Count);
+        Assert.AreEqual(2, _graph.Edges.Count);
 
-        var edge1 = _pathHandler.Graph.Edges.Find(x => x == new Edge(new Location(0, 0), new Location(2,0)));
+        var edge1 = _graph.Edges.Find(x => x == new Edge(new Location(0, 0), new Location(2,0)));
         Assert.IsNotNull(edge1);
-        var edge2 = _pathHandler.Graph.Edges.Find(x => x == new Edge(new Location(2,0), new Location(4,0)));
+        var edge2 = _graph.Edges.Find(x => x == new Edge(new Location(2,0), new Location(4,0)));
         Assert.IsNotNull(edge2);
     }
 
@@ -203,20 +203,20 @@ public class GraphBuilderTests
         var vertex2 = CreateTwoWayCornerDLRoad(new Location(0, 4));
         
         var map = _graphBuilder.GetConnectedVertices(road);
-        _pathHandler.Graph.AddVertex(vertex1.Origin);
-        _pathHandler.Graph.AddVertex(vertex2.Origin);
+        _graph.AddVertex(vertex1.Origin);
+        _graph.AddVertex(vertex2.Origin);
         
-        Assert.AreEqual(0, _pathHandler.Graph.Edges.Count);
-        Assert.AreEqual(2, _pathHandler.Graph.Vertices.Count);
+        Assert.AreEqual(0, _graph.Edges.Count);
+        Assert.AreEqual(2, _graph.Vertices.Count);
         
-        _graphBuilder.CreateVertex(new Location(0,2));
+        _graphBuilder.CreateConnectionsAt(new Location(0,2));
         
-        Assert.AreEqual(2, _pathHandler.Graph.Edges.Count);
-        Assert.AreEqual(3, _pathHandler.Graph.Vertices.Count);
+        Assert.AreEqual(2, _graph.Edges.Count);
+        Assert.AreEqual(3, _graph.Vertices.Count);
 
-        var edge1 = _pathHandler.Graph.Edges.Find(x => x == new Edge(new Location(0, 0), new Location(0, 2)));
+        var edge1 = _graph.Edges.Find(x => x == new Edge(new Location(0, 0), new Location(0, 2)));
         Assert.IsNotNull(edge1);
-        var edge2 = _pathHandler.Graph.Edges.Find(x => x == new Edge(new Location(0, 2), new Location(0, 4)));
+        var edge2 = _graph.Edges.Find(x => x == new Edge(new Location(0, 2), new Location(0, 4)));
         Assert.IsNotNull(edge2);
     }
     
@@ -231,20 +231,20 @@ public class GraphBuilderTests
         var vertex2 = CreateTwoWayCornerDLRoad(new Location(4,0));
         
         var map = _graphBuilder.GetConnectedVertices(road);
-        _pathHandler.Graph.AddVertex(vertex1.Origin);
-        _pathHandler.Graph.AddVertex(vertex2.Origin);
+        _graph.AddVertex(vertex1.Origin);
+        _graph.AddVertex(vertex2.Origin);
         
-        Assert.AreEqual(0, _pathHandler.Graph.Edges.Count);
-        Assert.AreEqual(2, _pathHandler.Graph.Vertices.Count);
+        Assert.AreEqual(0, _graph.Edges.Count);
+        Assert.AreEqual(2, _graph.Vertices.Count);
         
-        _graphBuilder.CreateVertex(new Location(2,0));
+        _graphBuilder.CreateConnectionsAt(new Location(2,0));
         
-        Assert.AreEqual(2, _pathHandler.Graph.Edges.Count);
-        Assert.AreEqual(3, _pathHandler.Graph.Vertices.Count);
+        Assert.AreEqual(2, _graph.Edges.Count);
+        Assert.AreEqual(3, _graph.Vertices.Count);
 
-        var edge1 = _pathHandler.Graph.Edges.Find(x => x == new Edge(new Location(0, 0), new Location(2,0)));
+        var edge1 = _graph.Edges.Find(x => x == new Edge(new Location(0, 0), new Location(2,0)));
         Assert.IsNotNull(edge1);
-        var edge2 = _pathHandler.Graph.Edges.Find(x => x == new Edge(new Location(2,0), new Location(4,0)));
+        var edge2 = _graph.Edges.Find(x => x == new Edge(new Location(2,0), new Location(4,0)));
         Assert.IsNotNull(edge2);
     }
 
@@ -253,105 +253,105 @@ public class GraphBuilderTests
     public void RemoveEdgeFromGraphIfRoadIsNotVertexVertical()
     {
         CreateFourWayRoad(new Location(0, 0));
-        _graphBuilder.CreateVertex(new Location(0,0));
+        _graphBuilder.CreateConnectionsAt(new Location(0,0));
         CreateTwoWayUDRoad(new Location(0, 1));
         CreateTwoWayUDRoad(new Location(0, 2));
-        _graphBuilder.CreateVertex(new Location(0,2));
+        _graphBuilder.CreateConnectionsAt(new Location(0,2));
         CreateTwoWayUDRoad(new Location(0, 3));
         CreateFourWayRoad(new Location(0, 4));
-        _graphBuilder.CreateVertex(new Location(0,4));
+        _graphBuilder.CreateConnectionsAt(new Location(0,4));
         
-        Assert.AreEqual(2, _pathHandler.Graph.Vertices.Count);
-        Assert.AreEqual(1, _pathHandler.Graph.Edges.Count);
-        _graphBuilder.RemoveVertex(new Location(0,2));
-        Assert.AreEqual(2, _pathHandler.Graph.Vertices.Count);
-        Assert.AreEqual(0, _pathHandler.Graph.Edges.Count);
+        Assert.AreEqual(2, _graph.Vertices.Count);
+        Assert.AreEqual(1, _graph.Edges.Count);
+        _graphBuilder.RemoveConnectionsAt(new Location(0,2));
+        Assert.AreEqual(2, _graph.Vertices.Count);
+        Assert.AreEqual(0, _graph.Edges.Count);
     }
 
     [Test]
     public void RemoveEdgeFromGraphIfRoadIsNotVertexHorizontalAndVertical()
     {
         CreateFourWayRoad(new Location(2, 0));
-        _graphBuilder.CreateVertex(new Location(2,0));
+        _graphBuilder.CreateConnectionsAt(new Location(2,0));
         CreateTwoWayUDRoad(new Location(2, 1));
         CreateFourWayRoad(new Location(2, 2));
-        _graphBuilder.CreateVertex(new Location(2,2));
+        _graphBuilder.CreateConnectionsAt(new Location(2,2));
         CreateTwoWayUDRoad(new Location(2, 3));
         CreateFourWayRoad(new Location(2, 4));
-        _graphBuilder.CreateVertex(new Location(2,4));
+        _graphBuilder.CreateConnectionsAt(new Location(2,4));
 
         CreateFourWayRoad(new Location(0, 2));
-        _graphBuilder.CreateVertex(new Location(0,2));
+        _graphBuilder.CreateConnectionsAt(new Location(0,2));
         CreateTwoWayLRRoad(new Location(1, 2));
-        _graphBuilder.CreateVertex(new Location(1,2));
+        _graphBuilder.CreateConnectionsAt(new Location(1,2));
         CreateTwoWayLRRoad(new Location(3, 2));
         CreateFourWayRoad(new Location(4, 2));
-        _graphBuilder.CreateVertex(new Location(4,2));
+        _graphBuilder.CreateConnectionsAt(new Location(4,2));
         
-        Assert.AreEqual(5, _pathHandler.Graph.Vertices.Count);
-        Assert.AreEqual(4, _pathHandler.Graph.Edges.Count);
-        _graphBuilder.RemoveVertex(new Location(1,2));
-        Assert.AreEqual(5, _pathHandler.Graph.Vertices.Count);
-        Assert.AreEqual(3, _pathHandler.Graph.Edges.Count);
+        Assert.AreEqual(5, _graph.Vertices.Count);
+        Assert.AreEqual(4, _graph.Edges.Count);
+        _graphBuilder.RemoveConnectionsAt(new Location(1,2));
+        Assert.AreEqual(5, _graph.Vertices.Count);
+        Assert.AreEqual(3, _graph.Edges.Count);
     }
     
     [Test]
     public void RemoveEdgeFromGraphIfRoadIsVertexHorizontalAndVertical()
     {
         CreateFourWayRoad(new Location(2, 0));
-        _graphBuilder.CreateVertex(new Location(2,0));
+        _graphBuilder.CreateConnectionsAt(new Location(2,0));
         CreateTwoWayUDRoad(new Location(2, 1));
         CreateFourWayRoad(new Location(2, 2));
-        _graphBuilder.CreateVertex(new Location(2,2));
+        _graphBuilder.CreateConnectionsAt(new Location(2,2));
         CreateTwoWayUDRoad(new Location(2, 3));
         CreateFourWayRoad(new Location(2, 4));
-        _graphBuilder.CreateVertex(new Location(2,4));
+        _graphBuilder.CreateConnectionsAt(new Location(2,4));
 
         CreateFourWayRoad(new Location(0, 2));
-        _graphBuilder.CreateVertex(new Location(0,2));
+        _graphBuilder.CreateConnectionsAt(new Location(0,2));
         CreateTwoWayLRRoad(new Location(1, 2));
-        _graphBuilder.CreateVertex(new Location(1,2));
+        _graphBuilder.CreateConnectionsAt(new Location(1,2));
         CreateTwoWayLRRoad(new Location(3, 2));
         CreateFourWayRoad(new Location(4, 2));
-        _graphBuilder.CreateVertex(new Location(4,2));
+        _graphBuilder.CreateConnectionsAt(new Location(4,2));
         
-        Assert.AreEqual(5, _pathHandler.Graph.Vertices.Count);
-        Assert.AreEqual(4, _pathHandler.Graph.Edges.Count);
-        _graphBuilder.RemoveVertex(new Location(2,2));
-        Assert.AreEqual(4, _pathHandler.Graph.Vertices.Count);
-        Assert.AreEqual(0, _pathHandler.Graph.Edges.Count);
+        Assert.AreEqual(5, _graph.Vertices.Count);
+        Assert.AreEqual(4, _graph.Edges.Count);
+        _graphBuilder.RemoveConnectionsAt(new Location(2,2));
+        Assert.AreEqual(4, _graph.Vertices.Count);
+        Assert.AreEqual(0, _graph.Edges.Count);
     }
     
     [Test]
     public void RemoveEdgeFromGraphIfRoadIsVertexHorizontalAndVertical2()
     {
         CreateFourWayRoad(new Location(2, 0));
-        _graphBuilder.CreateVertex(new Location(2,0));
+        _graphBuilder.CreateConnectionsAt(new Location(2,0));
         CreateTwoWayUDRoad(new Location(2, 1));
         CreateFourWayRoad(new Location(2, 2));
-        _graphBuilder.CreateVertex(new Location(2,2));
+        _graphBuilder.CreateConnectionsAt(new Location(2,2));
         CreateTwoWayUDRoad(new Location(2, 3));
         CreateFourWayRoad(new Location(2, 4));
-        _graphBuilder.CreateVertex(new Location(2,4));
+        _graphBuilder.CreateConnectionsAt(new Location(2,4));
 
         CreateFourWayRoad(new Location(0, 2));
-        _graphBuilder.CreateVertex(new Location(0,2));
+        _graphBuilder.CreateConnectionsAt(new Location(0,2));
         CreateTwoWayLRRoad(new Location(1, 2));
-        _graphBuilder.CreateVertex(new Location(1,2));
+        _graphBuilder.CreateConnectionsAt(new Location(1,2));
         CreateTwoWayLRRoad(new Location(3, 2));
         CreateFourWayRoad(new Location(4, 2));
-        _graphBuilder.CreateVertex(new Location(4,2));
+        _graphBuilder.CreateConnectionsAt(new Location(4,2));
         
-        Assert.AreEqual(5, _pathHandler.Graph.Vertices.Count);
-        Assert.AreEqual(4, _pathHandler.Graph.Edges.Count);
-        _graphBuilder.RemoveVertex(new Location(2,2));
-        Assert.AreEqual(4, _pathHandler.Graph.Vertices.Count);
-        Assert.AreEqual(0, _pathHandler.Graph.Edges.Count);
+        Assert.AreEqual(5, _graph.Vertices.Count);
+        Assert.AreEqual(4, _graph.Edges.Count);
+        _graphBuilder.RemoveConnectionsAt(new Location(2,2));
+        Assert.AreEqual(4, _graph.Vertices.Count);
+        Assert.AreEqual(0, _graph.Edges.Count);
 
         CreateTwoWayUDRoad(new Location(2, 2));
-        _graphBuilder.CreateVertex(new Location(2,2));
-        Assert.AreEqual(4, _pathHandler.Graph.Vertices.Count);
-        Assert.AreEqual(1, _pathHandler.Graph.Edges.Count);
+        _graphBuilder.CreateConnectionsAt(new Location(2,2));
+        Assert.AreEqual(4, _graph.Vertices.Count);
+        Assert.AreEqual(1, _graph.Edges.Count);
     }
     
     #region Helper | Mock

@@ -6,7 +6,7 @@ namespace Model.RoadSystem
 {
     public static class GraphAlgorithms
     {
-        public static Dictionary<Location, SearchNode> Dijkstra(Location startLocation, Graph reachableGraph)
+        public static Dictionary<Location, SearchNode> Dijkstra(Location startLocation, IGraph reachableGraph)
         {
             Dictionary<Location, SearchNode> dijkstra = new();
             foreach (Location v in reachableGraph.Vertices) dijkstra[v] = new SearchNode(Int32.MaxValue, null);
@@ -43,7 +43,7 @@ namespace Model.RoadSystem
             return dijkstra;
         }
         
-        public static Dictionary<Location, SearchNode> Bfs(Location startLocation, Graph graph)
+        public static Dictionary<Location, SearchNode> Bfs(Location startLocation, IGraph graph)
         {
             Dictionary<Location,SearchNode> bfs = new();
             foreach (Location vertex in graph.Vertices)
@@ -69,7 +69,7 @@ namespace Model.RoadSystem
             return bfs;
         }
         
-        public static Graph GetReachableGraphFromBfsTable(Graph originalGraph, Dictionary<Location,SearchNode> bfs)
+        public static IGraph GetReachableGraphFromBfsTable(IGraph originalGraph, Dictionary<Location,SearchNode> bfs)
         {
             var vertices = bfs
                 .Where(x => x.Value.Distance != Int32.MaxValue)
