@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-    public class Graph
+    public class Graph : IGraph
     {
         public List<Edge> Edges { get; private set; } = new();
         public List<Location> Vertices { get; private set; } = new();
