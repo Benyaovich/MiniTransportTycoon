@@ -2,7 +2,7 @@
 using System;
 using System.Numerics;
 
-public class Grid<T>
+public class Grid<T> : IGrid<T>
 {
     #region Events
 
@@ -99,6 +99,11 @@ public class Grid<T>
         } else {
             return default(T);
         }
+    }
+
+    public T GetGridObject(Location location)
+    {
+        return GetGridObject(location.X, location.Y);
     }
     
     public T GetGridObject(Vector3 worldPosition) {
