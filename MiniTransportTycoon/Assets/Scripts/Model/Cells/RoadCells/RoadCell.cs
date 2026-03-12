@@ -17,11 +17,12 @@ public class RoadCell : Cell, IPurchasable, IDestroyable
 
 
     public RoadCell(Location origin, bool isIntersection, List<Direction> directions,
-        Size? size = null, bool destroyable = true)
+         bool isVertexPoint = false, Size? size = null, bool destroyable = true)
         : base(origin, size, destroyable)
     {
         IsIntersection = isIntersection;
         Directions = directions;
+        IsVertexPoint = isVertexPoint;
     }
 
     public void AddVehicle(Vehicle vehicle)

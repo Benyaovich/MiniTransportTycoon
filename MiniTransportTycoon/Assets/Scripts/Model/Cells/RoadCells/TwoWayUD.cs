@@ -9,6 +9,7 @@ namespace Model.Cells.RoadCells
         public TwoWayUD([NotNull] Location origin, bool destroyable = true) 
             : base(origin, false,
                 new List<Direction>() { Direction.Up , Direction.Down},
+                false,
                 new Size(1,1), destroyable)
         {
         }

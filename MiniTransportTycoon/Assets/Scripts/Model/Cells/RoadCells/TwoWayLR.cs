@@ -6,9 +6,10 @@ namespace Model.Cells.RoadCells
 {
     public class TwoWayLR: RoadCell
     {
-        public TwoWayLR([NotNull] Location origin, bool destroyable = true) 
+        public TwoWayLR([NotNull] Location origin, bool destroyable = true)
             : base(origin, false,
-                new List<Direction>() { Direction.Left , Direction.Right},
+                new List<Direction>() { Direction.Left, Direction.Right },
+                false,
                 new Size(1,1), destroyable)
         {
         }
