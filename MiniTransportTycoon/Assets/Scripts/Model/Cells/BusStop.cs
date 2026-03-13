@@ -1,20 +1,19 @@
 
 using System;
 using JetBrains.Annotations;
-using Model.Interfaces;
 
 public class BusStop : Cell, IAdvancable, IPurchasable
 {
     public int NumOfPeople { get; private set; }
-    public City City { get; private set; }
+    [CanBeNull] public City City { get; private set; }
     public int BuildPrice { get; set; }
 
-    private Timer _timer;
-    private int _range;
-    private int _maxNumOfPeople = 50;
-    private CityService _cityService;
+    private readonly Timer _timer;
+    private readonly int _range;
+    private readonly int _maxNumOfPeople;
+    [CanBeNull] private CityService _cityService;
 
-    public BusStop(Location location, CityService cityService, [CanBeNull] Size size = null, bool destroyable = true,
+    public BusStop(Location location, [CanBeNull] CityService cityService = null, [CanBeNull] Size size = null, bool destroyable = true,
         float interval = 15, int buildPrice = 1500,
         int range = 5, int maxNumOfPeople = 50) :
         base(location, size, destroyable)
@@ -29,8 +28,14 @@ public class BusStop : Cell, IAdvancable, IPurchasable
         LocateAndSetCity();
     }
 
-    private void LocateAndSetCity()
+    public void SetCityService(CityService cityService)
     {
+        _cityService = cityService;
+    }
+    public void LocateAndSetCity()
+    {
+        if (_cityService is null) return;
+        
         int radius = (int)MathF.Floor(_range/2.0f);
         for (int y = Origin.Y - radius; y < Origin.Y + radius; y++)
         {
@@ -48,6 +53,8 @@ public class BusStop : Cell, IAdvancable, IPurchasable
 
     private void GetPeopleFromCity(object sender, EventArgs e)
     {
+        if (City is null) return;
+        
         int amount = City.ProvidePeopleToBusStop();
         NumOfPeople += amount;
         if (NumOfPeople > _maxNumOfPeople)
@@ -60,6 +67,8 @@ public class BusStop : Cell, IAdvancable, IPurchasable
 
     public void AddPeopleToBusStop(int amount)
     {
+        if (City is null) return;
+        
         City.AddPeople(amount);
     }
 
