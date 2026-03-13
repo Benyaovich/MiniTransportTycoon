@@ -47,8 +47,9 @@ public class CellVisualService
                 ForestVisual forestVisual = origin.Visual.GetComponent<ForestVisual>();
                 forestVisual.Setup(forest);
                 break;
-
-            case ProcessingBuildingSteel processingBuildingSteel:
+            case RoadCell roadCell:
+                RoadCellVisual roadCellVisual = origin.Visual.GetComponent<RoadCellVisual>();
+                roadCellVisual.Setup(roadCell);
                 break;
         }
     }

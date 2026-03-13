@@ -2,7 +2,7 @@
 using System;
 using JetBrains.Annotations;
 
-public class BusStop : Cell, IAdvancable, IPurchasable
+public class BusStop : Cell, IAdvancable, IPurchasable, IVisitableBuiling
 {
     public int NumOfPeople { get; private set; }
     [CanBeNull] public City City { get; private set; }
