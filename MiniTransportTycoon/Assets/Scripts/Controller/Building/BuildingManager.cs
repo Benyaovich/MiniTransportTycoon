@@ -11,14 +11,18 @@ public class BuildingManager : IBuildingManager
     private readonly Grid<GridObject> _grid;
     private readonly List<IAdvancable> _advancables;
     private readonly CellVisualService _cellVisualService;
-
+    private readonly CityService _cityService;
+    
+    
     public BuildingManager(
         Grid<GridObject> grid,
+        CityService cityService,
         Transform parentTransform,
         List<IAdvancable> advancables,
         Dictionary<Type, CellObjectTypeSO> cellLookup)
     {
         _grid = grid;
+        _cityService = cityService;
         _advancables = advancables;
         _cellVisualService = new CellVisualService(grid, parentTransform, cellLookup);
     }
@@ -28,13 +32,14 @@ public class BuildingManager : IBuildingManager
         Cell cell = cellObjectTypeSo.Create(location);
         List<Location> gridPositionList = cell.GetGridPositionList();
 
-        if (!CheckIfCanBuild(gridPositionList))
+        if (cell is not City && !CheckIfCanBuild(gridPositionList))
         {
             return false;
         }
-
+        
         Build(cell, gridPositionList);
         InvokeRoadCellBuilt(cellObjectTypeSo.CellType, location);
+        
         return true;
     }
 
@@ -46,6 +51,7 @@ public class BuildingManager : IBuildingManager
         if (!go.Model.Destroyable) return;
 
         List<Location> gridPositionList = go.Model.GetGridPositionList();
+        InvokeRoadCellDemolished(go.Model.GetType(), location);
         Demolish(go, gridPositionList);
     }
 
@@ -85,13 +91,13 @@ public class BuildingManager : IBuildingManager
         }
     }
 
-    public void InvokeRoadCellBuilt(Type type, Location location)
+    private void InvokeRoadCellBuilt(Type type, Location location)
     {
         if (type != typeof(RoadCell)) return;
         OnRoadCellBuilt?.Invoke(this, location);
     }
     
-    public void InvokeRoadCellDemolished(Type type, Location location)
+    private void InvokeRoadCellDemolished(Type type, Location location)
     {
         if (type != typeof(RoadCell)) return;
         OnRoadCellDemolished?.Invoke(this, location);
@@ -99,8 +105,15 @@ public class BuildingManager : IBuildingManager
 
     private void Build(Cell cell, List<Location> gridPositionList)
     {
-        SetModelsValueInGridObjects(cell, gridPositionList);
-        _cellVisualService.CreateVisualForCell(cell);
+        if (cell is City)
+        {
+            _cityService.AddCity(cell, gridPositionList);
+        }
+        else
+        {
+            SetModelsValueInGridObjects(cell, gridPositionList);
+            _cellVisualService.CreateVisualForCell(cell);
+        }
         AddCellToIAdvancableListIfIAdvancable(cell);
     }
 
