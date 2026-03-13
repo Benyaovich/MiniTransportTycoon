@@ -56,6 +56,7 @@ public class GridManager : MonoBehaviour
     private Dictionary<Type, CellObjectTypeSO> _cellLookup = new();
     private List<CellObjectTypeSO> _cellObjectTypeSos = new();
     private IBuildingManager? _buildingManager;
+    private CityService? _cityService;
 
     #endregion
 
@@ -73,11 +74,15 @@ public class GridManager : MonoBehaviour
             gridOriginPosition.SV3(),
             (g, l) => new GridObject(g, l));
         
+        _cityService = new CityService();
+        
         _buildingManager = new BuildingManager(
             _grid,
+            _cityService,
             transform,
             _advancables,
             _cellLookup!);
+
         
         Location firstGridObjectsLocation = _grid.GetGridObject(0, 0).Location;
         mapFloor!.position = new UniVector3(firstGridObjectsLocation.X, -0.01f, firstGridObjectsLocation.Y);
