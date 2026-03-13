@@ -1,6 +1,8 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using Model.RoadSystem;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UniVector3 = UnityEngine.Vector3;
@@ -24,6 +26,7 @@ public class GridManager : MonoBehaviour
 
     public IBuildingManager BuildingManager => _buildingManager!;
     public Grid<GridObject> Grid => _grid;
+    public HighlightService HighlightService => _highlightService!;
     
     #endregion
 
@@ -57,6 +60,8 @@ public class GridManager : MonoBehaviour
     private List<CellObjectTypeSO> _cellObjectTypeSos = new();
     private IBuildingManager? _buildingManager;
     private CityService? _cityService;
+    private HighlightService? _highlightService;
+    private PathHandler? _pathHandler;
 
     #endregion
 
@@ -82,6 +87,8 @@ public class GridManager : MonoBehaviour
             transform,
             _advancables,
             _cellLookup!);
+
+        _highlightService = new HighlightService(_grid);
 
         
         Location firstGridObjectsLocation = _grid.GetGridObject(0, 0).Location;
@@ -146,6 +153,12 @@ public class GridManager : MonoBehaviour
         {
             _buildSelectionManager.CycleSelection(twoWayRoadCornerCellObjectTypeSos!);
         }
+        else if (Keyboard.current.digit4Key.wasPressedThisFrame)
+        {
+            if (_highlightService is null || _pathHandler is null) return;
+            Debug.Log(_pathHandler.Graph.Vertices.Count);
+            _highlightService.EnableHighlight(_pathHandler.Graph.Vertices);
+        }
     }
 
     private void BuildSelectionManagerOnSelectedObjectChanged(object? sender, Transform? selectedVisual)
@@ -209,6 +222,11 @@ public class GridManager : MonoBehaviour
         UniVector3 mousePos = Utils.GetMouseWorldPosition();
         _grid.GetXY(mousePos.SV3(), out int x, out int y);
         return _grid.GetWorldPosition(x, y).UVXZ3();
+    }
+
+    public void SetPathHandler(PathHandler pathHandler)
+    {
+        _pathHandler = pathHandler;
     }
 
     private void DebugGridData()

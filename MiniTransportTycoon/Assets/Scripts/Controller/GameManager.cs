@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     private IGraph _graph;
     private PathHandler _pathHandler;
     private IGraphBuilder _graphBuilder;
+    private HighlightService _highlightService;
 
     private void Start()
     {
@@ -14,7 +15,8 @@ public class GameManager : MonoBehaviour
         _graph = new Graph();
         _pathHandler = new PathHandler(_graph);
         _graphBuilder = new GraphBuilder<GridObject>(GridManager.Instance.Grid, _graph);
-        
+        _highlightService = GridManager.Instance!.HighlightService;
+        GridManager.Instance.SetPathHandler(_pathHandler);
         
         _buildingManager.OnRoadCellBuilt += BuildingManagerOnRoadCellBuilt;
         _buildingManager.OnRoadCellDemolished += BuildingManagerOnRoadCellDemolished;
