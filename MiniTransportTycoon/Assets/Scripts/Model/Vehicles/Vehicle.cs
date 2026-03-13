@@ -54,7 +54,7 @@ public class Vehicle : IAdvancable
         {
             if (RightDirecion(road))
             {
-                
+                //folyt kov
             }
         }
         
