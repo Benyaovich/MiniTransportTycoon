@@ -105,12 +105,14 @@ public class BuildingManager : IBuildingManager
 
     private void Build(Cell cell, List<Location> gridPositionList)
     {
-        if (cell is City)
-        {
-            _cityService.AddCity(cell, gridPositionList);
-        }
+        if (cell is City){ _cityService.AddCity(cell, gridPositionList); }
         else
         {
+            if (cell is BusStop busStop)
+            {
+                busStop.SetCityService(_cityService);
+                busStop.LocateAndSetCity();
+            }
             SetModelsValueInGridObjects(cell, gridPositionList);
             _cellVisualService.CreateVisualForCell(cell);
         }
