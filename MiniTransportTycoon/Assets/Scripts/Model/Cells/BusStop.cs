@@ -11,15 +11,17 @@ public class BusStop : Cell, IAdvancable, IPurchasable
 
     private Timer _timer;
     private int _range;
-    private int _maxNumOfPeople;
-    private IGrid<IHasCellModel> _grid;
+    private int _maxNumOfPeople = 50;
+    private CityService _cityService;
 
-    public BusStop(Location location, IGrid<IHasCellModel> grid, [CanBeNull] Size size = null, bool destroyable = true,
-        float interval = 15, int buildPrice = 1500, int range = 5) :
+    public BusStop(Location location, CityService cityService, [CanBeNull] Size size = null, bool destroyable = true,
+        float interval = 15, int buildPrice = 1500,
+        int range = 5, int maxNumOfPeople = 50) :
         base(location, size, destroyable)
     {
-        _grid = grid;
+        _cityService = cityService;
         BuildPrice = buildPrice;
+        _maxNumOfPeople = maxNumOfPeople;
         _range = range;
         _timer = new Timer(interval);
         _timer.OnTimerElapsed += GetPeopleFromCity;
@@ -34,9 +36,8 @@ public class BusStop : Cell, IAdvancable, IPurchasable
         {
             for (int x = Origin.X - radius; x < Origin.X + radius; x++)
             {
-                IHasCellModel gridObject = _grid.GetGridObject(x, y);
-                if (gridObject?.Model is null) continue;
-                if(gridObject.Model is not City city) continue;
+                if (!_cityService.CityByLocationMap.TryGetValue(new Location(x, y), out City city)) continue;
+                
                 City = city;
                 return;
             }
