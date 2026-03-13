@@ -16,10 +16,6 @@ public class GameManager : MonoBehaviour
         _graphBuilder = new GraphBuilder<GridObject>(GridManager.Instance.Grid, _graph);
         
         
-    }
-
-    private void OnEnable()
-    {
         _buildingManager.OnRoadCellBuilt += BuildingManagerOnRoadCellBuilt;
         _buildingManager.OnRoadCellDemolished += BuildingManagerOnRoadCellDemolished;
     }
