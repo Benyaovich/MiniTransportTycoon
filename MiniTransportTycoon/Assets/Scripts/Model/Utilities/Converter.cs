@@ -3,15 +3,19 @@ using Model.Enumerations;
 
 public static class Converter
 {
-    public static Direction ToDirection(this Location location)
+    public static Direction ToDirection(this Location location, Location nextLocation)
     {
-        return location.X switch
+        int deltaX = nextLocation.X - location.X;
+        int deltaY = nextLocation.Y - location.Y;
+        
+        return (deltaX, deltaY) switch
         {
-            0 when location.Y == -1 => Direction.Up,
-            0 when location.Y == 1 => Direction.Down,
-            -1 when location.Y == 0 => Direction.Left,
-            1 when location.Y == 0 => Direction.Right,
-            _ => throw new Exception($"Can not convert this location ({location.X} - {location.Y}) to direction.")
+            (0, -1) => Direction.Up,
+            (0, 1) => Direction.Down,
+            (-1, 0) => Direction.Left,
+            (1, 0) => Direction.Right,
+            (0,0) => throw new ArgumentException("The two Locations are the same"),
+            _ => throw new Exception($"Can not convert this movement ({location.X},{location.Y} -> {nextLocation.X},{nextLocation.Y}) to direction.")
         };
     }
 
