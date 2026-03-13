@@ -156,7 +156,7 @@ public class GridManager : MonoBehaviour
         else if (Keyboard.current.digit4Key.wasPressedThisFrame)
         {
             if (_highlightService is null || _pathHandler is null) return;
-            Debug.Log(_pathHandler.Graph.Vertices.Count);
+            
             _highlightService.EnableHighlight(_pathHandler.Graph.Vertices);
         }
     }

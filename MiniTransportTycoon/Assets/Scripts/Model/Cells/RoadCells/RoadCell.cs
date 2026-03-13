@@ -52,4 +52,9 @@ public class RoadCell : Cell, IPurchasable, IHighlightable
         if(Highlighted) { OnHighlightEnabled?.Invoke(this, Origin); }
         else{ OnHighlightDisabled?.Invoke(this, Origin); }
     }
+
+    public void SetIsVertexPoint(bool value)
+    {
+        IsVertexPoint = value;
+    }
 }
