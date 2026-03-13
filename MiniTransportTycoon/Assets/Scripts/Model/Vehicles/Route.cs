@@ -10,24 +10,26 @@ public class Route
     public Location PreviousLocation { get; private set; }
     public Location CurrentLocation { get; private set; }
     public Location NextLocation { get; private set; }
-
+    
     public Direction CurrentDirection
+    {
+        get => CurrentLocation.ToDirection(NextLocation);
+        private set {}
+    }
+
+    public Direction NextDirection
     {
         get
         {
-            return CurrentLocation.ToDirection(NextLocation);
+            return NextLocation.ToDirection(Vertices.Peek());
         }
-        private set {}
+        private set{}
     }
     
     private int index;
     
     public Route(List<Location> vertices)
     {
-        if (vertices.Count < 2)
-        {
-            throw new ArgumentException("Ebbol nem lehet korpalyat csinalni, kevesebb mint 2 allomas");
-        }
         //ha a palyanak elso es utolso eleme egyezik
         if (vertices[0] == vertices[^1])
         {
@@ -57,6 +59,4 @@ public class Route
     {
         return Vertices.Contains(location);
     }
-    
-    
 }

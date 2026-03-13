@@ -5,20 +5,27 @@ using UnityEngine;
 
 public class Vehicle : IAdvancable
 {
-    private Timer vehicleTimer; // od-ba
     public Resource Resource { get; private set;}
     public float MoveSpeed { get; private set; }
     public int MaintenanceCost { get; private set; }
     public int PurchaseCost { get; private set; }
     public int ResourceAmount { get; private set; }
-    public Route? Route { get; private set; }
-    public Location?  CurrentLocation { get; private set; }
+    public Route? Route
+    {
+        get => Route;
+        set
+        {
+            Route = value;
+            CurrentLocation = Route.CurrentLocation;
+        }
+    }
+    public Location? CurrentLocation { get => Route.CurrentLocation; private set{} }
     
     private int maxCapacity;
     private Timer maintenanceTimer;
     private Timer moveTimer; // szerintem nem lesz szukseg ra, will see
-    private bool canMove; // eleg lesz a function
-    private RoadCell roadCell; // the current cell
+    
+    public event EventHandler CarMove;
 
     public Vehicle(Resource resource, float speed, int maintenanceCost, int purchaseCost, int resourceAmount)
     {
@@ -28,26 +35,68 @@ public class Vehicle : IAdvancable
         this.PurchaseCost = purchaseCost;
         this.ResourceAmount = resourceAmount;
         
-        vehicleTimer = new Timer(1 / speed);
-        vehicleTimer.OnTimerElapsed += (MoveNext);
+        moveTimer = new Timer(1 / speed);
+        moveTimer.OnTimerElapsed += (object sender, EventArgs e) => CarMove?.Invoke(this, EventArgs.Empty);
     }
 
-    private void MoveNext(object o, EventArgs args)
+    private void MoveNext(Cell cell)
     {
-        if (CanMove())
+        if (CanMove(cell))
         {
-            
+            Route.StepVertex();
+            CurrentLocation = Route.CurrentLocation;
         };
     }
 
-    private bool CanMove()
+    private bool CanMove(Cell cell)
     {
-        // Route osztaly kell ide
-        throw new NotImplementedException();
+        if (cell is RoadCell road)
+        {
+            if (RightDirecion(road))
+            {
+                
+            }
+        }
+        
+        return false;
+    }
+
+    private bool RightDirecion(RoadCell road)
+    {
+        //merre van az auto az uthoz kepest (jobbra, balra, ...)
+        int dx = road.Origin.X - CurrentLocation.X;
+        int dy = road.Origin.Y - CurrentLocation.Y;
+            
+        switch (dx, dy)
+        {
+            case (0, 0):
+                throw new ArgumentException("Ezen a cellan van a jármu");
+            
+            case (var x, 0) when x != 0:
+                if (road.Directions.Contains(Converter.Opposite(Route.CurrentDirection)) && 
+                    road.Directions.Contains(Route.NextDirection))
+                {
+                    return true;
+                }
+                break;
+            
+            case (0, var y) when y != 0:
+                if (road.Directions.Contains(Route.CurrentDirection) && 
+                    road.Directions.Contains(Converter.Opposite(Route.NextDirection)))
+                {
+                    return true;
+                }
+                break;
+            default:
+                break;
+        }
+
+        return false;
     }
 
     public void Tick(float delta)
     {
-        vehicleTimer.Tick(delta);
+        moveTimer.Tick(delta);
     }
+    
 }
