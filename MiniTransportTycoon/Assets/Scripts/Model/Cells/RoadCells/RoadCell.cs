@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using Model.Enumerations;
 using Model.Interfaces;
 
-public class RoadCell : Cell, IPurchasable, IDestroyable
+public class RoadCell : Cell, IPurchasable, IHighlightable
 {
+    public event EventHandler<Location>? OnHighlightEnabled;
+    public event EventHandler<Location>? OnHighlightDisabled;
     public bool IsVertexPoint { get; private set; }
     public bool IsIntersection { get; private set; }
     public TrafficLamp? Lamp { get; private set; }
@@ -14,7 +16,9 @@ public class RoadCell : Cell, IPurchasable, IDestroyable
     public List<Direction> Directions { get; private set; }
     public List<Vehicle> Vehicles { get; private set; } = new();
     public int BuildPrice { get; set; }
-
+    
+    public bool Highlighted { get; protected set; }
+    
 
     public RoadCell(Location origin, bool isIntersection, List<Direction> directions,
          bool isVertexPoint = false, Size? size = null, bool destroyable = true)
@@ -42,8 +46,10 @@ public class RoadCell : Cell, IPurchasable, IDestroyable
         Lamp = lamp;
     }
 
-    public void Destroy()
+    public void SetHighlighted(bool value)
     {
-        // Gráfból ki kell szedni a csucsot meg hasonlok
+        Highlighted = value;
+        if(Highlighted) { OnHighlightEnabled?.Invoke(this, Origin); }
+        else{ OnHighlightDisabled?.Invoke(this, Origin); }
     }
 }
