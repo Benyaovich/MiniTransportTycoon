@@ -33,6 +33,7 @@ public class BuildingManager : IBuildingManager
             return false;
         }
 
+        
         Build(cell, gridPositionList);
         InvokeRoadCellBuilt(cellObjectTypeSo.CellType, location);
         return true;
@@ -47,6 +48,7 @@ public class BuildingManager : IBuildingManager
 
         List<Location> gridPositionList = go.Model.GetGridPositionList();
         Demolish(go, gridPositionList);
+        InvokeRoadCellDemolished(go.Model.GetType(), location);
     }
 
     public bool CheckIfCanBuild(List<Location> gridPositionList)
@@ -85,13 +87,13 @@ public class BuildingManager : IBuildingManager
         }
     }
 
-    public void InvokeRoadCellBuilt(Type type, Location location)
+    private void InvokeRoadCellBuilt(Type type, Location location)
     {
         if (type != typeof(RoadCell)) return;
         OnRoadCellBuilt?.Invoke(this, location);
     }
     
-    public void InvokeRoadCellDemolished(Type type, Location location)
+    private void InvokeRoadCellDemolished(Type type, Location location)
     {
         if (type != typeof(RoadCell)) return;
         OnRoadCellDemolished?.Invoke(this, location);
