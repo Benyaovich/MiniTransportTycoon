@@ -69,10 +69,10 @@ public class GraphBuilderTests
     [Test]
     public void GetNextVertexInUpDirectionWhenExists()
     {
-        var road = CreateTwoWayCornerURRoad(new Location(0,3));
-        CreateTwoWayUDRoad(new Location(0, 2));
+        var road = CreateTwoWayCornerURRoad(new Location(0,0));
         CreateTwoWayUDRoad(new Location(0, 1));
-        var vertex = CreateTwoWayCornerURRoad(new Location(0, 0));
+        CreateTwoWayUDRoad(new Location(0, 2));
+        var vertex = CreateTwoWayCornerURRoad(new Location(0, 3));
         _graph.AddVertex(vertex.Origin);
         
         Assert.AreEqual(vertex.Origin, _graphBuilder.GetNextVertexInDirection(road, Direction.Up));
@@ -120,8 +120,8 @@ public class GraphBuilderTests
         CreateTwoWayUDRoad(new Location(0, 3));
         CreateTwoWayCornerDLRoad(new Location(0, 4));
         var map = _graphBuilder.GetConnectedVertices(road);
-        Assert.AreEqual(new Location(0,0), map[Direction.Up]);
-        Assert.AreEqual(new Location(0,4), map[Direction.Down]);
+        Assert.AreEqual(new Location(0,0), map[Direction.Down]);
+        Assert.AreEqual(new Location(0,4), map[Direction.Up]);
         Assert.IsNull(map[Direction.Left]);
         Assert.IsNull(map[Direction.Right]);
     }
