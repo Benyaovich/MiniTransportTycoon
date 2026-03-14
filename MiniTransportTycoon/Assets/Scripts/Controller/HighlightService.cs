@@ -10,20 +10,37 @@ public class HighlightService
         _grid = grid;
     }
     
-    public void EnableHighlight(List<Location> locations)
+    private void EnableHighlight(List<IHighlightable> highlightables)
     {
-        foreach (IHighlightable highlightable in GetHighlightableList(locations))    
+        foreach (IHighlightable highlightable in highlightables)    
         {
             highlightable.SetHighlighted(true);
         }
     }
-    
-    public void DisableHighlight(List<Location> locations)
+    public void EnableHighlight(List<Location> locations)
     {
-        foreach (IHighlightable highlightable in GetHighlightableList(locations))    
+        EnableHighlight(GetHighlightableList(locations));
+    }
+    
+    private void DisableHighlight(List<IHighlightable> highlightables)
+    {
+        foreach (IHighlightable highlightable in highlightables)    
         {
             highlightable.SetHighlighted(false);
         }
+    }
+    public void DisableHighlight(List<Location> locations)
+    {
+        DisableHighlight(GetHighlightableList(locations));
+    }
+
+    public void ToggleHighlight(List<Location> locations)
+    {
+        List<IHighlightable> highlightables = GetHighlightableList(locations);
+        if (highlightables.Count == 0) return;
+        
+        if(highlightables[0].Highlighted){DisableHighlight(highlightables);}
+        else if(!highlightables[0].Highlighted){EnableHighlight(highlightables);}
     }
 
     private List<IHighlightable> GetHighlightableList(List<Location> locations)
