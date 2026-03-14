@@ -9,6 +9,12 @@ public class BuildSelectionManager : IBuildSelectionManager
 
     public CellObjectTypeSO? SelectedObjectType { get; private set; }
 
+    public void ClearSelectedObjectType()
+    {
+        SelectedObjectType = null;
+        RaiseSelectedObjectChanged();
+    }
+
     public void CycleSelection(List<CellObjectTypeSO> cellObjectTypes)
     {
         if (cellObjectTypes.Count < 1)
@@ -32,6 +38,12 @@ public class BuildSelectionManager : IBuildSelectionManager
 
     private void RaiseSelectedObjectChanged()
     {
-        OnSelectedObjectChanged?.Invoke(this, SelectedObjectType!.visual);
+        if (SelectedObjectType is null)
+        {
+            OnSelectedObjectChanged?.Invoke(this, null);
+            return;
+        }
+        
+        OnSelectedObjectChanged?.Invoke(this, SelectedObjectType.visual);
     }
 }
