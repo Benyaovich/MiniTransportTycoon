@@ -48,6 +48,6 @@ public class Route
 
     public bool ContainsVertex(Location location)
     {
-        return Vertices.Contains(location);
+        return (Vertices.Contains(location) || location == CurrentLocation ||  location == NextLocation);
     }
 }

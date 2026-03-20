@@ -47,7 +47,7 @@ public abstract class Vehicle : IAdvancable
             {
                 if (facility is ProcessingBuilding pBuilding)
                 {
-                    
+                    LoadResource(pBuilding);
                     return;
                 } else if (facility is ExtractorBuilding eBuilding)
                 {
