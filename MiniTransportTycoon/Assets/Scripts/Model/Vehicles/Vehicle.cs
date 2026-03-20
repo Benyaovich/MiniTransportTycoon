@@ -12,7 +12,7 @@ public abstract class Vehicle : IAdvancable
     public int PurchaseCost { get; private set; }
     public int ResourceAmount { get; protected set; }
     public Route? Route { get; set; }
-    public Location? CurrentLocation => Route.CurrentVertex;
+    public Location? CurrentLocation => Route.CurrentPosition;
     private RoadCell? _currentRoad;
     
     private int maxCapacity;

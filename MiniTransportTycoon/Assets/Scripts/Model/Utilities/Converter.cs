@@ -7,10 +7,10 @@ public static class Converter
     {
         return location.X switch
         {
-            0 when location.Y == 1 => Direction.Up,
-            0 when location.Y == -1 => Direction.Down,
-            -1 when location.Y == 0 => Direction.Left,
-            1 when location.Y == 0 => Direction.Right,
+            0 when location.Y >= 1 => Direction.Up,
+            0 when location.Y <= -1 => Direction.Down,
+            <=-1 when location.Y == 0 => Direction.Left,
+            >=1 when location.Y == 0 => Direction.Right,
             _ => throw new Exception($"Can not convert this location ({location.X} - {location.Y}) to direction.")
         };
     }
@@ -72,8 +72,8 @@ public static class Converter
         
         return (deltaX, deltaY) switch
         {
-            (0, -1) => Direction.Up,
-            (0, 1) => Direction.Down,
+            (0, 1) => Direction.Up,
+            (0, -1) => Direction.Down,
             (-1, 0) => Direction.Left,
             (1, 0) => Direction.Right,
             (0,0) => throw new ArgumentException("The two Locations are the same"),

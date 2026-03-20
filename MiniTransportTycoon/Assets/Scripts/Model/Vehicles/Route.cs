@@ -13,11 +13,11 @@ public class Route
     
     public Location CurrentPosition {get; private set; }
     
-    public Direction CurrentDirection => CurrentVertex.ToDirection(NextVertex);
+    public Direction CurrentDirection => (NextVertex - CurrentVertex).ToDirection();
 
-    public Direction NextDirection => NextVertex.ToDirection(Vertices.Peek());
+    public Direction NextDirection => (Vertices.Peek() - NextVertex).ToDirection();
 
-    public Direction PreviousDirection => PreviousVertex.ToDirection(CurrentVertex);
+    public Direction PreviousDirection => (CurrentVertex - PreviousVertex).ToDirection();
     
     private int index;
     
@@ -44,12 +44,12 @@ public class Route
 
     public void Step()
     {
+        CurrentPosition += CurrentDirection.ToLocation();
+        
         if (CurrentPosition == NextVertex)
         {
             StepVertex();
         }
-        
-        CurrentVertex += CurrentDirection;
     }
     
     public void StepVertex()
