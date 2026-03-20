@@ -56,9 +56,9 @@ public class CargoTruckTests
         _crossingTruck.Route = _crossingRoute;
         
         Assert.AreEqual(new Location(0, 0), _testTruck.CurrentLocation);
-        Assert.AreEqual(new Location(0, 1), _testTruck.Route.NextLocation);
+        Assert.AreEqual(new Location(0, 1), _testTruck.Route.NextVertex);
         
-        RoadCell road01 = new RoadCell(_testTruck.Route.NextLocation, true,
+        RoadCell road01 = new RoadCell(_testTruck.Route.NextVertex, true,
             new List<Direction>() { Direction.Down, Direction.Left, Direction.Right, Direction.Up }, true);
         
         _testTruck.NextStep(road01, new List<Cell>());
@@ -70,7 +70,7 @@ public class CargoTruckTests
         
         Assert.AreEqual(new Location(-1, 1), _crossingTruck.CurrentLocation);
         
-        RoadCell road02 = new RoadCell(_testTruck.Route.NextLocation, true,
+        RoadCell road02 = new RoadCell(_testTruck.Route.NextVertex, true,
             new List<Direction>() { Direction.Down, Direction.Left, Direction.Right, Direction.Up }, true);
         
         _testTruck.NextStep(road02, new List<Cell>());
@@ -94,7 +94,7 @@ public class CargoTruckTests
             new Location(-1, -1), 1f, new Size(1, 1), false, 
             new RateChangeHandler(10, 100, 1, 120f, 50));
         
-        RoadCell road01 = new RoadCell(_testTruck.Route.NextLocation, true,
+        RoadCell road01 = new RoadCell(_testTruck.Route.NextVertex, true,
             new List<Direction>() { Direction.Down, Direction.Left, Direction.Right, Direction.Up }, true);
         
         _testTruck.NextStep(road01, new List<Cell>(){extract});
@@ -106,7 +106,7 @@ public class CargoTruckTests
         
         Assert.AreEqual(new  Location(0, 1), _testTruck.CurrentLocation);
         
-        RoadCell road02 = new RoadCell(_testTruck.Route.NextLocation, true,
+        RoadCell road02 = new RoadCell(_testTruck.Route.NextVertex, true,
             new List<Direction>() { Direction.Down, Direction.Left, Direction.Right, Direction.Up }, true);
         
         _testTruck.NextStep(road02, new List<Cell>(){produce});
@@ -114,7 +114,7 @@ public class CargoTruckTests
         Assert.AreEqual(new  Location(0, 1), _testTruck.CurrentLocation);
         Assert.AreEqual(0, _testTruck.ResourceAmount);
         
-        RoadCell road03 = new RoadCell(_testTruck.Route.NextLocation, true,
+        RoadCell road03 = new RoadCell(_testTruck.Route.NextVertex, true,
             new List<Direction>() { Direction.Down, Direction.Left, Direction.Right, Direction.Up }, true);
         
         _testTruck.NextStep(road03, new List<Cell>(){produce});

@@ -30,9 +30,9 @@ public class RouteTests
         
         Assert.AreEqual(2, route.Vertices.Count);
         
-        Assert.AreEqual(new Location(1, 0), route.PreviousLocation); 
-        Assert.AreEqual(new Location(0, 0), route.CurrentLocation);  
-        Assert.AreEqual(new Location(0, 1), route.NextLocation);
+        Assert.AreEqual(new Location(1, 0), route.PreviousVertex); 
+        Assert.AreEqual(new Location(0, 0), route.CurrentVertex);  
+        Assert.AreEqual(new Location(0, 1), route.NextVertex);
     }
 
     [Test]
@@ -42,9 +42,9 @@ public class RouteTests
         
         route.StepVertex();
         
-        Assert.AreEqual(new Location(0, 0), route.PreviousLocation); 
-        Assert.AreEqual(new Location(0, 1), route.CurrentLocation);  
-        Assert.AreEqual(new Location(1, 1), route.NextLocation);
+        Assert.AreEqual(new Location(0, 0), route.PreviousVertex); 
+        Assert.AreEqual(new Location(0, 1), route.CurrentVertex);  
+        Assert.AreEqual(new Location(1, 1), route.NextVertex);
     }
 
     [Test]

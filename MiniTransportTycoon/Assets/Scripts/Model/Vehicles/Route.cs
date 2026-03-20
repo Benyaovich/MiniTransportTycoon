@@ -7,15 +7,17 @@ using Model.Enumerations;
 public class Route
 {
     public Queue<Location> Vertices { get; private set; }
-    public Location PreviousLocation { get; private set; }
-    public Location CurrentLocation { get; private set; }
-    public Location NextLocation { get; private set; }
+    public Location PreviousVertex { get; private set; }
+    public Location CurrentVertex { get; private set; }
+    public Location NextVertex { get; private set; }
     
-    public Direction CurrentDirection => CurrentLocation.ToDirection(NextLocation);
+    public Location CurrentPosition {get; private set; }
+    
+    public Direction CurrentDirection => CurrentVertex.ToDirection(NextVertex);
 
-    public Direction NextDirection => NextLocation.ToDirection(Vertices.Peek());
+    public Direction NextDirection => NextVertex.ToDirection(Vertices.Peek());
 
-    public Direction PreviousDirection => PreviousLocation.ToDirection(CurrentLocation);
+    public Direction PreviousDirection => PreviousVertex.ToDirection(CurrentVertex);
     
     private int index;
     
@@ -32,22 +34,34 @@ public class Route
         {
             Vertices.Enqueue(vertex);
         }
-
-        PreviousLocation = Vertices.Last();
-        CurrentLocation = Vertices.Dequeue();
-        NextLocation = Vertices.Dequeue();
+        
+        PreviousVertex = Vertices.Last();
+        CurrentVertex = Vertices.Dequeue();
+        NextVertex = Vertices.Dequeue();
+        
+        CurrentPosition = CurrentVertex;
     }
 
+    public void Step()
+    {
+        if (CurrentPosition == NextVertex)
+        {
+            StepVertex();
+        }
+        
+        CurrentVertex += CurrentDirection;
+    }
+    
     public void StepVertex()
     {
-        Vertices.Enqueue(CurrentLocation);
-        PreviousLocation = CurrentLocation;
-        CurrentLocation = NextLocation;
-        NextLocation = Vertices.Dequeue();
+        Vertices.Enqueue(CurrentVertex);
+        PreviousVertex = CurrentVertex;
+        CurrentVertex = NextVertex;
+        NextVertex = Vertices.Dequeue();
     }
 
     public bool ContainsVertex(Location location)
     {
-        return (Vertices.Contains(location) || location == CurrentLocation ||  location == NextLocation);
+        return (Vertices.Contains(location) || location == CurrentVertex ||  location == NextVertex);
     }
 }
