@@ -42,4 +42,30 @@ public static class Converter
             _ => throw new Exception($"Opposite of {direction.ToString()} is not defined yet.")
         };
     }
+
+    public static Direction TurnRightClockwise(this Direction direction)
+    {
+        //90 fokos forgatas
+        return direction switch
+        {
+            Direction.Up => Direction.Right,
+            Direction.Down => Direction.Left,
+            Direction.Left => Direction.Up,
+            Direction.Right => Direction.Down,
+            _ => throw new Exception($"Opposite of {direction.ToString()} is not defined yet.")
+        };
+    }
+    
+    public static Direction TurnLeftClockwise(this Direction direction)
+    {
+        //90 fokos forgatas
+        return direction switch
+        {
+            Direction.Up => Direction.Left,
+            Direction.Down => Direction.Right,
+            Direction.Left => Direction.Down,
+            Direction.Right => Direction.Up,
+            _ => throw new Exception($"Opposite of {direction.ToString()} is not defined yet.")
+        };
+    }
 }

@@ -2,8 +2,9 @@ using System;
 using JetBrains.Annotations;
 using Mono.Cecil;
 using UnityEngine;
+using System.Collections.Generic;
 
-public class Vehicle : IAdvancable
+public abstract class Vehicle : IAdvancable
 {
     public Resource Resource { get; private set;}
     public float MoveSpeed { get; private set; }
@@ -16,14 +17,13 @@ public class Vehicle : IAdvancable
         set
         {
             Route = value;
-            CurrentLocation = Route.CurrentLocation;
         }
     }
-    public Location? CurrentLocation { get => Route.CurrentLocation; private set{} }
+    public Location? CurrentLocation => Route.CurrentLocation;
     
     private int maxCapacity;
     private Timer maintenanceTimer;
-    private Timer moveTimer; // szerintem nem lesz szukseg ra, will see
+    private Timer moveTimer;
     
     public event EventHandler CarMove;
 
@@ -39,23 +39,102 @@ public class Vehicle : IAdvancable
         moveTimer.OnTimerElapsed += (object sender, EventArgs e) => CarMove?.Invoke(this, EventArgs.Empty);
     }
 
+    public void NextStep(Cell cell, List<Cell> neighbouringCells)
+    {
+        foreach (var outsideCells in neighbouringCells)
+        {
+            if (outsideCells is Facility facility && facility.ProducedResource == Resource)
+            {
+                
+            }
+        }
+        
+        MoveNext(cell);
+    }
+    
     private void MoveNext(Cell cell)
     {
         if (CanMove(cell))
         {
             Route.StepVertex();
-            CurrentLocation = Route.CurrentLocation;
         };
     }
 
     private bool CanMove(Cell cell)
     {
-        if (cell is RoadCell road)
+        if (cell is RoadCell road && RightDirecion(road) && SafeToMove(road))
         {
-            if (RightDirecion(road))
+            return true;
+        }
+        
+        return false;
+    }
+
+    private bool SafeToMove(RoadCell road)
+    {
+        if (road.IsIntersection)
+        {
+            if (road.HasLamp) // ide vissza terni lampa implementalas utan: && road.Lamp.Passable( == true)
             {
-                //folyt kov
+                foreach (var observedVehicle in road.Vehicles)
+                {
+                    if (IsInterSectionPassable(observedVehicle.Route, road))
+                    {
+                        return true;
+                    }
+                }
             }
+        }
+        else
+        {
+            foreach (var observedVehicle in road.Vehicles)
+            {
+                if (observedVehicle.Route.PreviousDirection == Route.CurrentDirection)
+                {
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+        return false;
+    }
+
+    private bool IsInterSectionPassable(Route oVRoute, RoadCell road)
+    {
+        //jobb kanyar
+        if (Route.CurrentDirection.TurnRightClockwise() == Route.NextDirection)
+        {
+            if (oVRoute.CurrentDirection == Route.NextDirection)
+            {
+                return false;
+            }
+            
+            return true;
+        } //egyenesen
+        else if (Route.CurrentDirection == Route.NextDirection)
+        {
+            //szembol jon
+            if (oVRoute.PreviousDirection.Opposite() == Route.CurrentDirection && 
+                (oVRoute.CurrentDirection == Route.CurrentDirection.Opposite() || oVRoute.CurrentDirection.TurnRightClockwise() == Route.CurrentDirection))
+            {
+                return true;
+            } //balrol jon
+            else if (oVRoute.PreviousDirection.TurnLeftClockwise() == Route.CurrentDirection && oVRoute.CurrentDirection == Route.CurrentDirection.Opposite())
+            {
+                return true;
+            }
+        } //bal kanyar
+        else if (Route.CurrentDirection.TurnLeftClockwise() == Route.NextDirection)
+        {
+            if (oVRoute.PreviousDirection.TurnLeftClockwise() == Route.CurrentDirection && oVRoute.CurrentDirection == Route.CurrentDirection.Opposite())
+            {
+                return true;
+            }
+        } //vissza fordulas
+        else 
+        {
+            if (road.Vehicles.Count == 0) return true;
         }
         
         return false;
@@ -93,6 +172,10 @@ public class Vehicle : IAdvancable
 
         return false;
     }
+
+    protected abstract void LoadResource();
+
+    protected abstract void UnLoadResource();
 
     public void Tick(float delta)
     {

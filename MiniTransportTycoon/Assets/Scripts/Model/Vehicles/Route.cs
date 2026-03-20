@@ -11,20 +11,11 @@ public class Route
     public Location CurrentLocation { get; private set; }
     public Location NextLocation { get; private set; }
     
-    public Direction CurrentDirection
-    {
-        get => CurrentLocation.ToDirection(NextLocation);
-        private set {}
-    }
+    public Direction CurrentDirection => CurrentLocation.ToDirection(NextLocation);
 
-    public Direction NextDirection
-    {
-        get
-        {
-            return NextLocation.ToDirection(Vertices.Peek());
-        }
-        private set{}
-    }
+    public Direction NextDirection => NextLocation.ToDirection(Vertices.Peek());
+
+    public Direction PreviousDirection => PreviousLocation.ToDirection(CurrentLocation);
     
     private int index;
     
