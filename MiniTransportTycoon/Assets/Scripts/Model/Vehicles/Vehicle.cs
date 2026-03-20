@@ -10,7 +10,7 @@ public abstract class Vehicle : IAdvancable
     public float MoveSpeed { get; private set; }
     public int MaintenanceCost { get; private set; }
     public int PurchaseCost { get; private set; }
-    public int ResourceAmount { get; private set; }
+    public int ResourceAmount { get; protected set; }
     public Route? Route
     {
         get => Route;
@@ -45,7 +45,15 @@ public abstract class Vehicle : IAdvancable
         {
             if (outsideCells is Facility facility && facility.ProducedResource == Resource)
             {
-                
+                if (facility is ProcessingBuilding pBuilding)
+                {
+                    
+                    return;
+                } else if (facility is ExtractorBuilding eBuilding)
+                {
+                    // to be implemented
+                    return;
+                }
             }
         }
         
@@ -173,9 +181,9 @@ public abstract class Vehicle : IAdvancable
         return false;
     }
 
-    protected abstract void LoadResource();
+    protected abstract void LoadResource(ProcessingBuilding processingBuilding);
 
-    protected abstract void UnLoadResource();
+    protected abstract void UnloadResource(ExtractorBuilding extractorBuilding);
 
     public void Tick(float delta)
     {
