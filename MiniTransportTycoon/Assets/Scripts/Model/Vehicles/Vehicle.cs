@@ -22,13 +22,14 @@ public abstract class Vehicle : IAdvancable
     
     public event EventHandler CarMove;
 
-    public Vehicle(Resource resource, float speed, int maintenanceCost, int purchaseCost, int resourceAmount)
+    public Vehicle(Resource resource, float speed, int maintenanceCost, int purchaseCost, int maxCapacity)
     {
         this.Resource = resource;
         this.MoveSpeed = speed;
         this.MaintenanceCost = maintenanceCost;
         this.PurchaseCost = purchaseCost;
-        this.ResourceAmount = resourceAmount;
+        this.maxCapacity = maxCapacity;
+        ResourceAmount = 0;
         
         moveTimer = new Timer(1 / speed);
         moveTimer.OnTimerElapsed += (object sender, EventArgs e) => CarMove?.Invoke(this, EventArgs.Empty);
@@ -40,12 +41,14 @@ public abstract class Vehicle : IAdvancable
         {
             if (outsideCells is Facility facility)
             {
-                if (facility.ProducedResource == Resource)
+                if (facility.ProducedResource == Resource && ResourceAmount <=  MaxCapacity - 1)
                 {
                     LoadResource(facility);
-                } else if (facility is ProcessingBuilding pBuilding &&  pBuilding.RequiredResource == Resource)
+                    return;
+                } else if (facility is ProcessingBuilding pBuilding &&  pBuilding.RequiredResource == Resource && ResourceAmount > 0)
                 {
                     UnloadResource(pBuilding);
+                    return;
                 }
             }
         }
