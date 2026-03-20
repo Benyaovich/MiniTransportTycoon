@@ -1,4 +1,5 @@
 using System;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -6,7 +7,7 @@ public class BuildingPreviewManager : MonoBehaviour
 {
      [SerializeField] private int previewLayerIndex;
     private Transform _previewObject;
-    private Transform _previewObjectVisual;
+    [CanBeNull] private Transform _previewObjectVisual;
 
     #region OnEnable - OnDisable
 
@@ -31,11 +32,12 @@ public class BuildingPreviewManager : MonoBehaviour
         
     }
 
-    private void GridManagerOnSelectedObjectChanged(object sender, Transform previewObjectVisual)
+    private void GridManagerOnSelectedObjectChanged(object sender, [CanBeNull] Transform previewObjectVisual)
     {
         _previewObjectVisual = previewObjectVisual;
-        if(_previewObject is not null) Destroy(_previewObject.gameObject);
-        if (_previewObjectVisual is null) return;
+        if(_previewObject != null) Destroy(_previewObject.gameObject);
+        if (_previewObjectVisual == null) return;
+        
         CreatePreviewObject();
     }
 
@@ -56,3 +58,5 @@ public class BuildingPreviewManager : MonoBehaviour
         }
     }
 }
+
+

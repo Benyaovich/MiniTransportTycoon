@@ -24,6 +24,7 @@ public class GridManager : MonoBehaviour
 
     public IBuildingManager BuildingManager => _buildingManager!;
     public Grid<GridObject> Grid => _grid;
+    public IBuildSelectionManager BuildSelectionManager => _buildSelectionManager!;
     
     #endregion
 
@@ -52,7 +53,7 @@ public class GridManager : MonoBehaviour
         (g, l) => new GridObject(g, l));
 
     private readonly List<IAdvancable> _advancables = new();
-    private readonly IBuildSelectionManager _buildSelectionManager = new BuildSelectionManager();
+    private IBuildSelectionManager? _buildSelectionManager;
     private Dictionary<Type, CellObjectTypeSO> _cellLookup = new();
     private List<CellObjectTypeSO> _cellObjectTypeSos = new();
     private IBuildingManager? _buildingManager;
@@ -98,7 +99,7 @@ public class GridManager : MonoBehaviour
 
     private void Start()
     {
-        _buildSelectionManager.OnSelectedObjectChanged += BuildSelectionManagerOnSelectedObjectChanged;
+        BuildSelectionManager.OnSelectedObjectChanged += BuildSelectionManagerOnSelectedObjectChanged;
     }
 
     #region OnEnable - OnDisable - OnDestroy
@@ -117,7 +118,7 @@ public class GridManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        _buildSelectionManager.OnSelectedObjectChanged -= BuildSelectionManagerOnSelectedObjectChanged;
+        BuildSelectionManager.OnSelectedObjectChanged -= BuildSelectionManagerOnSelectedObjectChanged;
     }
 
     #endregion
@@ -128,23 +129,21 @@ public class GridManager : MonoBehaviour
         {
             advancable.Tick(Time.deltaTime);
         }
-
-        HandleBuildSelectionInput();
     }
 
-    private void HandleBuildSelectionInput()
+    public void HandleBuildSelectionInput()
     {
         if (Keyboard.current.digit1Key.wasPressedThisFrame)
         {
-            _buildSelectionManager.CycleSelection(buildingCellObjectTypeSos!);
+            BuildSelectionManager.CycleSelection(buildingCellObjectTypeSos!);
         }
         else if (Keyboard.current.digit2Key.wasPressedThisFrame)
         {
-            _buildSelectionManager.CycleSelection(twoWayRoadCellObjectTypeSos!);
+            BuildSelectionManager.CycleSelection(twoWayRoadCellObjectTypeSos!);
         }
         else if (Keyboard.current.digit3Key.wasPressedThisFrame)
         {
-            _buildSelectionManager.CycleSelection(twoWayRoadCornerCellObjectTypeSos!);
+            BuildSelectionManager.CycleSelection(twoWayRoadCornerCellObjectTypeSos!);
         }
     }
 
@@ -186,12 +185,12 @@ public class GridManager : MonoBehaviour
     private void GameInputOnLeftClickPressed(object? sender, EventArgs e)
     {
         if (_buildingManager is null) return;
-        if (_buildSelectionManager.SelectedObjectType is null) return;
+        if (BuildSelectionManager.SelectedObjectType is null) return;
 
         UniVector3 mousePos = Utils.GetMouseWorldPosition();
         _grid.GetXY(mousePos.SV3(), out int x, out int y);
 
-        _buildingManager.TryBuild(_buildSelectionManager.SelectedObjectType, new Location(x, y));
+        _buildingManager.TryBuild(BuildSelectionManager.SelectedObjectType, new Location(x, y));
     }
 
     private void GameInputOnDeleteKeyPressed(object? sender, EventArgs e)
@@ -210,7 +209,11 @@ public class GridManager : MonoBehaviour
         _grid.GetXY(mousePos.SV3(), out int x, out int y);
         return _grid.GetWorldPosition(x, y).UVXZ3();
     }
-
+    public void SetBuildSelectionManager(IBuildSelectionManager buildSelectionManager)
+    {
+        _buildSelectionManager = buildSelectionManager;
+    }
+    
     private void DebugGridData()
     {
         TextMesh[][] debugTextArray = new TextMesh[_grid.Size.Width][];
@@ -246,4 +249,6 @@ public class GridManager : MonoBehaviour
                 _grid.GetGridObject(eventArgs.location.X, eventArgs.location.Y).ToString();
         };
     }
+
+    
 }

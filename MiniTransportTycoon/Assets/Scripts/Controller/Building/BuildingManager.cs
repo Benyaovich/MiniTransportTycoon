@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using Model.Enumerations;
 using UnityEngine;
 
 public class BuildingManager : IBuildingManager
@@ -38,7 +39,8 @@ public class BuildingManager : IBuildingManager
         }
         
         Build(cell, gridPositionList);
-        InvokeRoadCellBuilt(cellObjectTypeSo.CellType, location);
+        
+        InvokeRoadCellBuilt(cell, location);
         
         return true;
     }
@@ -51,7 +53,7 @@ public class BuildingManager : IBuildingManager
         if (!go.Model.Destroyable) return;
 
         List<Location> gridPositionList = go.Model.GetGridPositionList();
-        InvokeRoadCellDemolished(go.Model.GetType(), location);
+        InvokeRoadCellDemolished(go.Model, location);
         Demolish(go, gridPositionList);
     }
 
@@ -91,31 +93,50 @@ public class BuildingManager : IBuildingManager
         }
     }
 
-    private void InvokeRoadCellBuilt(Type type, Location location)
+    private void InvokeRoadCellBuilt(Cell cell, Location location)
     {
-        if (type != typeof(RoadCell)) return;
+        if (cell is not RoadCell) return;
+        
         OnRoadCellBuilt?.Invoke(this, location);
     }
     
-    private void InvokeRoadCellDemolished(Type type, Location location)
+    private void InvokeRoadCellDemolished(Cell cell, Location location)
     {
-        if (type != typeof(RoadCell)) return;
+        if (cell is not RoadCell) return;
         OnRoadCellDemolished?.Invoke(this, location);
     }
 
     private void Build(Cell cell, List<Location> gridPositionList)
     {
-        if (cell is City)
-        {
-            _cityService.AddCity(cell, gridPositionList);
-        }
+        if (cell is City){ _cityService.AddCity(cell, gridPositionList); }
         else
         {
+            if (cell is BusStop busStop)
+            {
+                busStop.SetCityService(_cityService);
+                busStop.LocateAndSetCity();
+            }
+
+            if (cell is RoadCell roadCell)
+            {
+                if (IsRoadVertexPoint(roadCell))
+                {
+                    roadCell.SetIsVertexPoint(true);
+                }
+            }
+
+            if (cell is IVisitableBuiling)
+            {
+                ConvertRoadsToVertexPoints(cell);
+            }
+            
             SetModelsValueInGridObjects(cell, gridPositionList);
             _cellVisualService.CreateVisualForCell(cell);
         }
         AddCellToIAdvancableListIfIAdvancable(cell);
     }
+
+    
 
     private void Demolish(GridObject go, List<Location> gridPositionList)
     {
@@ -162,4 +183,37 @@ public class BuildingManager : IBuildingManager
             _advancables.Add(advancable);
         }
     }
+    
+    private bool IsRoadVertexPoint(RoadCell roadCell)
+    {
+        if (_grid.GetGridObject(roadCell.Origin + Direction.Up)?.Model is IVisitableBuiling) return true;
+        if (_grid.GetGridObject(roadCell.Origin + Direction.Down)?.Model is IVisitableBuiling) return true;
+        if (_grid.GetGridObject(roadCell.Origin + Direction.Left)?.Model is IVisitableBuiling) return true;
+        if (_grid.GetGridObject(roadCell.Origin + Direction.Right)?.Model is IVisitableBuiling) return true;
+        return false;
+    }
+    
+    private void ConvertRoadsToVertexPoints(Cell cell)
+    {
+        int yFrom = cell.Origin.Y - 1;
+        int yTo = cell.Origin.Y + cell.Size.Height;
+        int xFrom = cell.Origin.X - 1;
+        int xTo = cell.Origin.X + cell.Size.Width;
+        
+        for (int y = yFrom; y <= yTo; y++)
+        {
+            for (int x = xFrom; x <= xTo; x++)
+            {
+                if((x == xFrom && y == yFrom) || (x == xTo && y == yTo) ||
+                   (x == xFrom && y == yTo) || (x == xTo && y == yFrom)) continue;
+                
+                GridObject gridObject = _grid.GetGridObject(x, y);
+                if (gridObject?.Model is not RoadCell roadCell) continue;
+
+                roadCell.SetIsVertexPoint(true);
+                InvokeRoadCellBuilt(roadCell, roadCell.Origin);
+            }
+        }
+    }
+
 }

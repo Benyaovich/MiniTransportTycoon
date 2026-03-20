@@ -6,7 +6,6 @@ public class Cell
     public Location Origin { get; private set; }
     public Size Size { get; protected set; }
     public bool Destroyable { get; private set; }
-    public bool Highlighted { get; private set; } = false;
     
     public Cell(Location origin, Size size = null, bool destroyable = true)
     {

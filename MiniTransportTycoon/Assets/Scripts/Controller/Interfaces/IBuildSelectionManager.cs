@@ -8,5 +8,6 @@ public interface IBuildSelectionManager
 {
     public event EventHandler<Transform?>? OnSelectedObjectChanged;
     public CellObjectTypeSO? SelectedObjectType { get; }
+    public void ClearSelectedObjectType();
     public void CycleSelection(List<CellObjectTypeSO> cellObjectTypes);
 }

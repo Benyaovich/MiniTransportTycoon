@@ -1,7 +1,7 @@
 
 using System;
 
-public abstract class Facility : Cell, IAdvancable
+public abstract class Facility : Cell, IAdvancable, IVisitableBuiling
 {
     public Resource ProducedResource { get; private set; }
     public int ResourceAmount { get; protected set; }
