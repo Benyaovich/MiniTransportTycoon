@@ -46,4 +46,8 @@ public class Location
     
     public override int GetHashCode() => HashCode.Combine(X, Y);
     
+    public override string ToString()
+    {
+        return $"Location({X}, {Y})";
+    }
 }
