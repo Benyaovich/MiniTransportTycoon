@@ -11,17 +11,12 @@ public abstract class Vehicle : IAdvancable
     public int MaintenanceCost { get; private set; }
     public int PurchaseCost { get; private set; }
     public int ResourceAmount { get; protected set; }
-    public Route? Route
-    {
-        get => Route;
-        set
-        {
-            Route = value;
-        }
-    }
+    public Route? Route { get; set; }
     public Location? CurrentLocation => Route.CurrentLocation;
+    private RoadCell? _currentRoad;
     
     private int maxCapacity;
+    protected int MaxCapacity => maxCapacity;
     private Timer maintenanceTimer;
     private Timer moveTimer;
     
@@ -43,16 +38,14 @@ public abstract class Vehicle : IAdvancable
     {
         foreach (var outsideCells in neighbouringCells)
         {
-            if (outsideCells is Facility facility && facility.ProducedResource == Resource)
+            if (outsideCells is Facility facility)
             {
-                if (facility is ProcessingBuilding pBuilding)
+                if (facility.ProducedResource == Resource)
                 {
-                    LoadResource(pBuilding);
-                    return;
-                } else if (facility is ExtractorBuilding eBuilding)
+                    LoadResource(facility);
+                } else if (facility is ProcessingBuilding pBuilding &&  pBuilding.RequiredResource == Resource)
                 {
-                    // to be implemented
-                    return;
+                    UnloadResource(pBuilding);
                 }
             }
         }
@@ -62,15 +55,18 @@ public abstract class Vehicle : IAdvancable
     
     private void MoveNext(Cell cell)
     {
-        if (CanMove(cell))
+        if (cell is RoadCell road && CanMove(road))
         {
+            _currentRoad?.Vehicles.Remove(this);
             Route.StepVertex();
-        };
+            _currentRoad = road;
+            _currentRoad.AddVehicle(this);
+        }
     }
 
-    private bool CanMove(Cell cell)
+    private bool CanMove(RoadCell road)
     {
-        if (cell is RoadCell road && RightDirecion(road) && SafeToMove(road))
+        if (RightDirecion(road) && SafeToMove(road))
         {
             return true;
         }
@@ -86,11 +82,25 @@ public abstract class Vehicle : IAdvancable
             {
                 foreach (var observedVehicle in road.Vehicles)
                 {
-                    if (IsInterSectionPassable(observedVehicle.Route, road))
+                    if (!(IsInterSectionPassable(observedVehicle.Route, road)))
                     {
-                        return true;
+                        return false;
                     }
                 }
+
+                return true;
+            }
+            else
+            {
+                foreach (var observedVehicle in road.Vehicles)
+                {
+                    if (!(IsInterSectionPassable(observedVehicle.Route, road)))
+                    {
+                        return false;
+                    }
+                }
+                
+                return true;
             }
         }
         else
@@ -139,11 +149,7 @@ public abstract class Vehicle : IAdvancable
             {
                 return true;
             }
-        } //vissza fordulas
-        else 
-        {
-            if (road.Vehicles.Count == 0) return true;
-        }
+        } //vissza fordulas - ha ures a lista
         
         return false;
     }
@@ -181,9 +187,9 @@ public abstract class Vehicle : IAdvancable
         return false;
     }
 
-    protected abstract void LoadResource(ProcessingBuilding processingBuilding);
+    protected abstract void LoadResource(Facility processingBuilding);
 
-    protected abstract void UnloadResource(ExtractorBuilding extractorBuilding);
+    protected abstract void UnloadResource(ProcessingBuilding extractorBuilding);
 
     public void Tick(float delta)
     {

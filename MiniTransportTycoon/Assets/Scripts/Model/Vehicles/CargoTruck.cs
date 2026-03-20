@@ -6,13 +6,13 @@ public class CargoTruck : Vehicle
     public CargoTruck(Resource resource, float speed, int maintenanceCost, int purchaseCost, int resourceAmount) 
         : base(resource, speed, maintenanceCost, purchaseCost, resourceAmount) { }
 
-    protected override void LoadResource(ProcessingBuilding pBuilding)
+    protected override void LoadResource(Facility facility)
     {
-        ResourceAmount = pBuilding.AddRequiredResource(ResourceAmount);
+        ResourceAmount = facility.GetProducedResource(MaxCapacity - ResourceAmount);
     }
 
-    protected override void UnloadResource(ExtractorBuilding eBuilding)
+    protected override void UnloadResource(ProcessingBuilding pBuilding)
     {
-        throw new NotImplementedException();
+        ResourceAmount = pBuilding.AddRequiredResource(ResourceAmount);
     }
 }
