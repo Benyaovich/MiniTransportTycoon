@@ -1,17 +1,20 @@
+using System.Collections.Generic;
 using System.Numerics;
 using NUnit.Framework;
 
 public class BusStopTests
 {
-    private Grid<MockGridObject> _grid;
+    private Grid<ModelGridObject> _grid;
     private CityService _cityService;
+    private IBuildingManager _buildingManager;
     
     [SetUp]
     public void Init()
     {
-        _grid= new Grid<MockGridObject>(new Size(10, 10), 10, Vector3.Zero,
-            (g, l) => new MockGridObject(g,l));
+        _grid= new Grid<ModelGridObject>(new Size(10, 10), 10, Vector3.Zero,
+            (g, l) => new ModelGridObject(g,l));
         _cityService = new CityService();
+        _buildingManager = new BuildingManager(_grid, _cityService, new List<IAdvancable>());
     }
     
     [Test]
@@ -105,25 +108,7 @@ public class BusStopTests
         BusStop bs = new BusStop(location, _cityService,
             interval: interval, range: range,
             maxNumOfPeople: maxNumOfPeople);
-        _grid.GetGridObject(location).Model = bs;
+        _buildingManager.TryBuild(bs);
         return bs;
-    }
-    
-    private class MockGridObject : IHasCellModel
-    {
-        public Cell Model { get; set; }
-        public void SetModel(Cell cell)
-        {
-            Model = cell;
-        }
-
-        public void ClearModel()
-        {
-            Model = null;
-        }
-
-        public MockGridObject(Grid<MockGridObject> g, Location l)
-        {
-        }
     }
 }
