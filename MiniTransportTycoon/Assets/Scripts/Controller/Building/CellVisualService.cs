@@ -5,56 +5,64 @@ using UnityEngine;
 
 public class CellVisualService
 {
-    private readonly Grid<GridObject> _grid;
+    private readonly Grid<ModelGridObject> _grid;
     private readonly Transform _parentTransform;
     private readonly Dictionary<Type, CellObjectTypeSO> _cellLookup;
-    
+    private readonly Dictionary<Location, Transform> _cellVisualDictionary = new();
     
     public CellVisualService(
-        Grid<GridObject> grid,
+        Grid<ModelGridObject> grid,
+        IBuildingManager buildingManager,
         Transform parentTransform,
         Dictionary<Type, CellObjectTypeSO> cellLookup)
     {
         _grid = grid;
         _parentTransform = parentTransform;
         _cellLookup = cellLookup;
+        
+        buildingManager.OnModelChanged += BuildingManagerOnModelChanged;
     }
-    
-    
+
+    private void BuildingManagerOnModelChanged(object sender, OnModelChangedEventArgs e)
+    {
+        if (e.Cell is null){ DestroyVisualOnModelOrigin(e.Location); }
+        else { CreateVisualForCell(e.Cell); }
+    }
+
 
     public void CreateVisualForCell(Cell cell)
     {
-        GridObject origin = _grid.GetGridObject(cell.Origin.X, cell.Origin.Y);
-        origin.SetVisual(InstantiateCellPrefab(origin));
+        ModelGridObject origin = _grid.GetGridObject(cell.Origin.X, cell.Origin.Y);
+        _cellVisualDictionary.TryAdd(origin.Location, InstantiateCellPrefab(origin));
         LinkVisualToModel(origin);
     }
 
-    public void DestroyVisualOnModelOrigin(GridObject go)
+    public void DestroyVisualOnModelOrigin(Location location)
     {
-        GridObject origin = _grid.GetGridObject(go.Model!.Origin.X, go.Model.Origin.Y);
-        if (origin.Visual is null) return;
-        UnityEngine.Object.Destroy(origin.Visual.gameObject);
+        if (!_cellVisualDictionary.ContainsKey(location)) return;
+        UnityEngine.Object.Destroy(_cellVisualDictionary[location].gameObject);
+        _cellVisualDictionary.Remove(location);
     }
 
-    private void LinkVisualToModel(GridObject origin)
+    private void LinkVisualToModel(ModelGridObject origin)
     {
-        if (origin.Model == null || origin.Visual == null)
+        if (origin.Model == null || !_cellVisualDictionary.ContainsKey(origin.Location))
             return;
 
         switch (origin.Model)
         {
             case Forest forest:
-                ForestVisual forestVisual = origin.Visual.GetComponent<ForestVisual>();
+                ForestVisual forestVisual = _cellVisualDictionary[origin.Location].GetComponent<ForestVisual>();
                 forestVisual.Setup(forest);
                 break;
             case RoadCell roadCell:
-                RoadCellVisual roadCellVisual = origin.Visual.GetComponent<RoadCellVisual>();
+                RoadCellVisual roadCellVisual = _cellVisualDictionary[origin.Location].GetComponent<RoadCellVisual>();
                 roadCellVisual.Setup(roadCell);
                 break;
         }
     }
 
-    private Transform InstantiateCellPrefab(GridObject go)
+    private Transform InstantiateCellPrefab(ModelGridObject go)
     {
         CellObjectTypeSO cellObjectTypeSo = GetCellObjectTypeSoForCell(go.Model!);
         return UnityEngine.Object.Instantiate(

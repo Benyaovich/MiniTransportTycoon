@@ -11,7 +11,7 @@ public class RouteCreationManager : MonoBehaviour
     public event EventHandler<List<Location>> OnRouteCreated;
     private HighlightService _highlightService;
     private PathHandler _pathHandler;
-    private Grid<GridObject> _grid;
+    private Grid<ModelGridObject> _grid;
     private List<Location> _selectedVertices = new();
     private List<Location> _availableVertices = new();
 

@@ -2,35 +2,32 @@
 using System;
 using System.Collections.Generic;
 using Model.Enumerations;
-using UnityEngine;
 
 public class BuildingManager : IBuildingManager
 {
     public event EventHandler<Location>? OnRoadCellBuilt; 
     public event EventHandler<Location>? OnRoadCellDemolished; 
+    public event EventHandler<OnModelChangedEventArgs>? OnModelChanged;
     
-    private readonly Grid<GridObject> _grid;
+    
+    private readonly Grid<ModelGridObject> _grid;
     private readonly List<IAdvancable> _advancables;
-    private readonly CellVisualService _cellVisualService;
     private readonly CityService _cityService;
     
     
     public BuildingManager(
-        Grid<GridObject> grid,
+        Grid<ModelGridObject> grid,
         CityService cityService,
-        Transform parentTransform,
-        List<IAdvancable> advancables,
-        Dictionary<Type, CellObjectTypeSO> cellLookup)
+        List<IAdvancable> advancables)
     {
         _grid = grid;
         _cityService = cityService;
         _advancables = advancables;
-        _cellVisualService = new CellVisualService(grid, parentTransform, cellLookup);
     }
 
-    public bool TryBuild(CellObjectTypeSO cellObjectTypeSo, Location location)
+    public bool TryBuild(Cell cell)
     {
-        Cell cell = cellObjectTypeSo.Create(location);
+        
         List<Location> gridPositionList = cell.GetGridPositionList();
 
         if (cell is not City && !CheckIfCanBuild(gridPositionList))
@@ -40,14 +37,14 @@ public class BuildingManager : IBuildingManager
         
         Build(cell, gridPositionList);
         
-        InvokeRoadCellBuilt(cell, location);
+        InvokeRoadCellBuilt(cell, cell.Origin);
         
         return true;
     }
 
     public void TryDemolish(Location location)
     {
-        GridObject go = _grid.GetGridObject(location.X, location.Y);
+        ModelGridObject go = _grid.GetGridObject(location.X, location.Y);
 
         if (go.Model is null) return;
         if (!go.Model.Destroyable) return;
@@ -63,12 +60,12 @@ public class BuildingManager : IBuildingManager
 
         foreach (Location position in gridPositionList)
         {
-            GridObject? go = _grid.GetGridObject(position.X, position.Y);
+            ModelGridObject? go = _grid.GetGridObject(position.X, position.Y);
 
             if (go is not null && go.CanBuild()) continue;
 
             canBuild = false;
-            Debug.Log("Cant build here");
+            
             break;
         }
 
@@ -81,75 +78,74 @@ public class BuildingManager : IBuildingManager
         {
             for (int y = 0; y < _grid.Size.Height; y++)
             {
-                GridObject gridObject = _grid.GetGridObject(x, y);
+                ModelGridObject gridObject = _grid.GetGridObject(x, y);
 
                 if (gridObject.Model is null) continue;
 
                 if (x != gridObject.Model.Origin.X || y != gridObject.Model.Origin.Y) continue;
 
-                _cellVisualService.CreateVisualForCell(gridObject.Model);
                 AddCellToIAdvancableListIfIAdvancable(gridObject.Model);
+                InvokeOnModelChanged(gridObject.Model, gridObject.Model.Origin);
             }
         }
     }
 
-    private void InvokeRoadCellBuilt(Cell cell, Location location)
-    {
-        if (cell is not RoadCell) return;
-        
-        OnRoadCellBuilt?.Invoke(this, location);
-    }
-    
-    private void InvokeRoadCellDemolished(Cell cell, Location location)
-    {
-        if (cell is not RoadCell) return;
-        OnRoadCellDemolished?.Invoke(this, location);
-    }
 
     private void Build(Cell cell, List<Location> gridPositionList)
     {
-        if (cell is City){ _cityService.AddCity(cell, gridPositionList); }
-        else
+        if (cell is City){ BuildCity(cell, gridPositionList); }
+        else if (cell is BusStop busStop){ BuildBusStop(busStop, gridPositionList);}
+        else if (cell is RoadCell roadCell){ BuildRoadCell(roadCell, gridPositionList);}
+        else{ BuildCell(cell, gridPositionList); }
+        
+        
+        if (cell is IVisitableBuiling)
         {
-            if (cell is BusStop busStop)
-            {
-                busStop.SetCityService(_cityService);
-                busStop.LocateAndSetCity();
-            }
-
-            if (cell is RoadCell roadCell)
-            {
-                if (IsRoadVertexPoint(roadCell))
-                {
-                    roadCell.SetIsVertexPoint(true);
-                }
-            }
-
-            if (cell is IVisitableBuiling)
-            {
-                ConvertRoadsToVertexPoints(cell);
-            }
-            
-            SetModelsValueInGridObjects(cell, gridPositionList);
-            _cellVisualService.CreateVisualForCell(cell);
+            ConvertRoadsToVertexPoints(cell);
         }
+    }
+
+    #region BuildMethods
+
+    private void BuildCell(Cell cell, List<Location> gridPositionList)
+    {
+        SetModelsValueInGridObjects(cell, gridPositionList);
+        AddCellToIAdvancableListIfIAdvancable(cell);
+        InvokeOnModelChanged(cell, cell.Origin);
+    }
+    
+    private void BuildCity(Cell cell, List<Location> gridPositionList)
+    {
+        _cityService.AddCity(cell, gridPositionList);
         AddCellToIAdvancableListIfIAdvancable(cell);
     }
 
-    
-
-    private void Demolish(GridObject go, List<Location> gridPositionList)
+    private void BuildBusStop(BusStop busStop, List<Location> gridPositionList)
     {
-        RemoveFromIAdvancablesList(go);
-        _cellVisualService.DestroyVisualOnModelOrigin(go);
-        go.DestroyModel();
-        ClearModelFromGridObjects(gridPositionList);
+        busStop.SetCityService(_cityService);
+        busStop.LocateAndSetCity();
+        BuildCell(busStop, gridPositionList);
     }
 
-    private void RemoveFromIAdvancablesList(GridObject go)
+    private void BuildRoadCell(RoadCell roadCell, List<Location> gridPositionList)
     {
-        if (go.Model is null) return;
+        if (IsRoadVertexPoint(roadCell)){ roadCell.SetIsVertexPoint(true); }
+        BuildCell(roadCell, gridPositionList);
+    }
+    
+    #endregion
 
+    private void Demolish(ModelGridObject go, List<Location> gridPositionList)
+    {
+        Location origin = go.Model!.Origin;
+        RemoveFromIAdvancablesList(go);
+        go.ClearModel();
+        ClearModelFromGridObjects(gridPositionList);
+        InvokeOnModelChanged(go.Model, origin);
+    }
+
+    private void RemoveFromIAdvancablesList(ModelGridObject go)
+    {
         if (go.Model is IAdvancable advancable && _advancables.Contains(advancable))
         {
             _advancables.Remove(advancable);
@@ -160,7 +156,7 @@ public class BuildingManager : IBuildingManager
     {
         foreach (Location position in gridPositionList)
         {
-            GridObject go = _grid.GetGridObject(position.X, position.Y);
+            ModelGridObject go = _grid.GetGridObject(position.X, position.Y);
             go.ClearModel();
         }
     }
@@ -171,7 +167,7 @@ public class BuildingManager : IBuildingManager
 
         foreach (Location position in gridPositionList)
         {
-            GridObject go = _grid.GetGridObject(position.X, position.Y);
+            ModelGridObject go = _grid.GetGridObject(position.X, position.Y);
             go.SetModel(cell);
         }
     }
@@ -207,7 +203,7 @@ public class BuildingManager : IBuildingManager
                 if((x == xFrom && y == yFrom) || (x == xTo && y == yTo) ||
                    (x == xFrom && y == yTo) || (x == xTo && y == yFrom)) continue;
                 
-                GridObject gridObject = _grid.GetGridObject(x, y);
+                ModelGridObject gridObject = _grid.GetGridObject(x, y);
                 if (gridObject?.Model is not RoadCell roadCell) continue;
 
                 roadCell.SetIsVertexPoint(true);
@@ -215,5 +211,22 @@ public class BuildingManager : IBuildingManager
             }
         }
     }
+    
+    private void InvokeOnModelChanged(Cell? cell, Location location)
+    {
+        OnModelChanged?.Invoke(this, new OnModelChangedEventArgs(cell, location));
+    }
 
+    private void InvokeRoadCellBuilt(Cell cell, Location location)
+    {
+        if (cell is not RoadCell) return;
+        
+        OnRoadCellBuilt?.Invoke(this, location);
+    }
+    
+    private void InvokeRoadCellDemolished(Cell cell, Location location)
+    {
+        if (cell is not RoadCell) return;
+        OnRoadCellDemolished?.Invoke(this, location);
+    }
 }

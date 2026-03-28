@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 public class HighlightService
 {
-    private readonly Grid<GridObject> _grid;
+    private readonly Grid<ModelGridObject> _grid;
 
-    public HighlightService(Grid<GridObject> grid)
+    public HighlightService(Grid<ModelGridObject> grid)
     {
         _grid = grid;
     }
@@ -48,7 +48,7 @@ public class HighlightService
         List<IHighlightable> highlightables = new();
         foreach (Location location in locations)
         {
-            GridObject gridObject = _grid.GetGridObject(location.X, location.Y);
+            ModelGridObject gridObject = _grid.GetGridObject(location.X, location.Y);
             if (gridObject?.Model is not IHighlightable highlightable) continue;
             highlightables.Add(highlightable);
         }

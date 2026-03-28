@@ -23,7 +23,7 @@ public class GridManager : MonoBehaviour
     #region Public Properties
 
     public IBuildingManager BuildingManager => _buildingManager!;
-    public Grid<GridObject> Grid => _grid;
+    public Grid<ModelGridObject> Grid => _grid;
     public IBuildSelectionManager BuildSelectionManager => _buildSelectionManager!;
     
     #endregion
@@ -46,11 +46,11 @@ public class GridManager : MonoBehaviour
 
     private Size _gridSize = new Size(10, 10);
 
-    private Grid<GridObject> _grid = new Grid<GridObject>(
+    private Grid<ModelGridObject> _grid = new Grid<ModelGridObject>(
         new Size(1, 1),
         1,
         new SysVector3(0, 0, 0),
-        (g, l) => new GridObject(g, l));
+        (g, l) => new ModelGridObject(g, l));
 
     private readonly List<IAdvancable> _advancables = new();
     private IBuildSelectionManager? _buildSelectionManager;
@@ -58,6 +58,7 @@ public class GridManager : MonoBehaviour
     private List<CellObjectTypeSO> _cellObjectTypeSos = new();
     private IBuildingManager? _buildingManager;
     private CityService? _cityService;
+    private CellVisualService? _cellVisualService;
 
     #endregion
 
@@ -69,24 +70,23 @@ public class GridManager : MonoBehaviour
         BuildLookup();
         
         _gridSize = new Size(gridSizeX, gridSizeY);
-        _grid = new Grid<GridObject>(
+        _grid = new Grid<ModelGridObject>(
             _gridSize,
             gridCellSize,
             gridOriginPosition.SV3(),
-            (g, l) => new GridObject(g, l));
+            (g, l) => new ModelGridObject(g, l));
         
         _cityService = new CityService();
         
         _buildingManager = new BuildingManager(
             _grid,
             _cityService,
-            transform,
-            _advancables,
-            _cellLookup!);
+            _advancables);
 
+        _cellVisualService = new CellVisualService(_grid, _buildingManager, transform, _cellLookup);
         
-        Location firstGridObjectsLocation = _grid.GetGridObject(0, 0).Location;
-        mapFloor!.position = new UniVector3(firstGridObjectsLocation.X, -0.01f, firstGridObjectsLocation.Y);
+        var firstGridObjectsPosition = _grid.GetWorldPosition(0, 0);
+        mapFloor!.position = new UniVector3(firstGridObjectsPosition.X, -0.01f, firstGridObjectsPosition.Y);
         mapFloor!.localScale = new UniVector3(_grid.Size.Width, 0, _grid.Size.Height);
 
         _buildingManager.BuildFromExistingGrid();
@@ -190,7 +190,7 @@ public class GridManager : MonoBehaviour
         UniVector3 mousePos = Utils.GetMouseWorldPosition();
         _grid.GetXY(mousePos.SV3(), out int x, out int y);
 
-        _buildingManager.TryBuild(BuildSelectionManager.SelectedObjectType, new Location(x, y));
+        _buildingManager.TryBuild(BuildSelectionManager.SelectedObjectType.Create(new Location(x, y)));
     }
 
     private void GameInputOnDeleteKeyPressed(object? sender, EventArgs e)
@@ -245,8 +245,8 @@ public class GridManager : MonoBehaviour
 
         _grid.OnGridObjectChanged += (sender, eventArgs) =>
         {
-            debugTextArray[eventArgs.location.X][eventArgs.location.Y].text =
-                _grid.GetGridObject(eventArgs.location.X, eventArgs.location.Y).ToString();
+            debugTextArray[eventArgs.Location.X][eventArgs.Location.Y].text =
+                _grid.GetGridObject(eventArgs.Location.X, eventArgs.Location.Y).ToString();
         };
     }
 

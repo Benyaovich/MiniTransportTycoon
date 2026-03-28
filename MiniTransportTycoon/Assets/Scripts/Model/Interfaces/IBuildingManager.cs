@@ -6,7 +6,8 @@ public interface IBuildingManager
 {
     public event EventHandler<Location>? OnRoadCellBuilt;
     public event EventHandler<Location>? OnRoadCellDemolished;
-    public bool TryBuild(CellObjectTypeSO cellObjectTypeSo, Location location);
+    public event EventHandler<OnModelChangedEventArgs>? OnModelChanged;
+    public bool TryBuild(Cell cell);
     public void TryDemolish(Location location);
     public void BuildFromExistingGrid();
 }

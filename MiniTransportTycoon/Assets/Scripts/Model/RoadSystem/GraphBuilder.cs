@@ -3,12 +3,12 @@ using System;
 using System.Collections.Generic;
 using Model.Enumerations;
 
-public class GraphBuilder<T> : IGraphBuilder where T : IHasCellModel
+public class GraphBuilder : IGraphBuilder
 {
-    private readonly IGrid<T> _grid;
+    private readonly IGrid<ModelGridObject> _grid;
     private readonly IGraph _graph;
 
-    public GraphBuilder(IGrid<T> grid, IGraph graph)
+    public GraphBuilder(IGrid<ModelGridObject> grid, IGraph graph)
     {
         _grid = grid;
         _graph = graph;
@@ -156,7 +156,7 @@ public class GraphBuilder<T> : IGraphBuilder where T : IHasCellModel
     
     private RoadCell? GetRoadCell(Location location)
     {
-        IHasCellModel? gridObject = _grid.GetGridObject(location.X, location.Y);
+        ModelGridObject? gridObject = _grid.GetGridObject(location.X, location.Y);
         return gridObject?.Model as RoadCell;
     }
 

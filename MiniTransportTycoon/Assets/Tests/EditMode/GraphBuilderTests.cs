@@ -8,17 +8,17 @@ using NUnit.Framework.Internal;
 
 public class GraphBuilderTests
 {
-    private GraphBuilder<MockGridObject> _graphBuilder;
-    private Grid<MockGridObject> _grid;
+    private GraphBuilder _graphBuilder;
+    private Grid<ModelGridObject> _grid;
     private IGraph _graph;
     [SetUp]
     public void Init()
     {
-        _grid= new Grid<MockGridObject>(new Size(5, 5), 10, Vector3.Zero,
-            (g, l) => new MockGridObject(g,l));
+        _grid= new Grid<ModelGridObject>(new Size(5, 5), 10, Vector3.Zero,
+            (g, l) => new ModelGridObject(g,l));
         _graph = new Graph();
         
-        _graphBuilder = new GraphBuilder<MockGridObject>(_grid, _graph);
+        _graphBuilder = new GraphBuilder(_grid, _graph);
     }
         
     [Test]
@@ -401,26 +401,6 @@ public class GraphBuilderTests
         var gridObject = _grid.GetGridObject(location.X, location.Y);
         gridObject.SetModel(forest);
         return forest;
-    }
-    
-    
-    
-    private class MockGridObject : IHasCellModel
-    {
-        public Cell Model { get; set; }
-        public void SetModel(Cell cell)
-        {
-            Model = cell;
-        }
-
-        public void ClearModel()
-        {
-            Model = null;
-        }
-
-        public MockGridObject(Grid<MockGridObject> g, Location l)
-        {
-        }
     }
 
     #endregion

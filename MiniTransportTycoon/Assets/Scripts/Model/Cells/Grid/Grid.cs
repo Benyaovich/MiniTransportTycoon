@@ -20,8 +20,8 @@ public class Grid<T> : IGrid<T>
 
     #region Fields
     
-    private Vector3 originPosition;
-    private T[,] gridArray;
+    private readonly Vector3 _originPosition;
+    private readonly T[,] _gridArray;
 
     #endregion
 
@@ -30,14 +30,14 @@ public class Grid<T> : IGrid<T>
     {
         Size = size;
         CellSize = cellSize;
-        this.originPosition = originPosition;
-        gridArray = new T[size.Width, size.Height];
+        _originPosition = originPosition;
+        _gridArray = new T[size.Width, size.Height];
         
         for (int y = 0; y < Size.Height; y++)
         {
             for (int x = 0; x < Size.Width; x++)
             {
-                gridArray[x, y] = createGridObject(this, new Location(x,y));
+                _gridArray[x, y] = createGridObject(this, new Location(x,y));
             }
         }
     }
@@ -47,7 +47,7 @@ public class Grid<T> : IGrid<T>
 
     public Vector3 GetWorldPosition(int x, int y)
     {
-        return new Vector3(x, y, 0) * CellSize + originPosition;
+        return new Vector3(x, y, 0) * CellSize + _originPosition;
     }
 
     public Vector3 GetWorldPosition(Location loc)
@@ -61,8 +61,8 @@ public class Grid<T> : IGrid<T>
     #region GetCoordinatesXYOrLocation
 
         public void GetXY(Vector3 worldPosition, out int x, out int y) {
-            x = (int)MathF.Floor((worldPosition - originPosition).X / CellSize);
-            y = (int)MathF.Floor((worldPosition - originPosition).Y / CellSize);
+            x = (int)MathF.Floor((worldPosition - _originPosition).X / CellSize);
+            y = (int)MathF.Floor((worldPosition - _originPosition).Y / CellSize);
         }
         
         public Location GetXY(Vector3 worldPosition)
@@ -75,11 +75,12 @@ public class Grid<T> : IGrid<T>
     #endregion
     
     #region SetGridObjects
-    public void SetGridObject(int x, int y, T value) {
-        if (x >= 0 && y >= 0 && x < Size.Width && y < Size.Height) {
-            gridArray[x, y] = value;
-            InvokeOnGridObjectChanged(x,y);
-        }
+    public void SetGridObject(int x, int y, T value)
+    {
+        if (x < 0 || y < 0 || x >= Size.Width || y >= Size.Height) return;
+        
+        _gridArray[x, y] = value;
+        InvokeOnGridObjectChanged(x,y);
     }
     
     public void SetGridObject(Location l, T value) {
@@ -95,10 +96,11 @@ public class Grid<T> : IGrid<T>
     #region GetGridObjects
     public T GetGridObject(int x, int y) {
         if (x >= 0 && y >= 0 && x < Size.Width && y < Size.Height) {
-            return gridArray[x, y];
-        } else {
-            return default(T);
+            return _gridArray[x, y];
         }
+        
+        return default;
+        
     }
 
     public T GetGridObject(Location location)
@@ -116,10 +118,10 @@ public class Grid<T> : IGrid<T>
     #region InvokeOnGridObjectChangedEvent
     
     public void InvokeOnGridObjectChanged(int x, int y) {
-        OnGridObjectChanged?.Invoke(this, new OnGridObjectChangedEventArgs { location = new Location(x,y) });
+        OnGridObjectChanged?.Invoke(this, new OnGridObjectChangedEventArgs { Location = new Location(x,y) });
     }
     public void InvokeOnGridObjectChanged(Location loc) {
-        OnGridObjectChanged?.Invoke(this, new OnGridObjectChangedEventArgs { location = loc });
+        OnGridObjectChanged?.Invoke(this, new OnGridObjectChangedEventArgs { Location = loc });
     }
     
     #endregion
@@ -128,5 +130,5 @@ public class Grid<T> : IGrid<T>
 
 public class OnGridObjectChangedEventArgs : EventArgs
 {  
-    public Location location;
+    public Location Location;
 }
