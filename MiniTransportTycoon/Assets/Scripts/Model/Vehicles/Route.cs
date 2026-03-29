@@ -15,7 +15,14 @@ public class Route
     
     public Direction CurrentDirection => (NextVertex - CurrentVertex).ToDirection();
 
-    public Direction NextDirection => (Vertices.Peek() - NextVertex).ToDirection();
+    public Direction NextDirection
+    {
+        get
+        {
+            if (Vertices.Count == 0) return PreviousDirection;
+            return (Vertices.Peek() - NextVertex).ToDirection();
+        }
+    }
 
     public Direction PreviousDirection => (CurrentVertex - PreviousVertex).ToDirection();
     
