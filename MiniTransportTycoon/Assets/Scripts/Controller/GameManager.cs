@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 public class GameManager : MonoBehaviour
 {
     
-    
     private IBuildingManager _buildingManager;
     private IGraph _graph;
     private PathHandler _pathHandler;
@@ -33,30 +32,22 @@ public class GameManager : MonoBehaviour
     {
         _buildingManager.OnRoadCellBuilt += BuildingManagerOnRoadCellBuilt;
         _buildingManager.OnRoadCellDemolished += BuildingManagerOnRoadCellDemolished;
+        RouteCreationManager.Instance.OnRouteCreationStarted += InstanceOnRouteCreationStarted;
+        RouteCreationManager.Instance.OnRouteCreationFinished += InstanceOnRouteCreationFinished;
     }
+
+    
 
     private void OnDisable()
     {
         _buildingManager.OnRoadCellBuilt -= BuildingManagerOnRoadCellBuilt;
         _buildingManager.OnRoadCellDemolished -= BuildingManagerOnRoadCellDemolished;
+        RouteCreationManager.Instance.OnRouteCreationStarted -= InstanceOnRouteCreationStarted;
+        RouteCreationManager.Instance.OnRouteCreationFinished -= InstanceOnRouteCreationFinished;
     }
 
     private void Update()
     {
-        if (Keyboard.current.tabKey.wasPressedThisFrame)
-        {
-            if (_gameplayState == GameplayState.Building)
-            {
-                _gameplayState = GameplayState.RouteCreating;
-                _buildSelectionManager.ClearSelectedObjectType();
-                RouteCreationManager.Instance!.StartRouteCreation();
-            }
-            else if (_gameplayState == GameplayState.RouteCreating)
-            {
-                _gameplayState = GameplayState.Building;
-                RouteCreationManager.Instance!.ExitRouteCreation();
-            }
-        }
         
         switch (_gameplayState)
         {
@@ -71,6 +62,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    
+    private void InstanceOnRouteCreationFinished(object sender, EventArgs e)
+    {
+        _gameplayState = GameplayState.Building;
+    }
+
+    private void InstanceOnRouteCreationStarted(object sender, EventArgs e)
+    {
+        _buildSelectionManager.ClearSelectedObjectType();
+        _gameplayState = GameplayState.RouteCreating;
+    }
+    
     private void BuildingManagerOnRoadCellBuilt(object sender, Location location)
     {
         _graphBuilder.CreateConnectionsAt(location);
