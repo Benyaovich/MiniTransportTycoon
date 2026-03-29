@@ -4,18 +4,22 @@ using System.Linq;
 using Model.RoadSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class RouteCreationManager : MonoBehaviour
 {
     public static RouteCreationManager Instance { get; private set; }
     public event EventHandler<List<Location>> OnRouteCreated;
+    public event EventHandler OnRouteCreationStarted; 
+    public event EventHandler OnRouteCreationFinished; 
+    public bool InRouteCreation { get; private set; }
+    
     private HighlightService _highlightService;
     private PathHandler _pathHandler;
     private Grid<ModelGridObject> _grid;
     private List<Location> _selectedVertices = new();
     private List<Location> _availableVertices = new();
 
-    private bool _isEnabled = false;
 
     private void Awake()
     {
@@ -44,18 +48,20 @@ public class RouteCreationManager : MonoBehaviour
         _selectedVertices.Clear();
         _availableVertices.Clear();
         _highlightService.EnableHighlight(_pathHandler.Graph.Vertices);
-        _isEnabled = true;
+        InRouteCreation = true;
+        OnRouteCreationStarted?.Invoke(this, EventArgs.Empty);
     }
 
     public void ExitRouteCreation()
     {
         _highlightService.DisableHighlight(_pathHandler.Graph.Vertices);
-        _isEnabled = false;
+        InRouteCreation = false;
+        OnRouteCreationFinished?.Invoke(this, EventArgs.Empty);
     }
     
     private void GameInputOnLeftClickPressed(object sender, EventArgs e)
     {
-        if (!_isEnabled) return;
+        if (!InRouteCreation) return;
         
         Vector3 mousePos = Utils.GetMouseWorldPosition();
         _grid.GetXY(mousePos.SV3(), out int x, out int y);
@@ -73,7 +79,7 @@ public class RouteCreationManager : MonoBehaviour
             _highlightService.DisableHighlight(_availableVertices);
             OnRouteCreated?.Invoke(this, _pathHandler.GetPathFromRoute(_selectedVertices));
             
-            _isEnabled = false;
+            ExitRouteCreation();
         }
     }
 
