@@ -1,25 +1,26 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/USS/GameUIVisualTreeStyle.uss?fileID=7433441132597879392&amp;guid=d594cda548d638443a4cd751fc3e73b9&amp;type=3#GameUIVisualTreeStyle"/>
+    <Style src="project://database/Assets/UI%20Toolkit/USS/UniversalStyle.uss?fileID=7433441132597879392&amp;guid=1858bf694d9c92140ab802dc915d4236&amp;type=3#UniversalStyle"/>
     <ui:VisualElement name="NavBar" style="flex-grow: 0; flex-direction: row; min-height: auto; width: auto; align-items: center; align-content: center; margin-top: 10px; margin-bottom: 10px; flex-shrink: 1;">
-        <ui:VisualElement style="flex-grow: 0; flex-direction: row; margin-right: 15px;">
+        <ui:VisualElement class="blocksGameInput" style="flex-grow: 0; flex-direction: row; margin-right: 15px;">
             <ui:Button text="Menu" name="MenuBtn" class="navBarButton"/>
         </ui:VisualElement>
-        <ui:VisualElement style="flex-grow: 0; flex-direction: row; margin-left: 15px;">
+        <ui:VisualElement class="blocksGameInput" style="flex-grow: 0; flex-direction: row; margin-left: 15px;">
             <ui:Button text="Buy Vehicles" name="BuyVehiclesBtn" class="navBarButton" style="margin-bottom: 2px; margin-top: 2px;"/>
             <ui:Button text="Owned Vehicles" name="OwnedVehiclesBtn" class="navBarButton"/>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="ControlsHelpOverlay" class="ControlsHelpOverlay" style="background-color: rgba(140, 140, 140, 0.31);">
+    <ui:VisualElement name="ControlsHelpOverlay" class="ControlsHelpOverlay">
         <ui:Label text="Move: WASD" class="ControlsHelpOverlayLabel"/>
         <ui:Label text="Rotate camera: Right click drag" class="ControlsHelpOverlayLabel"/>
         <ui:Label text="Select buildings: 1,2,3" class="ControlsHelpOverlayLabel"/>
         <ui:Label text="Delete building: DEL" class="ControlsHelpOverlayLabel"/>
         <ui:Label text="Route creation mode: TAB" name="Label" class="ControlsHelpOverlayLabel"/>
     </ui:VisualElement>
-    <ui:VisualElement name="VehiclePurchasePanel" style="flex-grow: 1; position: absolute; right: 0; bottom: 0; top: 100px; min-height: 200px; max-height: 600px;">
+    <ui:VisualElement name="VehiclePurchasePanel" class="blocksGameInput" style="flex-grow: 1; position: absolute; right: 0; bottom: 0; top: 100px; min-height: 200px; max-height: 600px;">
         <ui:ScrollView horizontal-scroller-visibility="Hidden" name="VehiclePurchaseList" style="position: absolute; right: 0; top: 0; max-height: 600px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-color: rgb(106, 106, 106); padding-left: 3px; padding-top: 3px; padding-right: 3px; padding-bottom: 3px;"/>
     </ui:VisualElement>
-    <ui:VisualElement name="VehicleOwnedPanel" style="flex-grow: 1; right: 0; bottom: 0; top: 100px; min-height: 200px; max-height: 600px; visibility: visible; display: flex; position: absolute;">
+    <ui:VisualElement name="VehicleOwnedPanel" class="blocksGameInput" style="flex-grow: 1; right: 0; bottom: 0; top: 100px; min-height: 200px; max-height: 600px; visibility: visible; display: flex; position: absolute;">
         <ui:ScrollView horizontal-scroller-visibility="Hidden" name="VehicleOwnedList" style="position: absolute; right: 0; top: 0; max-height: 600px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-color: rgb(106, 106, 106); padding-left: 3px; padding-top: 3px; padding-right: 3px; padding-bottom: 3px;"/>
         <ui:VisualElement name="NoVehiclesOwnedInfoPanel" style="flex-grow: 1; position: absolute; background-color: rgba(195, 195, 195, 0.31); width: 400px; -unity-text-align: middle-center; height: 100%; align-items: center; align-content: center; align-self: center; justify-content: center; visibility: visible; right: 0; bottom: 0; top: 0; display: none;">
             <ui:Label text="You don&apos;t have any vehicles." name="Text" style="font-size: 32px; white-space: normal;"/>

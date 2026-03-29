@@ -72,7 +72,7 @@ public class GraphBuilderTests
         var road = CreateTwoWayCornerURRoad(new Location(0,0));
         CreateTwoWayUDRoad(new Location(0, 1));
         CreateTwoWayUDRoad(new Location(0, 2));
-        var vertex = CreateTwoWayCornerURRoad(new Location(0, 3));
+        var vertex = CreateTwoWayCornerDLRoad(new Location(0, 3));
         _graph.AddVertex(vertex.Origin);
         
         Assert.AreEqual(vertex.Origin, _graphBuilder.GetNextVertexInDirection(road, Direction.Up));
@@ -391,6 +391,14 @@ public class GraphBuilderTests
     private RoadCell CreateTwoWayLRRoad(Location location)
     {
         RoadCell road = new TwoWayLR(location);
+        var gridObject = _grid.GetGridObject(location.X, location.Y);
+        gridObject.SetModel(road);
+        return road;
+    }
+    
+    private RoadCell CreateTwoWaURRoad(Location location)
+    {
+        RoadCell road = new TwoWayCornerUR(location);
         var gridObject = _grid.GetGridObject(location.X, location.Y);
         gridObject.SetModel(road);
         return road;

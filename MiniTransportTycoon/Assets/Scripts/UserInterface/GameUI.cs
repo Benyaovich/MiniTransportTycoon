@@ -28,7 +28,6 @@ public class GameUI : MonoBehaviour
         _ownedVehiclesBtn = root.Q<Button>("OwnedVehiclesBtn");
         _vehiclePurchasePanel = root.Q<VisualElement>("VehiclePurchasePanel");
         _vehicleOwnedPanel = root.Q<VisualElement>("VehicleOwnedPanel");
-
         _buyVehiclesBtn.clicked += ToggleBuyVehicleListView;
         _ownedVehiclesBtn.clicked += ToggleOwnedVehicleListView;
 

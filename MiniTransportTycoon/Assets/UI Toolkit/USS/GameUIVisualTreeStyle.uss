@@ -6,24 +6,46 @@
     font-size: 24px;
 }
 
-#ControlsHelpOverlay:hover {
-    background-color: rgb(195, 195, 195);
-    scale: 1 1;
+.ControlsHelpOverlay:hover {
+    background-color: rgb(166, 166, 166);
+    transition-property: all;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    padding-top: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
 }
 
-#ControlsHelpOverlay {
-    flex-grow: 0;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    background-color: rgb(118, 118, 118);
-    border-top-right-radius: 15px;
-    padding-left: 16px;
-    padding-top: 16px;
-    padding-right: 16px;
-    padding-bottom: 16px;
+.ControlsHelpOverlay {
+    background-color: rgba(140, 140, 140, 0.31);
     transition-property: background-color;
+    bottom: 0;
+    left: 0;
+    position: absolute;
     transition-duration: 0.2s;
+    padding-top: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    border-top-right-radius: 10px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgba(140, 140, 140, 0.31);
+    border-right-color: rgba(140, 140, 140, 0.31);
+    border-top-color: rgba(140, 140, 140, 0.31);
+    border-bottom-color: rgba(140, 140, 140, 0.31);
 }
 
 .navBarButton {

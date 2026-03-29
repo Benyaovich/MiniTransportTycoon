@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using System.Collections.Generic;
 using Controller.Vehicles;
 using ScriptableObjects.Vehicles;
 using UnityEngine;
@@ -54,12 +55,50 @@ public class VehicleOwnedListUI : MonoBehaviour
             element.Q<Label>("Maintenance").text = "Maintenance: " + vehicleSo.maintenanceCost;
         
         
+            Button pathBtn = element.Q<Button>("PathBtn");
+            pathBtn.clicked += PathBtnClicked;
+            
+            void PathBtnClicked()
+            {
+                RouteCreationManager routeCreationManager = RouteCreationManager.Instance;
+                if (routeCreationManager.InRouteCreation)
+                {
+                    routeCreationManager.ExitRouteCreation();
+                    return;
+                }
+                
+                routeCreationManager.StartRouteCreation();
+                
+                void OnRouteCreated(object? sender, List<Location> route)
+                {
+                    routeCreationManager.OnRouteCreated -= OnRouteCreated;
+                    vehicle.SetRoute(new Route(route));
+                    foreach (var loc in route)
+                    {
+                        Debug.Log(loc);
+                    }
+                }
+
+                routeCreationManager.OnRouteCreated += OnRouteCreated;
+            }
+            
+            
             Button sellBtn = element.Q<Button>("SellBtn");
-            sellBtn.clicked += () => vehicleManager.SellVehicle(vehicle);
+            sellBtn.clicked += SellBtnClicked;
+            
+            void SellBtnClicked()
+            {
+                sellBtn.clicked -= SellBtnClicked;
+                pathBtn.clicked -= PathBtnClicked;
+
+                vehicleManager.SellVehicle(vehicle);
+            }
+
             
             _vehicleList.Add(element);
         }
     }
+
 
     private void InfoPanel()
     {
