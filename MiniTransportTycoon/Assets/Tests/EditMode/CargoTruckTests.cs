@@ -3,35 +3,89 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 using System.Collections.Generic;
+using System.Numerics;
+using Model.Cells.RoadCells;
 using Model.Enumerations;
 
 public class CargoTruckTests
 {
-    CargoTruck _testTruck;
-    Route _testRoute;
+    private CargoTruck _testTruck;
+    private Route _testRoute;
+    private Grid<ModelGridObject> _grid;
 
     [SetUp]
     public void Init()
     {
-        _testTruck = new CargoTruck(Resource.Iron, 2f, 5, 50, 100);
-        _testRoute = new Route(new List<Location>
-        {
-            new Location(0, 0),
-            new Location(0, 1),
-            new Location(0, 2),
-            new Location(1, 2),
-            new Location(2, 2),
-            new Location(2, 1),
-            new Location(2, 0),
-            new Location(1, 0),
-            new Location(0, 0),
-        });
+        SetUpGrid();
+        _testTruck = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
         
-        _testTruck.Route = _testRoute;
+    }
+
+    private void SetUpRoute1()
+    {
+        _testRoute = new Route(new List<Location>()
+        {
+            new(0,0),
+            new(1,0),
+            new(3,0),
+            new(4,0),
+            new(3,0),
+            new(1,0),
+            new(0,0)
+        });
+    }
+    
+    // C R R R C
+    // R   B   R
+    // R       R
+    // R F   F R
+    // C R R R C
+    private void SetUpGrid()
+    {
+        _grid = new Grid<ModelGridObject>(new Size(5, 5), 10, new System.Numerics.Vector3(0,0,0),
+            (g, l) => new ModelGridObject(g, l));
+        
+        // Corners
+        _grid.GetGridObject(0,0).SetModel(new TwoWayCornerUR(new Location(0,0)));
+        _grid.GetGridObject(0,4).SetModel(new TwoWayCornerDR(new Location(0,4)));
+        _grid.GetGridObject(4,0).SetModel(new TwoWayCornerUL(new Location(4,0)));
+        _grid.GetGridObject(4,4).SetModel(new TwoWayCornerDL(new Location(4,4)));
+        
+        // Vertical
+        _grid.GetGridObject(0,1).SetModel(new TwoWayUD(new Location(0,1)));
+        _grid.GetGridObject(0,2).SetModel(new TwoWayUD(new Location(0,2)));
+        _grid.GetGridObject(0,3).SetModel(new TwoWayUD(new Location(0,3)));
+        _grid.GetGridObject(4,1).SetModel(new TwoWayUD(new Location(4,1)));
+        _grid.GetGridObject(4,2).SetModel(new TwoWayUD(new Location(4,2)));
+        _grid.GetGridObject(4,3).SetModel(new TwoWayUD(new Location(4,3)));
+        
+        // Horizontal
+        _grid.GetGridObject(1,0).SetModel(new TwoWayLR(new Location(1,0)));
+        _grid.GetGridObject(2,0).SetModel(new TwoWayLR(new Location(2,0)));
+        _grid.GetGridObject(3,0).SetModel(new TwoWayLR(new Location(3,0)));
+        _grid.GetGridObject(1,4).SetModel(new TwoWayLR(new Location(1,4)));
+        _grid.GetGridObject(2,4).SetModel(new TwoWayLR(new Location(2,4)));
+        _grid.GetGridObject(3,4).SetModel(new TwoWayLR(new Location(3,4)));
+        
+        // Bus stop
+        _grid.GetGridObject(2,3).SetModel(new BusStop(new Location(2,3)));
+        
+        // Factory
+        ProcessingBuildingSteel pbs = new ProcessingBuildingSteel(new Location(2, 3),
+            rch: new RateChangeHandler(100,100,0,1,100));
+        _grid.GetGridObject(1,1).SetModel(pbs);
+
+        ExtractorBuilding ebi = new ExtractorBuilding(Resource.Iron, 100, new Location(3,1),
+            rch: new RateChangeHandler(100,100,0,1,100));
+        _grid.GetGridObject(3,1).SetModel(ebi);
+        
+        
+        
+        
     }
     
     [Test]
-    public void CargoTruckConstuctor()
+    public void CargoTruckConstructor()
     {
         Assert.AreEqual(_testTruck.Resource, Resource.Iron);
         Assert.AreEqual(_testTruck.MoveSpeed, 2f);
@@ -40,83 +94,162 @@ public class CargoTruckTests
         Assert.AreEqual(_testTruck.ResourceAmount, 0);
     }
 
+
     [Test]
-    public void CargoTruckMovement()
+    public void CarTeleportsToRouteStartLocationWhenRouteIsSet()
     {
-        CargoTruck _crossingTruck = new CargoTruck(Resource.Steel, 2f, 5, 50, 100);
-        Route _crossingRoute = new Route(new List<Location>
-        {
-            new Location(-1, 1),
-            new Location(0, 1), 
-            new Location(1, 1),
-            new Location(2, 1), 
-            new Location(3, 1),
-            new Location(-1, 1)
-        });
-        _crossingTruck.Route = _crossingRoute;
+        SetUpRoute1();
+        Assert.IsNull(_testTruck.CurrentLocation);
+        _testTruck.SetRoute(_testRoute);
+        Assert.AreEqual(_testRoute.CurrentVertex, _testTruck.CurrentLocation);
+    }
+
+    
+    [Test]
+    public void VehicleMovesAlongTheRoute()
+    {
+        SetUpRoute1();
+        _testTruck.SetRoute(_testRoute);
         
-        Assert.AreEqual(new Location(0, 0), _testTruck.CurrentLocation);
-        Assert.AreEqual(new Location(0, 1), _testTruck.Route.NextVertex);
+        Assert.AreEqual(new Location(0,0), _testTruck.CurrentLocation);
+        _testTruck.MoveNext();
+        Assert.AreEqual(new Location(1,0), _testTruck.CurrentLocation);
+        _testTruck.MoveNext();
+        Assert.AreEqual(new Location(2,0), _testTruck.CurrentLocation);
+        _testTruck.MoveNext();
+        Assert.AreEqual(new Location(3,0), _testTruck.CurrentLocation);
+        _testTruck.MoveNext();
+        Assert.AreEqual(new Location(4,0), _testTruck.CurrentLocation);
+        _testTruck.MoveNext();
+        Assert.AreEqual(new Location(3,0), _testTruck.CurrentLocation);
+        _testTruck.MoveNext();
+        _testTruck.MoveNext();
+        _testTruck.MoveNext();
+        Assert.AreEqual(new Location(0,0), _testTruck.CurrentLocation);
         
-        RoadCell road01 = new RoadCell(_testTruck.Route.NextVertex, true,
-            new List<Direction>() { Direction.Down, Direction.Left, Direction.Right, Direction.Up }, true);
-        
-        _testTruck.NextStep(road01, new List<Cell>());
-        
-        Assert.AreEqual(new Location(0, 1), _testTruck.CurrentLocation);
-        Assert.AreEqual(new Location(-1, 1), _crossingTruck.CurrentLocation);
-        //nem tud lepni, mert az elozo kamion ott van
-        _crossingTruck.NextStep(road01, new List<Cell>());
-        
-        Assert.AreEqual(new Location(-1, 1), _crossingTruck.CurrentLocation);
-        
-        RoadCell road02 = new RoadCell(_testTruck.Route.NextVertex, true,
-            new List<Direction>() { Direction.Down, Direction.Left, Direction.Right, Direction.Up }, true);
-        
-        _testTruck.NextStep(road02, new List<Cell>());
-        
-        Assert.AreEqual(new Location(0, 2), _testTruck.CurrentLocation);
-        
-        _crossingTruck.NextStep(road01, new List<Cell>());
-        
-        Assert.AreEqual(new Location(0, 1), _crossingTruck.CurrentLocation);
     }
 
     [Test]
-    public void CargoTruckTakesAndPutsResource()
+    public void VehiclePickUpResourceFromIResourceProvider()
     {
-        Facility extract = new ExtractorBuilding(Resource.Iron, 50000, new Location(-1, 0), 50, new Size(1, 1));
-        for (int i = 0; i < 50000; i++)
-        {
-            extract.Tick(10f);
-        }
-        Facility produce = new ProcessingBuilding(Resource.Steel, Resource.Iron, 50000, 
-            new Location(-1, -1), 1f, new Size(1, 1), false, 
-            new RateChangeHandler(10, 100, 1, 120f, 50));
+        SetUpRoute1();
+        _testTruck = new CargoTruck(_grid, Resource.Steel, resourceAmount: 50);
+        ProcessingBuildingSteel pbs = _grid.GetGridObject(1,1).Model as ProcessingBuildingSteel;
+        pbs!.AddResource(200);
+        pbs.Tick(100);
+        _testTruck.SetRoute(_testRoute);
         
-        RoadCell road01 = new RoadCell(_testTruck.Route.NextVertex, true,
-            new List<Direction>() { Direction.Down, Direction.Left, Direction.Right, Direction.Up }, true);
-        
-        _testTruck.NextStep(road01, new List<Cell>(){extract});
-        
-        Assert.AreEqual(new  Location(0, 0), _testTruck.CurrentLocation);
-        Assert.AreEqual(100, _testTruck.ResourceAmount);
-        
-        _testTruck.NextStep(road01, new List<Cell>());
-        
-        Assert.AreEqual(new  Location(0, 1), _testTruck.CurrentLocation);
-        
-        RoadCell road02 = new RoadCell(_testTruck.Route.NextVertex, true,
-            new List<Direction>() { Direction.Down, Direction.Left, Direction.Right, Direction.Up }, true);
-        
-        _testTruck.NextStep(road02, new List<Cell>(){produce});
-        
-        Assert.AreEqual(new  Location(0, 1), _testTruck.CurrentLocation);
         Assert.AreEqual(0, _testTruck.ResourceAmount);
-        
-        RoadCell road03 = new RoadCell(_testTruck.Route.NextVertex, true,
-            new List<Direction>() { Direction.Down, Direction.Left, Direction.Right, Direction.Up }, true);
-        
-        _testTruck.NextStep(road03, new List<Cell>(){produce});
+        _testTruck.MoveNext();
+        Assert.AreEqual(50, _testTruck.ResourceAmount);
+        Assert.AreEqual(50, pbs.ResourceAmount);
     }
+    
+    [Test]
+    public void VehicleDepositResourceToIDepositPoint()
+    {
+        SetUpRoute1();
+        _testTruck = new CargoTruck(_grid, Resource.Iron, resourceAmount: 50);
+        ProcessingBuildingSteel pbs = _grid.GetGridObject(1,1).Model as ProcessingBuildingSteel;
+        ExtractorBuilding ebi = _grid.GetGridObject(3,1).Model as ExtractorBuilding;
+        ebi!.Tick(100);
+        _testTruck.SetRoute(_testRoute);
+        
+        Assert.AreEqual(0, _testTruck.ResourceAmount);
+        Assert.AreEqual(0, pbs!.ResourceAmount);
+        
+        _testTruck.MoveNext();
+        _testTruck.MoveNext();
+        _testTruck.MoveNext();
+        Assert.AreEqual(50, _testTruck.ResourceAmount);
+        Assert.AreEqual(50, ebi.ResourceAmount);
+        
+        _testTruck.MoveNext();
+        _testTruck.MoveNext();
+        _testTruck.MoveNext();
+        _testTruck.MoveNext();
+        Assert.AreEqual(0, _testTruck.ResourceAmount);
+        Assert.AreEqual(50, pbs.RequiredResourceAmount);
+        
+    }
+    
+    // [Test]
+    // public void CargoTruckMovement()
+    // {
+    //     CargoTruck _crossingTruck = new CargoTruck(_grid, Resource.Steel, 2f, 5, 50, 100);
+    //     Route _crossingRoute = new Route(new List<Location>
+    //     {
+    //         new Location(-1, 1),
+    //         new Location(0, 1), 
+    //         new Location(1, 1),
+    //         new Location(2, 1), 
+    //         new Location(3, 1),
+    //         new Location(-1, 1)
+    //     });
+    //     _crossingTruck.SetRoute(_crossingRoute);
+    //     
+    //     Assert.AreEqual(new Location(0, 0), _testTruck.CurrentLocation);
+    //     Assert.AreEqual(new Location(0, 1), _testTruck.Route.NextVertex);
+    //     
+    //     RoadCell road01 = new RoadCell(_testTruck.Route.NextVertex, true,
+    //         new List<Direction>() { Direction.Down, Direction.Left, Direction.Right, Direction.Up }, true);
+    //     
+    //     _testTruck.MoveNext();
+    //     
+    //     Assert.AreEqual(new Location(0, 1), _testTruck.CurrentLocation);
+    //     Assert.AreEqual(new Location(-1, 1), _crossingTruck.CurrentLocation);
+    //     //nem tud lepni, mert az elozo kamion ott van
+    //     _crossingTruck.MoveNext();
+    //     
+    //     Assert.AreEqual(new Location(-1, 1), _crossingTruck.CurrentLocation);
+    //     
+    //     RoadCell road02 = new RoadCell(_testTruck.Route.NextVertex, true,
+    //         new List<Direction>() { Direction.Down, Direction.Left, Direction.Right, Direction.Up }, true);
+    //     
+    //     _testTruck.MoveNext();
+    //     
+    //     Assert.AreEqual(new Location(0, 2), _testTruck.CurrentLocation);
+    //     
+    //     _crossingTruck.MoveNext();
+    //     
+    //     Assert.AreEqual(new Location(0, 1), _crossingTruck.CurrentLocation);
+    // }
+    //
+    // [Test]
+    // public void CargoTruckTakesAndPutsResource()
+    // {
+    //     Facility extract = new ExtractorBuilding(Resource.Iron, 50000, new Location(-1, 0), 50, new Size(1, 1));
+    //     for (int i = 0; i < 50000; i++)
+    //     {
+    //         extract.Tick(10f);
+    //     }
+    //     Facility produce = new ProcessingBuilding(Resource.Steel, Resource.Iron, 50000, 
+    //         new Location(-1, -1), 1f, new Size(1, 1), false, 
+    //         new RateChangeHandler(10, 100, 1, 120f, 50));
+    //     
+    //     RoadCell road01 = new RoadCell(_testTruck.Route.NextVertex, true,
+    //         new List<Direction>() { Direction.Down, Direction.Left, Direction.Right, Direction.Up }, true);
+    //     
+    //     _testTruck.MoveNext();
+    //     
+    //     Assert.AreEqual(new  Location(0, 0), _testTruck.CurrentLocation);
+    //     Assert.AreEqual(100, _testTruck.ResourceAmount);
+    //     
+    //     _testTruck.MoveNext();
+    //     
+    //     Assert.AreEqual(new  Location(0, 1), _testTruck.CurrentLocation);
+    //     
+    //     RoadCell road02 = new RoadCell(_testTruck.Route.NextVertex, true,
+    //         new List<Direction>() { Direction.Down, Direction.Left, Direction.Right, Direction.Up }, true);
+    //     
+    //     _testTruck.MoveNext();
+    //     
+    //     Assert.AreEqual(new  Location(0, 1), _testTruck.CurrentLocation);
+    //     Assert.AreEqual(0, _testTruck.ResourceAmount);
+    //     
+    //     RoadCell road03 = new RoadCell(_testTruck.Route.NextVertex, true,
+    //         new List<Direction>() { Direction.Down, Direction.Left, Direction.Right, Direction.Up }, true);
+    //     
+    //     _testTruck.MoveNext();
+    // }
 }

@@ -77,11 +77,11 @@ public class BusStopTests
         
         bs.Tick(1);
         Assert.AreEqual(10, bs.NumOfPeople);
-        int amount = bs.GetPeopleFromBusStop(2);
+        int amount = bs.GetResource(2);
         Assert.AreEqual(2, amount);
         Assert.AreEqual(8, bs.NumOfPeople);
 
-        amount = bs.GetPeopleFromBusStop(20);
+        amount = bs.GetResource(20);
         Assert.AreEqual(8, amount);
         Assert.AreEqual(0, bs.NumOfPeople);
     }
@@ -96,7 +96,7 @@ public class BusStopTests
         
         Assert.AreEqual(100, city.NumOfPeople);
         Assert.AreEqual(0, bs.NumOfPeople);
-        bs.AddPeopleToBusStop(10);
+        bs.AddResource(10);
         Assert.AreEqual(110, city.NumOfPeople);
         Assert.AreEqual(0, bs.NumOfPeople);
     }
