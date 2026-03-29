@@ -39,7 +39,7 @@ public static class Utils
         }
     }
     
-    public static bool IsPointerOverUI()
+    public static bool IsPointerOverBlockingUI()
     {
         var panel = GameUI.Instance.uiDocument.rootVisualElement.panel;
         if (panel == null) return false;
@@ -52,7 +52,7 @@ public static class Utils
 
         while (picked != null)
         {
-            if (picked is Button || picked is ScrollView || picked.focusable)
+            if (picked.ClassListContains("blocksGameInput"))
                 return true;
 
             picked = picked.parent;
