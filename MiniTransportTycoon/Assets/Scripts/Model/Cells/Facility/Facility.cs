@@ -1,7 +1,8 @@
 
 using System;
+using Model.Interfaces;
 
-public abstract class Facility : Cell, IAdvancable, IVisitableBuiling
+public abstract class Facility : Cell, IAdvancable, IVisitableBuiling, IResourceProvider
 {
     public Resource ProducedResource { get; private set; }
     public int ResourceAmount { get; protected set; }
@@ -29,7 +30,7 @@ public abstract class Facility : Cell, IAdvancable, IVisitableBuiling
         rch.Tick(deltaTime);
     }
 
-    public int GetProducedResource(int amount)
+    public int GetResource(int amount)
     {
         if (amount <= 0) return 0;
 
