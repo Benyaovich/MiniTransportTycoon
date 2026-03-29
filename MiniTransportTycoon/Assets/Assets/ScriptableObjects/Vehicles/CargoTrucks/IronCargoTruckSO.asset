@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73dd7c36d79a15347ba9e8310a876b2b, type: 3}
+  m_Name: IronCargoTruckSO
+  m_EditorClassIdentifier: Assembly-CSharp::IronCargoTruckSO
+  prefab: {fileID: 1770216711821918037, guid: aa46fb887315cf54aa01ae967eba31cf, type: 3}
+  displayName: Cargo Truck - Iron
+  speed: 2
+  price: 1000
+  maintenanceCost: 200
+  maxCarryCapacity: 50
