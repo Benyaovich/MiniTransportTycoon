@@ -1,13 +1,15 @@
 
 using System;
 using JetBrains.Annotations;
+using Model.Interfaces;
 
-public class BusStop : Cell, IAdvancable, IPurchasable, IVisitableBuiling
+public class BusStop : Cell, IAdvancable, IPurchasable, IVisitableBuiling, IDepositPoint, IResourceProvider
 {
     public int NumOfPeople { get; private set; }
     [CanBeNull] public City City { get; private set; }
     public int BuildPrice { get; set; }
-
+    public Resource ProducedResource => Resource.People;
+    public Resource RequiredResource => Resource.People;
     private readonly Timer _timer;
     private readonly int _range;
     private readonly int _maxNumOfPeople;
@@ -65,14 +67,17 @@ public class BusStop : Cell, IAdvancable, IPurchasable, IVisitableBuiling
         }
     }
 
-    public void AddPeopleToBusStop(int amount)
+    public int AddResource(int amount)
     {
-        if (City is null) return;
+        if (City is null) return 0;
         
         City.AddPeople(amount);
+        return 0;
     }
 
-    public int GetPeopleFromBusStop(int amount)
+    
+
+    public int GetResource(int amount)
     {
         if (amount > NumOfPeople)
         {
