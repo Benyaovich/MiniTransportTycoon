@@ -11,7 +11,7 @@ namespace ScriptableObjects.Vehicles
         public int price;
         public int maintenanceCost;
         public int maxCarryCapacity;
-        public abstract Vehicle Create();
+        public abstract Vehicle Create(Grid<ModelGridObject> grid);
         public abstract Type VehicleType { get; }
     }
 }
