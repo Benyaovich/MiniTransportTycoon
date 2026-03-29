@@ -43,7 +43,7 @@ namespace Controller.Vehicles
 
         public void BuyVehicle(VehicleSO vehicleSo)
         {
-            Vehicle vehicle = vehicleSo.Create();
+            Vehicle vehicle = vehicleSo.Create(GridManager.Instance!.Grid);
             _vehicleStorage.AddVehicle(vehicle);
             OnVehicleBought?.Invoke(this, EventArgs.Empty);
         }
