@@ -116,6 +116,8 @@ public class GraphBuilder : IGraphBuilder
             RoadCell? nextRoad = GetRoadCell(origin);
             if (nextRoad is null) return null;
             
+            if (!HasExitTowards(nextRoad, direction.Opposite())) return null;
+            
             if (nextRoad.IsVertexPoint)
             {
                 return nextRoad.Origin;
