@@ -23,6 +23,7 @@ namespace Model.Vehicles
         {
             if (!Vehicles.Contains(vehicle)) return;
             Vehicles.Remove(vehicle);
+            vehicle.RemoveFromRoadCell();
             OnVehicleRemove?.Invoke(this, vehicle);
         }
     }
