@@ -184,6 +184,8 @@ public class GridManager : MonoBehaviour
 
     private void GameInputOnLeftClickPressed(object? sender, EventArgs e)
     {
+        if (Utils.IsPointerOverBlockingUI()) return;
+        if (RouteCreationManager.Instance.InRouteCreation) return;
         if (_buildingManager is null) return;
         if (BuildSelectionManager.SelectedObjectType is null) return;
 
@@ -195,8 +197,10 @@ public class GridManager : MonoBehaviour
 
     private void GameInputOnDeleteKeyPressed(object? sender, EventArgs e)
     {
+        if (Utils.IsPointerOverBlockingUI()) return;
         if (_buildingManager is null) return;
-
+        if (RouteCreationManager.Instance.InRouteCreation) return;
+        
         UniVector3 mousePos = Utils.GetMouseWorldPosition();
         _grid.GetXY(mousePos.SV3(), out int x, out int y);
 
