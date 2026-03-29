@@ -1,7 +1,8 @@
 using System;
+using Model.Interfaces;
 using UnityEngine;
 
-public class ProcessingBuilding : Facility
+public class ProcessingBuilding : Facility, IDepositPoint
 {
     public Resource RequiredResource { get; private set; }
     public int RequiredResourceAmount { get; private set; }
@@ -17,7 +18,7 @@ public class ProcessingBuilding : Facility
     }
 
     // return the amount left after adding to the facility
-    public int AddRequiredResource(int amount)
+    public int AddResource(int amount)
     {
         if (amount <= 0) return 0;
         if (RequiredResourceAmount == requiredResourceCapacity) return amount;

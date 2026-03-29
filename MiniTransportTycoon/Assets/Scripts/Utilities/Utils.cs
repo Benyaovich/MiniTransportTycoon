@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 using UniVector3 = UnityEngine.Vector3;
 using SysVector3 = System.Numerics.Vector3;
 
@@ -36,5 +37,27 @@ public static class Utils
         } else {
             return Vector3.zero;
         }
+    }
+    
+    public static bool IsPointerOverUI()
+    {
+        var panel = GameUI.Instance.uiDocument.rootVisualElement.panel;
+        if (panel == null) return false;
+
+        Vector2 mousePos = Mouse.current.position.ReadValue();
+        mousePos.y = Screen.height - mousePos.y;
+
+        VisualElement picked = panel.Pick(mousePos);
+        if (picked == null) return false;
+
+        while (picked != null)
+        {
+            if (picked is Button || picked is ScrollView || picked.focusable)
+                return true;
+
+            picked = picked.parent;
+        }
+
+        return false;
     }
 }

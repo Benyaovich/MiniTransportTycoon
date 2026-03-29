@@ -18,6 +18,7 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         HandleMovement();
+        if (Utils.IsPointerOverUI()) return;
         HandleCameraZoom();
         HandleRotation();
     }

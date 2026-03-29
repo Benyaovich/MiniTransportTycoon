@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using Mono.Cecil;
 using UnityEngine;
 using System.Collections.Generic;
+using Model.Interfaces;
 
 public abstract class Vehicle : IAdvancable
 {
@@ -20,7 +21,7 @@ public abstract class Vehicle : IAdvancable
     private Timer maintenanceTimer;
     private Timer moveTimer;
     
-    public event EventHandler CarMove;
+    public event EventHandler<Vehicle> OnMove;
 
     public Vehicle(Resource resource, float speed, int maintenanceCost, int purchaseCost, int maxCapacity)
     {
@@ -32,7 +33,7 @@ public abstract class Vehicle : IAdvancable
         ResourceAmount = 0;
         
         moveTimer = new Timer(1 / speed);
-        moveTimer.OnTimerElapsed += (object sender, EventArgs e) => CarMove?.Invoke(this, EventArgs.Empty);
+        moveTimer.OnTimerElapsed += (object sender, EventArgs e) => OnMove?.Invoke(this, this);
     }
 
     public void NextStep(Cell cell, List<Cell> neighbouringCells)
@@ -192,7 +193,7 @@ public abstract class Vehicle : IAdvancable
 
     protected abstract void LoadResource(Facility processingBuilding);
 
-    protected abstract void UnloadResource(ProcessingBuilding extractorBuilding);
+    protected abstract void UnloadResource(IDepositPoint extractorBuilding);
 
     public void Tick(float delta)
     {
@@ -200,3 +201,4 @@ public abstract class Vehicle : IAdvancable
     }
     
 }
+

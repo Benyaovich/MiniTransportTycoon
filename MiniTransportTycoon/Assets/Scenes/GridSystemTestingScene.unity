@@ -603,6 +603,52 @@ MonoBehaviour:
   minFOV: 70
   rotationSensitivity: 0.2
   cinemachineCamera: {fileID: 795215429}
+--- !u!1 &1135533724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1135533726}
+  - component: {fileID: 1135533725}
+  m_Layer: 0
+  m_Name: VehicleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1135533725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135533724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bcaebe673414653932ceaaee8429075, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Controller.Vehicles.VehicleManager
+  vehicleSos:
+  - {fileID: 11400000, guid: 97c68951c9ed7dc419dbc9cff808d0de, type: 2}
+--- !u!4 &1135533726
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135533724}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1205279722
 GameObject:
   m_ObjectHideFlags: 0
@@ -1003,6 +1049,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2078239778}
   - component: {fileID: 2078239777}
+  - component: {fileID: 2078239780}
+  - component: {fileID: 2078239779}
+  - component: {fileID: 2078239781}
   m_Layer: 5
   m_Name: GameUI
   m_TagString: Untagged
@@ -1048,6 +1097,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2078239779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078239776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cda3ec93e47476c4085c754a7b45114f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameUI
+  uiDocument: {fileID: 2078239777}
+  vehicleManager: {fileID: 1135533725}
+  listItemTemplate: {fileID: 9197481963319205126, guid: 8a8dfcbb4b6b4334eb98760828817e3d, type: 3}
+--- !u!114 &2078239780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078239776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de75401a4ab0fe5438addf864e9307be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameUI
+  uiDocument: {fileID: 2078239777}
+  vehicleOwnedListUI: {fileID: 2078239781}
+--- !u!114 &2078239781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078239776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50f46d2157a94554cbcb34854c2c6cdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VehicleOwnedListUI
+  uiDocument: {fileID: 2078239777}
+  vehicleManager: {fileID: 1135533725}
+  listItemTemplate: {fileID: 9197481963319205126, guid: 615b2cdfa25a9c844bfee7a6dae60dfe, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1057,6 +1150,7 @@ SceneRoots:
   - {fileID: 965899860}
   - {fileID: 1330599017}
   - {fileID: 1514503208}
+  - {fileID: 1135533726}
   - {fileID: 795215430}
   - {fileID: 1608755515}
   - {fileID: 873599970}

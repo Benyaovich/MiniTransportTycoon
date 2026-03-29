@@ -33,11 +33,11 @@ public class ProcessingBuildingTests
             rch: new RateChangeHandler(1,1,0,1,1));
 
         Assert.AreEqual(0, b.RequiredResourceAmount);
-        Assert.AreEqual(0, b.AddRequiredResource(0));
+        Assert.AreEqual(0, b.AddResource(0));
         Assert.AreEqual(0, b.RequiredResourceAmount);
-        Assert.AreEqual(0, b.AddRequiredResource(-1));
+        Assert.AreEqual(0, b.AddResource(-1));
         Assert.AreEqual(0, b.RequiredResourceAmount);
-        Assert.AreEqual(0, b.AddRequiredResource(-100));
+        Assert.AreEqual(0, b.AddResource(-100));
         Assert.AreEqual(0, b.RequiredResourceAmount);
             
     }
@@ -52,9 +52,9 @@ public class ProcessingBuildingTests
             rch: new RateChangeHandler(1, 1, 0, 1, 1));
 
         Assert.AreEqual(0, b.RequiredResourceAmount);
-        b.AddRequiredResource(10);
+        b.AddResource(10);
         Assert.AreEqual(10, b.RequiredResourceAmount);
-        b.AddRequiredResource(20);
+        b.AddResource(20);
         Assert.AreEqual(30, b.RequiredResourceAmount);
     }
 
@@ -68,11 +68,11 @@ public class ProcessingBuildingTests
             rch: new RateChangeHandler(1, 1, 0, 1, 1));
 
         Assert.AreEqual(0, b.RequiredResourceAmount);
-        b.AddRequiredResource(50);
+        b.AddResource(50);
         Assert.AreEqual(50, b.RequiredResourceAmount);
-        b.AddRequiredResource(60);
+        b.AddResource(60);
         Assert.AreEqual(100, b.RequiredResourceAmount);
-        b.AddRequiredResource(60);
+        b.AddResource(60);
         Assert.AreEqual(100, b.RequiredResourceAmount);
 
     }
@@ -86,11 +86,11 @@ public class ProcessingBuildingTests
             prodInterval: 1,
             rch: new RateChangeHandler(1, 1, 0, 1, 1));
 
-        Assert.AreEqual(0,b.AddRequiredResource(10));
-        Assert.AreEqual(0,b.AddRequiredResource(20));
-        Assert.AreEqual(0,b.AddRequiredResource(50));
-        Assert.AreEqual(80,b.AddRequiredResource(100));
-        Assert.AreEqual(100,b.AddRequiredResource(100));
+        Assert.AreEqual(0,b.AddResource(10));
+        Assert.AreEqual(0,b.AddResource(20));
+        Assert.AreEqual(0,b.AddResource(50));
+        Assert.AreEqual(80,b.AddResource(100));
+        Assert.AreEqual(100,b.AddResource(100));
     }
 
     [Test]
@@ -102,7 +102,7 @@ public class ProcessingBuildingTests
             prodInterval: 1,
             rch: new RateChangeHandler(1, 1, 0, 1, 1));
 
-        b.AddRequiredResource(1);
+        b.AddResource(1);
         Assert.AreEqual(0, b.ResourceAmount);
         b.Tick(1);
         Assert.AreEqual(1, b.ResourceAmount);
@@ -110,7 +110,7 @@ public class ProcessingBuildingTests
         b.Tick(1);
         b.Tick(1);
         Assert.AreEqual(1, b.ResourceAmount);
-        b.AddRequiredResource(2);
+        b.AddResource(2);
         b.Tick(1);
         b.Tick(1);
         b.Tick(1);
@@ -127,7 +127,7 @@ public class ProcessingBuildingTests
             prodInterval: 1,
             rch: new RateChangeHandler(1, 1, 0, 1, 1));
 
-        b.AddRequiredResource(5);
+        b.AddResource(5);
         Assert.AreEqual(5,b.RequiredResourceAmount);
         b.Tick(1);
         Assert.AreEqual(4,b.RequiredResourceAmount);
