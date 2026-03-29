@@ -1,9 +1,12 @@
+#nullable enable
 using System;
 using JetBrains.Annotations;
 using Mono.Cecil;
 using UnityEngine;
 using System.Collections.Generic;
+using Model.Enumerations;
 using Model.Interfaces;
+using NUnit.Framework;
 
 public abstract class Vehicle : IAdvancable
 {
@@ -12,70 +15,109 @@ public abstract class Vehicle : IAdvancable
     public int MaintenanceCost { get; private set; }
     public int PurchaseCost { get; private set; }
     public int ResourceAmount { get; protected set; }
-    public Route? Route { get; set; }
-    public Location? CurrentLocation => Route.CurrentPosition;
-    private RoadCell? _currentRoad;
-    
-    private int maxCapacity;
-    protected int MaxCapacity => maxCapacity;
-    private Timer maintenanceTimer;
-    private Timer moveTimer;
-    
-    public event EventHandler<Vehicle> OnMove;
+    private Route? _route;
+    public Route Route => _route!;
+    public Location? CurrentLocation => _route?.CurrentPosition;
 
-    public Vehicle(Resource resource, float speed, int maintenanceCost, int purchaseCost, int maxCapacity)
+    private IGrid<ModelGridObject> _grid;
+    public IGrid<ModelGridObject> Grid => _grid;
+    private int _maxCapacity;
+    protected int MaxCapacity => _maxCapacity;
+    private Timer _maintenanceTimer;
+    private Timer _moveTimer;
+    
+    public event EventHandler<Vehicle>? OnMove;
+
+    protected Vehicle(Grid<ModelGridObject> grid, Resource resource, float speed, int maintenanceCost,
+        int purchaseCost, int maxCapacity, float maintenanceInterval = 100)
     {
-        this.Resource = resource;
-        this.MoveSpeed = speed;
-        this.MaintenanceCost = maintenanceCost;
-        this.PurchaseCost = purchaseCost;
-        this.maxCapacity = maxCapacity;
+        _grid = grid;
+        Resource = resource;
+        MoveSpeed = speed;
+        MaintenanceCost = maintenanceCost;
+        PurchaseCost = purchaseCost;
+        this._maxCapacity = maxCapacity;
         ResourceAmount = 0;
         
-        moveTimer = new Timer(1 / speed);
-        moveTimer.OnTimerElapsed += (object sender, EventArgs e) => OnMove?.Invoke(this, this);
+        _moveTimer = new Timer(speed / 2);
+        _moveTimer.OnTimerElapsed += TryMove;
+
+        _maintenanceTimer = new Timer(maintenanceInterval);
+        _maintenanceTimer.OnTimerElapsed += MaintenanceTimerOnTimerElapsed;
     }
 
-    public void NextStep(Cell cell, List<Cell> neighbouringCells)
+    
+
+    private void TryMove(object sender, EventArgs e)
     {
-        foreach (var outsideCells in neighbouringCells)
-        {
-            if (outsideCells is Facility facility)
-            {
-                if (facility.ProducedResource == Resource && ResourceAmount <=  MaxCapacity - 1)
-                {
-                    LoadResource(facility);
-                    return;
-                } else if (facility is ProcessingBuilding pBuilding &&  pBuilding.RequiredResource == Resource && ResourceAmount > 0)
-                {
-                    UnloadResource(pBuilding);
-                    return;
-                }
-            }
-        }
-        
-        MoveNext(cell);
+        MoveNext();
     }
     
-    private void MoveNext(Cell cell)
+    public void MoveNext()
     {
-        if (cell is RoadCell road && CanMove(road))
+        if (_route == null) return;
+        RoadCell nextRoadCell = (_grid.GetGridObject(CurrentLocation + _route.CurrentDirection).Model as RoadCell)!;
+        if (_route == null || !CanMove(nextRoadCell)) return;
+
+        RoadCell currentRoadCell = (_grid.GetGridObject(CurrentLocation).Model as RoadCell)!;
+        currentRoadCell.RemoveVehicle(this);
+        _route.Step();
+        nextRoadCell!.AddVehicle(this);
+
+        List<Cell> neighbouringCells = GetNeighbouringCells();
+        DepositToNeighbours(neighbouringCells);
+        LoadFromNeighbours(neighbouringCells);
+        
+        OnMove?.Invoke(this, this);
+    }
+
+    private void DepositToNeighbours(List<Cell> neighbouringCells)
+    {
+        if (_route == null) return;
+        
+        foreach (var neighbouringCell in neighbouringCells)
         {
-            _currentRoad?.Vehicles.Remove(this);
-            Route.Step();
-            _currentRoad = road;
-            _currentRoad.AddVehicle(this);
+            if (neighbouringCell is not IDepositPoint depositPoint) continue;
+            
+            if (depositPoint.RequiredResource == Resource && ResourceAmount > 0)
+            {
+                UnloadResource(depositPoint);
+            }
+        }
+    }
+
+    private void LoadFromNeighbours(List<Cell> neighbouringCells)
+    {
+        if (_route == null) return;
+        
+        foreach (var neighbouringCell in neighbouringCells)
+        {
+            if (neighbouringCell is not IResourceProvider resourceProvider) continue;
+            
+            if (resourceProvider.ProducedResource == Resource && ResourceAmount < MaxCapacity)
+            {
+                LoadResource(resourceProvider);
+            }
         }
     }
 
     private bool CanMove(RoadCell road)
     {
-        if (RightDirecion(road) && SafeToMove(road))
+        if (RightDirecion(road) && SafeToMove(road) && _route != null)
         {
             return true;
         }
         
         return false;
+    }
+
+    public void SetRoute(Route route)
+    {
+        _route = route;
+        RoadCell startingRoadCell = (_grid.GetGridObject(CurrentLocation).Model as RoadCell)!;
+        startingRoadCell!.AddVehicle(this);
+        OnMove?.Invoke(this, this);
+        LoadFromNeighbours(GetNeighbouringCells());
     }
 
     private bool SafeToMove(RoadCell road)
@@ -86,7 +128,9 @@ public abstract class Vehicle : IAdvancable
             {
                 foreach (var observedVehicle in road.Vehicles)
                 {
-                    if (!(IsInterSectionPassable(observedVehicle.Route, road)))
+                    if (observedVehicle._route == null)
+                        throw new InvalidOperationException("Observed vehicle doesn't have a route.");
+                    if (!IsInterSectionPassable(observedVehicle._route))
                     {
                         return false;
                     }
@@ -94,62 +138,64 @@ public abstract class Vehicle : IAdvancable
 
                 return true;
             }
-            else
-            {
-                foreach (var observedVehicle in road.Vehicles)
-                {
-                    if (!(IsInterSectionPassable(observedVehicle.Route, road)))
-                    {
-                        return false;
-                    }
-                }
-                
-                return true;
-            }
-        }
-        else
-        {
+            
             foreach (var observedVehicle in road.Vehicles)
             {
-                if (observedVehicle.Route.PreviousDirection == Route.CurrentDirection)
+                if (observedVehicle._route == null)
+                    throw new InvalidOperationException("Observed vehicle doesn't have a route.");
+                if (!IsInterSectionPassable(observedVehicle._route))
                 {
                     return false;
                 }
             }
             
             return true;
+            
         }
-        return false;
+        
+        foreach (var observedVehicle in road.Vehicles)
+        {
+            if (observedVehicle._route!.PreviousDirection == _route!.CurrentDirection)
+            {
+                return false;
+            }
+        }
+        
+        return true;
     }
 
-    private bool IsInterSectionPassable(Route oVRoute, RoadCell road)
+    private bool IsInterSectionPassable(Route otherVehiclesRoute)
     {
+        if (_route == null) return false;
+        
         //jobb kanyar
-        if (Route.CurrentDirection.TurnRightClockwise() == Route.NextDirection)
+        if (_route.CurrentDirection.TurnRightClockwise() == _route.NextDirection)
         {
-            if (oVRoute.CurrentDirection == Route.NextDirection)
+            if (otherVehiclesRoute.CurrentDirection == _route.NextDirection)
             {
                 return false;
             }
             
             return true;
-        } //egyenesen
-        else if (Route.CurrentDirection == Route.NextDirection)
+        } 
+        
+        //egyenesen
+        if (_route.CurrentDirection == _route.NextDirection)
         {
             //szembol jon
-            if (oVRoute.PreviousDirection.Opposite() == Route.CurrentDirection && 
-                (oVRoute.CurrentDirection == Route.CurrentDirection.Opposite() || oVRoute.CurrentDirection.TurnRightClockwise() == Route.CurrentDirection))
+            if (otherVehiclesRoute.PreviousDirection.Opposite() == _route.CurrentDirection && 
+                (otherVehiclesRoute.CurrentDirection == _route.CurrentDirection.Opposite() || otherVehiclesRoute.CurrentDirection.TurnRightClockwise() == _route.CurrentDirection))
             {
                 return true;
             } //balrol jon
-            else if (oVRoute.PreviousDirection.TurnLeftClockwise() == Route.CurrentDirection && oVRoute.CurrentDirection == Route.CurrentDirection.Opposite())
+            else if (otherVehiclesRoute.PreviousDirection.TurnLeftClockwise() == _route.CurrentDirection && otherVehiclesRoute.CurrentDirection == _route.CurrentDirection.Opposite())
             {
                 return true;
             }
         } //bal kanyar
-        else if (Route.CurrentDirection.TurnLeftClockwise() == Route.NextDirection)
+        else if (_route.CurrentDirection.TurnLeftClockwise() == _route.NextDirection)
         {
-            if (oVRoute.PreviousDirection.TurnLeftClockwise() == Route.CurrentDirection && oVRoute.CurrentDirection == Route.CurrentDirection.Opposite())
+            if (otherVehiclesRoute.PreviousDirection.TurnLeftClockwise() == _route.CurrentDirection && otherVehiclesRoute.CurrentDirection == _route.CurrentDirection.Opposite())
             {
                 return true;
             }
@@ -160,44 +206,43 @@ public abstract class Vehicle : IAdvancable
 
     private bool RightDirecion(RoadCell road)
     {
-        //merre van az auto az uthoz kepest (jobbra, balra, ...)
-        int dx = road.Origin.X - CurrentLocation.X;
-        int dy = road.Origin.Y - CurrentLocation.Y;
-            
-        switch (dx, dy)
-        {
-            case (0, 0):
-                throw new ArgumentException("Ezen a cellan van a jármu");
-            
-            case (var x, 0) when x != 0:
-                if (road.Directions.Contains(Converter.Opposite(Route.CurrentDirection)) && 
-                    road.Directions.Contains(Route.NextDirection))
-                {
-                    return true;
-                }
-                break;
-            
-            case (0, var y) when y != 0:
-                if (road.Directions.Contains(Route.CurrentDirection) && 
-                    road.Directions.Contains(Converter.Opposite(Route.NextDirection)))
-                {
-                    return true;
-                }
-                break;
-            default:
-                break;
-        }
+        Location locationDiff = road.Origin - CurrentLocation;
 
-        return false;
+        if (locationDiff.X == 0 && locationDiff.Y == 0)
+            throw new ArgumentException("Ezen a cellán van a jármű.");
+
+        Direction dirToRoad = locationDiff.ToDirection();
+        return road.Directions.Contains(dirToRoad.Opposite());
     }
 
-    protected abstract void LoadResource(Facility processingBuilding);
+    private List<Cell> GetNeighbouringCells()
+    {
+        List<Cell> neighbours = new();
+        if(_grid.GetGridObject(CurrentLocation + Direction.Up)?.Model is Cell up) {neighbours.Add(up);}
+        if(_grid.GetGridObject(CurrentLocation + Direction.Down)?.Model is Cell down) {neighbours.Add(down);}
+        if(_grid.GetGridObject(CurrentLocation + Direction.Left)?.Model is Cell left) {neighbours.Add(left);}
+        if(_grid.GetGridObject(CurrentLocation + Direction.Right)?.Model is Cell right) {neighbours.Add(right);}
+        return neighbours;
+    }
 
-    protected abstract void UnloadResource(IDepositPoint extractorBuilding);
+    public void RemoveFromRoadCell()
+    {
+        RoadCell roadCell = (_grid.GetGridObject(CurrentLocation).Model as RoadCell)!;
+        roadCell!.RemoveVehicle(this);
+    }
 
+    protected abstract void LoadResource(IResourceProvider resourceProvider);
+
+    protected abstract void UnloadResource(IDepositPoint depositPoint);
+
+    private void MaintenanceTimerOnTimerElapsed(object sender, EventArgs e)
+    {
+        throw new NotImplementedException();
+    }
     public void Tick(float delta)
     {
-        moveTimer.Tick(delta);
+        _moveTimer.Tick(delta);
+        _maintenanceTimer.Tick(delta);
     }
     
 }
