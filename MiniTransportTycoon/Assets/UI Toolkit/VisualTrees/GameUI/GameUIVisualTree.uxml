@@ -15,7 +15,6 @@
         <ui:Label text="Rotate camera: Right click drag" class="ControlsHelpOverlayLabel"/>
         <ui:Label text="Select buildings: 1,2,3" class="ControlsHelpOverlayLabel"/>
         <ui:Label text="Delete building: DEL" class="ControlsHelpOverlayLabel"/>
-        <ui:Label text="Route creation mode: TAB" name="Label" class="ControlsHelpOverlayLabel"/>
     </ui:VisualElement>
     <ui:VisualElement name="VehiclePurchasePanel" class="blocksGameInput" style="flex-grow: 1; position: absolute; right: 0; bottom: 0; top: 100px; min-height: 200px; max-height: 600px;">
         <ui:ScrollView horizontal-scroller-visibility="Hidden" name="VehiclePurchaseList" style="position: absolute; right: 0; top: 0; max-height: 600px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-color: rgb(106, 106, 106); padding-left: 3px; padding-top: 3px; padding-right: 3px; padding-bottom: 3px;"/>

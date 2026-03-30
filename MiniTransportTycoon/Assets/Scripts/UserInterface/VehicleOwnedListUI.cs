@@ -73,10 +73,6 @@ public class VehicleOwnedListUI : MonoBehaviour
                 {
                     routeCreationManager.OnRouteCreated -= OnRouteCreated;
                     vehicle.SetRoute(new Route(route));
-                    foreach (var loc in route)
-                    {
-                        Debug.Log(loc);
-                    }
                 }
 
                 routeCreationManager.OnRouteCreated += OnRouteCreated;

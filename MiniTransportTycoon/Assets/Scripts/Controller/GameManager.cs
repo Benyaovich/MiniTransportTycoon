@@ -21,9 +21,8 @@ public class GameManager : MonoBehaviour
         _graph = new Graph();
         _pathHandler = new PathHandler(_graph);
         _graphBuilder = new GraphBuilder(GridManager.Instance.Grid, _graph);
-        _highlightService = new HighlightService(GridManager.Instance!.Grid);
         GridManager.Instance.SetBuildSelectionManager(_buildSelectionManager);
-        RouteCreationManager.Instance.Setup(_highlightService, _pathHandler);
+        RouteCreationManager.Instance.Setup(_pathHandler);
         
         _gameplayState = GameplayState.Building;
     }

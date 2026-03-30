@@ -10,8 +10,12 @@ public class Route
     public Location PreviousVertex { get; private set; }
     public Location CurrentVertex { get; private set; }
     public Location NextVertex { get; private set; }
-    
+
+    public Location PreviousPosition { get; private set; }
     public Location CurrentPosition {get; private set; }
+    public Location NextPosition { get; private set; }
+    public bool IsTurning { get; private set; }
+    public Direction TurningDirection => (NextPosition - CurrentPosition).ToDirection();
     
     public Direction CurrentDirection => (NextVertex - CurrentVertex).ToDirection();
 
@@ -45,19 +49,28 @@ public class Route
         PreviousVertex = Vertices.Last();
         CurrentVertex = Vertices.Dequeue();
         NextVertex = Vertices.Dequeue();
-        
+
+        PreviousPosition = CurrentVertex;
         CurrentPosition = CurrentVertex;
+        NextPosition = CurrentPosition + CurrentDirection;
     }
 
     public void Step()
     {
+        PreviousPosition = CurrentPosition;
         CurrentPosition += CurrentDirection.ToLocation();
         
         if (CurrentPosition == NextVertex)
         {
             StepVertex();
         }
+        NextPosition = CurrentPosition + CurrentDirection;
+        SetIsTurning();
+        Debug.Log("Current direction: "+ CurrentDirection);
+        Debug.Log("Turning direction: "+TurningDirection);
     }
+
+    
     
     public void StepVertex()
     {
@@ -70,5 +83,11 @@ public class Route
     public bool ContainsVertex(Location location)
     {
         return (Vertices.Contains(location) || location == CurrentVertex ||  location == NextVertex);
+    }
+    
+    private void SetIsTurning()
+    {
+        IsTurning = (CurrentPosition - PreviousPosition).ToDirection() !=
+                    (NextPosition - CurrentPosition).ToDirection();
     }
 }

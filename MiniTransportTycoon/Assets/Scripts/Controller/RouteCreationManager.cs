@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Controller;
 using Model.RoadSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,7 +15,6 @@ public class RouteCreationManager : MonoBehaviour
     public event EventHandler OnRouteCreationFinished; 
     public bool InRouteCreation { get; private set; }
     
-    private HighlightService _highlightService;
     private PathHandler _pathHandler;
     private Grid<ModelGridObject> _grid;
     private List<Location> _selectedVertices = new();
@@ -24,6 +24,7 @@ public class RouteCreationManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        
         _grid = GridManager.Instance!.Grid;
     }
     
@@ -37,9 +38,8 @@ public class RouteCreationManager : MonoBehaviour
         GameInput.Instance.OnLeftClickPressed -= GameInputOnLeftClickPressed;
     }
     
-    public void Setup(HighlightService highlightService, PathHandler pathHandler)
+    public void Setup(PathHandler pathHandler)
     {
-        _highlightService = highlightService;
         _pathHandler = pathHandler;
     }
 
@@ -47,14 +47,14 @@ public class RouteCreationManager : MonoBehaviour
     {
         _selectedVertices.Clear();
         _availableVertices.Clear();
-        _highlightService.EnableHighlight(_pathHandler.Graph.Vertices);
+        HighlightManager.Instance.HighlightService.EnableHighlight(_pathHandler.Graph.Vertices);
         InRouteCreation = true;
         OnRouteCreationStarted?.Invoke(this, EventArgs.Empty);
     }
 
     public void ExitRouteCreation()
     {
-        _highlightService.DisableHighlight(_pathHandler.Graph.Vertices);
+        HighlightManager.Instance.HighlightService.DisableHighlight(_pathHandler.Graph.Vertices);
         InRouteCreation = false;
         OnRouteCreationFinished?.Invoke(this, EventArgs.Empty);
     }
@@ -76,7 +76,7 @@ public class RouteCreationManager : MonoBehaviour
         if(!finished){ RefreshHighlights(); }
         else
         {
-            _highlightService.DisableHighlight(_availableVertices);
+            HighlightManager.Instance.HighlightService.DisableHighlight(_availableVertices);
             OnRouteCreated?.Invoke(this, _pathHandler.GetPathFromRoute(_selectedVertices));
             
             ExitRouteCreation();
@@ -115,8 +115,8 @@ public class RouteCreationManager : MonoBehaviour
 
     private void RefreshHighlights()
     {
-        _highlightService.DisableHighlight(_pathHandler.Graph.Vertices);
-        _highlightService.EnableHighlight(GetHighlightableVertices());
+        HighlightManager.Instance.HighlightService.DisableHighlight(_pathHandler.Graph.Vertices);
+        HighlightManager.Instance.HighlightService.EnableHighlight(GetHighlightableVertices());
     }
 
 

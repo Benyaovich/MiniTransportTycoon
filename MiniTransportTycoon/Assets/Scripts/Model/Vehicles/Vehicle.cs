@@ -1,12 +1,8 @@
 #nullable enable
 using System;
-using JetBrains.Annotations;
-using Mono.Cecil;
-using UnityEngine;
 using System.Collections.Generic;
 using Model.Enumerations;
 using Model.Interfaces;
-using NUnit.Framework;
 
 public abstract class Vehicle : IAdvancable
 {
@@ -16,17 +12,18 @@ public abstract class Vehicle : IAdvancable
     public int PurchaseCost { get; private set; }
     public int ResourceAmount { get; protected set; }
     private Route? _route;
-    public Route Route => _route!;
+    public Route? Route => _route;
     public Location? CurrentLocation => _route?.CurrentPosition;
-
+    
     private IGrid<ModelGridObject> _grid;
     public IGrid<ModelGridObject> Grid => _grid;
     private int _maxCapacity;
     protected int MaxCapacity => _maxCapacity;
     private Timer _maintenanceTimer;
-    private Timer _moveTimer;
+    private Timer? _moveTimer;
     
     public event EventHandler<Vehicle>? OnMove;
+    public event EventHandler? OnRouteSet;
 
     protected Vehicle(Grid<ModelGridObject> grid, Resource resource, float speed, int maintenanceCost,
         int purchaseCost, int maxCapacity, float maintenanceInterval = 100)
@@ -36,12 +33,9 @@ public abstract class Vehicle : IAdvancable
         MoveSpeed = speed;
         MaintenanceCost = maintenanceCost;
         PurchaseCost = purchaseCost;
-        this._maxCapacity = maxCapacity;
+        _maxCapacity = maxCapacity;
         ResourceAmount = 0;
         
-        _moveTimer = new Timer(speed / 2);
-        _moveTimer.OnTimerElapsed += TryMove;
-
         _maintenanceTimer = new Timer(maintenanceInterval);
         _maintenanceTimer.OnTimerElapsed += MaintenanceTimerOnTimerElapsed;
     }
@@ -63,12 +57,12 @@ public abstract class Vehicle : IAdvancable
         currentRoadCell.RemoveVehicle(this);
         _route.Step();
         nextRoadCell!.AddVehicle(this);
+        OnMove?.Invoke(this, this);
 
         List<Cell> neighbouringCells = GetNeighbouringCells();
         DepositToNeighbours(neighbouringCells);
         LoadFromNeighbours(neighbouringCells);
         
-        OnMove?.Invoke(this, this);
     }
 
     private void DepositToNeighbours(List<Cell> neighbouringCells)
@@ -114,10 +108,14 @@ public abstract class Vehicle : IAdvancable
     public void SetRoute(Route route)
     {
         _route = route;
+        _moveTimer = new Timer(MoveSpeed);
+        _moveTimer.OnTimerElapsed += TryMove;
+        
         RoadCell startingRoadCell = (_grid.GetGridObject(CurrentLocation).Model as RoadCell)!;
         startingRoadCell!.AddVehicle(this);
-        OnMove?.Invoke(this, this);
+        OnRouteSet?.Invoke(this, EventArgs.Empty);
         LoadFromNeighbours(GetNeighbouringCells());
+        _moveTimer.Tick(MoveSpeed);
     }
 
     private bool SafeToMove(RoadCell road)
@@ -204,13 +202,14 @@ public abstract class Vehicle : IAdvancable
         return false;
     }
 
+    
     private bool RightDirecion(RoadCell road)
     {
         Location locationDiff = road.Origin - CurrentLocation;
-
+    
         if (locationDiff.X == 0 && locationDiff.Y == 0)
             throw new ArgumentException("Ezen a cellán van a jármű.");
-
+    
         Direction dirToRoad = locationDiff.ToDirection();
         return road.Directions.Contains(dirToRoad.Opposite());
     }
@@ -237,11 +236,12 @@ public abstract class Vehicle : IAdvancable
 
     private void MaintenanceTimerOnTimerElapsed(object sender, EventArgs e)
     {
-        throw new NotImplementedException();
+        
     }
     public void Tick(float delta)
     {
-        _moveTimer.Tick(delta);
+        if(_moveTimer != null){ _moveTimer.Tick(delta); }
+        
         _maintenanceTimer.Tick(delta);
     }
     
