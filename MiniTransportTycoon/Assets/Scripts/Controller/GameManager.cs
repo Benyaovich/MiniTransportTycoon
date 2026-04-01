@@ -1,11 +1,13 @@
 using System;
+using Model.Cells.Grid;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
     
-    private IBuildingManager _buildingManager;
+    private CellBuildingManager _cellBuildingManager;
+    private DynamicRoadBuildingManager _dynamicRoadBuildingManager;
     private IGraph _graph;
     private PathHandler _pathHandler;
     private IGraphBuilder _graphBuilder;
@@ -16,7 +18,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        _buildingManager = GridManager.Instance!.BuildingManager;
+        _cellBuildingManager = GridManager.Instance!.CellBuildingManager;
+        _dynamicRoadBuildingManager = GridManager.Instance!.DynamicRoadBuildingManager;
         _buildSelectionManager = new BuildSelectionManager();
         _graph = new Graph();
         _pathHandler = new PathHandler(_graph);
@@ -29,18 +32,19 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        _buildingManager.OnRoadCellBuilt += BuildingManagerOnRoadCellBuilt;
-        _buildingManager.OnRoadCellDemolished += BuildingManagerOnRoadCellDemolished;
+        _dynamicRoadBuildingManager.OnRoadCellBuilt += DynamicRoadBuildingManagerOnRoadCellBuilt;
+        _dynamicRoadBuildingManager.OnRoadCellDemolished += DynamicRoadBuildingManagerOnRoadCellDemolished;
+        _dynamicRoadBuildingManager.OnRoadCellRefreshed += DynamicRoadBuildingManagerOnRoadCellRefreshed;
         RouteCreationManager.Instance.OnRouteCreationStarted += InstanceOnRouteCreationStarted;
         RouteCreationManager.Instance.OnRouteCreationFinished += InstanceOnRouteCreationFinished;
     }
-
     
 
     private void OnDisable()
     {
-        _buildingManager.OnRoadCellBuilt -= BuildingManagerOnRoadCellBuilt;
-        _buildingManager.OnRoadCellDemolished -= BuildingManagerOnRoadCellDemolished;
+        _dynamicRoadBuildingManager.OnRoadCellBuilt -= DynamicRoadBuildingManagerOnRoadCellBuilt;
+        _dynamicRoadBuildingManager.OnRoadCellDemolished -= DynamicRoadBuildingManagerOnRoadCellDemolished;
+        _dynamicRoadBuildingManager.OnRoadCellRefreshed -= DynamicRoadBuildingManagerOnRoadCellRefreshed;
         RouteCreationManager.Instance.OnRouteCreationStarted -= InstanceOnRouteCreationStarted;
         RouteCreationManager.Instance.OnRouteCreationFinished -= InstanceOnRouteCreationFinished;
     }
@@ -73,14 +77,19 @@ public class GameManager : MonoBehaviour
         _gameplayState = GameplayState.RouteCreating;
     }
     
-    private void BuildingManagerOnRoadCellBuilt(object sender, Location location)
+    private void DynamicRoadBuildingManagerOnRoadCellBuilt(object sender, RoadCell roadCell)
     {
-        _graphBuilder.CreateConnectionsAt(location);
+        _graphBuilder.CreateConnectionsAt(roadCell);
     }
     
-    private void BuildingManagerOnRoadCellDemolished(object sender, Location location)
+    private void DynamicRoadBuildingManagerOnRoadCellDemolished(object sender, RoadCell roadCell)
     {
-        _graphBuilder.RemoveConnectionsAt(location);
+        _graphBuilder.RemoveConnectionsAt(roadCell);
+    }
+    
+    private void DynamicRoadBuildingManagerOnRoadCellRefreshed(object sender, RoadCell roadCell)
+    {
+        _graphBuilder.RefreshConnectionsAt(roadCell);
     }
     
 }

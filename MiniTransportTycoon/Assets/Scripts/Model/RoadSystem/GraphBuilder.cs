@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Model.Enumerations;
+using UnityEngine;
 
 public class GraphBuilder : IGraphBuilder
 {
@@ -16,23 +17,23 @@ public class GraphBuilder : IGraphBuilder
 
     #region Interface Methods
     
-    public void CreateConnectionsAt(Location location)
+    public void CreateConnectionsAt(RoadCell roadCell)
     {
-        RoadCell? roadCell = GetRoadCell(location);
-        if(roadCell is null) return;
-        
         if(roadCell.IsVertexPoint){ _graph.AddVertex(roadCell.Origin); }
         Dictionary<Direction, Location?> vertexInDirectionMap = GetConnectedVertices(roadCell);
         AddEdgesToGraph(roadCell, vertexInDirectionMap);
     }
 
-    public void RemoveConnectionsAt(Location location)
+    public void RemoveConnectionsAt(RoadCell roadCell)
     {
-        RoadCell? roadCell = GetRoadCell(location);
-        if(roadCell is null) return;
-        
         Dictionary<Direction, Location?> vertexInDirectionMap = GetConnectedVertices(roadCell);
         RemoveEdgeFromGraph(roadCell, vertexInDirectionMap);
+    }
+
+    public void RefreshConnectionsAt(RoadCell roadCell)
+    {
+        RemoveConnectionsAt(roadCell);
+        CreateConnectionsAt(roadCell);
     }
 
     #endregion
@@ -46,7 +47,6 @@ public class GraphBuilder : IGraphBuilder
             AddEdgeIfRoadIsVertex(road, vertexInDirectionMap);
             return;
         }
-
         AddEdgeIfRoadIsNotVertex(vertexInDirectionMap);
     }
 
@@ -75,7 +75,6 @@ public class GraphBuilder : IGraphBuilder
             _graph.RemoveVertex(road.Origin);
             return;
         }
-
         RemoveEdgeIfRoadIsNotVertex(vertexInDirectionMap);
     }
 

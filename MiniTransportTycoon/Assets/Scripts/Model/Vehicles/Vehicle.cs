@@ -115,7 +115,6 @@ public abstract class Vehicle : IAdvancable
         startingRoadCell!.AddVehicle(this);
         OnRouteSet?.Invoke(this, EventArgs.Empty);
         LoadFromNeighbours(GetNeighbouringCells());
-        _moveTimer.Tick(MoveSpeed);
     }
 
     private bool SafeToMove(RoadCell road)

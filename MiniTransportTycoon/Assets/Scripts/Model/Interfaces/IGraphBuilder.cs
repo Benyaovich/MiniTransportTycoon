@@ -1,5 +1,7 @@
 public interface IGraphBuilder
 {
-    public void CreateConnectionsAt(Location location);
-    public void RemoveConnectionsAt(Location location);
+    public void CreateConnectionsAt(RoadCell roadCell);
+    public void RemoveConnectionsAt(RoadCell roadCell);
+
+    public void RefreshConnectionsAt(RoadCell roadCell);
 }

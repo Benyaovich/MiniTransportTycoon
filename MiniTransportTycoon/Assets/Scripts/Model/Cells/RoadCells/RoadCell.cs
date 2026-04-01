@@ -9,11 +9,11 @@ public class RoadCell : Cell, IPurchasable, IHighlightable
 {
     public event EventHandler<Location>? OnHighlightEnabled;
     public event EventHandler<Location>? OnHighlightDisabled;
-    public bool IsVertexPoint { get; private set; }
-    public bool IsIntersection { get; private set; }
+    public bool IsVertexPoint { get; protected set; }
+    public bool IsIntersection { get; protected set; }
     public TrafficLamp? Lamp { get; private set; }
     public bool HasLamp => Lamp is not null;
-    public List<Direction> Directions { get; private set; }
+    public List<Direction> Directions { get; protected set; }
     public List<Vehicle> Vehicles { get; private set; } = new();
     public int BuildPrice { get; set; }
     

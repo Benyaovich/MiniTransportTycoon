@@ -1,6 +1,9 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
+using Controller.Building;
+using Model.Cells.Grid;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UniVector3 = UnityEngine.Vector3;
@@ -22,7 +25,8 @@ public class GridManager : MonoBehaviour
 
     #region Public Properties
 
-    public IBuildingManager BuildingManager => _buildingManager!;
+    public CellBuildingManager CellBuildingManager => _cellBuildingManager!;
+    public DynamicRoadBuildingManager DynamicRoadBuildingManager => _dynamicRoadBuildingManager;
     public Grid<ModelGridObject> Grid => _grid;
     public IBuildSelectionManager BuildSelectionManager => _buildSelectionManager!;
     
@@ -52,13 +56,18 @@ public class GridManager : MonoBehaviour
         new SysVector3(0, 0, 0),
         (g, l) => new ModelGridObject(g, l));
 
-    private readonly List<IAdvancable> _advancables = new();
     private IBuildSelectionManager? _buildSelectionManager;
+    
+    private readonly List<IAdvancable> _advancables = new();
     private Dictionary<Type, CellObjectTypeSO> _cellLookup = new();
     private List<CellObjectTypeSO> _cellObjectTypeSos = new();
-    private IBuildingManager? _buildingManager;
+    
+    private CellBuildingManager? _cellBuildingManager;
+    private DynamicRoadBuildingManager _dynamicRoadBuildingManager = null!;
+    
     private CityService? _cityService;
     private CellVisualService? _cellVisualService;
+    private DynamicRoadVisualService _dynamicRoadVisualService = null!;
 
     #endregion
 
@@ -78,19 +87,22 @@ public class GridManager : MonoBehaviour
         
         _cityService = new CityService();
         
-        _buildingManager = new BuildingManager(
+        _dynamicRoadBuildingManager = new DynamicRoadBuildingManager(_grid);
+        
+        _cellBuildingManager = new CellBuildingManager(
             _grid,
+            _dynamicRoadBuildingManager,
             _cityService,
             _advancables);
 
-        _cellVisualService = new CellVisualService(_grid, _buildingManager, transform, _cellLookup);
+        
+        _cellVisualService = new CellVisualService(_grid, _cellBuildingManager, transform, _cellLookup);
+        _dynamicRoadVisualService = new DynamicRoadVisualService(_grid, _dynamicRoadBuildingManager, transform, _cellLookup);
         
         var firstGridObjectsPosition = _grid.GetWorldPosition(0, 0);
         mapFloor!.position = new UniVector3(firstGridObjectsPosition.X, -0.01f, firstGridObjectsPosition.Y);
         mapFloor!.localScale = new UniVector3(_grid.Size.Width, 0, _grid.Size.Height);
-
-        _buildingManager.BuildFromExistingGrid();
-
+        
         if (showDebug)
         {
             DebugGridData();
@@ -186,25 +198,42 @@ public class GridManager : MonoBehaviour
     {
         if (Utils.IsPointerOverBlockingUI()) return;
         if (RouteCreationManager.Instance.InRouteCreation) return;
-        if (_buildingManager is null) return;
+        if (_cellBuildingManager is null) return;
         if (BuildSelectionManager.SelectedObjectType is null) return;
 
         UniVector3 mousePos = Utils.GetMouseWorldPosition();
         _grid.GetXY(mousePos.SV3(), out int x, out int y);
 
-        _buildingManager.TryBuild(BuildSelectionManager.SelectedObjectType.Create(new Location(x, y)));
+        if (BuildSelectionManager.SelectedObjectType.CellType == typeof(DynamicRoadCell))
+        {
+            _dynamicRoadBuildingManager.TryBuildRoad(new Location(x,y));
+        }
+        else
+        {
+            _cellBuildingManager.TryBuild(BuildSelectionManager.SelectedObjectType.Create(new Location(x, y)));
+        }
     }
 
     private void GameInputOnDeleteKeyPressed(object? sender, EventArgs e)
     {
         if (Utils.IsPointerOverBlockingUI()) return;
-        if (_buildingManager is null) return;
+        if (_cellBuildingManager is null) return;
         if (RouteCreationManager.Instance.InRouteCreation) return;
         
         UniVector3 mousePos = Utils.GetMouseWorldPosition();
         _grid.GetXY(mousePos.SV3(), out int x, out int y);
 
-        _buildingManager.TryDemolish(new Location(x, y));
+        ModelGridObject gridObject = _grid.GetGridObject(x, y);
+        if (gridObject.Model == null) return;
+        
+        if (gridObject.Model is DynamicRoadCell)
+        {
+            _dynamicRoadBuildingManager.TryDemolishRoad(new Location(x,y));
+        }
+        else
+        {
+            _cellBuildingManager.TryDemolish(new Location(x, y));
+        }
     }
 
     public UniVector3 GetMousePosSnappedToGrid()
