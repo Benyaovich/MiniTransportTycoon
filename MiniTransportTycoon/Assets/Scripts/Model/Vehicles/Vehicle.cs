@@ -225,8 +225,11 @@ public abstract class Vehicle : IAdvancable
 
     public void RemoveFromRoadCell()
     {
-        RoadCell roadCell = (_grid.GetGridObject(CurrentLocation).Model as RoadCell)!;
-        roadCell!.RemoveVehicle(this);
+        if (CurrentLocation == null) return;
+        if (_grid.GetGridObject(CurrentLocation)?.Model is RoadCell roadCell)
+        {
+            roadCell.RemoveVehicle(this);
+        }
     }
 
     protected abstract void LoadResource(IResourceProvider resourceProvider);
