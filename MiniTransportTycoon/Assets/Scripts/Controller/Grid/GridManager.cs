@@ -1,11 +1,9 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using Controller.Building;
 using Model.Cells.Grid;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UniVector3 = UnityEngine.Vector3;
 using SysVector3 = System.Numerics.Vector3;
 
@@ -25,10 +23,8 @@ public class GridManager : MonoBehaviour
 
     #region Public Properties
 
-    public CellBuildingManager CellBuildingManager => _cellBuildingManager!;
     public DynamicRoadBuildingManager DynamicRoadBuildingManager => _dynamicRoadBuildingManager;
     public Grid<ModelGridObject> Grid => _grid;
-    public IBuildSelectionManager BuildSelectionManager => _buildSelectionManager!;
     
     #endregion
 
@@ -40,9 +36,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private float gridCellSize = 10f;
     [SerializeField] private UniVector3 gridOriginPosition = new UniVector3(0, 0, 0);
     [SerializeField] private Transform? mapFloor;
-    [SerializeField] private List<CellObjectTypeSO>? buildingCellObjectTypeSos;
-    [SerializeField] private List<CellObjectTypeSO>? twoWayRoadCellObjectTypeSos;
-    [SerializeField] private List<CellObjectTypeSO>? twoWayRoadCornerCellObjectTypeSos;
+   
 
     #endregion
 
@@ -56,11 +50,7 @@ public class GridManager : MonoBehaviour
         new SysVector3(0, 0, 0),
         (g, l) => new ModelGridObject(g, l));
 
-    private IBuildSelectionManager? _buildSelectionManager;
-    
     private readonly List<IAdvancable> _advancables = new();
-    private Dictionary<Type, CellObjectTypeSO> _cellLookup = new();
-    private List<CellObjectTypeSO> _cellObjectTypeSos = new();
     
     private CellBuildingManager? _cellBuildingManager;
     private DynamicRoadBuildingManager _dynamicRoadBuildingManager = null!;
@@ -74,9 +64,6 @@ public class GridManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        
-        CollectAllCellObjectTypeSosIntoASingleList();
-        BuildLookup();
         
         _gridSize = new Size(gridSizeX, gridSizeY);
         _grid = new Grid<ModelGridObject>(
@@ -96,8 +83,10 @@ public class GridManager : MonoBehaviour
             _advancables);
 
         
-        _cellVisualService = new CellVisualService(_grid, _cellBuildingManager, transform, _cellLookup);
-        _dynamicRoadVisualService = new DynamicRoadVisualService(_grid, _dynamicRoadBuildingManager, transform, _cellLookup);
+        _cellVisualService = new CellVisualService(_grid, _cellBuildingManager, transform,
+            BuildSelectionManager.Instance.CellLookup);
+        _dynamicRoadVisualService = new DynamicRoadVisualService(_grid, _dynamicRoadBuildingManager, transform,
+            BuildSelectionManager.Instance.CellLookup);
         
         var firstGridObjectsPosition = _grid.GetWorldPosition(0, 0);
         mapFloor!.position = new UniVector3(firstGridObjectsPosition.X, -0.01f, firstGridObjectsPosition.Y);
@@ -111,7 +100,7 @@ public class GridManager : MonoBehaviour
 
     private void Start()
     {
-        BuildSelectionManager.OnSelectedObjectChanged += BuildSelectionManagerOnSelectedObjectChanged;
+        BuildSelectionManager.Instance.OnSelectedObjectChanged += BuildSelectionManagerOnSelectedObjectChanged;
     }
 
     #region OnEnable - OnDisable - OnDestroy
@@ -130,7 +119,7 @@ public class GridManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        BuildSelectionManager.OnSelectedObjectChanged -= BuildSelectionManagerOnSelectedObjectChanged;
+        BuildSelectionManager.Instance.OnSelectedObjectChanged -= BuildSelectionManagerOnSelectedObjectChanged;
     }
 
     #endregion
@@ -143,74 +132,32 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public void HandleBuildSelectionInput()
-    {
-        if (Keyboard.current.digit1Key.wasPressedThisFrame)
-        {
-            BuildSelectionManager.CycleSelection(buildingCellObjectTypeSos!);
-        }
-        else if (Keyboard.current.digit2Key.wasPressedThisFrame)
-        {
-            BuildSelectionManager.CycleSelection(twoWayRoadCellObjectTypeSos!);
-        }
-        else if (Keyboard.current.digit3Key.wasPressedThisFrame)
-        {
-            BuildSelectionManager.CycleSelection(twoWayRoadCornerCellObjectTypeSos!);
-        }
-    }
+    
 
     private void BuildSelectionManagerOnSelectedObjectChanged(object? sender, Transform? selectedVisual)
     {
         OnSelectedObjectChanged?.Invoke(this, selectedVisual);
     }
-
-    private void CollectAllCellObjectTypeSosIntoASingleList()
-    {
-        _cellObjectTypeSos = new List<CellObjectTypeSO>();
-
-        foreach (CellObjectTypeSO cellObjectTypeSo in buildingCellObjectTypeSos!)
-        {
-            _cellObjectTypeSos.Add(cellObjectTypeSo);
-        }
-
-        foreach (CellObjectTypeSO cellObjectTypeSo in twoWayRoadCellObjectTypeSos!)
-        {
-            _cellObjectTypeSos.Add(cellObjectTypeSo);
-        }
-
-        foreach (CellObjectTypeSO cellObjectTypeSo in twoWayRoadCornerCellObjectTypeSos!)
-        {
-            _cellObjectTypeSos.Add(cellObjectTypeSo);
-        }
-    }
     
-    private void BuildLookup()
-    {
-        _cellLookup = new Dictionary<Type, CellObjectTypeSO>();
-        
-        foreach (var so in _cellObjectTypeSos)
-        {
-            _cellLookup.Add(so.CellType, so);
-        }
-    }
+    
 
     private void GameInputOnLeftClickPressed(object? sender, EventArgs e)
     {
         if (Utils.IsPointerOverBlockingUI()) return;
         if (RouteCreationManager.Instance.InRouteCreation) return;
         if (_cellBuildingManager is null) return;
-        if (BuildSelectionManager.SelectedObjectType is null) return;
+        if (BuildSelectionManager.Instance.SelectedObjectType is null) return;
 
         UniVector3 mousePos = Utils.GetMouseWorldPosition();
         _grid.GetXY(mousePos.SV3(), out int x, out int y);
 
-        if (BuildSelectionManager.SelectedObjectType.CellType == typeof(DynamicRoadCell))
+        if (BuildSelectionManager.Instance.SelectedObjectType.CellType == typeof(DynamicRoadCell))
         {
             _dynamicRoadBuildingManager.TryBuildRoad(new Location(x,y));
         }
         else
         {
-            _cellBuildingManager.TryBuild(BuildSelectionManager.SelectedObjectType.Create(new Location(x, y)));
+            _cellBuildingManager.TryBuild(BuildSelectionManager.Instance.SelectedObjectType.Create(new Location(x, y)));
         }
     }
 
@@ -242,11 +189,6 @@ public class GridManager : MonoBehaviour
         _grid.GetXY(mousePos.SV3(), out int x, out int y);
         return _grid.GetWorldPosition(x, y).UVXZ3();
     }
-    public void SetBuildSelectionManager(IBuildSelectionManager buildSelectionManager)
-    {
-        _buildSelectionManager = buildSelectionManager;
-    }
-    
     private void DebugGridData()
     {
         TextMesh[][] debugTextArray = new TextMesh[_grid.Size.Width][];

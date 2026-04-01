@@ -1,31 +1,23 @@
 using System;
 using Model.Cells.Grid;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
     
-    private CellBuildingManager _cellBuildingManager;
     private DynamicRoadBuildingManager _dynamicRoadBuildingManager;
-    private IGraph _graph;
-    private PathHandler _pathHandler;
     private IGraphBuilder _graphBuilder;
     private HighlightService _highlightService;
-    private IBuildSelectionManager _buildSelectionManager;
 
     private GameplayState _gameplayState;
 
     private void Awake()
     {
-        _cellBuildingManager = GridManager.Instance!.CellBuildingManager;
         _dynamicRoadBuildingManager = GridManager.Instance!.DynamicRoadBuildingManager;
-        _buildSelectionManager = new BuildSelectionManager();
-        _graph = new Graph();
-        _pathHandler = new PathHandler(_graph);
-        _graphBuilder = new GraphBuilder(GridManager.Instance.Grid, _graph);
-        GridManager.Instance.SetBuildSelectionManager(_buildSelectionManager);
-        RouteCreationManager.Instance.Setup(_pathHandler);
+        Graph graph = new Graph();
+        PathHandler pathHandler = new PathHandler(graph);
+        _graphBuilder = new GraphBuilder(GridManager.Instance.Grid, graph);
+        RouteCreationManager.Instance.Setup(pathHandler);
         
         _gameplayState = GameplayState.Building;
     }
@@ -55,7 +47,7 @@ public class GameManager : MonoBehaviour
         switch (_gameplayState)
         {
             case GameplayState.Building:
-                GridManager.Instance!.HandleBuildSelectionInput();
+                BuildSelectionManager.Instance!.HandleBuildSelectionInput();
                 break;
             
             case GameplayState.RouteCreating:
@@ -73,7 +65,7 @@ public class GameManager : MonoBehaviour
 
     private void InstanceOnRouteCreationStarted(object sender, EventArgs e)
     {
-        _buildSelectionManager.ClearSelectedObjectType();
+        BuildSelectionManager.Instance.ClearSelectedObjectType();
         _gameplayState = GameplayState.RouteCreating;
     }
     
