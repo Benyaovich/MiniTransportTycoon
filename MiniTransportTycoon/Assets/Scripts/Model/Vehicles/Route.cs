@@ -66,8 +66,6 @@ public class Route
         }
         NextPosition = CurrentPosition + CurrentDirection;
         SetIsTurning();
-        Debug.Log("Current direction: "+ CurrentDirection);
-        Debug.Log("Turning direction: "+TurningDirection);
     }
 
     

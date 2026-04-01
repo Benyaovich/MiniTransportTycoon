@@ -151,27 +151,27 @@ public class GridManager : MonoBehaviour
         BuildOnCurrentMousePosition();
     }
 
-    private void BuildOnCurrentMousePosition()
+    public void BuildOnCurrentMousePosition()
     {
         UniVector3 mousePos = Utils.GetMouseWorldPosition();
         _grid.GetXY(mousePos.SV3(), out int x, out int y);
 
-        if (BuildSelectionManager.Instance!.SelectedObjectType!.CellType == typeof(DynamicRoadCell))
-        {
+        
+        if (BuildSelectionManager.Instance!.SelectedObjectType!.CellType == typeof(DynamicRoadCell)){
             _dynamicRoadBuildingManager.TryBuildRoad(new Location(x,y));
+            return;
         }
-        else
-        {
-            _cellBuildingManager!.TryBuild(
-                BuildSelectionManager.Instance.SelectedObjectType.Create(new Location(x, y)));
-        }
+        
+        _cellBuildingManager!.TryBuild(
+            BuildSelectionManager.Instance.SelectedObjectType.Create(new Location(x, y)));
+        
     }
 
     public void BuildOnLocations(List<Location> locations)
     {
         foreach (Location location in locations)
         {
-            if (BuildSelectionManager.Instance!.SelectedObjectType!.CellType == typeof(DynamicRoadCell))
+            if (BuildSelectionManager.Instance.SelectedObjectType!.CellType == typeof(DynamicRoadCell))
             {
                 _dynamicRoadBuildingManager.TryBuildRoad(location);
             }
