@@ -1,4 +1,5 @@
 using System;
+using Controller.Building;
 using Model.Cells.Grid;
 using UnityEngine;
 
@@ -29,8 +30,12 @@ public class GameManager : MonoBehaviour
         _dynamicRoadBuildingManager.OnRoadCellRefreshed += DynamicRoadBuildingManagerOnRoadCellRefreshed;
         RouteCreationManager.Instance.OnRouteCreationStarted += InstanceOnRouteCreationStarted;
         RouteCreationManager.Instance.OnRouteCreationFinished += InstanceOnRouteCreationFinished;
+        BuildSelectionManager.Instance.OnDynamicRoadSelected += InstanceOnDynamicRoadSelected; 
+        BuildSelectionManager.Instance.OnBuildingSelected += InstanceOnBuildingSelected; 
     }
+
     
+
 
     private void OnDisable()
     {
@@ -39,21 +44,16 @@ public class GameManager : MonoBehaviour
         _dynamicRoadBuildingManager.OnRoadCellRefreshed -= DynamicRoadBuildingManagerOnRoadCellRefreshed;
         RouteCreationManager.Instance.OnRouteCreationStarted -= InstanceOnRouteCreationStarted;
         RouteCreationManager.Instance.OnRouteCreationFinished -= InstanceOnRouteCreationFinished;
+        BuildSelectionManager.Instance.OnDynamicRoadSelected -= InstanceOnDynamicRoadSelected; 
+        BuildSelectionManager.Instance.OnBuildingSelected -= InstanceOnBuildingSelected; 
     }
 
     private void Update()
     {
-        
-        switch (_gameplayState)
+        if (_gameplayState == GameplayState.Building ||
+            _gameplayState == GameplayState.DynamicRoadBuilding)
         {
-            case GameplayState.Building:
-                BuildSelectionManager.Instance!.HandleBuildSelectionInput();
-                break;
-            
-            case GameplayState.RouteCreating:
-                
-
-                break;
+            BuildSelectionManager.Instance!.HandleBuildSelectionInput();
         }
     }
 
@@ -66,7 +66,21 @@ public class GameManager : MonoBehaviour
     private void InstanceOnRouteCreationStarted(object sender, EventArgs e)
     {
         BuildSelectionManager.Instance.ClearSelectedObjectType();
+        DynamicRoadBuilder.Instance.SetActive(false);
         _gameplayState = GameplayState.RouteCreating;
+    }
+    
+    private void InstanceOnDynamicRoadSelected(object sender, EventArgs e)
+    {
+        _gameplayState = GameplayState.DynamicRoadBuilding;
+        DynamicRoadBuilder.Instance.ResetRoadBuilder();
+        DynamicRoadBuilder.Instance.SetActive(true);
+    }
+    
+    private void InstanceOnBuildingSelected(object sender, EventArgs e)
+    {
+        _gameplayState = GameplayState.Building;
+        DynamicRoadBuilder.Instance.SetActive(false);
     }
     
     private void DynamicRoadBuildingManagerOnRoadCellBuilt(object sender, RoadCell roadCell)
@@ -87,5 +101,5 @@ public class GameManager : MonoBehaviour
 }
 public enum GameplayState
 {
-    Building, RouteCreating
+    Building, RouteCreating, DynamicRoadBuilding
 }

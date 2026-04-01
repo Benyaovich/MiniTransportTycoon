@@ -9,6 +9,8 @@ public class BuildSelectionManager : MonoBehaviour, IBuildSelectionManager
 {
     public static BuildSelectionManager Instance { get; private set; } = null!;
     public event EventHandler<Transform?>? OnSelectedObjectChanged;
+    public event EventHandler? OnDynamicRoadSelected;
+    public event EventHandler? OnBuildingSelected; 
 
     public CellObjectTypeSO? SelectedObjectType { get; private set; }
 
@@ -31,10 +33,12 @@ public class BuildSelectionManager : MonoBehaviour, IBuildSelectionManager
         if (Keyboard.current.digit1Key.wasPressedThisFrame)
         {
             CycleSelection(buildingCellObjectTypeSos!);
+            InvokeBuildingSelected();
         }
         else if (Keyboard.current.digit2Key.wasPressedThisFrame)
         {
             SetSelectedObjectType(dynamicRoadCellObjectTypeSo!);
+            InvokeDynamicRoadSelected();
         }
     }
     
@@ -102,5 +106,14 @@ public class BuildSelectionManager : MonoBehaviour, IBuildSelectionManager
         }
         
         OnSelectedObjectChanged?.Invoke(this, SelectedObjectType.visual);
+    }
+    
+    private void InvokeDynamicRoadSelected()
+    {
+        OnDynamicRoadSelected?.Invoke(this, EventArgs.Empty);
+    }
+    private void InvokeBuildingSelected()
+    {
+        OnBuildingSelected?.Invoke(this, EventArgs.Empty);
     }
 }
