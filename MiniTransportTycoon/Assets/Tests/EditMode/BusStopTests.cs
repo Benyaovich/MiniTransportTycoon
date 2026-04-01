@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.Numerics;
+using Model.Cells.Grid;
 using NUnit.Framework;
 
 public class BusStopTests
 {
     private Grid<ModelGridObject> _grid;
     private CityService _cityService;
-    private IBuildingManager _buildingManager;
+    private CellBuildingManager _buildingManager;
     
     [SetUp]
     public void Init()
@@ -14,7 +15,7 @@ public class BusStopTests
         _grid= new Grid<ModelGridObject>(new Size(10, 10), 10, Vector3.Zero,
             (g, l) => new ModelGridObject(g,l));
         _cityService = new CityService();
-        _buildingManager = new BuildingManager(_grid, _cityService, new List<IAdvancable>());
+        _buildingManager = new CellBuildingManager(_grid, new DynamicRoadBuildingManager(_grid), _cityService, new List<IAdvancable>());
     }
     
     [Test]
