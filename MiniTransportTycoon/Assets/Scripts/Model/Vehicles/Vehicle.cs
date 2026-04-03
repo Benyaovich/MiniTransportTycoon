@@ -121,19 +121,9 @@ public abstract class Vehicle : IAdvancable
     {
         if (road.IsIntersection)
         {
-            if (road.HasLamp) // ide vissza terni lampa implementalas utan: && road.Lamp.Passable( == true)
+            if (road.HasLamp ) // ide vissza terni lampa implementalas utan: && road.Lamp.Passable( == false)
             {
-                foreach (var observedVehicle in road.Vehicles)
-                {
-                    if (observedVehicle._route == null)
-                        throw new InvalidOperationException("Observed vehicle doesn't have a route.");
-                    if (!IsInterSectionPassable(observedVehicle._route))
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
+                //return false
             }
             
             foreach (var observedVehicle in road.Vehicles)
@@ -145,9 +135,6 @@ public abstract class Vehicle : IAdvancable
                     return false;
                 }
             }
-            
-            return true;
-            
         }
         
         foreach (var observedVehicle in road.Vehicles)
