@@ -107,6 +107,13 @@ public abstract class Vehicle : IAdvancable
 
     public void SetRoute(Route route)
     {
+        //ha mar volt utja, akkor nem vette ki magat a mezorol, amikor ujat kapott xddd
+        if (_route is not null)
+        {
+            RoadCell currentRoadCell = (_grid.GetGridObject(CurrentLocation).Model as RoadCell)!;
+            currentRoadCell.RemoveVehicle(this);
+        }
+        
         _route = route;
         _moveTimer = new Timer(MoveSpeed);
         _moveTimer.OnTimerElapsed += TryMove;
