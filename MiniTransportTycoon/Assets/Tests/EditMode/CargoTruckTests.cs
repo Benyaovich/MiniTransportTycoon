@@ -10,7 +10,9 @@ using Model.Enumerations;
 public class CargoTruckTests
 {
     private CargoTruck _testTruck;
+    private CargoTruck _testTruck2;
     private Route _testRoute;
+    private Route _testRoute2;
     private Grid<ModelGridObject> _grid;
 
     [SetUp]
@@ -19,6 +21,7 @@ public class CargoTruckTests
         SetUpGrid();
         _testTruck = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
         
+        _testTruck2 = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
     }
 
     private void SetUpRoute1()
@@ -82,6 +85,18 @@ public class CargoTruckTests
         
         
         
+    }
+
+    private void gridsetup2()
+    {
+        _grid = new Grid<ModelGridObject>(new Size(3, 3), 5, new System.Numerics.Vector3(0,0,0),
+            (g, l) => new ModelGridObject(g, l));
+        
+        _grid.GetGridObject(1,1).SetModel(new FourWay(new Location(1,1)));
+        _grid.GetGridObject(0,1).SetModel(new TwoWayLR(new Location(0,1)));
+        _grid.GetGridObject(2,1).SetModel(new TwoWayLR(new Location(2,1)));
+        _grid.GetGridObject(1,0).SetModel(new TwoWayUD(new Location(1,0)));
+        _grid.GetGridObject(1,2).SetModel(new TwoWayUD(new Location(1,3)));
     }
     
     [Test]
@@ -171,6 +186,231 @@ public class CargoTruckTests
         Assert.AreEqual(0, _testTruck.ResourceAmount);
         Assert.AreEqual(50, pbs.RequiredResourceAmount);
         
+    }
+
+    
+    //    V         
+    //    R    or  V R V
+    //    V
+    [Test]
+    public void CrossroadStraightPassing()
+    {
+        gridsetup2();
+        
+        _testTruck = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
+        _testTruck2 = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
+
+        #region LeftToRight
+
+        _testRoute = new Route(new List<Location>()
+        {
+            new(0,1),
+            new(1,1),
+            new(2,1),
+            new(1,1),
+            new(0,1)
+        });
+        
+        _testRoute2 = new Route(new List<Location>()
+        {
+            new(2,1),
+            new(1,1),
+            new(0,1),
+            new(1,1),
+            new(2,1)
+        });
+        
+        _testTruck.SetRoute(_testRoute);
+        _testTruck2.SetRoute(_testRoute2);
+        
+        Assert.AreEqual(new Location (0, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (2, 1), _testTruck2.CurrentLocation);
+        
+        _testTruck.MoveNext();
+        _testTruck2.MoveNext();
+        
+        Assert.AreEqual(new Location (1, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
+        
+        _testTruck.MoveNext();
+        _testTruck2.MoveNext();
+        
+        Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (0, 1), _testTruck2.CurrentLocation);
+        
+        _testTruck.MoveNext();
+        _testTruck2.MoveNext();
+        
+        Assert.AreEqual(new Location (1, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
+        
+        _testTruck.MoveNext();
+        _testTruck2.MoveNext();
+        
+        Assert.AreEqual(new Location (0, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (2, 1), _testTruck2.CurrentLocation);
+
+            #endregion
+
+        #region UpToDown
+
+            _testRoute = new Route(new List<Location>()
+            {
+                new(1,2),
+                new(1,1),
+                new(1,0),
+                new(1,1),
+                new(1,2)
+            });
+        
+            _testRoute2 = new Route(new List<Location>()
+            {
+                new(1,0),
+                new(1,1),
+                new(1,2),
+                new(1,1),
+                new(1,0)
+            });
+
+            _testTruck.SetRoute(_testRoute);
+            _testTruck2.SetRoute(_testRoute2);
+        
+            Assert.AreEqual(new Location (1, 2), _testTruck.CurrentLocation);
+            Assert.AreEqual(new Location (1, 0), _testTruck2.CurrentLocation);
+        
+            _testTruck.MoveNext();
+            _testTruck2.MoveNext();
+        
+            Assert.AreEqual(new Location (1, 1), _testTruck.CurrentLocation);
+            Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
+        
+            _testTruck.MoveNext();
+            _testTruck2.MoveNext();
+        
+            Assert.AreEqual(new Location (1, 0), _testTruck.CurrentLocation);
+            Assert.AreEqual(new Location (1, 2), _testTruck2.CurrentLocation);
+        
+            _testTruck.MoveNext();
+            _testTruck2.MoveNext();
+        
+            Assert.AreEqual(new Location (1, 1), _testTruck.CurrentLocation);
+            Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
+        
+            _testTruck.MoveNext();
+            _testTruck2.MoveNext();
+        
+            Assert.AreEqual(new Location (1, 2), _testTruck.CurrentLocation);
+            Assert.AreEqual(new Location (1, 0), _testTruck2.CurrentLocation);
+            #endregion
+    }
+
+    
+    //             
+    //  V R    or   V R V   or    R V  ....stb
+    //    V                       V
+    [Test]
+    public void RightTurnPassing()
+    {
+        gridsetup2();
+        
+        _testTruck = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
+        _testTruck2 = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
+        
+        #region RoutesAndSteps
+        
+        //posive tests
+        _testRoute = new Route(new List<Location>()
+        {
+            new(0,1),
+            new(1,1),
+            new(1,2),
+            new(1,1),
+            new(0,1)
+        });
+        
+        _testRoute2 = new Route(new List<Location>()
+        {
+            new(1,0),
+            new(1,1),
+            new(2,1),
+            new(1,1),
+            new(1,0)
+        });
+        
+        _testTruck.SetRoute(_testRoute);
+        _testTruck2.SetRoute(_testRoute2);
+        
+        _testTruck.MoveNext();
+        _testTruck2.MoveNext();
+        
+        Assert.AreEqual(new Location (1, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
+        
+        //negative tests - megall a kamion ha nem mehet
+        
+        _testRoute = new Route(new List<Location>()
+        {
+            new(1,0),
+            new(1,1),
+            new(2,1),
+            new(1,1),
+            new(1,0)
+        });
+        
+        _testRoute2 = new Route(new List<Location>()
+        {
+            new(0,1),
+            new(1,1),
+            new(2,1),
+            new(1,1),
+            new(0,1)
+        });
+        
+        _testTruck.SetRoute(_testRoute);
+        _testTruck2.SetRoute(_testRoute2);
+        
+        Assert.AreEqual(new Location (1, 0), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (0, 1), _testTruck2.CurrentLocation);
+
+        _testTruck.MoveNext();
+        _testTruck2.MoveNext();
+        
+        Assert.AreEqual(new Location (1, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (0, 1), _testTruck2.CurrentLocation);
+        
+        _testTruck.MoveNext();
+        _testTruck2.MoveNext();
+        
+        Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
+        #endregion
+    }
+
+    [Test]
+    public void LeftTurnPassing()
+    {
+        gridsetup2();
+        
+        _testTruck = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
+        _testTruck2 = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
+        
+        _testRoute = new Route(new List<Location>()
+        {
+            new(0,1),
+            new(1,1),
+            new(1,2),
+            new(1,1),
+            new(0,1)
+        });
+        
+        _testRoute2 = new Route(new List<Location>()
+        {
+            new(1,0),
+            new(1,1),
+            new(2,1),
+            new(1,1),
+            new(1,0)
+        });
     }
     
     // [Test]

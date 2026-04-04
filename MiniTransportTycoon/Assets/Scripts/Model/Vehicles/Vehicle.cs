@@ -107,6 +107,13 @@ public abstract class Vehicle : IAdvancable
 
     public void SetRoute(Route route)
     {
+        //ha mar volt utja, akkor nem vette ki magat a mezorol, amikor ujat kapott xddd
+        if (_route is not null)
+        {
+            RoadCell currentRoadCell = (_grid.GetGridObject(CurrentLocation).Model as RoadCell)!;
+            currentRoadCell.RemoveVehicle(this);
+        }
+        
         _route = route;
         _moveTimer = new Timer(MoveSpeed);
         _moveTimer.OnTimerElapsed += TryMove;
@@ -121,19 +128,9 @@ public abstract class Vehicle : IAdvancable
     {
         if (road.IsIntersection)
         {
-            if (road.HasLamp) // ide vissza terni lampa implementalas utan: && road.Lamp.Passable( == true)
+            if (road.HasLamp ) // ide vissza terni lampa implementalas utan: && road.Lamp.Passable( == false)
             {
-                foreach (var observedVehicle in road.Vehicles)
-                {
-                    if (observedVehicle._route == null)
-                        throw new InvalidOperationException("Observed vehicle doesn't have a route.");
-                    if (!IsInterSectionPassable(observedVehicle._route))
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
+                //return false
             }
             
             foreach (var observedVehicle in road.Vehicles)
@@ -145,9 +142,6 @@ public abstract class Vehicle : IAdvancable
                     return false;
                 }
             }
-            
-            return true;
-            
         }
         
         foreach (var observedVehicle in road.Vehicles)
