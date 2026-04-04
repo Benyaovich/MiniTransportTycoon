@@ -383,6 +383,20 @@ public class CargoTruckTests
         
         Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
         Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
+        
+        
+        //itt van egy erdekes beakadas, amit lekell majd kezelnem
+        _testTruck.MoveNext();
+        _testTruck2.MoveNext();
+        
+        Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
+        
+        _testTruck.MoveNext();
+        _testTruck2.MoveNext();
+        
+        Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
         #endregion
     }
 
@@ -411,6 +425,8 @@ public class CargoTruckTests
             new(1,1),
             new(1,0)
         });
+        
+        
     }
     
     // [Test]
