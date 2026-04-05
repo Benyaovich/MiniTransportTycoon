@@ -426,7 +426,22 @@ public class CargoTruckTests
             new(1,0)
         });
         
+        _testTruck.SetRoute(_testRoute);
+        _testTruck2.SetRoute(_testRoute2);
         
+        // pozitiv
+        
+        _testTruck.MoveNext();
+        _testTruck2.MoveNext();
+        
+        Assert.AreEqual(new Location (1, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
+        
+        _testTruck.MoveNext();
+        _testTruck2.MoveNext();
+        
+        Assert.AreEqual(new Location (1, 2), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (2, 1), _testTruck2.CurrentLocation);
     }
     
     // [Test]
