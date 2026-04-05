@@ -14,6 +14,7 @@ public class RouteCreationManager : MonoBehaviour
     public event EventHandler OnRouteCreationStarted; 
     public event EventHandler OnRouteCreationFinished; 
     public bool InRouteCreation { get; private set; }
+    public PathHandler PathHandler => _pathHandler;
     
     private PathHandler _pathHandler;
     private Grid<ModelGridObject> _grid;

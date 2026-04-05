@@ -3,9 +3,12 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using Model.Enumerations;
+using Model.Cells;
+using PlasticGui;
 
 public class Route
 {
+    PathHandler _pathHandler;
     public Queue<Location> Vertices { get; private set; }
     public Location PreviousVertex { get; private set; }
     public Location CurrentVertex { get; private set; }
@@ -15,6 +18,7 @@ public class Route
     public Location CurrentPosition {get; private set; }
     public Location NextPosition { get; private set; }
     public bool IsTurning { get; private set; }
+    private bool currentlyStuck = false;
     public Direction TurningDirection => (NextPosition - CurrentPosition).ToDirection();
     
     public Direction CurrentDirection => (NextVertex - CurrentVertex).ToDirection();
@@ -32,7 +36,14 @@ public class Route
     
     private int index;
     
-    public Route(List<Location> vertices)
+    public Route(List<Location> vertices, PathHandler pathHandler)
+    {
+        _pathHandler = pathHandler;
+        
+        SetUp(vertices);
+    }
+
+    public void SetUp(List<Location> vertices)
     {
         //ha a palyanak elso es utolso eleme egyezik
         if (vertices[0] == vertices[^1])
@@ -57,12 +68,31 @@ public class Route
 
     public void Step()
     {
+        if (currentlyStuck)
+        {
+            try
+            {
+                RecalculateRoute();
+            }
+            catch (Exception e)
+            {
+                return;
+            }
+        }
+        
         PreviousPosition = CurrentPosition;
         CurrentPosition += CurrentDirection.ToLocation();
         
         if (CurrentPosition == NextVertex)
         {
-            StepVertex();
+            try
+            {
+                StepVertex();
+            }
+            catch (Exception e)
+            {
+                return;
+            }
         }
         NextPosition = CurrentPosition + CurrentDirection;
         SetIsTurning();
@@ -72,10 +102,34 @@ public class Route
     
     public void StepVertex()
     {
-        Vertices.Enqueue(CurrentVertex);
-        PreviousVertex = CurrentVertex;
-        CurrentVertex = NextVertex;
-        NextVertex = Vertices.Dequeue();
+        if (!_pathHandler.Graph.ContainsVertex(NextVertex))
+        {
+            RecalculateRoute();
+        }
+        else
+        {
+            Vertices.Enqueue(CurrentVertex);
+            PreviousVertex = CurrentVertex;
+            CurrentVertex = NextVertex;
+            NextVertex = Vertices.Dequeue();
+        }
+    }
+
+    private void RecalculateRoute()
+    {
+        try
+        {
+            List<Location> newLocs = _pathHandler.GetPathFromRoute(_pathHandler.Graph.Vertices);
+            
+            SetUp(newLocs);
+        }
+        catch (Exception e)
+        {
+            currentlyStuck = true;
+            throw new Exception("Nincs elerheto ut");
+        }
+        
+        currentlyStuck = false;
     }
 
     public bool ContainsVertex(Location location)

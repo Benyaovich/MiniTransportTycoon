@@ -72,7 +72,7 @@ public class VehicleOwnedListUI : MonoBehaviour
                 void OnRouteCreated(object? sender, List<Location> route)
                 {
                     routeCreationManager.OnRouteCreated -= OnRouteCreated;
-                    vehicle.SetRoute(new Route(route));
+                    vehicle.SetRoute(new Route(route, routeCreationManager.PathHandler));
                 }
 
                 routeCreationManager.OnRouteCreated += OnRouteCreated;

@@ -9,4 +9,5 @@ public interface IGraph
     public void AddVertex(Location vertex);
     public void RemoveVertex(Location vertex);
     public List<Location> GetNeighbours(Location vertex);
+    public bool ContainsVertex(Location vertex);
 }

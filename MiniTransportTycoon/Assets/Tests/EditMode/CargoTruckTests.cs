@@ -14,6 +14,30 @@ public class CargoTruckTests
     private Route _testRoute;
     private Route _testRoute2;
     private Grid<ModelGridObject> _grid;
+    
+    #region ExtraPathahndler
+    private PathHandler pathHandler =  new PathHandler();
+    
+    private List<Location> testVertices = new ()
+    {
+        new(0,0),
+        new(1,0),
+        new(3,0),
+        new(4,0),
+        new(3,0),
+        new(1,0),
+        new(0,0)
+    };
+    
+    private List<Location> testVertices2 = new ()
+    {
+        new(1,1),
+        new(0,1),
+        new(2,1),
+        new(1,0),
+        new(1,2)
+    };
+    #endregion
 
     [SetUp]
     public void Init()
@@ -22,20 +46,6 @@ public class CargoTruckTests
         _testTruck = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
         
         _testTruck2 = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
-    }
-
-    private void SetUpRoute1()
-    {
-        _testRoute = new Route(new List<Location>()
-        {
-            new(0,0),
-            new(1,0),
-            new(3,0),
-            new(4,0),
-            new(3,0),
-            new(1,0),
-            new(0,0)
-        });
     }
     
     // C R R R C
@@ -81,14 +91,42 @@ public class CargoTruckTests
         ExtractorBuilding ebi = new ExtractorBuilding(Resource.Iron, 100, new Location(3,1),
             rch: new RateChangeHandler(100,100,0,1,100));
         _grid.GetGridObject(3,1).SetModel(ebi);
+    }
+    
+    private void SetUpRoute1()
+    {
+        foreach (var item in testVertices)
+        {
+            pathHandler.Graph.AddVertex(item);
+        }
+        pathHandler.Graph.AddEdge(new Edge(testVertices[0], testVertices[1]));
+        pathHandler.Graph.AddEdge(new Edge(testVertices[1], testVertices[2]));
+        pathHandler.Graph.AddEdge(new Edge(testVertices[3], testVertices[4]));
+        pathHandler.Graph.AddEdge(new Edge(testVertices[4], testVertices[5]));
+        pathHandler.Graph.AddEdge(new Edge(testVertices[5], testVertices[6]));
         
-        
-        
-        
+        _testRoute = new Route(new List<Location>()
+        {
+            new(0,0),
+            new(1,0),
+            new(3,0),
+            new(4,0),
+            new(3,0),
+            new(1,0),
+            new(0,0)
+        }, pathHandler);
     }
 
     private void gridsetup2()
     {
+        foreach (var item in testVertices2)
+        {
+            pathHandler.Graph.AddVertex(item);
+        }
+        pathHandler.Graph.AddEdge(new Edge(testVertices2[0], testVertices2[1]));
+        pathHandler.Graph.AddEdge(new Edge(testVertices2[0], testVertices2[2]));
+        pathHandler.Graph.AddEdge(new Edge(testVertices2[0], testVertices2[3]));
+        
         _grid = new Grid<ModelGridObject>(new Size(3, 3), 5, new System.Numerics.Vector3(0,0,0),
             (g, l) => new ModelGridObject(g, l));
         
@@ -96,7 +134,7 @@ public class CargoTruckTests
         _grid.GetGridObject(0,1).SetModel(new TwoWayLR(new Location(0,1)));
         _grid.GetGridObject(2,1).SetModel(new TwoWayLR(new Location(2,1)));
         _grid.GetGridObject(1,0).SetModel(new TwoWayUD(new Location(1,0)));
-        _grid.GetGridObject(1,2).SetModel(new TwoWayUD(new Location(1,3)));
+        _grid.GetGridObject(1,2).SetModel(new TwoWayUD(new Location(1,2)));
     }
     
     [Test]
@@ -209,7 +247,7 @@ public class CargoTruckTests
             new(2,1),
             new(1,1),
             new(0,1)
-        });
+        }, pathHandler);
         
         _testRoute2 = new Route(new List<Location>()
         {
@@ -218,7 +256,7 @@ public class CargoTruckTests
             new(0,1),
             new(1,1),
             new(2,1)
-        });
+        }, pathHandler);
         
         _testTruck.SetRoute(_testRoute);
         _testTruck2.SetRoute(_testRoute2);
@@ -261,7 +299,7 @@ public class CargoTruckTests
                 new(1,0),
                 new(1,1),
                 new(1,2)
-            });
+            }, pathHandler);
         
             _testRoute2 = new Route(new List<Location>()
             {
@@ -270,7 +308,7 @@ public class CargoTruckTests
                 new(1,2),
                 new(1,1),
                 new(1,0)
-            });
+            }, pathHandler);
 
             _testTruck.SetRoute(_testRoute);
             _testTruck2.SetRoute(_testRoute2);
@@ -326,7 +364,7 @@ public class CargoTruckTests
             new(1,2),
             new(1,1),
             new(0,1)
-        });
+        }, pathHandler);
         
         _testRoute2 = new Route(new List<Location>()
         {
@@ -335,7 +373,7 @@ public class CargoTruckTests
             new(2,1),
             new(1,1),
             new(1,0)
-        });
+        }, pathHandler);
         
         _testTruck.SetRoute(_testRoute);
         _testTruck2.SetRoute(_testRoute2);
@@ -355,7 +393,7 @@ public class CargoTruckTests
             new(2,1),
             new(1,1),
             new(1,0)
-        });
+        }, pathHandler);
         
         _testRoute2 = new Route(new List<Location>()
         {
@@ -364,7 +402,7 @@ public class CargoTruckTests
             new(2,1),
             new(1,1),
             new(0,1)
-        });
+        }, pathHandler);
         
         _testTruck.SetRoute(_testRoute);
         _testTruck2.SetRoute(_testRoute2);
@@ -415,7 +453,7 @@ public class CargoTruckTests
             new(1,2),
             new(1,1),
             new(0,1)
-        });
+        }, pathHandler);
         
         _testRoute2 = new Route(new List<Location>()
         {
@@ -424,7 +462,7 @@ public class CargoTruckTests
             new(2,1),
             new(1,1),
             new(1,0)
-        });
+        }, pathHandler);
         
         _testTruck.SetRoute(_testRoute);
         _testTruck2.SetRoute(_testRoute2);
