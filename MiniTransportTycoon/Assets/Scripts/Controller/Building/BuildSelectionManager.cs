@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.PlayerLoop;
+using UnityEngine.Serialization;
 
 public class BuildSelectionManager : MonoBehaviour, IBuildSelectionManager
 {
@@ -13,13 +14,14 @@ public class BuildSelectionManager : MonoBehaviour, IBuildSelectionManager
     public event EventHandler? OnBuildingSelected; 
 
     public CellObjectTypeSO? SelectedObjectType { get; private set; }
-
+    
     private List<CellObjectTypeSO> _cellObjectTypeSos = new();
     public Dictionary<Type, CellObjectTypeSO> CellLookup { get; private set; } = new();
     
-    [SerializeField] private List<CellObjectTypeSO>? buildingCellObjectTypeSos;
-    [SerializeField] private List<CellObjectTypeSO>? roadCellObjectsTypeSos;
-    [SerializeField] private CellObjectTypeSO? dynamicRoadCellObjectTypeSo;
+    [SerializeField] private List<CellObjectTypeSO> buildingCellObjectTypeSos = null!;
+    [SerializeField] private List<CellObjectTypeSO> roadCellObjectsTypeSos = null!;
+    [SerializeField] private CellObjectTypeSO dynamicRoadCellObjectTypeSo = null!; 
+    [SerializeField] private CellObjectTypeSO busStop = null!;
 
     private void Awake()
     {
@@ -37,8 +39,7 @@ public class BuildSelectionManager : MonoBehaviour, IBuildSelectionManager
         }
         else if (Keyboard.current.digit2Key.wasPressedThisFrame)
         {
-            SetSelectedObjectType(dynamicRoadCellObjectTypeSo!);
-            InvokeDynamicRoadSelected();
+            SelectDynamicRoadObjectTypeSo();
         }
     }
     
@@ -70,6 +71,18 @@ public class BuildSelectionManager : MonoBehaviour, IBuildSelectionManager
     {
         SelectedObjectType = cellObjectTypeSo;
         RaiseSelectedObjectChanged();
+    }
+
+    public void SelectDynamicRoadObjectTypeSo()
+    {
+        SetSelectedObjectType(dynamicRoadCellObjectTypeSo);
+        InvokeDynamicRoadSelected();
+    }
+
+    public void SelectBusStopObjectTypeSo()
+    {
+        SetSelectedObjectType(busStop);
+        InvokeBuildingSelected();
     }
     
     private void CollectAllCellObjectTypeSosIntoASingleList()
