@@ -48,11 +48,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::View.VehicleVisual
   currentCell: {fileID: 2056364361841637757}
   debugMode: 0
-  upOffset: {x: 1.5, y: 0, z: 3}
-  downOffset: {x: -1.5, y: 0, z: -3}
-  leftOffset: {x: -3, y: 0, z: 1.5}
-  rightOffset: {x: 3, y: 0, z: -1.5}
-  turningOffset: {x: 0.01, y: 0, z: 0}
+  upDirectionOffset: {x: 3, y: 0, z: 3}
+  downDirectionOffset: {x: -0.5, y: 0, z: -3}
+  leftDirectionOffset: {x: -3, y: 0, z: 3}
+  rightDirectionOffset: {x: 3, y: 0, z: -0.5}
+  testingOffset1: {x: 0.01, y: 0, z: 0}
+  testingOffset2: {x: 0.01, y: 0, z: 0}
 --- !u!1001 &4148345430605844296
 PrefabInstance:
   m_ObjectHideFlags: 0
