@@ -1,13 +1,17 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/USS/GameUIVisualTreeStyle.uss?fileID=7433441132597879392&amp;guid=d594cda548d638443a4cd751fc3e73b9&amp;type=3#GameUIVisualTreeStyle"/>
     <Style src="project://database/Assets/UI%20Toolkit/USS/UniversalStyle.uss?fileID=7433441132597879392&amp;guid=1858bf694d9c92140ab802dc915d4236&amp;type=3#UniversalStyle"/>
-    <ui:VisualElement name="NavBar" style="flex-grow: 0; flex-direction: row; min-height: auto; width: auto; align-items: center; align-content: center; margin-top: 10px; margin-bottom: 10px; flex-shrink: 1;">
-        <ui:VisualElement class="blocksGameInput" style="flex-grow: 0; flex-direction: row; margin-right: 15px;">
+    <ui:VisualElement name="NavBar" style="flex-grow: 0; flex-direction: row; min-height: auto; width: auto; align-items: center; align-content: center; margin-top: 0; margin-bottom: 10px; flex-shrink: 1; background-color: rgba(140, 140, 140, 0.31); padding-top: 10px; padding-bottom: 10px; max-width: 80%;">
+        <ui:VisualElement name="VisualElement" class="blocksGameInput" style="flex-grow: 0; flex-direction: row; margin-right: 15px; align-self: flex-start;">
             <ui:Button text="Menu" name="MenuBtn" class="navBarButton"/>
         </ui:VisualElement>
-        <ui:VisualElement class="blocksGameInput" style="flex-grow: 0; flex-direction: row; margin-left: 15px;">
+        <ui:VisualElement class="blocksGameInput" style="flex-grow: 0; flex-direction: row; margin-left: 15px; align-self: flex-start; margin-right: 15px;">
             <ui:Button text="Buy Vehicles" name="BuyVehiclesBtn" class="navBarButton" style="margin-bottom: 2px; margin-top: 2px;"/>
             <ui:Button text="Owned Vehicles" name="OwnedVehiclesBtn" class="navBarButton"/>
+        </ui:VisualElement>
+        <ui:VisualElement class="blocksGameInput" style="flex-grow: 0; flex-direction: row; margin-left: 15px; align-self: flex-start;">
+            <ui:Button text="Roads" name="SelectRoadBtn" class="navBarButton" style="margin-bottom: 2px; margin-top: 2px; color: rgb(0, 0, 0);"/>
+            <ui:Button text="Bus Station" name="SelectBusStopBtn" parse-escape-sequences="false" class="navBarButton" style="color: rgb(0, 0, 0);"/>
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="ControlsHelpOverlay" class="ControlsHelpOverlay">
