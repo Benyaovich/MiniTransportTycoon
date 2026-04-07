@@ -44,6 +44,7 @@ public class GameUI : MonoBehaviour
     private void ToggleOwnedVehicleListView()
     {
         _vehiclePurchasePanel.Disable();
+        vehicleOwnedListUI.InitialState();
         vehicleOwnedListUI.RefreshList();
         _vehicleOwnedPanel.ToggleVisibility();
     }
@@ -51,6 +52,7 @@ public class GameUI : MonoBehaviour
     private void ToggleBuyVehicleListView()
     {
         _vehicleOwnedPanel.Disable();
+        vehicleOwnedListUI.InitialState();
         _vehiclePurchasePanel.ToggleVisibility();
     }
 
