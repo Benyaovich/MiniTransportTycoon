@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Model.Enumerations;
 using Model.Cells;
+using NUnit.Framework;
 using PlasticGui;
 
 public class Route
@@ -19,6 +20,7 @@ public class Route
     public Location NextPosition { get; private set; }
     public bool IsTurning { get; private set; }
     private bool currentlyStuck = false;
+    private bool turns180 = false;
     public Direction TurningDirection => (NextPosition - CurrentPosition).ToDirection();
     
     public Direction CurrentDirection => (NextVertex - CurrentVertex).ToDirection();
@@ -33,8 +35,6 @@ public class Route
     }
 
     public Direction PreviousDirection => (CurrentVertex - PreviousVertex).ToDirection();
-    
-    private int index;
     
     public Route(List<Location> vertices, PathHandler pathHandler)
     {
@@ -74,7 +74,7 @@ public class Route
             {
                 RecalculateRoute();
             }
-            catch (Exception e)
+            catch (Exception ex) when (ex is InvalidOperationException)
             {
                 return;
             }
@@ -85,14 +85,7 @@ public class Route
         
         if (CurrentPosition == NextVertex)
         {
-            try
-            {
-                StepVertex();
-            }
-            catch (Exception e)
-            {
-                return;
-            }
+            StepVertex();
         }
         NextPosition = CurrentPosition + CurrentDirection;
         SetIsTurning();
@@ -104,15 +97,19 @@ public class Route
     {
         if (!_pathHandler.Graph.ContainsVertex(NextVertex))
         {
-            RecalculateRoute();
+            try
+            {
+                RecalculateRoute();
+            }
+            catch (InvalidOperationException) { }
+            return;
         }
-        else
-        {
-            Vertices.Enqueue(CurrentVertex);
-            PreviousVertex = CurrentVertex;
-            CurrentVertex = NextVertex;
-            NextVertex = Vertices.Dequeue();
-        }
+        
+        Vertices.Enqueue(CurrentVertex);
+        PreviousVertex = CurrentVertex;
+        CurrentVertex = NextVertex; 
+        NextVertex = Vertices.Dequeue();
+        
     }
 
     private void RecalculateRoute()
@@ -120,13 +117,13 @@ public class Route
         try
         {
             List<Location> newLocs = _pathHandler.GetPathFromRoute(_pathHandler.Graph.Vertices);
-            
+
             SetUp(newLocs);
         }
-        catch (Exception e)
+        catch (ArgumentException ex)
         {
             currentlyStuck = true;
-            throw new Exception("Nincs elerheto ut");
+            throw new InvalidOperationException("Nem lehet utat csinalni a letezo csucsokbol. Ennek oka: " + ex.Message);
         }
         
         currentlyStuck = false;

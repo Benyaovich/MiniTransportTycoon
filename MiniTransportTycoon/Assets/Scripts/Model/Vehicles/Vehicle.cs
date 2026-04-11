@@ -54,6 +54,7 @@ public abstract class Vehicle : IAdvancable
         if (_route == null || !CanMove(nextRoadCell)) return;
 
         RoadCell currentRoadCell = (_grid.GetGridObject(CurrentLocation).Model as RoadCell)!;
+        
         currentRoadCell.RemoveVehicle(this);
         _route.Step();
         nextRoadCell!.AddVehicle(this);
