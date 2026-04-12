@@ -16,18 +16,15 @@ public class TraficLampTests
         trafficLamp.SetTrafficLight();
         
         Assert.IsTrue(trafficLamp.IsLightOn);
-        Assert.IsTrue(trafficLamp.UDLight);
-        Assert.IsFalse(trafficLamp.LRLight);
+        Assert.IsTrue(trafficLamp.UDLightActive);
         
         trafficLamp.Tick(3.1f);
         
-        Assert.IsFalse(trafficLamp.UDLight);
-        Assert.IsTrue(trafficLamp.LRLight);
+        Assert.IsFalse(trafficLamp.UDLightActive);
         
         trafficLamp.Tick(3.1f);
         
-        Assert.IsTrue(trafficLamp.UDLight);
-        Assert.IsFalse(trafficLamp.LRLight);
+        Assert.IsTrue(trafficLamp.UDLightActive);
     }
 
     [Test]
@@ -36,16 +33,19 @@ public class TraficLampTests
         TrafficLamp trafficLamp = new TrafficLamp();
         trafficLamp.SetTrafficLight(1, 3, false);
         
-        Assert.IsFalse(trafficLamp.UDLight);
-        Assert.IsTrue(trafficLamp.LRLight);
+        Assert.IsFalse(trafficLamp.UDLightActive);
         
         //ket tick-ben valtas
         trafficLamp.Tick(1.501f);
-        Assert.IsFalse(trafficLamp.UDLight);
-        Assert.IsTrue(trafficLamp.LRLight);
+        Assert.IsFalse(trafficLamp.UDLightActive);
         
         trafficLamp.Tick(1.501f);
-        Assert.IsTrue(trafficLamp.UDLight);
-        Assert.IsFalse(trafficLamp.LRLight);
+        Assert.IsTrue(trafficLamp.UDLightActive);
+    }
+
+    [Test]
+    public void RoadWithTrafficLightsSetGreen()
+    {
+        
     }
 }

@@ -75,19 +75,15 @@ public class RouteTests
         route.Step();
         route.Step();
         
+        Assert.AreEqual(new Location(0, 0), route.PreviousVertex); 
+        Assert.AreEqual(new Location(0, 5), route.CurrentVertex);  
+        Assert.AreEqual(new Location(5, 5), route.NextVertex);
+        
         Assert.AreEqual(new Location(0, 5), route.CurrentPosition);
         
-        Assert.AreEqual(new Location(0, 0), route.PreviousVertex); 
-        Assert.AreEqual(new Location(0, 5), route.CurrentVertex);  
-        Assert.AreEqual(new Location(5, 5), route.NextVertex);
-        
         route.Step();
+        
         Assert.AreEqual(new Location(1, 5), route.CurrentPosition);
-        
-        Assert.AreEqual(new Location(0, 0), route.PreviousVertex); 
-        Assert.AreEqual(new Location(0, 5), route.CurrentVertex);  
-        Assert.AreEqual(new Location(5, 5), route.NextVertex);
-        
     }
 
     [Test]

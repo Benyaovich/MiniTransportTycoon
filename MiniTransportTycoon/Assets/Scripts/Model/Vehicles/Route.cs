@@ -20,7 +20,7 @@ public class Route
     public Location NextPosition { get; private set; }
     public bool IsTurning { get; private set; }
     private bool currentlyStuck = false;
-    private bool turns180 = false;
+    private bool turns180happened = false;
     public Direction TurningDirection => (NextPosition - CurrentPosition).ToDirection();
     
     public Direction CurrentDirection => (NextVertex - CurrentVertex).ToDirection();
@@ -80,12 +80,27 @@ public class Route
             }
         }
         
+        if (turns180happened)
+        {
+            turns180happened = false;
+            PreviousPosition = CurrentPosition;
+            NextPosition = CurrentPosition + CurrentDirection;
+            IsTurning = true;
+            return;
+        } 
+        
+        
         PreviousPosition = CurrentPosition;
         CurrentPosition += CurrentDirection.ToLocation();
         
         if (CurrentPosition == NextVertex)
         {
             StepVertex();
+            if (PreviousDirection.Opposite() == CurrentDirection)
+            {
+                turns180happened = true;
+                return;
+            }
         }
         NextPosition = CurrentPosition + CurrentDirection;
         SetIsTurning();
@@ -137,6 +152,6 @@ public class Route
     private void SetIsTurning()
     {
         IsTurning = (CurrentPosition - PreviousPosition).ToDirection() !=
-                    (NextPosition - CurrentPosition).ToDirection();
+                        (NextPosition - CurrentPosition).ToDirection();
     }
 }

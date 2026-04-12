@@ -50,16 +50,24 @@ public abstract class Vehicle : IAdvancable
     public void MoveNext()
     {
         if (_route == null) return;
-        RoadCell nextRoadCell = (_grid.GetGridObject(CurrentLocation + _route.CurrentDirection).Model as RoadCell)!;
+        RoadCell nextRoadCell = (_grid.GetGridObject(_route.NextPosition).Model as RoadCell)!;
         if (_route == null || !CanMove(nextRoadCell)) return;
 
-        RoadCell currentRoadCell = (_grid.GetGridObject(CurrentLocation).Model as RoadCell)!;
+        Location? oldLocation = CurrentLocation;
         
-        currentRoadCell.RemoveVehicle(this);
         _route.Step();
+        
+        RoadCell currentRoadCell = (_grid.GetGridObject(oldLocation).Model as RoadCell)!;
+        currentRoadCell.RemoveVehicle(this);
+        nextRoadCell!.RemoveWaitingVehicle(this);
         nextRoadCell!.AddVehicle(this);
-        OnMove?.Invoke(this, this);
 
+        RoadCell nextnextRoadCell = // technikailag volt lepes ezert ez itt a "next", ez csak felre ertes elkerulese miatt "nextnext"
+            (_grid.GetGridObject(_route.NextPosition).Model as RoadCell)!;
+        nextnextRoadCell.AddWaitingVehicle(this);
+        
+        OnMove?.Invoke(this, this);
+        
         List<Cell> neighbouringCells = GetNeighbouringCells();
         DepositToNeighbours(neighbouringCells);
         LoadFromNeighbours(neighbouringCells);
@@ -98,12 +106,11 @@ public abstract class Vehicle : IAdvancable
 
     private bool CanMove(RoadCell road)
     {
-        if (RightDirecion(road) && SafeToMove(road) && _route != null)
-        {
-            return true;
-        }
+        if (_route == null) throw new InvalidOperationException("There is no Route given to the vehicle.");
+
+        bool canmove = RightDirecion(road) && road.IsVehicleAllowedToPass(this);
         
-        return false;
+        return canmove;
     }
 
     public void SetRoute(Route route)
@@ -121,88 +128,20 @@ public abstract class Vehicle : IAdvancable
         
         RoadCell startingRoadCell = (_grid.GetGridObject(CurrentLocation).Model as RoadCell)!;
         startingRoadCell!.AddVehicle(this);
+        
+        RoadCell nextRoadCell = (_grid.GetGridObject(_route.NextPosition).Model as RoadCell)!;
+        nextRoadCell.AddWaitingVehicle(this);
+        
         OnRouteSet?.Invoke(this, EventArgs.Empty);
         LoadFromNeighbours(GetNeighbouringCells());
-    }
-
-    private bool SafeToMove(RoadCell road)
-    {
-        if (road.IsIntersection)
-        {
-            if (road.HasLamp ) // ide vissza terni lampa implementalas utan: && road.Lamp.Passable( == false)
-            {
-                //return false
-            }
-            
-            foreach (var observedVehicle in road.Vehicles)
-            {
-                if (observedVehicle._route == null)
-                    throw new InvalidOperationException("Observed vehicle doesn't have a route.");
-                if (!IsInterSectionPassable(observedVehicle._route))
-                {
-                    return false;
-                }
-            }
-        }
-        
-        foreach (var observedVehicle in road.Vehicles)
-        {
-            if (observedVehicle._route!.PreviousDirection == _route!.CurrentDirection)
-            {
-                return false;
-            }
-        }
-        
-        return true;
-    }
-
-    private bool IsInterSectionPassable(Route otherVehiclesRoute)
-    {
-        if (_route == null) return false;
-        
-        //jobb kanyar
-        if (_route.CurrentDirection.TurnRightClockwise() == _route.NextDirection)
-        {
-            if (otherVehiclesRoute.CurrentDirection == _route.NextDirection)
-            {
-                return false;
-            }
-            
-            return true;
-        } 
-        
-        //egyenesen
-        if (_route.CurrentDirection == _route.NextDirection)
-        {
-            //szembol jon
-            if (otherVehiclesRoute.PreviousDirection.Opposite() == _route.CurrentDirection && 
-                (otherVehiclesRoute.CurrentDirection == _route.CurrentDirection.Opposite() || otherVehiclesRoute.CurrentDirection.TurnRightClockwise() == _route.CurrentDirection))
-            {
-                return true;
-            } //balrol jon
-            else if (otherVehiclesRoute.PreviousDirection.TurnLeftClockwise() == _route.CurrentDirection && otherVehiclesRoute.CurrentDirection == _route.CurrentDirection.Opposite())
-            {
-                return true;
-            }
-        } //bal kanyar
-        else if (_route.CurrentDirection.TurnLeftClockwise() == _route.NextDirection)
-        {
-            if (otherVehiclesRoute.PreviousDirection.TurnLeftClockwise() == _route.CurrentDirection && otherVehiclesRoute.CurrentDirection == _route.CurrentDirection.Opposite())
-            {
-                return true;
-            }
-        } //vissza fordulas - ha ures a lista
-        
-        return false;
     }
 
     
     private bool RightDirecion(RoadCell road)
     {
         Location locationDiff = road.Origin - CurrentLocation;
-    
-        if (locationDiff.X == 0 && locationDiff.Y == 0)
-            throw new ArgumentException("Ezen a cellán van a jármű.");
+
+        if (locationDiff.X == 0 && locationDiff.Y == 0) return true;
     
         Direction dirToRoad = locationDiff.ToDirection();
         return road.Directions.Contains(dirToRoad.Opposite());
