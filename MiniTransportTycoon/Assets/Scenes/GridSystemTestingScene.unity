@@ -740,6 +740,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 066f6e65edbaea6408d369f24ccf28a0, type: 2}
   - {fileID: 11400000, guid: 058390a7b0f561a4189254188cdcf533, type: 2}
   dynamicRoadCellObjectTypeSo: {fileID: 11400000, guid: d96afe7bca81c4842a36dbed025ee2a2, type: 2}
+  busStop: {fileID: 11400000, guid: b8e89535b943c0848ae6091888aa6f05, type: 2}
 --- !u!4 &974421256
 Transform:
   m_ObjectHideFlags: 0
@@ -1153,7 +1154,7 @@ MonoBehaviour:
   gridSizeX: 50
   gridSizeY: 50
   gridCellSize: 10
-  gridOriginPosition: {x: 0, y: 0, z: 0}
+  gridOriginPosition: {x: 1, y: 0, z: 1}
   mapFloor: {fileID: 1627260197}
 --- !u!4 &1514503208
 Transform:
