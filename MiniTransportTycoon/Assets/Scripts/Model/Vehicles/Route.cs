@@ -100,6 +100,7 @@ public class Route
             if (CurrentDirection.Opposite() == NextDirection)
             {
                 turns180happened = true;
+                NextPosition = CurrentPosition;
                 return;
             }
             else

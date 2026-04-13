@@ -92,8 +92,10 @@ public class RoadCell : Cell, IPurchasable, IHighlightable
         }
         else
         {
-            if (Lamp is not null && Lamp.IsLightOn && Lamp.PassingDirection.Contains(tryingVehicle.Route.NextDirection.Opposite()))
+            if (Lamp is not null && Lamp.IsLightOn)
             {
+                if (!Lamp.PassingDirection.Contains(tryingVehicle.Route.NextDirection.Opposite())) return false;
+                
                 foreach (var observedVehicle in Vehicles)
                 {
                     if (observedVehicle == tryingVehicle) continue;

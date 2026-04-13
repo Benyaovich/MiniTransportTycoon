@@ -50,6 +50,8 @@ public abstract class Vehicle : IAdvancable
     public void MoveNext()
     {
         if (_route == null) return;
+        if (_grid.GetGridObject(_route.NextPosition) is null) return;
+        
         RoadCell nextRoadCell = (_grid.GetGridObject(_route.NextPosition).Model as RoadCell)!;
         if (_route == null || !CanMove(nextRoadCell)) return;
 
