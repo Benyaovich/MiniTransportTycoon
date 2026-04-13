@@ -82,6 +82,7 @@ public class Route
         
         if (turns180happened)
         {
+            StepVertex();
             turns180happened = false;
             PreviousPosition = CurrentPosition;
             NextPosition = CurrentPosition + CurrentDirection;
@@ -95,11 +96,15 @@ public class Route
         
         if (CurrentPosition == NextVertex)
         {
-            StepVertex();
-            if (PreviousDirection.Opposite() == CurrentDirection)
+            
+            if (CurrentDirection.Opposite() == NextDirection)
             {
                 turns180happened = true;
                 return;
+            }
+            else
+            {
+                StepVertex();
             }
         }
         NextPosition = CurrentPosition + CurrentDirection;
