@@ -1154,7 +1154,7 @@ MonoBehaviour:
   gridSizeX: 50
   gridSizeY: 50
   gridCellSize: 10
-  gridOriginPosition: {x: 1, y: 0, z: 1}
+  gridOriginPosition: {x: 0, y: 0, z: 0}
   mapFloor: {fileID: 1627260197}
 --- !u!4 &1514503208
 Transform:

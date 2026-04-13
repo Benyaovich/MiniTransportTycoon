@@ -46,14 +46,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b207b0e21c0744b0998dddd39c601a33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::View.VehicleVisual
-  currentCell: {fileID: 2056364361841637757}
   debugMode: 0
-  upDirectionOffset: {x: 3, y: 0, z: 3}
-  downDirectionOffset: {x: -0.5, y: 0, z: -3}
-  leftDirectionOffset: {x: -3, y: 0, z: 3}
-  rightDirectionOffset: {x: 3, y: 0, z: -0.5}
-  testingOffset1: {x: 0.01, y: 0, z: 0}
-  testingOffset2: {x: 0.01, y: 0, z: 0}
+  sideWaysOffset: 1.5
+  straightOffset: 3
+  rightTurnPivot1: {x: 0, y: 0, z: 4}
+  rightTurnPivot2: {x: 0, y: 0, z: 0}
+  rightTurnDestinationOffset: {x: 1, y: 0, z: 0}
+  leftTurnPivot1: {x: 0, y: 0, z: -7}
+  leftTurnPivot2: {x: -3, y: 0, z: 0}
+  uTurnFirstPartPivot1: {x: 4, y: 0, z: -1.5}
+  uTurnFirstPartPivot2: {x: 7, y: 0, z: -1}
+  uTurnFirstPartDestinationOffset: {x: 8, y: 0, z: 1}
 --- !u!1001 &4148345430605844296
 PrefabInstance:
   m_ObjectHideFlags: 0

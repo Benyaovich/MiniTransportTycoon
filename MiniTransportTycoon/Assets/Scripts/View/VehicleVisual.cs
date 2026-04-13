@@ -1,33 +1,36 @@
 using System;
 using Model.Enumerations;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UIElements;
 
 namespace View
 {
     public class VehicleVisual : MonoBehaviour
     {
-        [SerializeField] private Transform currentCell;
-        [SerializeField] private bool debugMode = false;
+        [SerializeField] private bool debugMode;
+        [SerializeField] private float sideWaysOffset = 1.5f;
+        [SerializeField] private float straightOffset = 3f;
 
-        [Header("Direction Offsets")]
-        [SerializeField] private Vector3 upDirectionOffset = new Vector3(3f, 0, 3f);
-        [SerializeField] private Vector3 downDirectionOffset = new Vector3(-0.5f, 0, -3f);
-        [SerializeField] private Vector3 leftDirectionOffset = new Vector3(-3f, 0, 3f);
-        [SerializeField] private Vector3 rightDirectionOffset = new Vector3(3f, 0, -0.5f);
+        [SerializeField] private Vector3 rightTurnPivot1 = new Vector3(0,0,4);
+        [SerializeField] private Vector3 rightTurnPivot2 = new Vector3(0,0,0);
+        [SerializeField] private Vector3 rightTurnDestinationOffset = new Vector3(1,0,0);
         
+        [SerializeField] private Vector3 leftTurnPivot1 = new Vector3(0,0,-7);
+        [SerializeField] private Vector3 leftTurnPivot2 = new Vector3(-3,0,0);
         
-        [Header("Testing")]
-        [SerializeField] private Vector3 testingOffset1 = new Vector3(0.01f, 0, 0);
-        [SerializeField] private Vector3 testingOffset2 = new Vector3(0.01f, 0, 0);
+        [SerializeField] private Vector3 uTurnFirstPartPivot1 = new Vector3(4,0,-1.5f);
+        [SerializeField] private Vector3 uTurnFirstPartPivot2 = new Vector3(7f,0,-1f);
+        [SerializeField] private Vector3 uTurnFirstPartDestinationOffset = new Vector3(8,0,1f);
+        
         
         private Vehicle _vehicle;
+        private Vector3 _cellCenter;
         private Vector3 _previousPosition;
         private Vector3 _currentPosition;
-        private Vector3 _nextPosition;
         private Vector3 _pivotPosition1;
         private Vector3 _pivotPosition2;
         private float _elapsedTime;
-        private Vector3 _directionOffset;
         private MoveVisualMode _state = MoveVisualMode.Idle;
         
         
@@ -36,6 +39,7 @@ namespace View
         public void Setup(Vehicle vehicle)
         {
             _vehicle = vehicle;
+            _cellCenter = new Vector3(_vehicle.Grid.CellSize / 2, 0, _vehicle.Grid.CellSize / 2);
             _vehicle.OnMove += VehicleOnMove;
             _vehicle.OnRouteSet += VehicleOnRouteSet;
 
@@ -51,8 +55,6 @@ namespace View
         {
             if (_vehicle?.Route == null) return;
             if (_state == MoveVisualMode.Idle) return;
-
-            DebugMode();
             
             _elapsedTime += Time.deltaTime;
             float routePercentage = Mathf.Clamp01(_elapsedTime / _vehicle.MoveSpeed);
@@ -61,17 +63,8 @@ namespace View
             {
                 transform.position = Vector3.Lerp(_previousPosition, _currentPosition, routePercentage);
             }
-            else if (_state == MoveVisualMode.Turn90)
-            {
-                transform.position = GetQuadraticBezierPoint(routePercentage, _previousPosition,
-                    _pivotPosition1, _currentPosition);
-                Vector3 tangent = EvaluateQuadraticBezierTangent(routePercentage, _previousPosition,
-                    _pivotPosition1, _currentPosition);
-                tangent.y = 0f;
-                if (tangent.sqrMagnitude > 0.0001f)
-                    transform.rotation = Quaternion.LookRotation(tangent);
-            }
-            else if (_state == MoveVisualMode.Turn180)
+            else if (_state == MoveVisualMode.Turn180 ||
+                     _state == MoveVisualMode.Turn90)
             {
                 transform.position = GetCubicBezierPoint(routePercentage, _previousPosition, _pivotPosition1,
                     _pivotPosition2, _currentPosition);
@@ -82,7 +75,7 @@ namespace View
                     transform.rotation = Quaternion.LookRotation(tangent);
             }
 
-            if (_elapsedTime >= _vehicle.MoveSpeed)
+            if (_elapsedTime >= _vehicle.MoveSpeed - 0.002)
             {
                 _state = MoveVisualMode.Idle;
                 _elapsedTime = 0;
@@ -98,139 +91,145 @@ namespace View
         private void VehicleOnRouteSet(object sender, EventArgs e)
         {
             RotateBasedOnDirection();
-            UpdateVisual();
+            _currentPosition = GetCurrentCellCenter() + GetSideWaysOffset()
+                                                      + GetStraightOffset(_vehicle.Route!.CurrentDirection.Opposite());
             transform.position = _currentPosition;
+            UpdateVisual();
         }
 
         private void UpdateVisual()
         {
             if (_vehicle?.Route == null) return;
-            
-            OffsetBasedOnDirection();
-
             _elapsedTime = 0f;
-
-            _previousPosition = _currentPosition;
-            _currentPosition = GetWorldPosition(_vehicle.CurrentLocation);
-            _nextPosition = GetWorldPosition(GetNextCellLocation());
             
             if (_vehicle.Route.IsTurning)
             {
-                if (_vehicle.Route.CurrentDirection == _vehicle.Route.PreviousDirection.Opposite())
+                if (_vehicle.Route.Turns180happened)
                 {
-                    PivotForCubic();
+                    FirstUTurnSetup();
+                    _state = MoveVisualMode.Turn180;
+                }
+                else if (_vehicle.Route.Turns180Finished)
+                {
+                    SecondUTurnSetup();
                     _state = MoveVisualMode.Turn180;
                 }
                 else
                 {
-                    PivotForQuadratic();
+                    if (_vehicle.Route.PreviousDirection.TurnRightClockwise() == _vehicle.Route.CurrentDirection)
+                    {
+                        RightTurnSetup();
+                    }
+                    else
+                    {
+                        LeftTurnSetup();
+                    }
                     _state = MoveVisualMode.Turn90;
                 }
                 return;
             }
+            
+            WorldPositionsStraight();
             _state = MoveVisualMode.Straight;
         }
-
         
-        private Location GetNextCellLocation()
+
+        private void FirstUTurnSetup()
         {
-            return _vehicle.CurrentLocation + _vehicle.Route!.CurrentDirection;
+            float degree = GetTurnRotation();
+
+            _previousPosition = _currentPosition;
+            
+            _pivotPosition1 = _previousPosition + uTurnFirstPartPivot1;
+            _pivotPosition2 = _previousPosition + uTurnFirstPartPivot2;
+            _currentPosition = _previousPosition + uTurnFirstPartDestinationOffset;
+            
+            _pivotPosition1 = RotateAroundPivot(_pivotPosition1, _previousPosition, degree);
+            _pivotPosition2 = RotateAroundPivot(_pivotPosition2, _previousPosition, degree);
+            _currentPosition = RotateAroundPivot(_currentPosition, _previousPosition, degree);
         }
-
-        private Vector3 GetWorldPosition(Location location)
+        
+        private void SecondUTurnSetup()
         {
-            return new Vector3(location.X, 0, location.Y) * _vehicle.Grid.CellSize
-                   + new Vector3(_vehicle.Grid.CellSize / 2, 0, _vehicle.Grid.CellSize / 2)
-                   + _directionOffset;
-        }
-
-        private void PivotForQuadratic()
-        {
-            if (_vehicle?.Route == null) return;
-            if (_vehicle.Route.TurningDirection == Direction.Left)
+            Vector3 a = GetCurrentCellCenter() - new Vector3(-5, 0, 0);
+            Vector3 b = GetCurrentCellCenter() - new Vector3(5, 0, 0);
+            Direction currDir = _vehicle.Route!.CurrentDirection;
+            if (currDir != Direction.Left && currDir != Direction.Right)
             {
-                if (_vehicle.Route.PreviousDirection == Direction.Up)
-                    { _pivotPosition1 = _currentPosition + new Vector3(4.5f, 0, 0); }
-                else if (_vehicle.Route.PreviousDirection == Direction.Down)
-                    { _pivotPosition1 = _currentPosition + new Vector3(1.5f, 0, 0); }
-            }
-
-            else if (_vehicle.Route.TurningDirection == Direction.Right)
-            {
-                if (_vehicle.Route.PreviousDirection == Direction.Down)
-                    { _pivotPosition1 = _currentPosition + new Vector3(-4.5f, 0, 0); }
-                else if (_vehicle.Route.PreviousDirection == Direction.Up)
-                    { _pivotPosition1 = _currentPosition + new Vector3(-1.5f, 0, 0); }
+                a = GetCurrentCellCenter() - new Vector3(0, 0, 5);
+                b = GetCurrentCellCenter() - new Vector3(0, 0, -5);
             }
             
-            else if (_vehicle.Route.TurningDirection == Direction.Down)
-            {
-                if (_vehicle.Route.PreviousDirection == Direction.Right)
-                    { _pivotPosition1 = _currentPosition + new Vector3(0, 0, 1.5f); }
-                else if (_vehicle.Route.PreviousDirection == Direction.Left)
-                    { _pivotPosition1 = _currentPosition + new Vector3(0, 0, 4.5f); }
-            }
-            
-            else if (_vehicle.Route.TurningDirection == Direction.Up)
-            {
-                if (_vehicle.Route.PreviousDirection == Direction.Left)
-                    { _pivotPosition1 = _currentPosition + new Vector3(0, 0, -1.5f); }
-                else if (_vehicle.Route.PreviousDirection == Direction.Right)
-                    { _pivotPosition1 = _currentPosition + new Vector3(0, 0, -4.5f); }
-            }
-            
-        }
-        
-        private void PivotForCubic()
-        {
-            if (_vehicle?.Route == null) return;
-            
-            if (_vehicle.Route.TurningDirection == Direction.Down &&
-                _vehicle.Route.PreviousDirection == Direction.Up)
-            {
-                _pivotPosition1 = _currentPosition + new Vector3(3.5f,0,5);
-                _pivotPosition2 = _currentPosition + new Vector3(0,0,5);
-            }
-            else if (_vehicle.Route.TurningDirection == Direction.Up &&
-                     _vehicle.Route.PreviousDirection == Direction.Down)
-            {
-                _pivotPosition1 = _currentPosition + new Vector3(-3.5f,0,-5);
-                _pivotPosition2 = _currentPosition + new Vector3(0,0,-5);
-            }
-            else if (_vehicle.Route.TurningDirection == Direction.Left &&
-                     _vehicle.Route.PreviousDirection == Direction.Right)
-            {
-                _pivotPosition1 = _currentPosition + new Vector3(6,0,-3.5f);
-                _pivotPosition2 = _currentPosition + new Vector3(6,0,0);
-            }
-            else if (_vehicle.Route.TurningDirection == Direction.Right &&
-                     _vehicle.Route.PreviousDirection == Direction.Left)
-            {
-                _pivotPosition1 = _currentPosition + new Vector3(-6,0,3.5f);
-                _pivotPosition2 = _currentPosition + new Vector3(-6,0,0);
-            }
-            
+            Vector3 prePos = _previousPosition;
+            _previousPosition = ReflectPointAcrossLine(_currentPosition, a, b);
+            _currentPosition = ReflectPointAcrossLine(prePos, a, b);
+            Vector3 pivot1 = _pivotPosition1;
+            _pivotPosition1 = ReflectPointAcrossLine(_pivotPosition2, a, b);
+            _pivotPosition2 = ReflectPointAcrossLine(pivot1, a, b);
         }
 
 
-        #region Quadratic Bezier
-        
-           
-        Vector3 GetQuadraticBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2)
+        private void RightTurnSetup()
         {
-            float u = 1 - t;
-            return u * u * p0 +
-                   2 * u * t * p1 +
-                   t * t * p2;
+            float degree = GetTurnRotation();
+            
+            _previousPosition = _currentPosition;
+            
+            _pivotPosition1 = _previousPosition + rightTurnPivot1;
+            _pivotPosition1 = RotateAroundPivot(_pivotPosition1, _previousPosition, degree);
+            
+            _pivotPosition2 = GetCurrentCellCenter() + GetSideWaysOffset() + GetStraightOffset() + rightTurnPivot2;
+            
+            _currentPosition = GetCurrentCellCenter() + GetSideWaysOffset() + GetStraightOffset()
+                               + rightTurnDestinationOffset;
+            _currentPosition = RotateAroundPivot(_currentPosition, _pivotPosition2, degree);
+
         }
         
-        private Vector3 EvaluateQuadraticBezierTangent( float t, Vector3 p0, Vector3 p1, Vector3 p2)
+        private void LeftTurnSetup()
         {
-            return 2f * (1f - t) * (p1 - p0) + 2f * t * (p2 - p1);
+            float degree = GetTurnRotation();
+            
+            _previousPosition = _currentPosition;
+            
+            _pivotPosition1 = _previousPosition + leftTurnPivot1;
+            _pivotPosition1 = RotateAroundPivot(_pivotPosition1, _previousPosition, degree);
+            
+            _currentPosition = GetCurrentCellCenter() + GetSideWaysOffset() + GetStraightOffset();
+            
+            _pivotPosition2 = GetCurrentCellCenter() + GetSideWaysOffset() + GetStraightOffset() + leftTurnPivot2;
+            _pivotPosition2 = RotateAroundPivot(_pivotPosition2, _currentPosition, degree);
+        }
+
+        private float GetTurnRotation()
+        {
+            if (_vehicle?.Route == null) return 0;
+            Direction currentDir = Direction.Right;
+
+            int i = 0;
+            while (currentDir != _vehicle.Route.CurrentDirection)
+            {
+                i++;
+                currentDir = currentDir.TurnRightClockwise();
+            }
+
+            return i * 90;
+        }
+
+        private void WorldPositionsStraight()
+        {
+            _previousPosition = _currentPosition;
+            _currentPosition = GetCurrentCellCenter() + GetSideWaysOffset() + GetStraightOffset();
+        }
+
+        private Vector3 GetCurrentCellCenter(Location location = null)
+        {
+            if (location == null) { location = _vehicle.CurrentLocation; }
+            return new Vector3(location!.X, 0, location.Y) * _vehicle.Grid.CellSize
+                   + _cellCenter;
         }
         
-        #endregion
-        
+
         #region Cubic Bezier
         private Vector3 GetCubicBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
         {
@@ -270,56 +269,68 @@ namespace View
             else if (dir == Direction.Right) transform.rotation = Quaternion.Euler(0, 90, 0);
         }
 
-        private void OffsetBasedOnDirection()
+        private Vector3 GetSideWaysOffset()
         {
-            if (_vehicle.Route == null) return;
-
+            if (_vehicle.Route == null) return Vector3.zero;
             
             Direction dir = _vehicle.Route.CurrentDirection;
-            if (dir == Direction.Up) _directionOffset = upDirectionOffset;
-            else if (dir == Direction.Down) _directionOffset = downDirectionOffset;
-            else if (dir == Direction.Left) _directionOffset = leftDirectionOffset;
-            else if (dir == Direction.Right) _directionOffset = rightDirectionOffset;
+            if (dir == Direction.Up) return new Vector3(sideWaysOffset,0,0);
+            if (dir == Direction.Down) return new Vector3(-sideWaysOffset,0,0);
+            if (dir == Direction.Left) return new Vector3(0,0,sideWaysOffset);
+            if (dir == Direction.Right) return new Vector3(0,0,-sideWaysOffset);
+            return Vector3.zero;
+        }
+        
+        private Vector3 GetStraightOffset(Direction? dir = null)
+        {
+            if (dir == null)
+            {
+                if (_vehicle.Route == null) return Vector3.zero;
+                dir = _vehicle.Route.CurrentDirection;
+            }
+            if (dir == Direction.Up) return new Vector3(0,0,straightOffset);
+            if (dir == Direction.Down) return new Vector3(0,0,-straightOffset);
+            if (dir == Direction.Left) return new Vector3(-straightOffset,0,0);
+            if (dir == Direction.Right) return new Vector3(straightOffset,0,0);
+            return Vector3.zero;
+        }
+        
+        private static Vector3 RotateAroundPivot(Vector3 point, Vector3 pivot, float angleDegrees)
+        {
+            Quaternion rotation = Quaternion.AngleAxis(angleDegrees, Vector3.up);
+            return pivot + rotation * (point - pivot);
+        }
+        
+        public static Vector3 ReflectPointAcrossLine(Vector3 point, Vector3 a, Vector3 b)
+        {
+            Vector3 dir = (b - a).normalized;
+            Vector3 toPoint = point - a;
+
+            Vector3 parallel = Vector3.Dot(toPoint, dir) * dir;
+            Vector3 perpendicular = toPoint - parallel;
+
+            return a + parallel - perpendicular;
         }
 
         private void OnDrawGizmos()
         {
             if (!debugMode) return;
-            if (_state == MoveVisualMode.Turn90)
-            {
-                Gizmos.DrawSphere(_previousPosition, 1f);
-                Gizmos.DrawSphere(_pivotPosition1, 1f);
-                Gizmos.DrawSphere(_currentPosition, 1f);
-            }
-            else if (_state == MoveVisualMode.Turn180)
-            {
-                Gizmos.DrawSphere(_previousPosition, 1f);
-                Gizmos.DrawSphere(_pivotPosition1, 1f);
-                Gizmos.DrawSphere(_pivotPosition2, 1f);
-                Gizmos.DrawSphere(_currentPosition, 1f);
-            }
-        }
+            
+            Gizmos.color = Color.blue;
+            Gizmos.DrawSphere(_previousPosition, 0.3f);
 
-        private void DebugMode()
-        {
-            if (!debugMode) return;
-            
-            
-            if (_state == MoveVisualMode.Turn90)
-            {
-                Debug.DrawLine(_previousPosition, _pivotPosition1, Color.blue);
-                Debug.DrawLine(_pivotPosition1, _currentPosition, Color.green);
-                Debug.DrawLine(_currentPosition, _nextPosition, Color.red);
-                
-            }
-            else if(_state == MoveVisualMode.Turn180)
-            {
-                Debug.DrawLine(_previousPosition, _pivotPosition1, Color.blue);
-                Debug.DrawLine(_pivotPosition1, _pivotPosition2, Color.green);
-                Debug.DrawLine(_pivotPosition2, _currentPosition, Color.red);
-                Debug.DrawLine(_currentPosition, _nextPosition, Color.orange);
-            }
-            // HighlightManager.Instance.HighlightService.HighlightFor(new List<Location>(){_vehicle.CurrentLocation}, 2f);
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(_pivotPosition1, 0.3f);
+
+            Gizmos.DrawSphere(_pivotPosition2, 0.3f);
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(_currentPosition, 0.3f);
+
+            Gizmos.color = Color.white;
+            Gizmos.DrawLine(_previousPosition, _pivotPosition1);
+            Gizmos.DrawLine(_pivotPosition1, _pivotPosition2);
+            Gizmos.DrawLine(_pivotPosition2, _currentPosition);
         }
 
         private enum MoveVisualMode
