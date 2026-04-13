@@ -1,0 +1,9 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/USS/MainMenuUIStyle.uss?fileID=7433441132597879392&amp;guid=d80955213eac810458a98946e5211984&amp;type=3#MainMenuUIStyle"/>
+    <ui:VisualElement name="Background" style="flex-grow: 1; background-color: rgb(51, 55, 53); position: absolute; translate: 0 0; width: 100%; height: 100%;"/>
+    <ui:VisualElement name="BtnContainer" style="flex-grow: 0; width: auto; height: auto; bottom: 0; left: 0; align-self: auto; top: auto; right: auto; position: absolute; align-items: flex-start; padding-left: 3%; padding-right: 0; margin-bottom: 10%;">
+        <ui:Button text="New Game" name="NewGameBtn" class="navBarButton"/>
+        <ui:Button text="Load Game" name="LoadGameBtn" parse-escape-sequences="false" class="navBarButton"/>
+        <ui:Button text="Exit" name="ExitGameBtn" enable-rich-text="true" class="navBarButton" style="width: 200px; align-self: auto;"/>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,16 @@
+:root {
+}
+
+#LoadingProgressBar > #unity-progress-bar {
+    margin-top: 3px;
+    margin-right: 3px;
+    margin-bottom: 3px;
+    margin-left: 3px;
+    flex-grow: 1;
+    height: 40px;
+}
+
+#LoadingProgressBar > #unity-progress-bar > .unity-progress-bar__background {
+    min-height: 40px;
+    flex-grow: 1;
+}
