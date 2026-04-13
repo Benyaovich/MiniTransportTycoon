@@ -9,7 +9,7 @@ using NUnit.Framework.Internal;
 public class RouteTests
 {
     private List<Location> _testPath;
-    private PathHandler pathHandler =  new PathHandler();
+    private PathHandler pathHandler;
 
     private List<Location> testVertices = new ()
     {
@@ -23,13 +23,15 @@ public class RouteTests
     [SetUp]
     public void Init()
     {
+        Graph graph = new Graph();
+        
         foreach (var item in testVertices)
         {
-            pathHandler.Graph.AddVertex(item);
+            graph.AddVertex(item);
         }
-        pathHandler.Graph.AddEdge(new Edge(testVertices[0], testVertices[1]));
-        pathHandler.Graph.AddEdge(new Edge(testVertices[1], testVertices[2]));
-        pathHandler.Graph.AddEdge(new Edge(testVertices[3], testVertices[4]));
+        graph.AddEdge(new Edge(testVertices[0], testVertices[1]));
+        graph.AddEdge(new Edge(testVertices[1], testVertices[2]));
+        graph.AddEdge(new Edge(testVertices[3], testVertices[4]));
         
         _testPath = new List<Location>
         {
@@ -39,6 +41,8 @@ public class RouteTests
             new Location(5, 0),
             new Location(0, 0)
         };
+
+        pathHandler = new PathHandler(graph);
     }
     
     [Test]
@@ -106,5 +110,24 @@ public class RouteTests
         Assert.True(route.ContainsVertex(new Location(0, 0)));
         Assert.True(route.ContainsVertex(new Location(0, 5)));
         Assert.False(route.ContainsVertex(new Location(50, 5)));
+    }
+
+    [Test]
+    public void RecalculationTest()
+    {
+        Route route = new Route(_testPath, pathHandler);
+        
+        pathHandler.Graph.RemoveEdge(new Edge(testVertices[1], testVertices[2]));
+
+        for (int i = 0; i < 4; i++)
+        {
+            route.Step();   
+        }
+        
+        Assert.AreEqual(new Location(5, 0), route.PreviousVertex);
+        
+        route.Step();
+        
+        //Assert.AreEqual(new Location(4, 0), route.PreviousVertex);
     }
 }
