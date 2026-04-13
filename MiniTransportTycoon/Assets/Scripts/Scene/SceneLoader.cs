@@ -8,7 +8,6 @@ namespace Scene
     public class SceneLoader
     {
         public static float LoadingProgress;
-        private static readonly int LoadingSceneShowTime = 500;
         public static async Task LoadSceneWithLoadingScreen(string targetScene, string loadingScene)
         {
             SceneManager.LoadScene(loadingScene);
@@ -24,7 +23,6 @@ namespace Scene
             }
         
             LoadingProgress = 100;
-            await Task.Delay(LoadingSceneShowTime);
 
             op.allowSceneActivation = true;
             LoadingProgress = 0;
