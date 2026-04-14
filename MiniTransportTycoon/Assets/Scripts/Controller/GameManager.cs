@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public float DeltaTime => Time.deltaTime * _gameSpeedMultiplier;
 
-    private float _gameSpeedMultiplier = 3;
+    private float _gameSpeedMultiplier = 1;
     private DynamicRoadBuildingManager _dynamicRoadBuildingManager;
     private IGraphBuilder _graphBuilder;
     private HighlightService _highlightService;
