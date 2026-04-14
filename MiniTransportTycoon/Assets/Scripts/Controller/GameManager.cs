@@ -5,15 +5,20 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    
+    public static GameManager Instance { get; private set; }
+    public float DeltaTime => Time.deltaTime * _gameSpeedMultiplier;
+
+    private float _gameSpeedMultiplier = 3;
     private DynamicRoadBuildingManager _dynamicRoadBuildingManager;
     private IGraphBuilder _graphBuilder;
     private HighlightService _highlightService;
 
     private GameplayState _gameplayState;
 
+    
     private void Awake()
     {
+        Instance = this;
         _dynamicRoadBuildingManager = GridManager.Instance!.DynamicRoadBuildingManager;
         Graph graph = new Graph();
         PathHandler pathHandler = new PathHandler(graph);
@@ -97,7 +102,9 @@ public class GameManager : MonoBehaviour
     {
         _graphBuilder.RefreshConnectionsAt(roadCell);
     }
-    
+
+    public void SetGameSpeedMultiplier(float value) => _gameSpeedMultiplier = value;
+
 }
 public enum GameplayState
 {
