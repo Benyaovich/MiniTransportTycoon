@@ -23,7 +23,7 @@ namespace Controller
             List<Timer> timers = HighlightService.Timers.ToList();
             foreach (Timer timer in timers)
             {
-                timer.Tick(Time.deltaTime);
+                timer.Tick(GameManager.Instance.DeltaTime);
             }
         }
     }

@@ -56,7 +56,7 @@ namespace View
             if (_vehicle?.Route == null) return;
             if (_state == MoveVisualMode.Idle) return;
             
-            _elapsedTime += Time.deltaTime;
+            _elapsedTime += GameManager.Instance.DeltaTime;
             float routePercentage = Mathf.Clamp01(_elapsedTime / _vehicle.MoveSpeed);
             
             if (_state == MoveVisualMode.Straight)

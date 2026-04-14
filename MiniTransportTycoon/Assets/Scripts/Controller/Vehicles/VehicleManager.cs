@@ -37,7 +37,7 @@ namespace Controller.Vehicles
 
             foreach (IAdvancable advancable in _vehicleStorage.Vehicles)
             {
-                advancable.Tick(Time.deltaTime);
+                advancable.Tick(GameManager.Instance.DeltaTime);
             }
         }
 

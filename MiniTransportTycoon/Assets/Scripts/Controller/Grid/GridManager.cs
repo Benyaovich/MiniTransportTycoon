@@ -128,7 +128,7 @@ public class GridManager : MonoBehaviour
     {
         foreach (IAdvancable advancable in _advancables)
         {
-            advancable.Tick(Time.deltaTime);
+            advancable.Tick(GameManager.Instance.DeltaTime);
         }
     }
 

@@ -50,7 +50,7 @@ public class CameraController : MonoBehaviour
 
         float finalMoveSpeed = moveSpeed * cinemachineCamera.Lens.FieldOfView / maxFOV;
         
-        t.position += moveDir * (finalMoveSpeed * Time.deltaTime);
+        t.position += moveDir * (finalMoveSpeed * GameManager.Instance.DeltaTime);
     }
 
     private void HandleCameraZoom()
