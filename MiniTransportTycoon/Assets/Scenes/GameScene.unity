@@ -726,6 +726,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cec95d5cecd92bf4fb81faec4af8e234, type: 2}
   - {fileID: 11400000, guid: b8e89535b943c0848ae6091888aa6f05, type: 2}
   - {fileID: 11400000, guid: 865e254ef083dbe49b256c1ad61b104b, type: 2}
+  - {fileID: 11400000, guid: 2017ab7e56a1bf245baeb167ab09b1f1, type: 2}
   - {fileID: 11400000, guid: 10bbcc29fecf3aa4d821924db9e613c0, type: 2}
   roadCellObjectsTypeSos:
   - {fileID: 11400000, guid: 7f79699ec2b07844180a9f32eb6f6401, type: 2}

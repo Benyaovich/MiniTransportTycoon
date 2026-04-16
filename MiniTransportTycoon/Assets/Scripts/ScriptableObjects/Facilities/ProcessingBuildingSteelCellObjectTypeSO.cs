@@ -2,7 +2,7 @@ using System;
 using Model.Cells.RoadCells;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ProcessingBuildingSteelCellObjectTypeSO", menuName = "Cell/ProcessingBuildingSteel")]
+[CreateAssetMenu(fileName = "ProcessingBuildingSteelCellObjectTypeSO", menuName = "Cell/Facilities/ProcessingBuildingSteel")]
 public class ProcessingBuildingSteelCellObjectTypeSO : CellObjectTypeSO
 {
     public override Cell Create(Location location)

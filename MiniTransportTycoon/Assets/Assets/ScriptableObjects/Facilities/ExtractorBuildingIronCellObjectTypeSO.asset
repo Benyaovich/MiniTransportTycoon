@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6f63a70541c4ddcbd47eba9ca09d220, type: 3}
+  m_Name: ExtractorBuildingIronCellObjectTypeSO
+  m_EditorClassIdentifier: Assembly-CSharp::ExtractorBuildingIronCellObjectTypeSO
+  prefab: {fileID: 4936713977235539623, guid: af66db65bfeaf72439a5a151393f9103, type: 3}
+  visual: {fileID: 5794051533596227549, guid: 2048c6e1eade6b043ab7fdaff2c98be0, type: 3}
