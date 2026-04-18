@@ -177,6 +177,10 @@ analyze:
       fi
     - 'roslynator analyze "$SLN_FILE" -o ./roslynator.xml --analyzer-assemblies $ANALYZERS_DIR || true'
     - cq roslynator roslynator.xml gl-code-quality-report.json $CI_PROJECT_DIR
+    - pwd
+    - ls -la
+    - find . -name "gl-code-quality-report.json"
+    - find . -name "roslynator.xml"
   artifacts:
     expire_in: 2 weeks
     paths:
