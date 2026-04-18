@@ -24,6 +24,7 @@ UNITY_EXIT_CODE=$?
 
 if [ $UNITY_EXIT_CODE -eq 0 ]; then
   echo -e "\033[32Project and solution files successfully generated\033[0m"
+  cd "$UNITY_DIR"
   ls *.sln *.csproj 2>/dev/null
 elif [ $UNITY_EXIT_CODE -eq 3 ]; then
   echo -e "\033[31Project and solution files failed to generate\033[0m"
