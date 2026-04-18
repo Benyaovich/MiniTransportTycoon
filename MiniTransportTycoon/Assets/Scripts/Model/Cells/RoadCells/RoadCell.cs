@@ -77,6 +77,7 @@ public class RoadCell : Cell, IPurchasable, IHighlightable
     {
         
         if(WaitingVehicles[0].Route is null) throw new NullReferenceException("The WaitingVehicles[0].Route is null");
+        if(Vehicles.Contains(tryingVehicle)) return true;
         if(tryingVehicle.Route is null || !WaitingVehicles.Contains(tryingVehicle)) return false;
         
         if (!IsIntersection)

@@ -234,6 +234,48 @@ public class CargoTruckTests
         
     }
 
+    [Test]
+    public void VehiclesBlockEachother()
+    {
+        SetUpRoute1();
+        _testTruck.SetRoute(_testRoute);
+        
+        _testTruck.MoveNext();
+        Assert.AreEqual(new Location(1, 0), _testTruck.CurrentLocation);
+
+        SetUpRoute1();
+        _testTruck2.SetRoute(_testRoute);
+        _testTruck2.MoveNext(); 
+        
+        Assert.AreEqual(new Location(0, 0), _testTruck2.CurrentLocation);
+        
+        _testTruck.MoveNext();
+        _testTruck.MoveNext();
+        
+        Assert.AreEqual(new Location(3, 0), _testTruck.CurrentLocation);
+        
+        _testTruck2.MoveNext(); 
+        _testTruck2.MoveNext(); 
+        _testTruck2.MoveNext(); 
+        _testTruck2.MoveNext(); 
+        _testTruck2.MoveNext(); 
+        
+        Assert.AreEqual(new Location(2, 0), _testTruck2.CurrentLocation);
+        
+        _testTruck.MoveNext();
+        _testTruck.MoveNext();
+        
+        Assert.AreEqual(new Location(4, 0), _testTruck.CurrentLocation);
+        
+        _testTruck2.MoveNext(); 
+        _testTruck2.MoveNext(); 
+        
+        Assert.AreEqual(new Location(4, 0), _testTruck2.CurrentLocation);
+        
+        _testTruck2.MoveNext(); 
+        
+        Assert.AreEqual(new Location(4, 0), _testTruck2.CurrentLocation);
+    }
     
     //    V         
     //    R    or  V R V
