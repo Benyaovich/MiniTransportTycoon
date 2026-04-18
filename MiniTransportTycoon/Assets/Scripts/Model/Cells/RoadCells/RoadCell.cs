@@ -77,7 +77,6 @@ public class RoadCell : Cell, IPurchasable, IHighlightable
     {
         
         if(WaitingVehicles[0].Route is null) throw new NullReferenceException("The WaitingVehicles[0].Route is null");
-        if(Vehicles.Contains(tryingVehicle)) return true;
         if(tryingVehicle.Route is null || !WaitingVehicles.Contains(tryingVehicle)) return false;
         
         if (!IsIntersection)
@@ -116,6 +115,8 @@ public class RoadCell : Cell, IPurchasable, IHighlightable
                         return false;
                     }
                 }
+                
+                if(Vehicles.Contains(tryingVehicle)) return true;
                 
                 if (tryingVehicle != WaitingVehicles[0] && !IsInterSectionPassable(tryingVehicle.Route!, WaitingVehicles[0].Route!))
                 { 
