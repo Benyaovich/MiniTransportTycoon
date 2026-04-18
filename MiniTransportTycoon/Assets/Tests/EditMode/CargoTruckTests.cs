@@ -697,6 +697,24 @@ public class CargoTruckTests
         
         Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
         Assert.AreEqual(new Location (1, 2), _testTruck2.CurrentLocation);
+        
+        _testTruck.Tick(2.001f);
+        _testTruck2.Tick(2.001f);
+        
+        Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (1, 2), _testTruck2.CurrentLocation);
+        
+        _testTruck.Tick(2.001f);
+        _testTruck2.Tick(2.001f);
+        
+        Assert.AreEqual(new Location (1, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (1, 2), _testTruck2.CurrentLocation);
+        
+        _testTruck.Tick(2.001f);
+        _testTruck2.Tick(2.001f);
+        
+        Assert.AreEqual(new Location (0, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (1, 2), _testTruck2.CurrentLocation);
     }
     
     // [Test]
