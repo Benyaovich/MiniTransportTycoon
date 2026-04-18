@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace UserInterface
@@ -17,6 +18,11 @@ namespace UserInterface
         public static void Enable(this VisualElement element)
         {
             element.style.display = DisplayStyle.Flex;
+        }
+
+        public static bool IsEnabled(this VisualElement element)
+        {
+            return element.style.display == DisplayStyle.Flex;
         }
     }
 }
