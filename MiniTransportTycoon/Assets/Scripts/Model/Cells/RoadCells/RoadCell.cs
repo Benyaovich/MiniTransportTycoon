@@ -40,6 +40,11 @@ public class RoadCell : Cell, IPurchasable, IHighlightable
     {
         if (!Vehicles.Contains(vehicle)) return;
         Vehicles.Remove(vehicle);
+        
+        if (vehicle.Route != null && vehicle.Grid.GetGridObject(vehicle.Route.NextPosition)?.Model is RoadCell nextRoadCell)
+        {
+            nextRoadCell.RemoveWaitingVehicle(vehicle);
+        }
     }
 
     public void AddWaitingVehicle(Vehicle vehicle)
@@ -52,11 +57,6 @@ public class RoadCell : Cell, IPurchasable, IHighlightable
     {
         if (!WaitingVehicles.Contains(vehicle)) return;
         WaitingVehicles.Remove(vehicle);
-        
-        if (vehicle.Route != null && vehicle.Grid.GetGridObject(vehicle.Route.NextPosition)?.Model is RoadCell nextRoadCell)
-        {
-            nextRoadCell.RemoveWaitingVehicle(vehicle);
-        }
     }
     
     public void SetHighlighted(bool value)
