@@ -644,6 +644,8 @@ public class CargoTruckTests
         Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
     }
     
+    
+    
     // [Test]
     // public void CargoTruckMovement()
     // {
