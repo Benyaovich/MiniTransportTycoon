@@ -905,11 +905,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Controller.Vehicles.VehicleManager
   vehicleSos:
+  - {fileID: 11400000, guid: 750606c9584e1e74594944c83f2b39f0, type: 2}
+  - {fileID: 11400000, guid: e459250f177607c47b1d7419411e8c83, type: 2}
+  - {fileID: 11400000, guid: a8b12ad9b41102c41a84b043711c78fd, type: 2}
+  - {fileID: 11400000, guid: 05ab18e82cef6b64db51a12f7bab103f, type: 2}
+  - {fileID: 11400000, guid: 6d4f9ff6b86dcb64e9a2ff57b160f2e1, type: 2}
   - {fileID: 11400000, guid: 97c68951c9ed7dc419dbc9cff808d0de, type: 2}
   - {fileID: 11400000, guid: fc228c5130166a94abac3d4e098bb1e7, type: 2}
   - {fileID: 11400000, guid: 0b1ec774d553b9e4ea970e4c34eb3487, type: 2}
-  - {fileID: 11400000, guid: 55a55cadc5bcfc940804e3b998fa9266, type: 2}
   - {fileID: 11400000, guid: ed436b74578dd04459930ffe7518dc92, type: 2}
+  - {fileID: 11400000, guid: 55a55cadc5bcfc940804e3b998fa9266, type: 2}
 --- !u!4 &1135533726
 Transform:
   m_ObjectHideFlags: 0
