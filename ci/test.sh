@@ -5,7 +5,7 @@ set -euo pipefail
 echo "Testing for $TEST_PLATFORM"
 
 CODE_COVERAGE_PACKAGE="com.unity.testtools.codecoverage"
-PACKAGE_MANIFEST_PATH="Packages/manifest.json"
+PACKAGE_MANIFEST_PATH="$UNITY_DIR/Packages/manifest.json"
 
 # Discover assembly names from .asmdef files, excluding test/editor assemblies
 ASSEMBLY_FILTERS=$(find "$UNITY_DIR/Assets" -name "*.asmdef" \
