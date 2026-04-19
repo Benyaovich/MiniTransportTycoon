@@ -55,9 +55,9 @@ MonoBehaviour:
   rightTurnDestinationOffset: {x: 1, y: 0, z: 0}
   leftTurnPivot1: {x: 0, y: 0, z: -7}
   leftTurnPivot2: {x: -3, y: 0, z: 0}
-  uTurnFirstPartPivot1: {x: 4, y: 0, z: -1.5}
-  uTurnFirstPartPivot2: {x: 7, y: 0, z: -1}
-  uTurnFirstPartDestinationOffset: {x: 8, y: 0, z: 1}
+  uTurnFirstPartPivot1: {x: 4, y: 0, z: 0}
+  uTurnFirstPartPivot2: {x: 8, y: 0, z: 0}
+  uTurnFirstPartDestinationOffset: {x: 8, y: 0, z: 1.5}
 --- !u!65 &4539571315979054601
 BoxCollider:
   m_ObjectHideFlags: 0
