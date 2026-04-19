@@ -143,9 +143,10 @@ pages:
     - build-WebGL
     - test-playmode
   script:
-    - mkdir public
+    - mkdir -p public
     - mv "$UNITY_DIR/Builds/WebGL/${BUILD_NAME}" public/demo
-    - mv "$UNITY_DIR/playmode-coverage/Report/" public/coverage
+    - mkdir -p public/coverage
+    - cp -r "$UNITY_DIR/playmode-coverage/." public/coverage/
   artifacts:
     paths:
       - public
