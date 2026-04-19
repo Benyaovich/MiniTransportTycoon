@@ -48,6 +48,10 @@ public abstract class Vehicle : IAdvancable
     
     public void MoveNext()
     {
+        List<Cell> neighbouringCells = GetNeighbouringCells();
+        if (TryDepositToNeighbours(neighbouringCells)) return;
+        if (TryLoadFromNeighbours(neighbouringCells)) return;
+        
         if (_route == null) return;
         if (_grid.GetGridObject(_route.NextPosition) is null) return;
         
@@ -68,16 +72,11 @@ public abstract class Vehicle : IAdvancable
         nextnextRoadCell.AddWaitingVehicle(this);
         
         OnMove?.Invoke(this, this);
-        
-        List<Cell> neighbouringCells = GetNeighbouringCells();
-        DepositToNeighbours(neighbouringCells);
-        LoadFromNeighbours(neighbouringCells);
-        
     }
 
-    private void DepositToNeighbours(List<Cell> neighbouringCells)
+    private bool TryDepositToNeighbours(List<Cell> neighbouringCells)
     {
-        if (_route == null) return;
+        if (_route == null) return false;
         
         foreach (var neighbouringCell in neighbouringCells)
         {
@@ -86,13 +85,15 @@ public abstract class Vehicle : IAdvancable
             if (depositPoint.RequiredResource == Resource && ResourceAmount > 0)
             {
                 UnloadResource(depositPoint);
+                return true;
             }
         }
+        return false;
     }
 
-    private void LoadFromNeighbours(List<Cell> neighbouringCells)
+    private bool TryLoadFromNeighbours(List<Cell> neighbouringCells)
     {
-        if (_route == null) return;
+        if (_route == null) return false;
         
         foreach (var neighbouringCell in neighbouringCells)
         {
@@ -101,8 +102,11 @@ public abstract class Vehicle : IAdvancable
             if (resourceProvider.ProducedResource == Resource && ResourceAmount < MaxCapacity)
             {
                 LoadResource(resourceProvider);
+                return true;
             }
         }
+
+        return false;
     }
 
     private bool CanMove(RoadCell road)
@@ -134,7 +138,6 @@ public abstract class Vehicle : IAdvancable
         nextRoadCell.AddWaitingVehicle(this);
         
         OnRouteSet?.Invoke(this, EventArgs.Empty);
-        LoadFromNeighbours(GetNeighbouringCells());
     }
 
     

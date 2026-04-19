@@ -161,6 +161,10 @@ public class CargoTruckTests
     [Test]
     public void VehicleMovesAlongTheRoute()
     {
+        ProcessingBuildingSteel pbs = _grid.GetGridObject(1,1).Model as ProcessingBuildingSteel;
+        ExtractorBuilding ebi = _grid.GetGridObject(3,1).Model as ExtractorBuilding;
+        ebi!.Tick(100);
+        
         SetUpRoute1();
         _testTruck.SetRoute(_testRoute);
         
@@ -172,6 +176,7 @@ public class CargoTruckTests
         _testTruck.MoveNext();
         Assert.AreEqual(new Location(3,0), _testTruck.CurrentLocation);
         _testTruck.MoveNext();
+        _testTruck.MoveNext(); // a gyar miatt itt felvesz
         Assert.AreEqual(new Location(4,0), _testTruck.CurrentLocation);
         _testTruck.MoveNext();
         Assert.AreEqual(new Location(4,0), _testTruck.CurrentLocation);
@@ -179,6 +184,7 @@ public class CargoTruckTests
         Assert.AreEqual(new Location(3,0), _testTruck.CurrentLocation);
         _testTruck.MoveNext();
         _testTruck.MoveNext();
+        _testTruck.MoveNext(); // a masik gyarba letesz
         _testTruck.MoveNext();
         Assert.AreEqual(new Location(0,0), _testTruck.CurrentLocation);
         
@@ -188,13 +194,14 @@ public class CargoTruckTests
     public void VehiclePickUpResourceFromIResourceProvider()
     {
         SetUpRoute1();
-        _testTruck = new CargoTruck(_grid, Resource.Steel, resourceAmount: 50);
+        _testTruck = new CargoTruck(_grid, Resource.Steel, maxCarryCapacity: 50);
         ProcessingBuildingSteel pbs = _grid.GetGridObject(1,1).Model as ProcessingBuildingSteel;
         pbs!.AddResource(200);
         pbs.Tick(100);
         _testTruck.SetRoute(_testRoute);
         
         Assert.AreEqual(0, _testTruck.ResourceAmount);
+        _testTruck.MoveNext();
         _testTruck.MoveNext();
         Assert.AreEqual(50, _testTruck.ResourceAmount);
         Assert.AreEqual(50, pbs.ResourceAmount);
@@ -204,7 +211,7 @@ public class CargoTruckTests
     public void VehicleDepositResourceToIDepositPoint()
     {
         SetUpRoute1();
-        _testTruck = new CargoTruck(_grid, Resource.Iron, resourceAmount: 50);
+        _testTruck = new CargoTruck(_grid, Resource.Iron, maxCarryCapacity: 50);
         ProcessingBuildingSteel pbs = _grid.GetGridObject(1,1).Model as ProcessingBuildingSteel;
         ExtractorBuilding ebi = _grid.GetGridObject(3,1).Model as ExtractorBuilding;
         ebi!.Tick(100);
@@ -221,6 +228,8 @@ public class CargoTruckTests
         _testTruck.MoveNext();
         _testTruck.MoveNext();
         _testTruck.MoveNext();
+        _testTruck.MoveNext(); // folveszi a banyabol
+        
         Assert.AreEqual(50, _testTruck.ResourceAmount);
         Assert.AreEqual(50, ebi.ResourceAmount);
         
@@ -229,14 +238,18 @@ public class CargoTruckTests
         _testTruck.MoveNext();
         _testTruck.MoveNext();
         _testTruck.MoveNext();
+        _testTruck.MoveNext(); // leteszi a gyarba
         Assert.AreEqual(0, _testTruck.ResourceAmount);
         Assert.AreEqual(50, pbs.RequiredResourceAmount);
-        
     }
 
     [Test]
     public void VehiclesBlockEachother()
     {
+        ProcessingBuildingSteel pbs = _grid.GetGridObject(1,1).Model as ProcessingBuildingSteel;
+        ExtractorBuilding ebi = _grid.GetGridObject(3,1).Model as ExtractorBuilding;
+        ebi!.Tick(100);
+        
         SetUpRoute1();
         _testTruck.SetRoute(_testRoute);
         
@@ -263,11 +276,14 @@ public class CargoTruckTests
         Assert.AreEqual(new Location(2, 0), _testTruck2.CurrentLocation);
         
         _testTruck.MoveNext();
+        ebi!.Tick(100);
+        _testTruck.MoveNext(); // nyersanyag felvetel
         _testTruck.MoveNext();
         
         Assert.AreEqual(new Location(4, 0), _testTruck.CurrentLocation);
         
         _testTruck2.MoveNext(); 
+        _testTruck2.MoveNext(); // nyersanyag felvetel
         _testTruck2.MoveNext(); 
         
         Assert.AreEqual(new Location(4, 0), _testTruck2.CurrentLocation);
