@@ -141,12 +141,11 @@ pages:
   dependencies:
      # we need artifacts only from these jobs
     - build-WebGL
-    - test-playmode
+    - test-editmode
   script:
     - mkdir -p public
     - mv "$UNITY_DIR/Builds/WebGL/${BUILD_NAME}" public/demo
-    - mkdir -p public/coverage
-    - cp -r "$UNITY_DIR/playmode-coverage/." public/coverage/
+    - cp -r "$UNITY_DIR/editmode-coverage/Report" public/coverage
   artifacts:
     paths:
       - public
