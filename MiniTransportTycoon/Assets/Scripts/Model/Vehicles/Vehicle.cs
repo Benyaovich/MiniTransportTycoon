@@ -67,9 +67,8 @@ public abstract class Vehicle : IAdvancable
         nextRoadCell!.RemoveWaitingVehicle(this);
         nextRoadCell!.AddVehicle(this);
 
-        RoadCell nextnextRoadCell = // technikailag volt lepes ezert ez itt a "next", ez csak felre ertes elkerulese miatt "nextnext"
-            (_grid.GetGridObject(_route.NextPosition).Model as RoadCell)!;
-        nextnextRoadCell.AddWaitingVehicle(this);
+        if (_grid.GetGridObject(_route.NextPosition).Model is not RoadCell nextNextRoadCell) return;
+        nextNextRoadCell.AddWaitingVehicle(this);
         
         OnMove?.Invoke(this, this);
     }
