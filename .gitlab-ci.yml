@@ -170,7 +170,7 @@ analyze:
       nuget install Microsoft.Unity.Analyzers -Version 1.26.0 -OutputDirectory $ANALYZERS_DIR
       cd $CI_PROJECT_DIR
     - |
-      SLN_FILE=$(find "$CI_PROJECT_DIR" -maxdepth 1 -name "*.sln" | head -n 1)
+      SLN_FILE=$(find "$UNITY_DIR" -maxdepth 1 -name "*.sln" | head -n 1)
       if [ -z "$SLN_FILE" ]; then
         echo "ERROR: No .sln file found in $CI_PROJECT_DIR"
         exit 1
