@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Controller.Building;
 using Model.Cells.Grid;
+using Model.Interfaces;
 using UnityEngine;
 using UniVector3 = UnityEngine.Vector3;
 using SysVector3 = System.Numerics.Vector3;
@@ -190,6 +191,8 @@ public class GridManager : MonoBehaviour
         ModelGridObject gridObject = _grid.GetGridObject(x, y);
         if (gridObject.Model == null) return;
         
+        if (gridObject.Model is IDestroyable { CanDestroy: false }) return;
+
         if (gridObject.Model is DynamicRoadCell)
         {
             _dynamicRoadBuildingManager.TryDemolishRoad(new Location(x,y));
