@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using View;
 
 namespace Controller.Building
 {
@@ -64,6 +65,10 @@ namespace Controller.Building
                 case RoadCell roadCell:
                     RoadCellVisual roadCellVisual = VisualDictionary[origin.Location].GetComponent<RoadCellVisual>();
                     roadCellVisual.Setup(roadCell);
+                    break;
+                case Facility facility:
+                    FacilityVisual facilityVisual = VisualDictionary[origin.Location].GetComponent<FacilityVisual>();
+                    facilityVisual.Setup(facility);
                     break;
             }
         }
