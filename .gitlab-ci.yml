@@ -170,13 +170,13 @@ analyze:
       nuget install Microsoft.Unity.Analyzers -Version 1.26.0 -OutputDirectory $ANALYZERS_DIR
       cd $CI_PROJECT_DIR
     - |
-      SLN_FILE=$(find "$CI_PROJECT_DIR" -maxdepth 1 -name "*.sln" | head -n 1)
+      SLN_FILE=$(find "$UNITY_DIR" -maxdepth 1 -name "*.sln" | head -n 1)
       if [ -z "$SLN_FILE" ]; then
-        echo "ERROR: No .sln file found in $CI_PROJECT_DIR"
+        echo "ERROR: No .sln file found in $$UNITY_DIR"
         exit 1
       fi
     - 'roslynator analyze "$SLN_FILE" -o ./roslynator.xml --analyzer-assemblies $ANALYZERS_DIR || true'
-    - cq roslynator roslynator.xml gl-code-quality-report.json $CI_PROJECT_DIR
+    - cq roslynator roslynator.xml gl-code-quality-report.json $CI_PROJECT_DIR || true
   artifacts:
     expire_in: 2 weeks
     paths:
