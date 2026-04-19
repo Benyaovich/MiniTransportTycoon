@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3379711be11ff342aab55d9b1ca8cc3, type: 3}
+  m_Name: PaperCargoTruckSO
+  m_EditorClassIdentifier: Assembly-CSharp::PaperCargoTruckSO
+  prefab: {fileID: 6820209335765974142, guid: 1db62c27f1eeefd4e9d32c30916fb512, type: 3}
+  displayName: Cargo Truck - Paper
+  speed: 2
+  price: 1000
+  maintenanceCost: 200
+  maxCarryCapacity: 50
