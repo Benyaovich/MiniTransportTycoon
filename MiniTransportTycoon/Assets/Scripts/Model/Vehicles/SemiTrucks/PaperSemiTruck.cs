@@ -1,6 +1,6 @@
-namespace Model.Vehicles.CargoTrucks
+namespace Model.Vehicles.SemiTrucks
 {
-    public class PaperSemiTruck : CargoTruck
+    public class PaperSemiTruck : SemiTruck
     {
         public PaperSemiTruck(Grid<ModelGridObject> grid, Resource resource = Resource.Paper, float speed = 1, int maintenanceCost = 60,
             int purchaseCost = 500, int maxCarryCapacity = 25)

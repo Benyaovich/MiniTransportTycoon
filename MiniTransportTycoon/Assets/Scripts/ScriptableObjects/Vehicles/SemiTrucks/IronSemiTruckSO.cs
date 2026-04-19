@@ -1,5 +1,5 @@
 using System;
-using Model.Vehicles.CargoTrucks;
+using Model.Vehicles.SemiTrucks;
 using ScriptableObjects.Vehicles;
 using UnityEngine;
 
