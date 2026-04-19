@@ -12,7 +12,7 @@ namespace Controller
         public static SelectionUIManager Instance { get; private set; }
 
         [SerializeField] private FacilityInfoUI facilityInfoUI;
-        // [SerializeField] private BusStopInfoUI busStopInfoUI;
+        [SerializeField] private BusStopInfoUI busStopInfoUI;
         [SerializeField] private VehicleInfoUI vehicleInfoUI;
 
         private void Awake()
@@ -32,26 +32,21 @@ namespace Controller
             if (viewable is FacilityVisual factoryView)
             {
                 facilityInfoUI.Show(factoryView.Facility);
-                return;
             }
-                
-            // if (selectable is BusStopView busStopView)
-            // {
-            //     busStopInfoUI.Show(busStopView.BusStop);
-            //     return;
-            // }
-
-            if (viewable is VehicleVisual vehicleView)
+            else if (viewable is BusStopVisual busStopView)
+            {
+                busStopInfoUI.Show(busStopView.BusStop);
+            }
+            else if (viewable is VehicleVisual vehicleView)
             {
                 vehicleInfoUI.Show(vehicleView.Vehicle);
-                return;
             }
         }
 
         public void HideAll()
         {
             facilityInfoUI.Hide();
-            // busStopInfoUI.Hide();
+            busStopInfoUI.Hide();
             vehicleInfoUI.Hide();
         }
     }

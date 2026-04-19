@@ -70,6 +70,10 @@ namespace Controller.Building
                     FacilityVisual facilityVisual = VisualDictionary[origin.Location].GetComponent<FacilityVisual>();
                     facilityVisual.Setup(facility);
                     break;
+                case BusStop busStop:
+                    BusStopVisual busStopVisual = VisualDictionary[origin.Location].GetComponent<BusStopVisual>();
+                    busStopVisual.Setup(busStop);
+                    break;
             }
         }
     }
