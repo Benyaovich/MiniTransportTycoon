@@ -155,6 +155,7 @@ public class GridManager : MonoBehaviour
     public void BuildOnCurrentMousePosition()
     {
         UniVector3 mousePos = Utils.GetMouseWorldPosition();
+        if (mousePos == Vector3.zero) return;
         _grid.GetXY(mousePos.SV3(), out int x, out int y);
 
         
