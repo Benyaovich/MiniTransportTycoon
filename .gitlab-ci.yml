@@ -92,111 +92,103 @@ test-editmode:
     TEST_PLATFORM: editmode
     TESTING_TYPE: NUNIT
 
-.build: &build
-  stage: build_and_test
-  <<: *unity_before_script
-  <<: *cache
-  <<: *license
-  script:
-    - chmod +x ./ci/build.sh && ./ci/build.sh
-  artifacts:
-    paths:
-      - $UNITY_DIR/Builds/
+# .build: &build
+#   stage: build_and_test
+#   <<: *unity_before_script
+#   <<: *cache
+#   <<: *license
+#   script:
+#     - chmod +x ./ci/build.sh && ./ci/build.sh
+#   artifacts:
+#     paths:
+#       - $UNITY_DIR/Builds/
 
-build-StandaloneLinux64:
-  <<: *build
-  variables:
-    BUILD_TARGET: StandaloneLinux64
+# build-StandaloneLinux64:
+#   <<: *build
+#   variables:
+#     BUILD_TARGET: StandaloneLinux64
 
-build-StandaloneOSX:
-  <<: *build
-  image: $IMAGE:$UNITY_VERSION-mac-mono-$IMAGE_VERSION
-  variables:
-    BUILD_TARGET: StandaloneOSX
+# build-StandaloneOSX:
+#   <<: *build
+#   image: $IMAGE:$UNITY_VERSION-mac-mono-$IMAGE_VERSION
+#   variables:
+#     BUILD_TARGET: StandaloneOSX
 
-build-StandaloneWindows64:
-  <<: *build
-  image: $IMAGE:$UNITY_VERSION-windows-mono-$IMAGE_VERSION
-  variables:
-    BUILD_TARGET: StandaloneWindows64
+# build-StandaloneWindows64:
+#   <<: *build
+#   image: $IMAGE:$UNITY_VERSION-windows-mono-$IMAGE_VERSION
+#   variables:
+#     BUILD_TARGET: StandaloneWindows64
 
-# For WebGL support served through GitLab Pages, compression has to be disabled.
-# - In Unity Editor, under Project Settings > Player > Settings for WebGL, set Compression Format to Disabled.
-# - Or directly in ProjectSettings/ProjectSettings.asset, set webGLCompressionFormat to 2.
-build-WebGL:
-  <<: *build
-  image: $IMAGE:$UNITY_VERSION-webgl-$IMAGE_VERSION
-  variables:
-    BUILD_TARGET: WebGL
-  rules:
-    # run only on default branch, as WebGL builds requires more time
-    - if: '$UNITY_LICENSE && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
-      when: always
-    - when: never
+# # For WebGL support served through GitLab Pages, compression has to be disabled.
+# # - In Unity Editor, under Project Settings > Player > Settings for WebGL, set Compression Format to Disabled.
+# # - Or directly in ProjectSettings/ProjectSettings.asset, set webGLCompressionFormat to 2.
+# build-WebGL:
+#   <<: *build
+#   image: $IMAGE:$UNITY_VERSION-webgl-$IMAGE_VERSION
+#   variables:
+#     BUILD_TARGET: WebGL
+#   rules:
+#     # run only on default branch, as WebGL builds requires more time
+#     - if: '$UNITY_LICENSE && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+#       when: always
+#     - when: never
     
-pages:
-  image: alpine:latest
-  stage: deploy
-  tags: [] # this is not a Unity based job
-  dependencies:
-     # we need artifacts only from these jobs
-    - build-WebGL
-    - test-playmode
-  script:
-    - mkdir -p public
-    - echo "=== UNITY_DIR ==="
-    - echo "$UNITY_DIR"
-    - echo "=== WEBGL ==="
-    - find "$UNITY_DIR/Builds/WebGL" -maxdepth 3 -print || true
-    - echo "=== PLAYMODE COVERAGE ==="
-    - find "$UNITY_DIR/playmode-coverage" -maxdepth 5 -print || true
-    - mv "$UNITY_DIR/Builds/WebGL/${BUILD_NAME}" public/demo
-    - |
-      if [ -d "$UNITY_DIR/playmode-coverage/Report" ]; then
-        mv "$UNITY_DIR/playmode-coverage/Report" public/coverage
-      else
-        echo "Coverage report not found at $UNITY_DIR/playmode-coverage/Report"
-        exit 1
-      fi
-  artifacts:
-    paths:
-      - public
-  rules:
-    - if: '$UNITY_LICENSE && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
-      when: always
-    - when: never
+# pages:
+#   image: alpine:latest
+#   stage: deploy
+#   tags: [] # this is not a Unity based job
+#   dependencies:
+#      # we need artifacts only from these jobs
+#     - build-WebGL
+#     - test-playmode
+#   script:
+#     - mkdir public
+#     - mv "$UNITY_DIR/Builds/WebGL/${BUILD_NAME}" public/demo
+#     - mv "$UNITY_DIR/playmode-coverage/Report/" public/coverage
+#   artifacts:
+#     paths:
+#       - public
+#   rules:
+#     - if: '$UNITY_LICENSE && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+#       when: always
+#     - when: never
 
-analyze:
-  <<: *unity_before_script
-  <<: *license
-  stage: analyze
-  variables:
-    ANALYZERS_DIR: /analyzers
-  script:
-    - chmod +x ./ci/generate_project_files.sh && ./ci/generate_project_files.sh
-    - |
-      cd /      
-      export PATH="$PATH:$HOME/.dotnet/tools"
-      dotnet tool install --global Roslynator.DotNet.Cli --version 0.10.2
-      dotnet tool install --global CodeQualityToGitlab --version 2.0.0
-      nuget install Microsoft.Unity.Analyzers -Version 1.26.0 -OutputDirectory $ANALYZERS_DIR
-      cd $CI_PROJECT_DIR
-    - |
-      SLN_FILE=$(find "$UNITY_DIR" -maxdepth 1 -name "*.sln" | head -n 1)
-      if [ -z "$SLN_FILE" ]; then
-        echo "ERROR: No .sln file found in $$UNITY_DIR"
-        exit 1
-      fi
-    - 'roslynator analyze "$SLN_FILE" -o ./roslynator.xml --analyzer-assemblies $ANALYZERS_DIR || true'
-    - cq roslynator roslynator.xml gl-code-quality-report.json $CI_PROJECT_DIR || true
-  artifacts:
-    expire_in: 2 weeks
-    paths:
-      - roslynator.xml
-      - gl-code-quality-report.json
-    expose_as: 'code_quality_report'
-    reports:
-      codequality: gl-code-quality-report.json
+# analyze:
+#   <<: *unity_before_script
+#   <<: *license
+#   stage: analyze
+#   variables:
+#     ANALYZERS_DIR: /analyzers
+#   script:
+#     - chmod +x ./ci/generate_project_files.sh && ./ci/generate_project_files.sh
+#     - |
+#       cd /      
+#       export PATH="$PATH:$HOME/.dotnet/tools"
+#       dotnet tool install --global Roslynator.DotNet.Cli --version 0.10.2
+#       dotnet tool install --global CodeQualityToGitlab --version 2.0.0
+#       nuget install Microsoft.Unity.Analyzers -Version 1.26.0 -OutputDirectory $ANALYZERS_DIR
+#       cd $CI_PROJECT_DIR
+#     - |
+#       SLN_FILE=$(find "$CI_PROJECT_DIR" -maxdepth 1 -name "*.sln" | head -n 1)
+#       if [ -z "$SLN_FILE" ]; then
+#         echo "ERROR: No .sln file found in $CI_PROJECT_DIR"
+#         exit 1
+#       fi
+#     - 'roslynator analyze "$SLN_FILE" -o ./roslynator.xml --analyzer-assemblies $ANALYZERS_DIR || true'
+#     - cq roslynator roslynator.xml gl-code-quality-report.json $CI_PROJECT_DIR || true
+#     - pwd
+#     - ls -la
+#     - find . -name "gl-code-quality-report.json"
+#     - find . -name "roslynator.xml"
+#   artifacts:
+#     expire_in: 2 weeks
+#     paths:
+#       - roslynator.xml
+#       - gl-code-quality-report.json
+#     expose_as: 'code_quality_report'
+#     reports:
+#       codequality: gl-code-quality-report.json
 
 workflow:
   rules:
