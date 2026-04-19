@@ -1,11 +1,7 @@
 using System;
-using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using Model.Enumerations;
-using Model.Cells;
-using NUnit.Framework;
-
 public class Route
 {
     PathHandler _pathHandler;
@@ -70,14 +66,7 @@ public class Route
     {
         if (currentlyStuck)
         {
-            try
-            {
-                RecalculateRoute();
-            }
-            catch (Exception ex) when (ex is InvalidOperationException)
-            {
-                return;
-            }
+            StepVertex();
         }
         
         if (Turns180happened)
@@ -104,10 +93,8 @@ public class Route
                 NextPosition = CurrentPosition;
                 return;
             }
-            else
-            {
-                StepVertex();
-            }
+            
+            StepVertex();
         }
         NextPosition = CurrentPosition + CurrentDirection;
         Turns180Finished = false;
@@ -118,15 +105,13 @@ public class Route
     
     public void StepVertex()
     {
-        if (!_pathHandler.Graph.ContainsVertex(NextVertex))
+        if (!_pathHandler.Graph.ContainsVertex(NextVertex) || !_pathHandler.Graph.Edges.Contains(new Edge(CurrentVertex, NextVertex)))
         {
-            try
-            {
-                RecalculateRoute();
-            }
-            catch (InvalidOperationException) { }
+            currentlyStuck = true;
             return;
         }
+        
+        currentlyStuck = false;
         
         Vertices.Enqueue(CurrentVertex);
         PreviousVertex = CurrentVertex;

@@ -49,8 +49,7 @@ public abstract class Vehicle : IAdvancable
     public void MoveNext()
     {
         List<Cell> neighbouringCells = GetNeighbouringCells();
-        if (TryDepositToNeighbours(neighbouringCells)) return;
-        if (TryLoadFromNeighbours(neighbouringCells)) return;
+        if (HandleStationAction(neighbouringCells)) return;
         
         if (_route == null) return;
         if (_grid.GetGridObject(_route.NextPosition) is null) return;
@@ -68,14 +67,22 @@ public abstract class Vehicle : IAdvancable
         currentRoadCell.RemoveVehicle(this);
         nextRoadCell!.RemoveWaitingVehicle(this);
         nextRoadCell!.AddVehicle(this);
-
+        
+        
         if (_grid.GetGridObject(_route.NextPosition).Model is not RoadCell nextNextRoadCell) return;
         nextNextRoadCell.AddWaitingVehicle(this);
         
         OnMove?.Invoke(this, this);
     }
+    
+    protected virtual bool HandleStationAction(List<Cell> neighbouringCells)
+    {
+        if (TryDepositToNeighbours(neighbouringCells)) return true;
+        if (TryLoadFromNeighbours(neighbouringCells)) return true;
+        return false;
+    }
 
-    private bool TryDepositToNeighbours(List<Cell> neighbouringCells)
+    protected bool TryDepositToNeighbours(List<Cell> neighbouringCells)
     {
         if (_route == null) return false;
         
@@ -92,7 +99,7 @@ public abstract class Vehicle : IAdvancable
         return false;
     }
 
-    private bool TryLoadFromNeighbours(List<Cell> neighbouringCells)
+    protected bool TryLoadFromNeighbours(List<Cell> neighbouringCells)
     {
         if (_route == null) return false;
         

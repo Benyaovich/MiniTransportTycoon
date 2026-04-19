@@ -1,6 +1,4 @@
-using System;
 using Model.Interfaces;
-using UnityEngine;
 
 public class CargoTruck : Vehicle
 {
