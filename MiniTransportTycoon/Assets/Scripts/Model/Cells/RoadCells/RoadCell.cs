@@ -6,7 +6,7 @@ using System.Data;
 using Model.Enumerations;
 using Model.Interfaces;
 
-public class RoadCell : Cell, IPurchasable, IHighlightable
+public class RoadCell : Cell, IPurchasable, IHighlightable, IDestroyable
 {
     public event EventHandler<Location>? OnHighlightEnabled;
     public event EventHandler<Location>? OnHighlightDisabled;
@@ -19,7 +19,8 @@ public class RoadCell : Cell, IPurchasable, IHighlightable
     public int BuildPrice { get; set; }
     
     public bool Highlighted { get; protected set; }
-    
+
+    public bool CanDestroy => Vehicles.Count == 0 && WaitingVehicles.Count == 0;
 
     public RoadCell(Location origin, bool isIntersection, List<Direction> directions,
          bool isVertexPoint = false, Size? size = null, bool destroyable = true)
