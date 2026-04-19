@@ -80,8 +80,7 @@ public class RoadCell : Cell, IPurchasable, IHighlightable, IDestroyable
     public bool IsVehicleAllowedToPass(Vehicle tryingVehicle)
     {
         
-        if(WaitingVehicles[0].Route is null) throw new NullReferenceException("The WaitingVehicles[0].Route is null");
-        if(tryingVehicle.Route is null || !WaitingVehicles.Contains(tryingVehicle)) return false;
+        if(WaitingVehicles.Count > 0 && WaitingVehicles[0].Route is null) throw new NullReferenceException("The WaitingVehicles[0].Route is null");
         
         if (!IsIntersection)
         {
@@ -122,7 +121,7 @@ public class RoadCell : Cell, IPurchasable, IHighlightable, IDestroyable
                 
                 if(Vehicles.Contains(tryingVehicle)) return true;
                 
-                if (tryingVehicle != WaitingVehicles[0] && !IsInterSectionPassable(tryingVehicle.Route!, WaitingVehicles[0].Route!))
+                if (WaitingVehicles.Count > 0 && tryingVehicle != WaitingVehicles[0] && !IsInterSectionPassable(tryingVehicle.Route!, WaitingVehicles[0].Route!))
                 { 
                     return false;
                 }
