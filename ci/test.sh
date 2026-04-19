@@ -55,4 +55,12 @@ else
 fi
 
 cat $UNITY_DIR/$TEST_PLATFORM-results.xml | grep test-run | grep Passed
+echo "=== REPORT DIR SEARCH ==="
+find "$UNITY_DIR" -type d -name "Report" | sort || true
+
+echo "=== INDEX.HTML SEARCH ==="
+find "$UNITY_DIR" -type f -name "index.html" | sort || true
+
+echo "=== PLAYMODE COVERAGE TREE ==="
+find "$UNITY_DIR/$TEST_PLATFORM-coverage" -maxdepth 5 -print || true
 exit $UNITY_EXIT_CODE
