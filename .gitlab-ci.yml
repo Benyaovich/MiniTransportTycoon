@@ -143,9 +143,21 @@ pages:
     - build-WebGL
     - test-playmode
   script:
-    - mkdir public
+    - mkdir -p public
+    - echo "=== UNITY_DIR ==="
+    - echo "$UNITY_DIR"
+    - echo "=== WEBGL ==="
+    - find "$UNITY_DIR/Builds/WebGL" -maxdepth 3 -print || true
+    - echo "=== PLAYMODE COVERAGE ==="
+    - find "$UNITY_DIR/playmode-coverage" -maxdepth 5 -print || true
     - mv "$UNITY_DIR/Builds/WebGL/${BUILD_NAME}" public/demo
-    - mv "$UNITY_DIR/playmode-coverage/Report/" public/coverage
+    - |
+      if [ -d "$UNITY_DIR/playmode-coverage/Report" ]; then
+        mv "$UNITY_DIR/playmode-coverage/Report" public/coverage
+      else
+        echo "Coverage report not found at $UNITY_DIR/playmode-coverage/Report"
+        exit 1
+      fi
   artifacts:
     paths:
       - public
