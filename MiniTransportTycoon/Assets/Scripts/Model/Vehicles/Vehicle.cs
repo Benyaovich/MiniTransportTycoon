@@ -17,8 +17,7 @@ public abstract class Vehicle : IAdvancable
     
     private IGrid<ModelGridObject> _grid;
     public IGrid<ModelGridObject> Grid => _grid;
-    private int _maxCapacity;
-    protected int MaxCapacity => _maxCapacity;
+    public int MaxCapacity { get; protected set; }
     private Timer _maintenanceTimer;
     private Timer? _moveTimer;
     
@@ -33,7 +32,7 @@ public abstract class Vehicle : IAdvancable
         MoveSpeed = speed;
         MaintenanceCost = maintenanceCost;
         PurchaseCost = purchaseCost;
-        _maxCapacity = maxCapacity;
+        MaxCapacity = maxCapacity;
         ResourceAmount = 0;
         
         _maintenanceTimer = new Timer(maintenanceInterval);

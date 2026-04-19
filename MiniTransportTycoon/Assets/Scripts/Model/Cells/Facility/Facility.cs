@@ -6,28 +6,28 @@ public abstract class Facility : Cell, IAdvancable, IVisitableBuiling, IResource
 {
     public Resource ProducedResource { get; private set; }
     public int ResourceAmount { get; protected set; }
-    private Timer productionTimer;
-    protected int maxCapacity;
-    protected RateChangeHandler rch;
+    public int MaxCapacity { get; protected set; }
+    private readonly Timer _productionTimer;
+    public RateChangeHandler Rch { get; }
 
     internal Facility(Resource prodRes, int maxCap, Location loc, float prodInterval = 10f, 
         Size size = null, bool destroyable = false, RateChangeHandler rch = null) : base(loc, size, destroyable)
     {
         ProducedResource = prodRes;
-        maxCapacity = maxCap;
-        productionTimer = new Timer(prodInterval);
-        this.rch = rch ?? new RateChangeHandler();
+        MaxCapacity = maxCap;
+        _productionTimer = new Timer(prodInterval);
+        Rch = rch ?? new RateChangeHandler();
         Size = size ?? new Size(2, 2);
         
-        productionTimer.OnTimerElapsed += Produce;
+        _productionTimer.OnTimerElapsed += Produce;
     }
 
     protected abstract void Produce(object sender, EventArgs e);
 
     public void Tick(float deltaTime)
     {
-        productionTimer.Tick(deltaTime);
-        rch.Tick(deltaTime);
+        _productionTimer.Tick(deltaTime);
+        Rch.Tick(deltaTime);
     }
 
     public int GetResource(int amount)
