@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1770216711821918037}
   - component: {fileID: 2222901431990722693}
+  - component: {fileID: 3463562570389679335}
   m_Layer: 0
   m_Name: IronCargoTruck
   m_TagString: Untagged
@@ -57,6 +58,27 @@ MonoBehaviour:
   uTurnFirstPartPivot1: {x: 4, y: 0, z: -1.5}
   uTurnFirstPartPivot2: {x: 7, y: 0, z: -1}
   uTurnFirstPartDestinationOffset: {x: 8, y: 0, z: 1}
+--- !u!65 &3463562570389679335
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2165093672467224736}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.6283646, y: 4.807712, z: 9.42485}
+  m_Center: {x: -0.024631977, y: 2.220587, z: 0.037714005}
 --- !u!1001 &4148345430605844296
 PrefabInstance:
   m_ObjectHideFlags: 0
