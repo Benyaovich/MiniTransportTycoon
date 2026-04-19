@@ -22,9 +22,9 @@ namespace View
         [SerializeField] private Vector3 leftTurnPivot1 = new Vector3(0,0,-7);
         [SerializeField] private Vector3 leftTurnPivot2 = new Vector3(-3,0,0);
         
-        [SerializeField] private Vector3 uTurnFirstPartPivot1 = new Vector3(4,0,-1.5f);
-        [SerializeField] private Vector3 uTurnFirstPartPivot2 = new Vector3(7f,0,-1f);
-        [SerializeField] private Vector3 uTurnFirstPartDestinationOffset = new Vector3(8,0,1f);
+        [SerializeField] private Vector3 uTurnFirstPartPivot1 = new Vector3(4,0,0);
+        [SerializeField] private Vector3 uTurnFirstPartPivot2 = new Vector3(8,0,0);
+        [SerializeField] private Vector3 uTurnFirstPartDestinationOffset = new Vector3(8,0,1.5f);
         
         
         private Vehicle _vehicle;
@@ -78,11 +78,10 @@ namespace View
                     transform.rotation = Quaternion.LookRotation(tangent);
             }
 
-            if (_elapsedTime >= _vehicle.MoveSpeed - 0.002)
+            if (_elapsedTime >= _vehicle.MoveSpeed)
             {
                 _state = MoveVisualMode.Idle;
                 _elapsedTime = 0;
-                RotateBasedOnDirection();
             }
         }
 
