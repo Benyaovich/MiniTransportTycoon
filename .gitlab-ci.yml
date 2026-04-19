@@ -77,7 +77,7 @@ get-activation-file:
       # https://docs.gitlab.com/ci/testing/code_coverage/
       coverage_report:
         coverage_format: cobertura
-        path: $UNITY_DIR/$TEST_PLATFORM-coverage/TestCoverageResults_*.xml
+        path: $UNITY_DIR/$TEST_PLATFORM-coverage/*-opencov/*Mode/TestCoverageResults_*.xml
   coverage: /<Linecoverage>(.*?)<\/Linecoverage>/
 
 test-playmode:

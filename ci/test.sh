@@ -45,8 +45,8 @@ fi
 if grep $CODE_COVERAGE_PACKAGE $PACKAGE_MANIFEST_PATH; then
   if [ -f "$UNITY_DIR/$TEST_PLATFORM-coverage/Report/Summary.xml" ]; then
     cat $UNITY_DIR/$TEST_PLATFORM-coverage/Report/Summary.xml | grep Linecoverage
-    mv $UNITY_DIR/$TEST_PLATFORM-coverage/$CI_PROJECT_NAME-opencov/*Mode/TestCoverageResults_*.xml $UNITY_DIR/$TEST_PLATFORM-coverage/
-    rm -r $UNITY_DIR/$TEST_PLATFORM-coverage/$CI_PROJECT_NAME-opencov/
+    find "$UNITY_DIR/$TEST_PLATFORM-coverage" -type f -name 'TestCoverageResults_*.xml' \
+    -exec cp {} "$UNITY_DIR/$TEST_PLATFORM-coverage/" \; || true
   else
     echo -e "\033[33mWARNING: Coverage Summary.xml not found, coverage report may not have been generated.\033[0m"
   fi
