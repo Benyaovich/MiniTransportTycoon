@@ -1,4 +1,5 @@
 using System;
+using Controller.Interfaces;
 using Model.Enumerations;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -6,8 +7,10 @@ using UnityEngine.UIElements;
 
 namespace View
 {
-    public class VehicleVisual : MonoBehaviour
+    public class VehicleVisual : MonoBehaviour, IViewable
     {
+        public Vehicle Vehicle => _vehicle;
+        
         [SerializeField] private bool debugMode;
         [SerializeField] private float sideWaysOffset = 1.5f;
         [SerializeField] private float straightOffset = 3f;

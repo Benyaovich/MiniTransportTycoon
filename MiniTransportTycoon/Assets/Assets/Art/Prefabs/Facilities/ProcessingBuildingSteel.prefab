@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5794051533596227549}
+  - component: {fileID: 3146778964158817740}
+  - component: {fileID: 5383498453696471058}
   m_Layer: 0
   m_Name: ProcessingBuildingSteel
   m_TagString: Untagged
@@ -33,6 +35,39 @@ Transform:
   - {fileID: 432987899117719772}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3146778964158817740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7707383209292136220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d95a155c8e24f5aac35bd8a9c6e00eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::View.FacilityVisual
+--- !u!65 &5383498453696471058
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7707383209292136220}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10.090651, y: 7.5854506, z: 17.132872}
+  m_Center: {x: 10.072877, y: 3.6170728, z: 9.80174}
 --- !u!1001 &432987899117587036
 PrefabInstance:
   m_ObjectHideFlags: 0
