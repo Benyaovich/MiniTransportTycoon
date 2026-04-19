@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using Model.Interfaces;
 using Model.Vehicles;
-using Model.Vehicles.CargoTrucks;
 using ScriptableObjects.Vehicles;
 using UnityEngine;
 using UnityEngine.InputSystem;

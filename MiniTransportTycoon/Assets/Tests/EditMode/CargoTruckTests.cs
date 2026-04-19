@@ -1,11 +1,6 @@
-using System.Collections;
 using NUnit.Framework;
-using UnityEngine;
-using UnityEngine.TestTools;
 using System.Collections.Generic;
-using System.Numerics;
 using Model.Cells.RoadCells;
-using Model.Enumerations;
 
 public class CargoTruckTests
 {
