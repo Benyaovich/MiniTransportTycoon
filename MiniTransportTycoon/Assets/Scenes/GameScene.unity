@@ -709,7 +709,7 @@ Transform:
   m_GameObject: {fileID: 795215426}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5029864, y: -0.0000000117588925, z: 0.0000000068432313, w: 0.86429435}
-  m_LocalPosition: {x: 50, y: 35, z: 5}
+  m_LocalPosition: {x: 2500, y: 35, z: 2475}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -785,7 +785,7 @@ Transform:
   m_GameObject: {fileID: 965899859}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 50, y: 0, z: 30}
+  m_LocalPosition: {x: 2500, y: 0, z: 2500}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -808,8 +808,8 @@ MonoBehaviour:
   maxFOV: 100
   minFOV: 40
   rotationSensitivity: 0.2
-  mapEdgeX: {x: -2000, y: 2000}
-  mapEdgeZ: {x: -2000, y: 2000}
+  mapEdgeX: {x: 500, y: 4500}
+  mapEdgeZ: {x: 500, y: 4500}
   cinemachineCamera: {fileID: 795215429}
 --- !u!1 &974421254
 GameObject:
@@ -1023,7 +1023,7 @@ Transform:
   m_GameObject: {fileID: 1205279722}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5029864, y: -0.00000001175889, z: 0.0000000068432247, w: 0.8642944}
-  m_LocalPosition: {x: 50, y: 35, z: 5}
+  m_LocalPosition: {x: 2500, y: 35, z: 2475}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1287,7 +1287,7 @@ MonoBehaviour:
   gridSizeX: 500
   gridSizeY: 500
   gridCellSize: 10
-  gridOriginPosition: {x: -2500, y: 0, z: -2500}
+  gridOriginPosition: {x: 0, y: 0, z: 0}
   mapFloor: {fileID: 1627260197}
 --- !u!4 &1514503208
 Transform:

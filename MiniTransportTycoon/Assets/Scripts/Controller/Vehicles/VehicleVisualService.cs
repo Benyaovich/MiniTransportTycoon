@@ -35,7 +35,7 @@ namespace Controller.Vehicles
         private void VehicleStorageOnVehicleAdd(object sender, Vehicle vehicle)
         {
             Transform transform = UnityEngine.Object.Instantiate(FindVehicleSo(vehicle).prefab,
-                new Vector3(-10,0,-10),
+                new Vector3(0,1000,0),
                 Quaternion.identity, _parentTransform);
             _vehiclesVisuals.TryAdd(vehicle, transform);
             LinkVisualToModel(vehicle, transform);
