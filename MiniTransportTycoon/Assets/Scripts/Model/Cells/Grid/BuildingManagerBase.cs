@@ -1,5 +1,8 @@
 #nullable enable
 using System.Collections.Generic;
+using System.Linq;
+using Codice.CM.Common.Merge;
+using Model.Interfaces;
 
 namespace Model.Cells.Grid
 {
@@ -46,6 +49,12 @@ namespace Model.Cells.Grid
                 ModelGridObject go = Grid.GetGridObject(position.X, position.Y);
                 go.ClearModel();
             }
+        }
+
+        protected int GetCellRemovePrice(Cell cell)
+        {
+            if (cell is not IDestroyable destroyable) return 0;
+            return destroyable.DestroyPrice;
         }
     }
 }

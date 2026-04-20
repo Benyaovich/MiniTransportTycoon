@@ -26,6 +26,7 @@ namespace Model.Cells.Grid
             List<Location>? gridPositionList = roadCell.GetGridPositionList();
             if (!CheckIfCanBuild(gridPositionList)) return;
             
+            
             var dynamicRoadCells = GetNeighboursAsDynamicRoadList(neighbours);
             
             SetModelsValueInGridObjects(roadCell, gridPositionList);
@@ -33,8 +34,9 @@ namespace Model.Cells.Grid
             UpdateNeighbours(dynamicRoadCells);
             RefreshNeighbours(dynamicRoadCells);
             
-            InvokeRoadCellBuilt(roadCell);
+            PlayerState.Instance.SpendMoney(roadCell.Price);
             
+            InvokeRoadCellBuilt(roadCell);
         }
 
 
@@ -48,6 +50,8 @@ namespace Model.Cells.Grid
             List<Location> gridPositionList = roadCell.GetGridPositionList();
             go.ClearModel();
             ClearModelFromGridObjects(gridPositionList);
+            
+            PlayerState.Instance.SpendMoney(GetCellRemovePrice(roadCell));
             InvokeRoadCellDemolished(roadCell);
             
             List<DynamicRoadCell> neighbours = GetNeighboursAsDynamicRoadList(GetNeighbours(roadCell.Origin));
