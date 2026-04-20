@@ -808,6 +808,8 @@ MonoBehaviour:
   maxFOV: 100
   minFOV: 40
   rotationSensitivity: 0.2
+  mapEdgeX: {x: -2000, y: 2000}
+  mapEdgeZ: {x: -2000, y: 2000}
   cinemachineCamera: {fileID: 795215429}
 --- !u!1 &974421254
 GameObject:
@@ -1282,10 +1284,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridManager
   showDebug: 0
-  gridSizeX: 50
-  gridSizeY: 50
+  gridSizeX: 500
+  gridSizeY: 500
   gridCellSize: 10
-  gridOriginPosition: {x: 0, y: 0, z: 0}
+  gridOriginPosition: {x: -2500, y: 0, z: -2500}
   mapFloor: {fileID: 1627260197}
 --- !u!4 &1514503208
 Transform:
