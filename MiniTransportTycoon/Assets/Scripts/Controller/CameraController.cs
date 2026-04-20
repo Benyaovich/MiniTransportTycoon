@@ -11,7 +11,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float maxFOV = 90;
     [SerializeField] private float minFOV = 40;
     [SerializeField] private float rotationSensitivity = 10;
-    
+    [SerializeField] private Vector2 mapEdgeX = new Vector2(0,500);
+    [SerializeField] private Vector2 mapEdgeZ = new Vector2(0,500);
     [SerializeField] private CinemachineCamera cinemachineCamera;
 
     private Vector2 previousMousePos = Vector2.zero;
@@ -52,7 +53,10 @@ public class CameraController : MonoBehaviour
 
         float finalMoveSpeed = moveSpeed * cinemachineCamera.Lens.FieldOfView / maxFOV;
         
-        t.position += moveDir * (finalMoveSpeed * Time.deltaTime);
+        Vector3 newPosition = t.position + moveDir * (finalMoveSpeed * Time.deltaTime);
+        if (newPosition.x <= mapEdgeX.x || newPosition.x >= mapEdgeX.y ||
+            newPosition.z <= mapEdgeZ.x || newPosition.z >= mapEdgeZ.y) return;
+        t.position = newPosition;
     }
 
     private void HandleCameraZoom()
