@@ -1,4 +1,3 @@
-
 using System;
 using System.Numerics;
 
@@ -21,7 +20,7 @@ public class Grid<T> : IGrid<T>
     #region Fields
     
     private readonly Vector3 _originPosition;
-    private readonly T[,] _gridArray;
+    public T[,] GridArray { get; private set; }
 
     #endregion
 
@@ -31,13 +30,13 @@ public class Grid<T> : IGrid<T>
         Size = size;
         CellSize = cellSize;
         _originPosition = originPosition;
-        _gridArray = new T[size.Width, size.Height];
+        GridArray = new T[size.Width, size.Height];
         
         for (int y = 0; y < Size.Height; y++)
         {
             for (int x = 0; x < Size.Width; x++)
             {
-                _gridArray[x, y] = createGridObject(this, new Location(x,y));
+                GridArray[x, y] = createGridObject(this, new Location(x,y));
             }
         }
     }
@@ -79,7 +78,7 @@ public class Grid<T> : IGrid<T>
     {
         if (x < 0 || y < 0 || x >= Size.Width || y >= Size.Height) return;
         
-        _gridArray[x, y] = value;
+        GridArray[x, y] = value;
         InvokeOnGridObjectChanged(x,y);
     }
     
@@ -96,7 +95,7 @@ public class Grid<T> : IGrid<T>
     #region GetGridObjects
     public T GetGridObject(int x, int y) {
         if (x >= 0 && y >= 0 && x < Size.Width && y < Size.Height) {
-            return _gridArray[x, y];
+            return GridArray[x, y];
         }
         
         return default;

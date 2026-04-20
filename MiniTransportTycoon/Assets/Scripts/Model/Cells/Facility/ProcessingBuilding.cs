@@ -1,6 +1,5 @@
 using System;
 using Model.Interfaces;
-using UnityEngine;
 
 public class ProcessingBuilding : Facility, IDepositPoint
 {

@@ -1,30 +1,35 @@
 using System.IO;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using UnityEngine;
+using Newtonsoft.Json;
 
 public class JsonFileManager : IFileManager
 {
-    public async Task<GameData> LoadAsync(Stream stream)
+    private JsonSerializerSettings _jsonSettings = new JsonSerializerSettings()
+    {
+        TypeNameHandling = TypeNameHandling.Auto,
+        Formatting = Formatting.Indented
+    };
+    public async Task<GameData> LoadAsync(string path)
     {
         try
         {
-            using StreamReader reader = new StreamReader(stream);
-            return JsonUtility.FromJson<GameData>(await reader.ReadToEndAsync());
+            using StreamReader reader = new StreamReader(path);
+            return JsonConvert.DeserializeObject<GameData>(await reader.ReadToEndAsync(),_jsonSettings);
         }
         catch
         {
             throw new InvalidDataContractException();
         }
-
     }
 
-    public async Task SaveAsync(Stream stream, GameData gameData)
+    public async Task SaveAsync(string path, GameData gameData)
     {
         try
         {
-            await using StreamWriter writer = new StreamWriter(stream);
-            await writer.WriteLineAsync(JsonUtility.ToJson(gameData));
+            string json = JsonConvert.SerializeObject(gameData, _jsonSettings);
+            await using StreamWriter writer = new StreamWriter(path);
+            await writer.WriteLineAsync(json);
         }
         catch
         {

@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Model.Enumerations;
 
-namespace Model.Cells.RoadCells
-{
+
     public class TwoWayLR: RoadCell
     {
         public TwoWayLR([NotNull] Location origin, bool destroyable = true)
@@ -14,4 +13,3 @@ namespace Model.Cells.RoadCells
         {
         }
     }
-}

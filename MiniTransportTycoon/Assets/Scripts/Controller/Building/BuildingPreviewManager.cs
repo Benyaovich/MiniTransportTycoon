@@ -1,7 +1,5 @@
-using System;
 using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class BuildingPreviewManager : MonoBehaviour
 {

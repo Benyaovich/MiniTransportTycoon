@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Model.Enumerations;
-using UnityEngine;
 
 public class DynamicRoadCell : RoadCell
 {
