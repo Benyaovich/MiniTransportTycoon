@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +9,11 @@ public class ForestVisual : MonoBehaviour
     public void Setup(Forest forest)
     {
         _forest = forest;
+        for (int i = 0; i < forest.NumOfTrees; i++)
+        {
+            trees[i].SetActive(true);
+        }
+        if (_forest.NumOfTrees == 4) return;
         _forest.OnGrow += ForestOnGrow;
     }
 
