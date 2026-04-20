@@ -2,7 +2,6 @@ using System;
 using Controller.Interfaces;
 using Model;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UserInterface.GameUI;
 using View;
 

@@ -1,7 +1,5 @@
 #nullable enable
 using System.Collections.Generic;
-using System.Linq;
-using Codice.CM.Common.Merge;
 using Model.Interfaces;
 
 namespace Model.Cells.Grid

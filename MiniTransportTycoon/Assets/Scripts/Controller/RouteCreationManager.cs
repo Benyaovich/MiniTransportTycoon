@@ -4,8 +4,6 @@ using System.Linq;
 using Controller;
 using Model.RoadSystem;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public class RouteCreationManager : MonoBehaviour
 {
