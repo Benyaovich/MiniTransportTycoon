@@ -11,4 +11,6 @@ public class SerializeableSize
         width = size.Width;
         height = size.Height;
     }
+    
+    public SerializeableSize(){}
 }

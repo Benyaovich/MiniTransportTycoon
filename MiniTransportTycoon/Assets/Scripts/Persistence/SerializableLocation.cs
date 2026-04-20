@@ -11,4 +11,9 @@ public class SerializableLocation
         x = location.X;
         y = location.Y;
     }
+
+    public SerializableLocation()
+    {
+        
+    }
 }

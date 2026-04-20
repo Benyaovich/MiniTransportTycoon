@@ -14,4 +14,6 @@ public class SerializableCell
         size = new SerializeableSize(cell.Size);
         destroyable = cell.Destroyable;
     }
+    
+    public SerializableCell(){}
 }
