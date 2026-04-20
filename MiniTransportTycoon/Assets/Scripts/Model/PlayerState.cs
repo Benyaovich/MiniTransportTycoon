@@ -21,6 +21,12 @@ namespace Model
 
         public event EventHandler<int>? OnMoneyChanged;
         public event EventHandler? OnGameOver;
+
+        public void ResetPlayerState()
+        {
+            Money = 10000;
+            IsGameOver = false;
+        }
         
         public void AddMoney(int amount)
         {
