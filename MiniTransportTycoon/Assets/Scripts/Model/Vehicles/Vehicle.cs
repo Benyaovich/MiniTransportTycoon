@@ -86,21 +86,30 @@ public abstract class Vehicle : IAdvancable
     protected bool TryDepositToNeighbours(List<Cell> neighbouringCells)
     {
         if (_route == null) return false;
-        
+
         foreach (var neighbouringCell in neighbouringCells)
         {
             if (neighbouringCell is not IDepositPoint depositPoint) continue;
-            
+
             if (depositPoint.RequiredResource == Resource && ResourceAmount > 0)
             {
                 int resourceAmountBefore = ResourceAmount;
+
                 UnloadResource(depositPoint);
-                int resourceAmountAfter = ResourceAmount;
-                PlayerState.Instance.AddMoney(GameEconomy.Instance.GetResourcePrice(Resource) *
-                                              resourceAmountBefore - resourceAmountAfter);
-                return true;
+
+                int depositedAmount = resourceAmountBefore - ResourceAmount;
+
+                if (depositedAmount > 0)
+                {
+                    PlayerState.Instance.AddMoney(
+                        GameEconomy.Instance.GetResourcePrice(Resource) * depositedAmount
+                    );
+
+                    return true;
+                }
             }
         }
+
         return false;
     }
 
