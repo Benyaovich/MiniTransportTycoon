@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using Model.Interfaces;
 using Model.Vehicles;
-using Model.Vehicles.CargoTrucks;
 using ScriptableObjects.Vehicles;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -37,7 +36,7 @@ namespace Controller.Vehicles
 
             foreach (IAdvancable advancable in _vehicleStorage.Vehicles)
             {
-                advancable.Tick(Time.deltaTime);
+                advancable.Tick(GameManager.Instance.DeltaTime);
             }
         }
 

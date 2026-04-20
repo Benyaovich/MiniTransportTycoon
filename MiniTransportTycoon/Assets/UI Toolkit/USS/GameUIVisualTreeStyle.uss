@@ -87,3 +87,8 @@
     scale: 1.1 1.1;
     rotate: 1deg;
 }
+
+.selectedBtn {
+    scale: 1.2 1.2 1.2;
+    -unity-font-style: normal;
+}

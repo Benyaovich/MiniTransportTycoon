@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7d05ee3ea12b9449b44301c36fa1d1e, type: 3}
+  m_Name: SteelCargoTruckSO
+  m_EditorClassIdentifier: Assembly-CSharp::SteelCargoTruckSO
+  prefab: {fileID: 3804225823130192258, guid: acea1bd7aeb73b644a27020ebf6d33a2, type: 3}
+  displayName: Cargo Truck - Steel
+  speed: 2
+  price: 1000
+  maintenanceCost: 200
+  maxCarryCapacity: 50

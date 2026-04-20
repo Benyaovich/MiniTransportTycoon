@@ -240,7 +240,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""af460ea8-4bcd-41a2-b8ad-62e5ae48c118"",
                     ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";KeyboardAndMouse"",
                     ""action"": ""RightClick"",

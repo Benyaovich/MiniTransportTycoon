@@ -12,6 +12,6 @@ public class ExtractorBuilding : Facility
 
     protected override void Produce(object sender, EventArgs e)
     {
-        ResourceAmount = Math.Min(ResourceAmount + rch.GetValue(), maxCapacity);
+        ResourceAmount = Math.Min(ResourceAmount + Rch.GetValue(), MaxCapacity);
     }
 }

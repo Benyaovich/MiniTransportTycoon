@@ -2,13 +2,47 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.PlayerLoop;
+using UnityEngine.Serialization;
 
-public class BuildSelectionManager : IBuildSelectionManager
+public class BuildSelectionManager : MonoBehaviour, IBuildSelectionManager
 {
+    public static BuildSelectionManager Instance { get; private set; } = null!;
     public event EventHandler<Transform?>? OnSelectedObjectChanged;
+    public event EventHandler? OnDynamicRoadSelected;
+    public event EventHandler? OnBuildingSelected; 
 
     public CellObjectTypeSO? SelectedObjectType { get; private set; }
+    
+    private List<CellObjectTypeSO> _cellObjectTypeSos = new();
+    public Dictionary<Type, CellObjectTypeSO> CellLookup { get; private set; } = new();
+    
+    [SerializeField] private List<CellObjectTypeSO> buildingCellObjectTypeSos = null!;
+    [SerializeField] private List<CellObjectTypeSO> roadCellObjectsTypeSos = null!;
+    [SerializeField] private CellObjectTypeSO dynamicRoadCellObjectTypeSo = null!; 
+    [SerializeField] private CellObjectTypeSO busStop = null!;
 
+    private void Awake()
+    {
+        Instance = this;
+        CollectAllCellObjectTypeSosIntoASingleList();
+        BuildLookup();
+    }
+    
+    public void HandleBuildSelectionInput()
+    {
+        if (Keyboard.current.digit1Key.wasPressedThisFrame)
+        {
+            CycleSelection(buildingCellObjectTypeSos!);
+            InvokeBuildingSelected();
+        }
+        else if (Keyboard.current.digit2Key.wasPressedThisFrame)
+        {
+            SelectDynamicRoadObjectTypeSo();
+        }
+    }
+    
     public void ClearSelectedObjectType()
     {
         SelectedObjectType = null;
@@ -24,16 +58,56 @@ public class BuildSelectionManager : IBuildSelectionManager
 
         if (SelectedObjectType is null || !cellObjectTypes.Contains(SelectedObjectType))
         {
-            SelectedObjectType = cellObjectTypes[0];
-            RaiseSelectedObjectChanged();
+            SetSelectedObjectType(cellObjectTypes[0]);
             return;
         }
 
         int index = cellObjectTypes.IndexOf(SelectedObjectType);
         index = (index + 1) % cellObjectTypes.Count;
-        SelectedObjectType = cellObjectTypes[index];
+        SetSelectedObjectType(cellObjectTypes[index]);
+    }
 
+    private void SetSelectedObjectType(CellObjectTypeSO cellObjectTypeSo)
+    {
+        SelectedObjectType = cellObjectTypeSo;
         RaiseSelectedObjectChanged();
+    }
+
+    public void SelectDynamicRoadObjectTypeSo()
+    {
+        SetSelectedObjectType(dynamicRoadCellObjectTypeSo);
+        InvokeDynamicRoadSelected();
+    }
+
+    public void SelectBusStopObjectTypeSo()
+    {
+        SetSelectedObjectType(busStop);
+        InvokeBuildingSelected();
+    }
+    
+    private void CollectAllCellObjectTypeSosIntoASingleList()
+    {
+        _cellObjectTypeSos = new List<CellObjectTypeSO>();
+
+        foreach (CellObjectTypeSO cellObjectTypeSo in buildingCellObjectTypeSos!)
+        {
+            _cellObjectTypeSos.Add(cellObjectTypeSo);
+        }
+
+        foreach (CellObjectTypeSO cellObjectTypeSo in roadCellObjectsTypeSos!)
+        {
+            _cellObjectTypeSos.Add(cellObjectTypeSo);
+        }
+    }
+    
+    private void BuildLookup()
+    {
+        CellLookup = new Dictionary<Type, CellObjectTypeSO>();
+        
+        foreach (var so in _cellObjectTypeSos)
+        {
+            CellLookup.Add(so.CellType, so);
+        }
     }
 
     private void RaiseSelectedObjectChanged()
@@ -45,5 +119,14 @@ public class BuildSelectionManager : IBuildSelectionManager
         }
         
         OnSelectedObjectChanged?.Invoke(this, SelectedObjectType.visual);
+    }
+    
+    private void InvokeDynamicRoadSelected()
+    {
+        OnDynamicRoadSelected?.Invoke(this, EventArgs.Empty);
+    }
+    private void InvokeBuildingSelected()
+    {
+        OnBuildingSelected?.Invoke(this, EventArgs.Empty);
     }
 }

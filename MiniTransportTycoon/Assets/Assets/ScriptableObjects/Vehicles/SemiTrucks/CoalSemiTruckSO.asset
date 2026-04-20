@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 035b326ddeea46a6987854f3c3f39af3, type: 3}
+  m_Name: CoalSemiTruckSO
+  m_EditorClassIdentifier: Assembly-CSharp::CoalSemiTruckSO
+  prefab: {fileID: 6264989677447907297, guid: 160d47dbb8c3d4c4aac2bd2c75eb7477, type: 3}
+  displayName: Semi Truck - Coal
+  speed: 4
+  price: 500
+  maintenanceCost: 60
+  maxCarryCapacity: 25

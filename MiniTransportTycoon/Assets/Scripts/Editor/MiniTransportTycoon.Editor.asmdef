@@ -1,0 +1,6 @@
+{
+	"name": "MiniTransportTycoon.Editor",
+	"includePlatforms": [
+      "Editor"
+  ]
+}

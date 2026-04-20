@@ -1,0 +1,17 @@
+using Model.Interfaces;
+
+public class CargoTruck : Vehicle
+{
+    public CargoTruck(Grid<ModelGridObject> grid, Resource resource, float speed = 2, int maintenanceCost = 100, int purchaseCost = 1000, int maxCarryCapacity = 50) 
+        : base(grid, resource, speed, maintenanceCost, purchaseCost, maxCarryCapacity) { }
+
+    protected override void LoadResource(IResourceProvider resourceProvider)
+    {
+        ResourceAmount += resourceProvider.GetResource(MaxCapacity - ResourceAmount);
+    }
+
+    protected override void UnloadResource(IDepositPoint depositPoint)
+    {
+        ResourceAmount = depositPoint.AddResource(ResourceAmount);
+    }
+}

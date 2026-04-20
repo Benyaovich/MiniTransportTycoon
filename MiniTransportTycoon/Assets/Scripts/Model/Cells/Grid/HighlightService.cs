@@ -1,11 +1,13 @@
 
+using System;
 using System.Collections.Generic;
 
 public class HighlightService
 {
-    private readonly Grid<ModelGridObject> _grid;
+    private readonly IGrid<ModelGridObject> _grid;
+    public readonly List<Timer> Timers = new();
 
-    public HighlightService(Grid<ModelGridObject> grid)
+    public HighlightService(IGrid<ModelGridObject> grid)
     {
         _grid = grid;
     }
@@ -20,6 +22,21 @@ public class HighlightService
     public void EnableHighlight(List<Location> locations)
     {
         EnableHighlight(GetHighlightableList(locations));
+    }
+
+    public void HighlightFor(List<Location> locations, float duration)
+    {
+        EnableHighlight(locations);
+        Timer timer = new Timer(duration);
+        timer.OnTimerElapsed += Elapsed;
+        Timers.Add(timer);
+
+        void Elapsed(object sender, EventArgs e)
+        {
+            timer.OnTimerElapsed -= Elapsed;
+            DisableHighlight(locations);
+            Timers.Remove(timer);
+        }
     }
     
     private void DisableHighlight(List<IHighlightable> highlightables)

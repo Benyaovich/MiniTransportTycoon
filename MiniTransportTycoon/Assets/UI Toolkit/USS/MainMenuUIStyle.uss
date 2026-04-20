@@ -1,0 +1,46 @@
+:root {
+}
+
+.navBarButton {
+    font-size: 24px;
+    background-color: rgb(255, 255, 255);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-width: 0;
+    border-top-color: rgb(0, 0, 0);
+    letter-spacing: 0;
+    -unity-text-align: middle-center;
+    margin-left: 10px;
+    margin-right: 10px;
+    rotate: 0;
+    min-width: 100px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    min-height: 60px;
+    transition-duration: 0.2s;
+    width: 300px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.navBarButton:hover {
+    font-size: 24px;
+    background-color: rgb(255, 255, 255);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-width: 0;
+    border-top-color: rgb(0, 0, 0);
+    letter-spacing: 0;
+    -unity-text-align: middle-center;
+    margin-left: 10px;
+    margin-right: 10px;
+    scale: 1.1 1.1;
+    rotate: 1deg;
+    -unity-font-style: bold;
+}

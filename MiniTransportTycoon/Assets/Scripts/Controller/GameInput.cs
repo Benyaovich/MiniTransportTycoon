@@ -11,39 +11,70 @@ public class GameInput : MonoBehaviour
     public event EventHandler OnMovePerformed;
     public event EventHandler OnLeftClickPressed;
     public event EventHandler OnDeleteKeyPressed;
+
+    public event EventHandler OnLeftClickStarted;
+    public event EventHandler OnRightClickPressed;
+    public event EventHandler OnLeftClickCanceled;
     
-    private PlayerInputActions playerInputActions;
+    private PlayerInputActions _playerInputActions;
 
 
     private void Awake()
     {
         Instance = this;
 
-        playerInputActions = new PlayerInputActions();
-        playerInputActions.Player.Enable();
-        playerInputActions.Player.Move.performed += MoveOnPerformed;
-        playerInputActions.Player.LeftClick.performed += LeftClickOnPerformed;
-        playerInputActions.Player.RightClick.started += RightClickOnStarted;
-        playerInputActions.Player.RightClick.canceled += RightClickOnCanceled;
-        playerInputActions.Player.Delete.performed += DeleteOnPerformed;
+        _playerInputActions = new PlayerInputActions();
+        _playerInputActions.Player.Enable();
+        _playerInputActions.Player.Move.performed += MoveOnPerformed;
+        
+        _playerInputActions.Player.LeftClick.performed += LeftClickOnPerformed;
+        _playerInputActions.Player.LeftClick.started += LeftClickOnStarted;
+        _playerInputActions.Player.LeftClick.canceled += LeftClickOnCanceled;
+        
+        _playerInputActions.Player.RightClick.performed += RightClickOnPerformed;
+        _playerInputActions.Player.RightClick.started += RightClickOnStarted;
+        _playerInputActions.Player.RightClick.canceled += RightClickOnCanceled;
+        
+        
+        _playerInputActions.Player.Delete.performed += DeleteOnPerformed;
 
     }
 
+    
+
+
     private void OnDisable()
     {
-        playerInputActions.Player.Delete.performed -= DeleteOnPerformed;
-        playerInputActions.Player.RightClick.canceled -= RightClickOnCanceled;
-        playerInputActions.Player.RightClick.performed -= RightClickOnStarted;
-        playerInputActions.Player.Move.performed -= MoveOnPerformed;
-        playerInputActions.Player.LeftClick.performed -= LeftClickOnPerformed;
-        playerInputActions.Player.Disable();
-        playerInputActions.Dispose();
+        _playerInputActions.Player.Move.performed -= MoveOnPerformed;
+        
+        _playerInputActions.Player.LeftClick.canceled -= LeftClickOnCanceled;
+        _playerInputActions.Player.LeftClick.performed -= LeftClickOnStarted;
+        _playerInputActions.Player.LeftClick.performed -= LeftClickOnPerformed;
+        
+        _playerInputActions.Player.RightClick.performed -= RightClickOnPerformed;
+        _playerInputActions.Player.RightClick.started -= RightClickOnStarted;
+        _playerInputActions.Player.RightClick.canceled -= RightClickOnCanceled;
+        
+        _playerInputActions.Player.Delete.performed -= DeleteOnPerformed;
+        
+        _playerInputActions.Player.Disable();
+        _playerInputActions.Dispose();
     }
 
     private void DeleteOnPerformed(InputAction.CallbackContext obj)
     {
         OnDeleteKeyPressed?.Invoke(this, EventArgs.Empty);
     }
+    private void LeftClickOnCanceled(InputAction.CallbackContext obj)
+    {
+        OnLeftClickCanceled?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void LeftClickOnStarted(InputAction.CallbackContext obj)
+    {
+        OnLeftClickStarted?.Invoke(this, EventArgs.Empty);
+    }
+    
     private void RightClickOnCanceled(InputAction.CallbackContext obj)
     {
         IsRightClickPressed = false;
@@ -52,6 +83,11 @@ public class GameInput : MonoBehaviour
     private void RightClickOnStarted(InputAction.CallbackContext obj)
     {
         IsRightClickPressed = true;
+    }
+    
+    private void RightClickOnPerformed(InputAction.CallbackContext obj)
+    {
+        OnRightClickPressed?.Invoke(this, EventArgs.Empty);
     }
 
 
@@ -72,9 +108,9 @@ public class GameInput : MonoBehaviour
 
     public Vector2 GetMovementVectorNormalized()
     {
-        Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
+        Vector2 inputVector = _playerInputActions.Player.Move.ReadValue<Vector2>();
         return inputVector.normalized;
     }
 
-    public float GetScrollAxis() => playerInputActions.Player.Scroll.ReadValue<float>();
+    public float GetScrollAxis() => _playerInputActions.Player.Scroll.ReadValue<float>();
 }

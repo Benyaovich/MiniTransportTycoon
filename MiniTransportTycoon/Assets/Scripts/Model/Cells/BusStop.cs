@@ -12,7 +12,7 @@ public class BusStop : Cell, IAdvancable, IPurchasable, IVisitableBuiling, IDepo
     public Resource RequiredResource => Resource.People;
     private readonly Timer _timer;
     private readonly int _range;
-    private readonly int _maxNumOfPeople;
+    public int MaxNumOfPeople { get; }
     [CanBeNull] private CityService _cityService;
 
     public BusStop(Location location, [CanBeNull] CityService cityService = null, [CanBeNull] Size size = null, bool destroyable = true,
@@ -22,7 +22,7 @@ public class BusStop : Cell, IAdvancable, IPurchasable, IVisitableBuiling, IDepo
     {
         _cityService = cityService;
         BuildPrice = buildPrice;
-        _maxNumOfPeople = maxNumOfPeople;
+        MaxNumOfPeople = maxNumOfPeople;
         _range = range;
         _timer = new Timer(interval);
         _timer.OnTimerElapsed += GetPeopleFromCity;
@@ -59,9 +59,9 @@ public class BusStop : Cell, IAdvancable, IPurchasable, IVisitableBuiling, IDepo
         
         int amount = City.ProvidePeopleToBusStop();
         NumOfPeople += amount;
-        if (NumOfPeople > _maxNumOfPeople)
+        if (NumOfPeople > MaxNumOfPeople)
         {
-            int diff = NumOfPeople - _maxNumOfPeople;
+            int diff = NumOfPeople - MaxNumOfPeople;
             NumOfPeople -= diff;
             City.AddPeople(diff);
         }
