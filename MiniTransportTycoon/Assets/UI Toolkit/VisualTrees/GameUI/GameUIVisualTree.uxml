@@ -13,6 +13,9 @@
             <ui:Button text="Roads" name="SelectRoadBtn" class="navBarButton" style="margin-bottom: 2px; margin-top: 2px; color: rgb(0, 0, 0);"/>
             <ui:Button text="Bus Station" name="SelectBusStopBtn" parse-escape-sequences="false" class="navBarButton" style="color: rgb(0, 0, 0);"/>
         </ui:VisualElement>
+        <ui:VisualElement name="VisualElement" class="blocksGameInput" style="flex-grow: 0; flex-direction: row; margin-left: 15px; align-self: center; margin-right: 15px; align-content: auto; background-color: rgba(168, 168, 168, 0.84); color: rgb(0, 0, 0); padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; right: auto; left: 0; position: relative; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px;">
+            <ui:Label text="Money: 10000$" name="Money" style="font-size: 24px;"/>
+        </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="ControlsHelpOverlay" class="ControlsHelpOverlay">
         <ui:Label text="Move: WASD" class="ControlsHelpOverlayLabel"/>
