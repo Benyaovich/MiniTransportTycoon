@@ -1,4 +1,5 @@
 using System;
+using Model;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -17,6 +18,7 @@ public class CameraController : MonoBehaviour
     
     private void Update()
     {
+        if (PlayerState.Instance.IsGameOver) return;
         HandleMovement();
         if (Utils.IsPointerOverBlockingUI()) return;
         HandleCameraZoom();
