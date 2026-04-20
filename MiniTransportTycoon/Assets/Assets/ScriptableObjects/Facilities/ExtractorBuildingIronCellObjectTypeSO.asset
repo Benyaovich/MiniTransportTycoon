@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ExtractorBuildingIronCellObjectTypeSO
   m_EditorClassIdentifier: Assembly-CSharp::ExtractorBuildingIronCellObjectTypeSO
   prefab: {fileID: 4936713977235539623, guid: af66db65bfeaf72439a5a151393f9103, type: 3}
-  visual: {fileID: 5794051533596227549, guid: 2048c6e1eade6b043ab7fdaff2c98be0, type: 3}
+  visual: {fileID: 6790077114347145825, guid: a9ae15b7bdf983044a5fd47c1d410ae9, type: 3}

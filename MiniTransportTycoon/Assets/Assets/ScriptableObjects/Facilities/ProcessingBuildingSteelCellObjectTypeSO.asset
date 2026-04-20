@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ProcessingBuildingSteelCellObjectTypeSO
   m_EditorClassIdentifier: Assembly-CSharp::ProcessingBuildingSteelCellObjectTypeSO
   prefab: {fileID: 5794051533596227549, guid: 1eaed373c414a9a419a2560dc2670a27, type: 3}
-  visual: {fileID: 5794051533596227549, guid: 2048c6e1eade6b043ab7fdaff2c98be0, type: 3}
+  visual: {fileID: 4245838814823025707, guid: a5410462536db844a9050f17b7adc538, type: 3}

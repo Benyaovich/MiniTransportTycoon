@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ProcessingBuildingPaperCellObjectTypeSO
   m_EditorClassIdentifier: Assembly-CSharp::ProcessingBuildingPaperCellObjectTypeSO
   prefab: {fileID: 1595013749956467782, guid: f1822adcf00dfd0458db699644a8fae9, type: 3}
-  visual: {fileID: 5794051533596227549, guid: 2048c6e1eade6b043ab7fdaff2c98be0, type: 3}
+  visual: {fileID: 9156857427422255239, guid: 51d3dd8ac556ac446a82b8c451af7765, type: 3}
