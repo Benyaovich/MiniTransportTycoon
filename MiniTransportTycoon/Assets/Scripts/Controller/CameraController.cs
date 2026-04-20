@@ -1,3 +1,4 @@
+using Model;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Vector2 mapEdgeZ = new Vector2(0,500);
     [SerializeField] private CinemachineCamera cinemachineCamera;
 
-    private Vector2 previousMousePos = Vector2.zero;
+    private Vector2 _previousMousePos = Vector2.zero;
     
     private void Update()
     {
@@ -27,17 +28,17 @@ public class CameraController : MonoBehaviour
     {
         if (!GameInput.Instance.IsRightClickPressed)
         {
-            previousMousePos = GameInput.Instance.GetMousePosition();
+            _previousMousePos = GameInput.Instance.GetMousePosition();
             return;
         }
 
         Vector2 mousePos = GameInput.Instance.GetMousePosition();
-        float deltaX = mousePos.x - previousMousePos.x;
+        float deltaX = mousePos.x - _previousMousePos.x;
 
         float amountToRotate = deltaX * rotationSensitivity;
         transform.Rotate(Vector3.up, amountToRotate, Space.World);
 
-        previousMousePos = mousePos;
+        _previousMousePos = mousePos;
     }
 
     private void HandleMovement()
