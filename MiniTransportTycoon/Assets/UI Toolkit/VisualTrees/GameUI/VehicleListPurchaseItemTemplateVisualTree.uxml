@@ -9,6 +9,6 @@
                 <ui:Label text="Maintenance: 2000" name="Maintenance" style="align-self: center; align-content: center; font-size: 14px; -unity-font-style: normal; flex-wrap: nowrap;"/>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:Button text="1000" name="BuyBtn" class="button" style="width: auto; height: 60px; bottom: auto; right: auto; top: auto; left: auto; position: relative; align-items: auto; align-self: center; align-content: center; font-size: 24px; background-color: rgb(255, 255, 255); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; color: rgb(0, 0, 0); transition-property: scale; transition-duration: 0.2s; flex-shrink: 1; flex-grow: 1; max-width: 125px;"/>
+        <ui:Button text="1000" name="BuyBtn" class="button navBarButton" style="width: auto; height: 60px; bottom: auto; right: auto; top: auto; left: auto; position: relative; align-items: auto; align-self: center; align-content: center; font-size: 24px; background-color: rgb(255, 255, 255); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; color: rgb(0, 0, 0); transition-property: scale; transition-duration: 0.2s; flex-shrink: 1; flex-grow: 1; max-width: 125px;"/>
     </ui:VisualElement>
 </ui:UXML>
