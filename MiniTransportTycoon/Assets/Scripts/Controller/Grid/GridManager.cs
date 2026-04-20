@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Controller.Building;
+using Model;
 using Model.Cells.Grid;
 using Model.Interfaces;
 using UnityEngine;
@@ -173,7 +174,8 @@ public class GridManager : MonoBehaviour
     {
         foreach (Location location in locations)
         {
-            if (BuildSelectionManager.Instance.SelectedObjectType!.CellType == typeof(DynamicRoadCell))
+            if (BuildSelectionManager.Instance.SelectedObjectType == null) return;
+            if (BuildSelectionManager.Instance.SelectedObjectType.CellType == typeof(DynamicRoadCell))
             {
                 _dynamicRoadBuildingManager.TryBuildRoad(location);
             }
