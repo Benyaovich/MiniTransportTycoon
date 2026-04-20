@@ -47,4 +47,8 @@
         <ui:Button text="Save Game" name="SaveBtn" class="navBarButton" style="width: 300px; margin-top: 10px; margin-bottom: 10px;"/>
         <ui:Button text="Main Menu" name="MainMenuBtn" class="navBarButton" style="width: 300px; margin-top: 20px; margin-bottom: 10px;"/>
     </ui:VisualElement>
+    <ui:VisualElement name="GameOverMenu" class="blocksGameInput" style="flex-grow: 1; position: absolute; width: 100%; height: 100%; background-color: rgba(55, 55, 55, 0.87); justify-content: center; align-items: center; display: none; visibility: visible;">
+        <ui:Label text="Game Over" style="font-size: 60px; color: rgb(255, 255, 255); -unity-font-style: bold; margin-bottom: 60px;"/>
+        <ui:Button text="Main Menu" name="GameOverMainMenuBtn" class="navBarButton" style="width: 300px; margin-top: 20px; margin-bottom: 10px;"/>
+    </ui:VisualElement>
 </ui:UXML>
