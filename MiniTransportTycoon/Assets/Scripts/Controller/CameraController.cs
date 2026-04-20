@@ -1,8 +1,5 @@
-using System;
-using Model;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class CameraController : MonoBehaviour
 {

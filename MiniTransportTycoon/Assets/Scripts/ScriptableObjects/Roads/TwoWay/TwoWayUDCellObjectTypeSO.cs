@@ -1,5 +1,4 @@
 using System;
-using Model.Cells.RoadCells;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "TwoWayUDCellObjectTypeSO", menuName = "Cell/Roads/TwoWay/TwoWayUD")]

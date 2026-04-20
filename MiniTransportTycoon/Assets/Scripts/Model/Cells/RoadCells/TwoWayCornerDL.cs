@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Model.Enumerations;
 
-namespace Model.Cells.RoadCells
-{
+
     public class TwoWayCornerDL : RoadCell
     {
         public TwoWayCornerDL([NotNull] Location origin, bool destroyable = true, bool isVertexPoint = true)
@@ -15,4 +14,3 @@ namespace Model.Cells.RoadCells
         }
         
     }
-}

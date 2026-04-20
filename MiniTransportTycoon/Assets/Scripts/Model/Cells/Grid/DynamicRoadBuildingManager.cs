@@ -1,9 +1,7 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Model.Enumerations;
-using UnityEngine;
 
 namespace Model.Cells.Grid
 {
