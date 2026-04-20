@@ -36,16 +36,20 @@ public class ProcessingBuilding : Facility, IDepositPoint
     // 1 to 1 conversion when producing resource
     protected override void Produce(object sender, EventArgs e)
     {
-        int amountToProduce = Rch.GetValue();
-        
-        if (amountToProduce >= RequiredResourceAmount)
-        {
-            ResourceAmount += RequiredResourceAmount;
-            RequiredResourceAmount = 0;
+        if (RequiredResourceAmount <= 0)
             return;
-        }
 
-        ResourceAmount += amountToProduce;
-        RequiredResourceAmount -= amountToProduce;
+        int freeCapacity = MaxCapacity - ResourceAmount;
+
+        if (freeCapacity <= 0)
+            return;
+
+        int producedAmount = Math.Min(
+            Rch.GetValue(),
+            Math.Min(RequiredResourceAmount, freeCapacity)
+        );
+
+        ResourceAmount += producedAmount;
+        RequiredResourceAmount -= producedAmount;
     }
 }
