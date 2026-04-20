@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Controller.Building;
 using Model.Cells.Grid;
 using Model.Interfaces;
@@ -60,6 +61,7 @@ public class GridManager : MonoBehaviour
     private CityService? _cityService;
     private CellVisualService? _cellVisualService;
     private DynamicRoadVisualService _dynamicRoadVisualService = null!;
+    private ForestSpreadManager _forestSpreadManager = null!;
 
     #endregion
 
@@ -84,6 +86,7 @@ public class GridManager : MonoBehaviour
             _cityService,
             _advancables);
 
+        _forestSpreadManager = new ForestSpreadManager(Grid, _cellBuildingManager);
         
         _cellVisualService = new CellVisualService(_grid, _cellBuildingManager, transform,
             BuildSelectionManager.Instance.CellLookup);
@@ -128,7 +131,7 @@ public class GridManager : MonoBehaviour
 
     private void Update()
     {
-        foreach (IAdvancable advancable in _advancables)
+        foreach (IAdvancable advancable in _advancables.ToList())
         {
             advancable.Tick(GameManager.Instance.DeltaTime);
         }
@@ -177,9 +180,13 @@ public class GridManager : MonoBehaviour
             _dynamicRoadBuildingManager.TryBuildRoad(new Location(x,y));
             return;
         }
-        
-        _cellBuildingManager!.TryBuild(
-            BuildSelectionManager.Instance.SelectedObjectType.Create(new Location(x, y)));
+
+        Cell cell = BuildSelectionManager.Instance.SelectedObjectType.Create(new Location(x, y));
+        if (cell is Forest forest)
+        {
+            _forestSpreadManager.AddForest(forest);
+        }
+        _cellBuildingManager!.TryBuild(cell);
         
     }
 
@@ -209,6 +216,11 @@ public class GridManager : MonoBehaviour
         
         if (gridObject.Model is IDestroyable { CanDestroy: false }) return;
 
+        if (gridObject.Model is Forest forest)
+        {
+            _forestSpreadManager.RemoveForest(forest);
+        }
+        
         if (gridObject.Model is DynamicRoadCell)
         {
             _dynamicRoadBuildingManager.TryDemolishRoad(new Location(x,y));
@@ -217,6 +229,7 @@ public class GridManager : MonoBehaviour
         {
             _cellBuildingManager.TryDemolish(new Location(x, y));
         }
+        
     }
 
     public UniVector3 GetMousePosSnappedToGrid()
