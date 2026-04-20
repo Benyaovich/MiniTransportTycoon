@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Controller.Building;
 using Model.Cells.Grid;
 using Model.Interfaces;
+using Persistence;
 using UnityEngine;
 using UniVector3 = UnityEngine.Vector3;
 using SysVector3 = System.Numerics.Vector3;
@@ -150,6 +151,19 @@ public class GridManager : MonoBehaviour
         if (BuildSelectionManager.Instance.SelectedObjectType is null) return;
 
         BuildOnCurrentMousePosition();
+    }
+
+    public void BuildOnLoad(List<SerializableModelGridObject> gridObjects)
+    {
+        Debug.Log("hahaoi epiteni kene");
+        foreach (var item in gridObjects)
+        {
+            if (item.model is SerializableForest sForest)
+            {
+                Forest forest = new Forest(new Location(sForest.origin.x,sForest.origin.y),numOfTrees: sForest.numOfTrees);
+                _cellBuildingManager!.TryBuild(forest);
+            }
+        }
     }
 
     public void BuildOnCurrentMousePosition()
