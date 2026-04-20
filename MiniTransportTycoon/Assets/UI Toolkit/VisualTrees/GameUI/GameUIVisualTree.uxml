@@ -13,6 +13,9 @@
             <ui:Button text="Roads" name="SelectRoadBtn" class="navBarButton" style="margin-bottom: 2px; margin-top: 2px; color: rgb(0, 0, 0);"/>
             <ui:Button text="Bus Station" name="SelectBusStopBtn" parse-escape-sequences="false" class="navBarButton" style="color: rgb(0, 0, 0);"/>
         </ui:VisualElement>
+        <ui:VisualElement name="VisualElement" class="blocksGameInput" style="flex-grow: 0; flex-direction: row; margin-left: 15px; align-self: center; margin-right: 15px; align-content: auto; background-color: rgba(168, 168, 168, 0.84); color: rgb(0, 0, 0); padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; right: auto; left: 0; position: relative; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px;">
+            <ui:Label text="Money: 10000$" name="Money" style="font-size: 24px;"/>
+        </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="ControlsHelpOverlay" class="ControlsHelpOverlay">
         <ui:Label text="Move: WASD" class="ControlsHelpOverlayLabel"/>
@@ -43,5 +46,9 @@
         <ui:Button text="Resume" name="ResumeBtn" class="navBarButton" style="width: 300px; margin-top: 10px; margin-bottom: 10px;"/>
         <ui:Button text="Save Game" name="SaveBtn" class="navBarButton" style="width: 300px; margin-top: 10px; margin-bottom: 10px;"/>
         <ui:Button text="Main Menu" name="MainMenuBtn" class="navBarButton" style="width: 300px; margin-top: 20px; margin-bottom: 10px;"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="GameOverMenu" class="blocksGameInput" style="flex-grow: 1; position: absolute; width: 100%; height: 100%; background-color: rgba(55, 55, 55, 0.87); justify-content: center; align-items: center; display: none; visibility: visible;">
+        <ui:Label text="Game Over" style="font-size: 60px; color: rgb(255, 255, 255); -unity-font-style: bold; margin-bottom: 60px;"/>
+        <ui:Button text="Main Menu" name="GameOverMainMenuBtn" class="navBarButton" style="width: 300px; margin-top: 20px; margin-bottom: 10px;"/>
     </ui:VisualElement>
 </ui:UXML>

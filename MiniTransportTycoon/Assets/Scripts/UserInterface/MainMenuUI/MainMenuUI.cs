@@ -1,4 +1,5 @@
 using System;
+using Model;
 using Scene;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -33,6 +34,7 @@ namespace UserInterface.MainMenuUI
 
         private async void NewGameBtnOnClicked()
         {
+            PlayerState.Instance.ResetPlayerState();
             await SceneLoader.LoadSceneWithLoadingScreen("GameScene", "LoadingScene");
         }
         

@@ -1,9 +1,12 @@
 using System;
 using JetBrains.Annotations;
+using Model.Interfaces;
 
-public class Forest : Cell, IAdvancable
+public class Forest : Cell, IAdvancable, IDestroyable
 {
 
+    public bool CanDestroy => true;
+    public int DestroyPrice => NumOfTrees * 50;
     public int NumOfTrees { get; private set; }
     private Timer growthTimer;
     private Timer spreadTimer;
@@ -41,4 +44,6 @@ public class Forest : Cell, IAdvancable
         NumOfTrees++;
         OnGrow?.Invoke(this, Origin);
     }
+
+    
 }

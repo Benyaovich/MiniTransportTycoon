@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using Model;
 using Model.Cells.Grid;
 using UnityEngine;
 
@@ -35,6 +36,11 @@ public class CellBuildingManager : BuildingManagerBase
         }
         
         Build(cell, gridPositionList);
+
+        if (cell is IPurchasable purchasable)
+        {
+            PlayerState.Instance.SpendMoney(purchasable.Price);
+        }
         
         return true;
     }
@@ -47,9 +53,11 @@ public class CellBuildingManager : BuildingManagerBase
         if (!go.Model.Destroyable) return;
 
         List<Location> gridPositionList = go.Model.GetGridPositionList();
+        
+        PlayerState.Instance.SpendMoney(GetCellRemovePrice(go.Model));
+        
         Demolish(go, gridPositionList);
     }
-    
     
     
     private void Build(Cell cell, List<Location> gridPositionList)

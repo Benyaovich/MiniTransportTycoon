@@ -1,5 +1,6 @@
 using System;
 using Controller.Interfaces;
+using Model;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UserInterface.GameUI;
@@ -21,6 +22,17 @@ namespace Controller
         }
 
         private void Start()
+        {
+            HideAll();
+            PlayerState.Instance.OnGameOver += PlayerStateOnGameOver;
+        }
+
+        private void OnDisable()
+        {
+            PlayerState.Instance.OnGameOver -= PlayerStateOnGameOver;
+        }
+
+        private void PlayerStateOnGameOver(object sender, EventArgs e)
         {
             HideAll();
         }

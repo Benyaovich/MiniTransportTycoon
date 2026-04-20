@@ -2,5 +2,5 @@
 
 public interface IPurchasable
 {
-    public int BuildPrice { get; set; }
+    public int Price { get; set; }
 }

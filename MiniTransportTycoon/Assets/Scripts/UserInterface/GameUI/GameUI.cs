@@ -1,4 +1,6 @@
 using System;
+using JetBrains.Annotations;
+using Model;
 using Scene;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -26,6 +28,11 @@ public class GameUI : MonoBehaviour
     
     private VisualElement _vehiclePurchasePanel;
     private VisualElement _vehicleOwnedPanel;
+
+    private Label _money;
+
+    private VisualElement _gameOverMenuPanel;
+    private Button _gameOverMainMenuBtn;
 
     private float _previousGameSpeedMultiplier;
     private void Awake()
@@ -55,6 +62,11 @@ public class GameUI : MonoBehaviour
 
         _selectRoadBtn = root.Q<Button>("SelectRoadBtn");
         _selectBusStopBtn = root.Q<Button>("SelectBusStopBtn");
+
+        _money = root.Q<Label>("Money");
+
+        _gameOverMenuPanel = root.Q<VisualElement>("GameOverMenu");
+        _gameOverMainMenuBtn = root.Q<Button>("GameOverMainMenuBtn");
         
 
         _menuBtn.clicked += ToggleMenu;
@@ -72,13 +84,19 @@ public class GameUI : MonoBehaviour
         _selectRoadBtn.clicked += BuildSelectionManager.Instance.SelectDynamicRoadObjectTypeSo;
         _selectBusStopBtn.clicked += BuildSelectionManager.Instance.SelectBusStopObjectTypeSo;
         
+        PlayerState.Instance.OnMoneyChanged += SetMoneyLabelText;
+
+        PlayerState.Instance.OnGameOver += PlayerStateOnGameOver;
+        _gameOverMainMenuBtn.clicked += MainMenuBtnOnClicked;
+        
         _vehiclePurchasePanel.Disable();
         _vehicleOwnedPanel.Disable();
         _menuPanel.Disable();
+        SetMoneyLabelText(PlayerState.Instance, PlayerState.Instance.Money);
+        _gameOverMenuPanel.Disable();
     }
 
-
-
+    
     private void OnDisable()
     {
         _menuBtn.clicked -= ToggleMenu;
@@ -95,6 +113,11 @@ public class GameUI : MonoBehaviour
        
         _selectRoadBtn.clicked -= BuildSelectionManager.Instance.SelectDynamicRoadObjectTypeSo;
         _selectBusStopBtn.clicked -= BuildSelectionManager.Instance.SelectBusStopObjectTypeSo;
+        
+        PlayerState.Instance.OnMoneyChanged -= SetMoneyLabelText;
+        
+        PlayerState.Instance.OnGameOver -= PlayerStateOnGameOver;
+        _gameOverMainMenuBtn.clicked += MainMenuBtnOnClicked;
     }
 
     private void ToggleOwnedVehicleListView()
@@ -152,7 +175,20 @@ public class GameUI : MonoBehaviour
         
         _selectedSpeed.AddToClassList("selectedBtn");
     }
+
+
+    private void SetMoneyLabelText([CanBeNull] object sender, int money)
+    {
+        _money.text = "Money: " + money + "$";
+    }
     
-    
-    
+    private void PlayerStateOnGameOver(object sender, EventArgs e)
+    {
+        GameManager.Instance.SetGameSpeedMultiplier(0);
+        _vehiclePurchasePanel.Disable();
+        _vehicleOwnedPanel.Disable();
+        BuildSelectionManager.Instance.ClearSelectedObjectType();
+        _gameOverMenuPanel.Enable();
+    }
+
 }

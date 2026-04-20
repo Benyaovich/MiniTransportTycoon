@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using Model;
 using Model.Enumerations;
 using Model.Interfaces;
 
@@ -92,7 +93,11 @@ public abstract class Vehicle : IAdvancable
             
             if (depositPoint.RequiredResource == Resource && ResourceAmount > 0)
             {
+                int resourceAmountBefore = ResourceAmount;
                 UnloadResource(depositPoint);
+                int resourceAmountAfter = ResourceAmount;
+                PlayerState.Instance.AddMoney(GameEconomy.Instance.GetResourcePrice(Resource) *
+                                              resourceAmountBefore - resourceAmountAfter);
                 return true;
             }
         }
@@ -184,7 +189,7 @@ public abstract class Vehicle : IAdvancable
 
     private void MaintenanceTimerOnTimerElapsed(object sender, EventArgs e)
     {
-        
+        PlayerState.Instance.SpendMoney(MaintenanceCost);
     }
     public void Tick(float delta)
     {
