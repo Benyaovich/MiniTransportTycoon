@@ -16,11 +16,12 @@ public class RoadCell : Cell, IPurchasable, IHighlightable, IDestroyable
     public List<Direction> Directions { get; protected set; }
     public List<Vehicle> Vehicles { get; private set; } = new(); // ami rajta vannak eppen
     public List<Vehicle> WaitingVehicles { get; private set; } = new(); // amik fel beakarnak hajtani
-    public int BuildPrice { get; set; }
     
     public bool Highlighted { get; protected set; }
 
+    public int Price { get; set; } = 100;
     public bool CanDestroy => Vehicles.Count == 0 && WaitingVehicles.Count == 0;
+    public int DestroyPrice => Price / 2;
 
     public RoadCell(Location origin, bool isIntersection, List<Direction> directions,
          bool isVertexPoint = false, Size? size = null, bool destroyable = true)

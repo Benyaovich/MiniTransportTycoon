@@ -7,7 +7,7 @@ public class BusStop : Cell, IAdvancable, IPurchasable, IVisitableBuiling, IDepo
 {
     public int NumOfPeople { get; private set; }
     [CanBeNull] public City City { get; private set; }
-    public int BuildPrice { get; set; }
+    public int Price { get; set; }
     public Resource ProducedResource => Resource.People;
     public Resource RequiredResource => Resource.People;
     private readonly Timer _timer;
@@ -16,12 +16,12 @@ public class BusStop : Cell, IAdvancable, IPurchasable, IVisitableBuiling, IDepo
     [CanBeNull] private CityService _cityService;
 
     public BusStop(Location location, [CanBeNull] CityService cityService = null, [CanBeNull] Size size = null, bool destroyable = true,
-        float interval = 15, int buildPrice = 1500,
+        float interval = 15, int buildPrice = 1000,
         int range = 5, int maxNumOfPeople = 50) :
         base(location, size, destroyable)
     {
         _cityService = cityService;
-        BuildPrice = buildPrice;
+        Price = buildPrice;
         MaxNumOfPeople = maxNumOfPeople;
         _range = range;
         _timer = new Timer(interval);
