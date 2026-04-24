@@ -1,16 +1,16 @@
 using System;
 
 [Serializable]
-public class SerializeableSize
+public class SSize
 {
     public int width;
     public int height;
         
-    public SerializeableSize(Size size)
+    public SSize(Size size)
     {
         width = size.Width;
         height = size.Height;
     }
     
-    public SerializeableSize(){}
+    public SSize(){}
 }

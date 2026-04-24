@@ -1,18 +1,18 @@
 using System;
 
 [Serializable]
-public class SerializableLocation
+public class SLocation
 {
     public int x;
     public int y;
 
-    public SerializableLocation(Location location)
+    public SLocation(Location location)
     {
         x = location.X;
         y = location.Y;
     }
 
-    public SerializableLocation()
+    public SLocation()
     {
         
     }
