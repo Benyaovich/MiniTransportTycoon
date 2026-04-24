@@ -11,11 +11,12 @@ public abstract class Facility : Cell, IAdvancable, IVisitableBuiling, IResource
     public RateChangeHandler Rch { get; }
 
     internal Facility(Resource prodRes, int maxCap, Location loc, float prodInterval = 10f, 
-        Size size = null, bool destroyable = false, RateChangeHandler rch = null) : base(loc, size, destroyable)
+        Size size = null, bool destroyable = false, RateChangeHandler rch = null, int resourceAmount = 0) : base(loc, size, destroyable)
     {
         ProducedResource = prodRes;
         MaxCapacity = maxCap;
         _productionTimer = new Timer(prodInterval);
+        ResourceAmount = resourceAmount;
         Rch = rch ?? new RateChangeHandler();
         Size = size ?? new Size(2, 2);
         
