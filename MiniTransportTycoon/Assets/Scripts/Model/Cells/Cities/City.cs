@@ -1,11 +1,12 @@
 public class City : Cell, IAdvancable
 {
-    public int NumOfPeople { get; private set; } = 100;
+    public int NumOfPeople { get; private set; }
     private RateChangeHandler travelDemandRCH;
     
-    public City(Location origin, Size size = null, bool destroyable = true,RateChangeHandler rch = null)
+    public City(Location origin, Size size = null, bool destroyable = true,RateChangeHandler rch = null,int numOfPeople = 100)
         : base(origin, size, destroyable)
     {
+        NumOfPeople = numOfPeople;
         travelDemandRCH = rch ?? new RateChangeHandler();
     }
 
