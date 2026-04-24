@@ -11,6 +11,7 @@ namespace Controller.Vehicles
 {
     public class VehicleManager : MonoBehaviour
     {
+        public static VehicleManager Instance { get;private set; }
         public event EventHandler OnVehicleBought;
         public event EventHandler OnVehicleSold;
         
@@ -23,6 +24,7 @@ namespace Controller.Vehicles
         
         private void Awake()
         {
+            Instance = this;
             _vehicleStorage = new VehicleStorage();
             _vehicleVisualService = new VehicleVisualService(_vehicleStorage, transform, vehicleSos);
         }
