@@ -4,8 +4,8 @@ public class ExtractorBuilding : Facility
 {
     public ExtractorBuilding(Resource prodRes, int maxCap, Location loc, 
         float prodInterval = 10, Size size = null, 
-        bool destroyable = false, RateChangeHandler rch = null) 
-        : base(prodRes, maxCap, loc, prodInterval, size, destroyable, rch)
+        bool destroyable = false, RateChangeHandler rch = null, int resourceAmount = 0) 
+        : base(prodRes, maxCap, loc, prodInterval, size, destroyable, rch, resourceAmount)
     {
     }
 
