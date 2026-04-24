@@ -10,7 +10,7 @@ public class CellBuildingManager : BuildingManagerBase
     
     
     private readonly List<IAdvancable> _advancables;
-    private readonly CityService _cityService;
+    public CityService CityService { get; private set; }
     private readonly DynamicRoadBuildingManager _dynamicRoadBuildingManager;
     
     
@@ -20,7 +20,7 @@ public class CellBuildingManager : BuildingManagerBase
         CityService cityService,
         List<IAdvancable> advancables) : base(grid)
     {
-        _cityService = cityService;
+        CityService = cityService;
         _advancables = advancables;
         _dynamicRoadBuildingManager = dynamicRoadBuildingManager;
     }
@@ -84,13 +84,13 @@ public class CellBuildingManager : BuildingManagerBase
     
     private void BuildCity(Cell cell, List<Location> gridPositionList)
     {
-        _cityService.AddCity(cell, gridPositionList);
+        CityService.AddCity(cell, gridPositionList);
         AddCellToIAdvancableListIfIAdvancable(cell);
     }
 
     private void BuildBusStop(BusStop busStop, List<Location> gridPositionList)
     {
-        busStop.SetCityService(_cityService);
+        busStop.SetCityService(CityService);
         busStop.LocateAndSetCity();
         BuildCell(busStop, gridPositionList);
     }
