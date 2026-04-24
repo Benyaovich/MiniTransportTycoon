@@ -45,7 +45,7 @@ namespace View
             _cellCenter = new Vector3(_vehicle.Grid.CellSize / 2, 0, _vehicle.Grid.CellSize / 2);
             _vehicle.OnMove += VehicleOnMove;
             _vehicle.OnRouteSet += VehicleOnRouteSet;
-
+            RotateBasedOnDirection();
         }
 
         private void OnDisable()
@@ -106,7 +106,7 @@ namespace View
             
             if (_vehicle.Route.IsTurning)
             {
-                if (_vehicle.Route.Turns180happened)
+                if (_vehicle.Route.Turns180Happened)
                 {
                     FirstUTurnSetup();
                     _state = MoveVisualMode.Turn180;
