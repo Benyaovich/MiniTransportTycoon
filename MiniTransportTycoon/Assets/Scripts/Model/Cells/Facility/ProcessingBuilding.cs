@@ -9,9 +9,10 @@ public class ProcessingBuilding : Facility, IDepositPoint
 
     public ProcessingBuilding(Resource prodRes, Resource reqRes, int maxCap,
         Location loc, float prodInterval = 10, Size size = null, 
-        bool destroyable = false, RateChangeHandler rch = null)
-        : base(prodRes, maxCap, loc, prodInterval, size, destroyable, rch)
+        bool destroyable = false, RateChangeHandler rch = null, int requiredResourceAmount = 0, int resourceAmount = 0)
+        : base(prodRes, maxCap, loc, prodInterval, size, destroyable, rch, resourceAmount)
     {
+        RequiredResourceAmount = requiredResourceAmount;
         RequiredResource = reqRes;
         RequiredResourceCapacity = maxCap;
     }
