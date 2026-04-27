@@ -14,8 +14,8 @@ public class Route
     public Location CurrentPosition {get; private set; }
     public Location NextPosition { get; private set; }
     public bool IsTurning { get; private set; }
-    private bool currentlyStuck = false;
-    public bool Turns180happened { get; private set; }
+    public bool CurrentlyStuck { get;private set; }
+    public bool Turns180Happened { get; private set; }
     public bool Turns180Finished { get; private set; }
     public Direction TurningDirection => (NextPosition - CurrentPosition).ToDirection();
     
@@ -37,6 +37,35 @@ public class Route
         _pathHandler = pathHandler;
         
         SetUp(vertices);
+    }
+
+    public Route(
+        Queue<Location> vertices,
+        PathHandler pathHandler,
+        Location previousVertex,
+        Location currentVertex,
+        Location nextVertex,
+        Location previousPosition,
+        Location currentPosition,
+        Location nextPosition,
+        bool isTurning,
+        bool currentlyStuck,
+        bool turns180Happened,
+        bool turns180Finished
+    )
+    {
+        Vertices = vertices;
+        _pathHandler = pathHandler;
+        PreviousVertex = previousVertex;
+        CurrentVertex = currentVertex;
+        NextVertex = nextVertex;
+        PreviousPosition = previousPosition;
+        CurrentPosition = currentPosition;
+        NextPosition = nextPosition;
+        IsTurning = isTurning;
+        CurrentlyStuck = currentlyStuck;
+        Turns180Happened = turns180Happened;
+        Turns180Finished = turns180Finished;
     }
 
     public void SetUp(List<Location> vertices)
@@ -64,15 +93,15 @@ public class Route
 
     public void Step()
     {
-        if (currentlyStuck)
+        if (CurrentlyStuck)
         {
             StepVertex();
         }
         
-        if (Turns180happened)
+        if (Turns180Happened)
         {
             StepVertex();
-            Turns180happened = false;
+            Turns180Happened = false;
             Turns180Finished = true;
             PreviousPosition = CurrentPosition;
             NextPosition = CurrentPosition + CurrentDirection;
@@ -88,7 +117,7 @@ public class Route
         {
             if (CurrentDirection.Opposite() == NextDirection)
             {
-                Turns180happened = true;
+                Turns180Happened = true;
                 IsTurning = true;
                 NextPosition = CurrentPosition;
                 return;
@@ -107,11 +136,11 @@ public class Route
     {
         if (!_pathHandler.Graph.ContainsVertex(NextVertex) || !_pathHandler.Graph.Edges.Contains(new Edge(CurrentVertex, NextVertex)))
         {
-            currentlyStuck = true;
+            CurrentlyStuck = true;
             return;
         }
         
-        currentlyStuck = false;
+        CurrentlyStuck = false;
         
         Vertices.Enqueue(CurrentVertex);
         PreviousVertex = CurrentVertex;
@@ -130,11 +159,11 @@ public class Route
         }
         catch (ArgumentException ex)
         {
-            currentlyStuck = true;
+            CurrentlyStuck = true;
             throw new InvalidOperationException("Nem lehet utat csinalni a letezo csucsokbol. Ennek oka: " + ex.Message);
         }
         
-        currentlyStuck = false;
+        CurrentlyStuck = false;
     }
 
     public bool ContainsVertex(Location location)

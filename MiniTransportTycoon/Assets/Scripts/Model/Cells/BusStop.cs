@@ -17,12 +17,13 @@ public class BusStop : Cell, IAdvancable, IPurchasable, IVisitableBuiling, IDepo
 
     public BusStop(Location location, [CanBeNull] CityService cityService = null, [CanBeNull] Size size = null, bool destroyable = true,
         float interval = 15, int buildPrice = 1000,
-        int range = 5, int maxNumOfPeople = 50) :
+        int range = 5, int maxNumOfPeople = 50, int numOfPeople = 0) :
         base(location, size, destroyable)
     {
         _cityService = cityService;
         Price = buildPrice;
         MaxNumOfPeople = maxNumOfPeople;
+        NumOfPeople = numOfPeople;
         _range = range;
         _timer = new Timer(interval);
         _timer.OnTimerElapsed += GetPeopleFromCity;

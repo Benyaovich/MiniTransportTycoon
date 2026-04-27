@@ -1,10 +1,11 @@
+ 
 using System.Collections.Generic;
 using Model.Interfaces;
 
 public class Bus : Vehicle
 {
-    public Bus(Grid<ModelGridObject> grid, Resource resource = Resource.People, float speed = 1.8f, int maintenanceCost = 100, int purchaseCost = 800, int maxCarryCapacity = 40) 
-        : base(grid, resource, speed, maintenanceCost, purchaseCost, maxCarryCapacity) { }
+    public Bus(Grid<ModelGridObject> grid, Resource resource = Resource.People, float speed = 1.8f, int maintenanceCost = 100, int purchaseCost = 800, int maxCarryCapacity = 40,int resourceAmount = 0, Route? route = null, float maintenanceRemainingTime = 0, float? moveRemainingTime = null) 
+        : base(grid, resource, speed, maintenanceCost, purchaseCost, maxCarryCapacity,resourceAmount: resourceAmount, route: route, maintenanceRemainingTime: maintenanceRemainingTime, moveRemainingTime: moveRemainingTime) { }
 
     protected override void LoadResource(IResourceProvider resourceProvider)
     {

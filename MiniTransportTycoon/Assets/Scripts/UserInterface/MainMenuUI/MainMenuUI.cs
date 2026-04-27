@@ -1,4 +1,3 @@
-using System;
 using Model;
 using Scene;
 using UnityEngine;
@@ -22,14 +21,16 @@ namespace UserInterface.MainMenuUI
             
             _newGameBtn.clicked += NewGameBtnOnClicked;
             _exitGameBtn.clicked += ExitGameBtnOnClicked;
+            _loadGameBtn.clicked += LoadGameBtnOnclicked;
         }
-
         
+
 
         private void OnDisable()
         {
             _newGameBtn.clicked -= NewGameBtnOnClicked;
             _exitGameBtn.clicked -= ExitGameBtnOnClicked;
+            _loadGameBtn.clicked -= LoadGameBtnOnclicked;
         }
 
         private async void NewGameBtnOnClicked()
@@ -41,6 +42,13 @@ namespace UserInterface.MainMenuUI
         private void ExitGameBtnOnClicked()
         {
             Application.Quit();
+        }
+        
+        private async void LoadGameBtnOnclicked()
+        {
+            PlayerState.Instance.ResetPlayerState();
+            await SceneLoader.LoadSceneWithLoadingScreen("GameScene", "LoadingScene");
+            PersistenceManager.Instance.OnClickOpen();
         }
     }
 }

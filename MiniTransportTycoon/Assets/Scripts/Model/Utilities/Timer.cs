@@ -4,7 +4,7 @@ using System;
 public class Timer : IAdvancable
 {
     public float Interval { get; private set; }
-    public float RemainingTime { get; private set; }
+    public float RemainingTime;
 
     public event EventHandler OnTimerElapsed;
 

@@ -34,6 +34,12 @@ namespace Model
             OnMoneyChanged?.Invoke(EventArgs.Empty, Money);
         }
 
+        public void SetMoney(int amount)
+        {
+            Money = amount;
+            OnMoneyChanged?.Invoke(EventArgs.Empty, Money);
+        }
+
         public void SpendMoney(int amount)
         {
             Money -= amount;

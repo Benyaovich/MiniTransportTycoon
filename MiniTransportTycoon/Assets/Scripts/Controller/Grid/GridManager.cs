@@ -5,7 +5,6 @@ using System.Linq;
 using Controller.Building;
 using Model.Cells.Grid;
 using Model.Interfaces;
-using Persistence;
 using UnityEngine;
 using UniVector3 = UnityEngine.Vector3;
 using SysVector3 = System.Numerics.Vector3;
@@ -55,7 +54,7 @@ public class GridManager : MonoBehaviour
 
     private readonly List<IAdvancable> _advancables = new();
     
-    private CellBuildingManager? _cellBuildingManager;
+    public CellBuildingManager? CellBuildingManager { get;private set; }
     private DynamicRoadBuildingManager _dynamicRoadBuildingManager = null!;
     
     private CityService? _cityService;
@@ -80,15 +79,15 @@ public class GridManager : MonoBehaviour
         
         _dynamicRoadBuildingManager = new DynamicRoadBuildingManager(_grid);
         
-        _cellBuildingManager = new CellBuildingManager(
+        CellBuildingManager = new CellBuildingManager(
             _grid,
             _dynamicRoadBuildingManager,
             _cityService,
             _advancables);
 
-        _forestSpreadManager = new ForestSpreadManager(Grid, _cellBuildingManager);
+        _forestSpreadManager = new ForestSpreadManager(Grid, CellBuildingManager);
         
-        _cellVisualService = new CellVisualService(_grid, _cellBuildingManager, transform,
+        _cellVisualService = new CellVisualService(_grid, CellBuildingManager, transform,
             BuildSelectionManager.Instance.CellLookup);
         _dynamicRoadVisualService = new DynamicRoadVisualService(_grid, _dynamicRoadBuildingManager, transform,
             BuildSelectionManager.Instance.CellLookup);
@@ -150,21 +149,21 @@ public class GridManager : MonoBehaviour
     {
         if (Utils.IsPointerOverBlockingUI()) return;
         if (RouteCreationManager.Instance.InRouteCreation) return;
-        if (_cellBuildingManager is null) return;
+        if (CellBuildingManager is null) return;
         if (BuildSelectionManager.Instance.SelectedObjectType is null) return;
 
         BuildOnCurrentMousePosition();
     }
 
-    public void BuildOnLoad(List<SerializableModelGridObject> gridObjects)
+    public void BuildOnLoad(List<SModelGridObject> gridObjects)
     {
         Debug.Log("hahaoi epiteni kene");
         foreach (var item in gridObjects)
         {
-            if (item.model is SerializableForest sForest)
+            if (item.model is SForest sForest)
             {
                 Forest forest = new Forest(new Location(sForest.origin.x,sForest.origin.y),numOfTrees: sForest.numOfTrees);
-                _cellBuildingManager!.TryBuild(forest);
+                CellBuildingManager!.TryBuild(forest);
             }
         }
     }
@@ -186,7 +185,7 @@ public class GridManager : MonoBehaviour
         {
             _forestSpreadManager.AddForest(forest);
         }
-        _cellBuildingManager!.TryBuild(cell);
+        CellBuildingManager!.TryBuild(cell);
         
     }
 
@@ -205,7 +204,7 @@ public class GridManager : MonoBehaviour
     private void GameInputOnDeleteKeyPressed(object? sender, EventArgs e)
     {
         if (Utils.IsPointerOverBlockingUI()) return;
-        if (_cellBuildingManager is null) return;
+        if (CellBuildingManager is null) return;
         if (RouteCreationManager.Instance.InRouteCreation) return;
         
         UniVector3 mousePos = Utils.GetMouseWorldPosition();
@@ -227,7 +226,7 @@ public class GridManager : MonoBehaviour
         }
         else
         {
-            _cellBuildingManager.TryDemolish(new Location(x, y));
+            CellBuildingManager.TryDemolish(new Location(x, y));
         }
         
     }

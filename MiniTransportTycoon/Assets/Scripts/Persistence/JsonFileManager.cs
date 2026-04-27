@@ -10,12 +10,23 @@ public class JsonFileManager : IFileManager
         TypeNameHandling = TypeNameHandling.Auto,
         Formatting = Formatting.Indented
     };
-    public async Task<GameData> LoadAsync(string path)
+    public GameData Deserialize(string json)
     {
         try
         {
-            using StreamReader reader = new StreamReader(path);
-            return JsonConvert.DeserializeObject<GameData>(await reader.ReadToEndAsync(),_jsonSettings);
+            return JsonConvert.DeserializeObject<GameData>(json,_jsonSettings);
+        }
+        catch
+        {
+            throw new InvalidDataContractException();
+        }
+    }
+
+    public string Serialize(GameData gameData)
+    {
+        try
+        {
+            return JsonConvert.SerializeObject(gameData,_jsonSettings);
         }
         catch
         {
@@ -27,7 +38,7 @@ public class JsonFileManager : IFileManager
     {
         try
         {
-            string json = JsonConvert.SerializeObject(gameData, _jsonSettings);
+            string json = Serialize(gameData);
             await using StreamWriter writer = new StreamWriter(path);
             await writer.WriteLineAsync(json);
         }

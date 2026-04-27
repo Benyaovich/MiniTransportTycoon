@@ -19,14 +19,14 @@ public abstract class Vehicle : IAdvancable
     private IGrid<ModelGridObject> _grid;
     public IGrid<ModelGridObject> Grid => _grid;
     public int MaxCapacity { get; protected set; }
-    private Timer _maintenanceTimer;
-    private Timer? _moveTimer;
+    public Timer MaintenanceTimer { get; private set; }
+    public Timer? MoveTimer { get; private set; }
     
     public event EventHandler<Vehicle>? OnMove;
     public event EventHandler? OnRouteSet;
 
     protected Vehicle(Grid<ModelGridObject> grid, Resource resource, float speed, int maintenanceCost,
-        int purchaseCost, int maxCapacity, float maintenanceInterval = 100)
+        int purchaseCost, int maxCapacity, float maintenanceInterval = 100,int resourceAmount = 0, Route? route = null, float maintenanceRemainingTime = 0, float? moveRemainingTime = null)
     {
         _grid = grid;
         Resource = resource;
@@ -34,10 +34,19 @@ public abstract class Vehicle : IAdvancable
         MaintenanceCost = maintenanceCost;
         PurchaseCost = purchaseCost;
         MaxCapacity = maxCapacity;
-        ResourceAmount = 0;
+        ResourceAmount = resourceAmount;
         
-        _maintenanceTimer = new Timer(maintenanceInterval);
-        _maintenanceTimer.OnTimerElapsed += MaintenanceTimerOnTimerElapsed;
+        MaintenanceTimer = new Timer(maintenanceInterval);
+        _route = route;
+        MaintenanceTimer.RemainingTime = maintenanceRemainingTime;
+        if (moveRemainingTime != null)
+        {
+            SetRoute(_route!);
+            MoveTimer!.RemainingTime = moveRemainingTime.Value;
+        }
+        
+        
+        MaintenanceTimer.OnTimerElapsed += MaintenanceTimerOnTimerElapsed;
     }
 
     
@@ -150,8 +159,8 @@ public abstract class Vehicle : IAdvancable
         }
         
         _route = route;
-        _moveTimer = new Timer(MoveSpeed);
-        _moveTimer.OnTimerElapsed += TryMove;
+        MoveTimer = new Timer(MoveSpeed);
+        MoveTimer.OnTimerElapsed += TryMove;
         
         RoadCell startingRoadCell = (_grid.GetGridObject(CurrentLocation).Model as RoadCell)!;
         startingRoadCell!.AddVehicle(this);
@@ -202,9 +211,9 @@ public abstract class Vehicle : IAdvancable
     }
     public void Tick(float delta)
     {
-        if(_moveTimer != null){ _moveTimer.Tick(delta); }
+        if(MoveTimer != null){ MoveTimer.Tick(delta); }
         
-        _maintenanceTimer.Tick(delta);
+        MaintenanceTimer.Tick(delta);
     }
     
 }
