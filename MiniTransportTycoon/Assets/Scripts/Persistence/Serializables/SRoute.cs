@@ -4,7 +4,7 @@ using System.Collections.Generic;
 [Serializable]
 public class SRoute
 {
-    public Queue<SLocation> vertices = new Queue<SLocation>();
+    public List<SLocation> vertices = new List<SLocation>();
     public SLocation previousVertex;
     public SLocation currentVertex;
     public SLocation nextVertex;
@@ -19,7 +19,7 @@ public class SRoute
     public SRoute(Route route)
     {
         foreach (var item in route.Vertices)
-            vertices.Enqueue(new SLocation(item));
+            vertices.Add(new SLocation(item));
         previousVertex = new SLocation(route.PreviousVertex);
         currentVertex = new SLocation(route.CurrentVertex);
         nextVertex = new SLocation(route.NextVertex);
