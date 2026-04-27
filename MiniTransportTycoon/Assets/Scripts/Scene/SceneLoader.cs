@@ -26,6 +26,7 @@ namespace Scene
 
             op.allowSceneActivation = true;
             LoadingProgress = 0;
+            await Task.Yield();
         }
     }
 }

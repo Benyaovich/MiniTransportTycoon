@@ -33,6 +33,7 @@ public class GameUI : MonoBehaviour
 
     private VisualElement _gameOverMenuPanel;
     private Button _gameOverMainMenuBtn;
+    private Button _saveGameBtn;
 
     private float _previousGameSpeedMultiplier;
     private void Awake()
@@ -67,6 +68,8 @@ public class GameUI : MonoBehaviour
 
         _gameOverMenuPanel = root.Q<VisualElement>("GameOverMenu");
         _gameOverMainMenuBtn = root.Q<Button>("GameOverMainMenuBtn");
+        _saveGameBtn = root.Q<Button>("SaveBtn");
+
         
 
         _menuBtn.clicked += ToggleMenu;
@@ -88,6 +91,7 @@ public class GameUI : MonoBehaviour
 
         PlayerState.Instance.OnGameOver += PlayerStateOnGameOver;
         _gameOverMainMenuBtn.clicked += MainMenuBtnOnClicked;
+        _saveGameBtn.clicked += SaveGameBtnOnclicked;
         
         _vehiclePurchasePanel.Disable();
         _vehicleOwnedPanel.Disable();
@@ -117,7 +121,8 @@ public class GameUI : MonoBehaviour
         PlayerState.Instance.OnMoneyChanged -= SetMoneyLabelText;
         
         PlayerState.Instance.OnGameOver -= PlayerStateOnGameOver;
-        _gameOverMainMenuBtn.clicked += MainMenuBtnOnClicked;
+        _gameOverMainMenuBtn.clicked -= MainMenuBtnOnClicked;
+        _saveGameBtn.clicked -= SaveGameBtnOnclicked;
     }
 
     private void ToggleOwnedVehicleListView()
@@ -191,4 +196,8 @@ public class GameUI : MonoBehaviour
         _gameOverMenuPanel.Enable();
     }
 
+    private void SaveGameBtnOnclicked()
+    {
+        PersistenceManager.Instance.OnClickSave();
+    }
 }
