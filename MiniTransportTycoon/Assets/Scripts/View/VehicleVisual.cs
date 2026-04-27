@@ -45,7 +45,8 @@ namespace View
             _cellCenter = new Vector3(_vehicle.Grid.CellSize / 2, 0, _vehicle.Grid.CellSize / 2);
             _vehicle.OnMove += VehicleOnMove;
             _vehicle.OnRouteSet += VehicleOnRouteSet;
-            RotateBasedOnDirection();
+            if (vehicle.Route == null) return;
+            _vehicle.SetRoute(_vehicle.Route!);
         }
 
         private void OnDisable()
