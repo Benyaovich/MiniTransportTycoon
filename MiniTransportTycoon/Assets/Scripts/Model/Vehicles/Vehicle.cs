@@ -100,22 +100,21 @@ public abstract class Vehicle : IAdvancable
         {
             if (neighbouringCell is not IDepositPoint depositPoint) continue;
 
-            if (depositPoint.RequiredResource == Resource && ResourceAmount > 0)
+            if (depositPoint.RequiredResource != Resource || ResourceAmount <= 0) continue;
+            
+            int resourceAmountBefore = ResourceAmount;
+
+            UnloadResource(depositPoint);
+
+            int depositedAmount = resourceAmountBefore - ResourceAmount;
+
+            if (depositedAmount > 0)
             {
-                int resourceAmountBefore = ResourceAmount;
+                PlayerState.Instance.AddMoney(
+                    GameEconomy.Instance.GetResourcePrice(Resource) * depositedAmount
+                );
 
-                UnloadResource(depositPoint);
-
-                int depositedAmount = resourceAmountBefore - ResourceAmount;
-
-                if (depositedAmount > 0)
-                {
-                    PlayerState.Instance.AddMoney(
-                        GameEconomy.Instance.GetResourcePrice(Resource) * depositedAmount
-                    );
-
-                    return true;
-                }
+                return true;
             }
         }
 
@@ -182,7 +181,7 @@ public abstract class Vehicle : IAdvancable
         return road.Directions.Contains(dirToRoad.Opposite());
     }
 
-    private List<Cell> GetNeighbouringCells()
+    protected virtual List<Cell> GetNeighbouringCells()
     {
         List<Cell> neighbours = new();
         if(_grid.GetGridObject(CurrentLocation + Direction.Up)?.Model is Cell up) {neighbours.Add(up);}

@@ -24,10 +24,9 @@ public class BusTests
     [SetUp]
     public void Init()
     {
-        SetUpGrid();
         
-        _cityService = new CityService();
-        _buildingManager = new CellBuildingManager(_grid, new DynamicRoadBuildingManager(_grid), _cityService, new List<IAdvancable>());
+        
+        SetUpGrid();
         
         _testBus = new Bus(_grid);
         _testBus2 = new Bus(_grid);
@@ -39,18 +38,25 @@ public class BusTests
             (g, l) => new ModelGridObject(g, l));
         
         //city
+        _cityService = new CityService();
+        _buildingManager = new CellBuildingManager(_grid, new DynamicRoadBuildingManager(_grid), _cityService, new List<IAdvancable>());
+        
         City city1 = new SmallCity(new Location(0,2), 
             rch: new RateChangeHandler(1,1,0,1,1));
         _cityService.AddCity(city1, city1.GetGridPositionList());
         BusStop bs1 = new BusStop(new Location(0, 1), _cityService, new Size(1, 1), interval: 1);
         _buildingManager.TryBuild(bs1);
         
+        
         City city2 = new SmallCity(new Location(4,2), 
             rch: new RateChangeHandler(1,1,0,1,1));
         _cityService.AddCity(city2, city2.GetGridPositionList());
-        BusStop bs2 = new BusStop(new Location(0, 1), _cityService, new Size(1, 1), interval: 1);
+        BusStop bs2 = new BusStop(new Location(4, 1), _cityService, new Size(1, 1), interval: 1);
         _buildingManager.TryBuild(bs2);
-
+        
+        bs1.Tick(1);
+        bs2.Tick(1);
+        
         //Road
         _grid.GetGridObject(0, 0).SetModel(new TwoWayLR(new Location(0, 0)));
         _grid.GetGridObject(1, 0).SetModel(new TwoWayLR(new Location(1, 0)));
@@ -59,8 +65,8 @@ public class BusTests
         _grid.GetGridObject(4, 0).SetModel(new TwoWayLR(new Location(4, 0)));
 
         // Bus stop
-        _grid.GetGridObject(1, 1).SetModel(new BusStop(new Location(1, 1)));
-        _grid.GetGridObject(4, 1).SetModel(new BusStop(new Location(1, 1)));
+        _grid.GetGridObject(1, 1).SetModel(bs1);
+        _grid.GetGridObject(4, 1).SetModel(bs2);
 
         //Factory building
 
@@ -104,5 +110,37 @@ public class BusTests
         
         Assert.AreEqual(new Location(0, 0), _testBus.CurrentLocation);
         Assert.AreEqual(new Location(4, 0), _testBus2.CurrentLocation);
+        
+        Assert.AreEqual(0, _testBus.ResourceAmount);
+        Assert.AreEqual(0, _testBus2.ResourceAmount);
+        
+        _testBus.MoveNext();
+        _testBus2.MoveNext();
+        
+        Assert.AreEqual(1, _testBus.ResourceAmount);
+        Assert.AreEqual(1, _testBus2.ResourceAmount);
+        
+        _testBus.MoveNext();
+        _testBus2.MoveNext();
+        
+        Assert.AreEqual(new Location(1, 0), _testBus.CurrentLocation);
+        Assert.AreEqual(new Location(3, 0), _testBus2.CurrentLocation);
+        
+        for(int i = 0; i < 4 ; i++)
+        {
+            _testBus.MoveNext();
+            _testBus2.MoveNext();
+        }
+        
+        Assert.AreEqual(new Location(4, 0), _testBus.CurrentLocation);
+        Assert.AreEqual(new Location(0, 0), _testBus2.CurrentLocation);
+        
+        Assert.AreEqual(0, _testBus.ResourceAmount);
+        Assert.AreEqual(0, _testBus2.ResourceAmount);
+        
+        //vissza ut + vissza fordulas
+        
+        _testBus.MoveNext();
+        _testBus2.MoveNext();
     }
 }
