@@ -12,11 +12,11 @@ public abstract class Vehicle : IAdvancable
     public int MaintenanceCost { get; private set; }
     public int PurchaseCost { get; private set; }
     public int ResourceAmount { get; protected set; }
-    private Route? _route;
+    protected Route? _route;
     public Route? Route => _route;
     public Location? CurrentLocation => _route?.CurrentPosition;
     
-    private IGrid<ModelGridObject> _grid;
+    protected IGrid<ModelGridObject> _grid;
     public IGrid<ModelGridObject> Grid => _grid;
     public int MaxCapacity { get; protected set; }
     public Timer MaintenanceTimer { get; private set; }

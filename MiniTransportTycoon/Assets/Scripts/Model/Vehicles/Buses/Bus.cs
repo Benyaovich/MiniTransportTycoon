@@ -34,6 +34,11 @@ public class Bus : Vehicle
 
         return _visitedAStation;
     }
-    
-    protected override 
+
+    protected override List<Cell> GetNeighbouringCells()
+    {
+        List<Cell> neighbours = new();
+        if(_grid.GetGridObject(CurrentLocation + _route.CurrentDirection.TurnRightClockwise().ToLocation())?.Model is Cell up) {neighbours.Add(up);}
+        return neighbours;
+    }
 }

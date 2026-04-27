@@ -16,9 +16,9 @@ public class BusTests
 
     private List<Location> _testVertices = new()
     {
-        new(0, 0),
-        new(4, 0),
-        new(0, 0)
+        new(0, 2),
+        new(4, 2),
+        new(0, 2)
     };
 
     [SetUp]
@@ -34,39 +34,39 @@ public class BusTests
 
     private void SetUpGrid()
     {
-        _grid = new Grid<ModelGridObject>(new Size(5, 3), 10, new System.Numerics.Vector3(0, 0, 0),
+        _grid = new Grid<ModelGridObject>(new Size(5, 5), 10, new System.Numerics.Vector3(0, 0, 0),
             (g, l) => new ModelGridObject(g, l));
         
         //city
         _cityService = new CityService();
         _buildingManager = new CellBuildingManager(_grid, new DynamicRoadBuildingManager(_grid), _cityService, new List<IAdvancable>());
         
-        City city1 = new SmallCity(new Location(0,2), 
+        City city1 = new SmallCity(new Location(0,0), 
             rch: new RateChangeHandler(1,1,0,1,1));
         _cityService.AddCity(city1, city1.GetGridPositionList());
         BusStop bs1 = new BusStop(new Location(0, 1), _cityService, new Size(1, 1), interval: 1);
         _buildingManager.TryBuild(bs1);
         
         
-        City city2 = new SmallCity(new Location(4,2), 
+        City city2 = new SmallCity(new Location(4,4), 
             rch: new RateChangeHandler(1,1,0,1,1));
         _cityService.AddCity(city2, city2.GetGridPositionList());
-        BusStop bs2 = new BusStop(new Location(4, 1), _cityService, new Size(1, 1), interval: 1);
+        BusStop bs2 = new BusStop(new Location(4, 3), _cityService, new Size(1, 1), interval: 1);
         _buildingManager.TryBuild(bs2);
         
         bs1.Tick(1);
         bs2.Tick(1);
         
         //Road
-        _grid.GetGridObject(0, 0).SetModel(new TwoWayLR(new Location(0, 0)));
-        _grid.GetGridObject(1, 0).SetModel(new TwoWayLR(new Location(1, 0)));
-        _grid.GetGridObject(2, 0).SetModel(new TwoWayLR(new Location(2, 0)));
-        _grid.GetGridObject(3, 0).SetModel(new TwoWayLR(new Location(3, 0)));
-        _grid.GetGridObject(4, 0).SetModel(new TwoWayLR(new Location(4, 0)));
+        _grid.GetGridObject(0, 2).SetModel(new TwoWayLR(new Location(0, 2)));
+        _grid.GetGridObject(1, 2).SetModel(new TwoWayLR(new Location(1, 2)));
+        _grid.GetGridObject(2, 2).SetModel(new TwoWayLR(new Location(2, 2)));
+        _grid.GetGridObject(3, 2).SetModel(new TwoWayLR(new Location(3, 2)));
+        _grid.GetGridObject(4, 2).SetModel(new TwoWayLR(new Location(4, 2)));
 
         // Bus stop
-        _grid.GetGridObject(1, 1).SetModel(bs1);
-        _grid.GetGridObject(4, 1).SetModel(bs2);
+        _grid.GetGridObject(0, 1).SetModel(bs1);
+        _grid.GetGridObject(4, 3).SetModel(bs2);
 
         //Factory building
 
@@ -86,16 +86,16 @@ public class BusTests
     {
         _testRoute = new Route(new List<Location>()
         {
-            new(0, 0),
-            new(4, 0),
-            new(0, 0)
+            new(0, 2),
+            new(4, 2),
+            new(0, 2)
         }, _pathHandler);
         
         _testRoute2 = new Route(new List<Location>()
         {
-            new(4, 0),
-            new(0, 0),
-            new(4, 0)
+            new(4, 2),
+            new(0, 2),
+            new(4, 2)
         }, _pathHandler);
     }
     
@@ -108,8 +108,8 @@ public class BusTests
         _testBus.SetRoute(_testRoute);
         _testBus2.SetRoute(_testRoute2);
         
-        Assert.AreEqual(new Location(0, 0), _testBus.CurrentLocation);
-        Assert.AreEqual(new Location(4, 0), _testBus2.CurrentLocation);
+        Assert.AreEqual(new Location(0, 2), _testBus.CurrentLocation);
+        Assert.AreEqual(new Location(4, 2), _testBus2.CurrentLocation);
         
         Assert.AreEqual(0, _testBus.ResourceAmount);
         Assert.AreEqual(0, _testBus2.ResourceAmount);
@@ -123,17 +123,17 @@ public class BusTests
         _testBus.MoveNext();
         _testBus2.MoveNext();
         
-        Assert.AreEqual(new Location(1, 0), _testBus.CurrentLocation);
-        Assert.AreEqual(new Location(3, 0), _testBus2.CurrentLocation);
+        Assert.AreEqual(new Location(1, 2), _testBus.CurrentLocation);
+        Assert.AreEqual(new Location(3, 2), _testBus2.CurrentLocation);
         
-        for(int i = 0; i < 4 ; i++)
+        for(int i = 0; i < 5 ; i++)
         {
             _testBus.MoveNext();
             _testBus2.MoveNext();
         }
         
-        Assert.AreEqual(new Location(4, 0), _testBus.CurrentLocation);
-        Assert.AreEqual(new Location(0, 0), _testBus2.CurrentLocation);
+        Assert.AreEqual(new Location(4, 2), _testBus.CurrentLocation);
+        Assert.AreEqual(new Location(0, 2), _testBus2.CurrentLocation);
         
         Assert.AreEqual(0, _testBus.ResourceAmount);
         Assert.AreEqual(0, _testBus2.ResourceAmount);
