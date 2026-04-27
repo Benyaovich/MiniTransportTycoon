@@ -19,6 +19,7 @@ using Model.Vehicles.SemiTrucks;
 public class PersistenceManager : MonoBehaviour
 {
     private IFileManager _fileManager;
+    public static PersistenceManager Instance { get; private set; }
     
 #if UNITY_WEBGL && !UNITY_EDITOR
 
@@ -52,7 +53,7 @@ public class PersistenceManager : MonoBehaviour
     public void OnClickOpen()
     {
         string[] paths = StandaloneFileBrowser.OpenFilePanel("Open File", "", "json", false);
-
+        
         if (paths.Length > 0)
         {
             StartCoroutine(OutputRoutineOpen(new System.Uri(paths[0]).AbsoluteUri));
@@ -97,22 +98,11 @@ public class PersistenceManager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Keyboard.current.jKey.wasPressedThisFrame)
-        {
-            OnClickOpen();
-        }
-
-        if (Keyboard.current.kKey.wasPressedThisFrame)
-        {
-            OnClickSave();
-        }
-    }
-
     private void Awake()
     {
+        Instance = this;
         _fileManager = new JsonFileManager();
+        DontDestroyOnLoad(gameObject);
     }
     
     private GameData CollectGameData()
