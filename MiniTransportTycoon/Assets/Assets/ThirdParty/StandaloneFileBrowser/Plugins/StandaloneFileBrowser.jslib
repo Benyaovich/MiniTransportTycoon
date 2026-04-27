@@ -35,14 +35,15 @@ var StandaloneFileBrowserWebGLPlugin = {
             SendMessage(gameObjectName, methodName, urls.join());
 
             document.body.removeChild(fileInput);
+
+            if (typeof Module !== 'undefined' && Module.canvas) {
+                Module.canvas.focus();
+            }
         };
 
         document.body.appendChild(fileInput);
 
-        document.onmouseup = function () {
-            fileInput.click();
-            document.onmouseup = null;
-        };
+        fileInput.click();
     },
 
     DownloadFile: function (gameObjectNamePtr, methodNamePtr, filenamePtr, byteArray, byteArraySize) {
@@ -57,17 +58,23 @@ var StandaloneFileBrowserWebGLPlugin = {
 
         var downloader = window.document.createElement('a');
         downloader.setAttribute('id', gameObjectName);
-        downloader.href = window.URL.createObjectURL(new Blob([bytes], { type: 'application/octet-stream' }));
+        downloader.href = window.URL.createObjectURL(
+            new Blob([bytes], { type: 'application/octet-stream' })
+        );
         downloader.download = filename;
+        downloader.style.display = 'none';
+
         document.body.appendChild(downloader);
 
-        document.onmouseup = function () {
-            downloader.click();
-            document.body.removeChild(downloader);
-            document.onmouseup = null;
+        downloader.click();
 
-            SendMessage(gameObjectName, methodName);
-        };
+        document.body.removeChild(downloader);
+
+        if (typeof Module !== 'undefined' && Module.canvas) {
+            Module.canvas.focus();
+        }
+
+        SendMessage(gameObjectName, methodName);
     }
 };
 
