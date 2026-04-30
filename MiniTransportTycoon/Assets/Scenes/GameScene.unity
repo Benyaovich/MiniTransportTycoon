@@ -1684,6 +1684,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameUI
   uiDocument: {fileID: 2078239777}
   vehicleOwnedListUI: {fileID: 2078239781}
+  cameraController: {fileID: 965899861}
+  minimapCamera: {fileID: 772124634}
 --- !u!114 &2078239781
 MonoBehaviour:
   m_ObjectHideFlags: 0
