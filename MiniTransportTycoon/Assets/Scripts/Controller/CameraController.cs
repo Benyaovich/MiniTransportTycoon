@@ -74,8 +74,11 @@ public class CameraController : MonoBehaviour
         cinemachineCamera.Lens.FieldOfView = newSize;
     }
 
-    
-    
-    
-    
+    public void SetPosition(Vector3 position)
+    {
+        transform.position = position;
+    }
+
+
+
 }
