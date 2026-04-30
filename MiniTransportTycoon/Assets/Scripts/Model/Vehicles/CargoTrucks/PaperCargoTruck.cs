@@ -1,3 +1,4 @@
+#nullable enable
 namespace Model.Vehicles.CargoTrucks
 {
     public class PaperCargoTruck : CargoTruck

@@ -1,3 +1,4 @@
+#nullable enable
 using Model.Interfaces;
 
 public class CargoTruck : Vehicle

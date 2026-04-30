@@ -1,3 +1,4 @@
+#nullable enable
 namespace Model.Vehicles.SemiTrucks
 {
     public class IronSemiTruck : SemiTruck

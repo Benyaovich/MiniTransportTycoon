@@ -1,3 +1,4 @@
+#nullable enable
 namespace Model.Vehicles.Buses
 {
     public class SlowBus : Bus
