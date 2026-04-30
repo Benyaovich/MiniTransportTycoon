@@ -51,7 +51,7 @@
         <ui:Label text="Game Over" style="font-size: 60px; color: rgb(255, 255, 255); -unity-font-style: bold; margin-bottom: 60px;"/>
         <ui:Button text="Main Menu" name="GameOverMainMenuBtn" class="navBarButton" style="width: 300px; margin-top: 20px; margin-bottom: 10px;"/>
     </ui:VisualElement>
-    <ui:VisualElement name="MinimapContainer" style="flex-grow: 1; position: absolute; right: 0; width: 300px; height: 300px; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px;">
+    <ui:VisualElement name="MinimapContainer" class="blocksGameInput" style="flex-grow: 1; position: absolute; right: 0; width: 300px; height: 300px; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px;">
         <ui:VisualElement name="Minimap" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Assets/RenderTextures/MinimapRenderTexture.renderTexture?fileID=8400000&amp;guid=147d0f3345f8f7f4a8c313d876a16bb2&amp;type=2#MinimapRenderTexture&quot;);"/>
     </ui:VisualElement>
 </ui:UXML>
