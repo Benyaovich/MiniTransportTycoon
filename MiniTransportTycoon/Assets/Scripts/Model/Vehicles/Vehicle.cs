@@ -65,8 +65,7 @@ public abstract class Vehicle : IAdvancable
         if (_grid.GetGridObject(_route.NextPosition) is null) return;
         
         ModelGridObject nextCell = _grid.GetGridObject(_route.NextPosition);
-        if (!(nextCell.Model is RoadCell)) return;
-        RoadCell nextRoadCell = nextCell.Model as RoadCell;
+        if (nextCell?.Model is not RoadCell nextRoadCell) return;
         if (!CanMove(nextRoadCell)) return;
 
         Location? oldLocation = CurrentLocation;
@@ -75,8 +74,8 @@ public abstract class Vehicle : IAdvancable
         
         RoadCell currentRoadCell = (_grid.GetGridObject(oldLocation).Model as RoadCell)!;
         currentRoadCell.RemoveVehicle(this);
-        nextRoadCell!.RemoveWaitingVehicle(this);
-        nextRoadCell!.AddVehicle(this);
+        nextRoadCell.RemoveWaitingVehicle(this);
+        nextRoadCell.AddVehicle(this);
         
         
         if (_grid.GetGridObject(_route.NextPosition).Model is not RoadCell nextNextRoadCell) return;
@@ -162,7 +161,7 @@ public abstract class Vehicle : IAdvancable
         MoveTimer.OnTimerElapsed += TryMove;
         
         RoadCell startingRoadCell = (_grid.GetGridObject(CurrentLocation).Model as RoadCell)!;
-        startingRoadCell!.AddVehicle(this);
+        startingRoadCell.AddVehicle(this);
         
         RoadCell nextRoadCell = (_grid.GetGridObject(_route.NextPosition).Model as RoadCell)!;
         nextRoadCell.AddWaitingVehicle(this);
@@ -184,10 +183,10 @@ public abstract class Vehicle : IAdvancable
     protected virtual List<Cell> GetNeighbouringCells()
     {
         List<Cell> neighbours = new();
-        if(_grid.GetGridObject(CurrentLocation + Direction.Up)?.Model is Cell up) {neighbours.Add(up);}
-        if(_grid.GetGridObject(CurrentLocation + Direction.Down)?.Model is Cell down) {neighbours.Add(down);}
-        if(_grid.GetGridObject(CurrentLocation + Direction.Left)?.Model is Cell left) {neighbours.Add(left);}
-        if(_grid.GetGridObject(CurrentLocation + Direction.Right)?.Model is Cell right) {neighbours.Add(right);}
+        if(_grid.GetGridObject(CurrentLocation + Direction.Up)?.Model is {} up) {neighbours.Add(up);}
+        if(_grid.GetGridObject(CurrentLocation + Direction.Down)?.Model is {} down) {neighbours.Add(down);}
+        if(_grid.GetGridObject(CurrentLocation + Direction.Left)?.Model is {} left) {neighbours.Add(left);}
+        if(_grid.GetGridObject(CurrentLocation + Direction.Right)?.Model is {} right) {neighbours.Add(right);}
         return neighbours;
     }
 
