@@ -90,9 +90,11 @@ namespace Controller.Grid
                 _cityService,
                 _advancables);
 
+            IBuildSelectionManager buildSelectionManager = BuildSelectionManager.Instance;
             _forestSpreadManager = new ForestSpreadManager(Grid, CellBuildingManager);
             _gridMouseService = new GridMouseService(_grid);
             _gridBuildService = new GridBuildService(
+                buildSelectionManager,
                 CellBuildingManager,
                 _dynamicRoadBuildingManager,
                 _forestSpreadManager,
@@ -104,8 +106,10 @@ namespace Controller.Grid
                 _forestSpreadManager,
                 _gridMouseService);
             _gridInputHandler = new GridInputHandler(
+                buildSelectionManager,
                 _gridBuildService,
-                _gridDemolishService);
+                _gridDemolishService,
+                () => RouteCreationManager.Instance.InRouteCreation);
         
             _cellVisualService = new CellVisualService(_grid, CellBuildingManager, transform,
                 BuildSelectionManager.Instance.CellLookup);

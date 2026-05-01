@@ -6,17 +6,20 @@ namespace Controller.Grid
 {
     public class GridBuildService
     {
+        private readonly IBuildSelectionManager _buildSelectionManager;
         private readonly CellBuildingManager _cellBuildingManager;
         private readonly DynamicRoadBuildingManager _dynamicRoadBuildingManager;
         private readonly ForestSpreadManager _forestSpreadManager;
         private readonly GridMouseService _gridMouseService;
 
         public GridBuildService(
+            IBuildSelectionManager buildSelectionManager,
             CellBuildingManager cellBuildingManager,
             DynamicRoadBuildingManager dynamicRoadBuildingManager,
             ForestSpreadManager forestSpreadManager,
             GridMouseService gridMouseService)
         {
+            _buildSelectionManager = buildSelectionManager;
             _cellBuildingManager = cellBuildingManager;
             _dynamicRoadBuildingManager = dynamicRoadBuildingManager;
             _forestSpreadManager = forestSpreadManager;
@@ -33,9 +36,9 @@ namespace Controller.Grid
         {
             foreach (Location location in locations)
             {
-                if (BuildSelectionManager.Instance.SelectedObjectType == null) return;
+                if (_buildSelectionManager.SelectedObjectType == null) return;
 
-                if (BuildSelectionManager.Instance.SelectedObjectType.CellType == typeof(DynamicRoadCell))
+                if (_buildSelectionManager.SelectedObjectType.CellType == typeof(DynamicRoadCell))
                 {
                     _dynamicRoadBuildingManager.TryBuildRoad(location);
                 }
@@ -44,13 +47,13 @@ namespace Controller.Grid
 
         private void BuildAt(Location location)
         {
-            if (BuildSelectionManager.Instance.SelectedObjectType!.CellType == typeof(DynamicRoadCell))
+            if (_buildSelectionManager.SelectedObjectType!.CellType == typeof(DynamicRoadCell))
             {
                 _dynamicRoadBuildingManager.TryBuildRoad(location);
                 return;
             }
 
-            Cell cell = BuildSelectionManager.Instance.SelectedObjectType.Create(location);
+            Cell cell = _buildSelectionManager.SelectedObjectType.Create(location);
 
             if (cell is Forest forest)
             {
