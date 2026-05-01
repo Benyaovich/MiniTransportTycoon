@@ -7,6 +7,7 @@ namespace UserInterface.GameUI
     public class FacilityInfoUI : MonoBehaviour
     {
         [SerializeField] private UIDocument uiDocument;
+        private Facility _facility;
         
         private VisualElement _panel;
         private Label _producedResource;
@@ -42,8 +43,17 @@ namespace UserInterface.GameUI
             _closeBtn.clicked -= Hide;
         }
 
+        private void Update()
+        {
+            if (_facility == null) return;
+            if (!_panel.IsEnabled()) return;
+
+            Refresh(_facility);
+        }
+
         public void Show(Facility facility)
         {
+            _facility = facility;
             Refresh(facility);
             _panel.Enable();
         }
@@ -71,6 +81,10 @@ namespace UserInterface.GameUI
             _efficiencyPercentage.text = $"Efficiency: {Math.Round(1.0f * facility.Rch.CurrentRate / facility.Rch.MaxRate * 100, 1)}%";
         }
 
-        public void Hide() => _panel.Disable();
+        public void Hide()
+        {
+            _facility = null;
+            _panel.Disable();
+        }
     }
 }
