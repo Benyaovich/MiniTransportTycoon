@@ -3,7 +3,7 @@ using Model.Enumerations;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrafficLamp : IAdvancable
+public class TrafficLamp : Cell, IAdvancable
 {
     private Timer _switchtimerUD;
     private Timer _switchtimerLR;
@@ -29,7 +29,7 @@ public class TrafficLamp : IAdvancable
         }
     }
 
-    public TrafficLamp()
+    public TrafficLamp(Location origin) : base(origin)
     {
         _isOn = false;
         _UDLightActive = false;
