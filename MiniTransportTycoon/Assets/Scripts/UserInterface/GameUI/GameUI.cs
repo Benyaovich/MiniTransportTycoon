@@ -241,7 +241,7 @@ public class GameUI : MonoBehaviour
     private void MoveCameraToPosition(Vector2 mousePosition)
     {
         float widthMultiplier = (minimapCamera.scaledPixelWidth / _minimap.layout.width);
-        float heightMultiplier = (minimapCamera.scaledPixelHeight / _minimap.layout.width);
+        float heightMultiplier = (minimapCamera.scaledPixelHeight / _minimap.layout.height);
 
         Vector2 convertedMousePosition = new(
             x: (_minimap.layout.width - (Screen.width - mousePosition.x)) * widthMultiplier,
