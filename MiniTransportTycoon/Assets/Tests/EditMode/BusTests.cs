@@ -34,7 +34,7 @@ public class BusTests
 
     private void SetUpGrid()
     {
-        _grid = new Grid<ModelGridObject>(new Size(5, 5), 10, new System.Numerics.Vector3(0, 0, 0),
+        _grid = new Grid<ModelGridObject>(new Size(6, 5), 15, new System.Numerics.Vector3(0, 0, 0),
             (g, l) => new ModelGridObject(g, l));
         
         //city
@@ -63,6 +63,10 @@ public class BusTests
         _grid.GetGridObject(2, 2).SetModel(new TwoWayLR(new Location(2, 2)));
         _grid.GetGridObject(3, 2).SetModel(new TwoWayLR(new Location(3, 2)));
         _grid.GetGridObject(4, 2).SetModel(new TwoWayLR(new Location(4, 2)));
+        _grid.GetGridObject(5, 2).SetModel(new TwoWayCornerUL(new Location(5, 2)));
+        
+        _grid.GetGridObject(5, 3).SetModel(new TwoWayUD(new Location(5, 3)));
+        _grid.GetGridObject(5, 4).SetModel(new TwoWayUD(new Location(5, 3)));
 
         // Bus stop
         _grid.GetGridObject(0, 1).SetModel(bs1);
@@ -99,6 +103,24 @@ public class BusTests
         }, _pathHandler);
     }
     
+    private void SetUpRoute2()
+    {
+        _testRoute = new Route(new List<Location>()
+        {
+            new(0, 2),
+            new(5, 2),
+            new(5, 4),
+            new(4, 2),
+            new(0, 2)
+        }, _pathHandler);
+        
+        _testRoute2 = new Route(new List<Location>()
+        {
+            new(4, 2),
+            new(0, 2),
+            new(4, 2)
+        }, _pathHandler);
+    }
     
     [Test]
     public void BusPicksUpAndPutsDownPassengers()
@@ -142,5 +164,11 @@ public class BusTests
         
         _testBus.MoveNext();
         _testBus2.MoveNext();
+    }
+
+    [Test]
+    public void BusStopsInfrontVoidRoadCell()
+    {
+        
     }
 }

@@ -76,11 +76,12 @@ public class RoadCell : Cell, IPurchasable, IHighlightable, IDestroyable
     {
         Lamp = lamp;
     }
-
+    
     public bool IsVehicleAllowedToPass(Vehicle tryingVehicle)
     {
         
         if(WaitingVehicles.Count > 0 && WaitingVehicles[0].Route is null) throw new NullReferenceException("The WaitingVehicles[0].Route is null");
+        if (tryingVehicle.Route is null) return false;
         
         if (!IsIntersection)
         {
@@ -95,44 +96,32 @@ public class RoadCell : Cell, IPurchasable, IHighlightable, IDestroyable
         }
         else
         {
-            if (Lamp is not null && Lamp.IsLightOn)
+            //lampas keresztezodes es athaladhato
+            if (Lamp is not null && Lamp.IsLightOn && LampedInterSectionPassable(tryingVehicle, Lamp))
             {
-                if (!Lamp.PassingDirection.Contains(tryingVehicle.Route.CurrentDirection.Opposite())) return false;
-                
-                foreach (var observedVehicle in Vehicles)
-                {
-                    if (observedVehicle == tryingVehicle) continue;
-                    if (!IsInterSectionPassable(tryingVehicle.Route!, observedVehicle.Route!))
-                    { 
-                        return false;
-                    }
-                }
+                return true;
             }
-            else
+            
+            foreach (var observedVehicle in Vehicles)
             {
-                foreach (var observedVehicle in Vehicles)
-                {
-                    if (observedVehicle == tryingVehicle) continue;
-                    if (!IsInterSectionPassable(tryingVehicle.Route!, observedVehicle.Route!))
-                    { 
-                        return false;
-                    }
-                }
-                
-                if(Vehicles.Contains(tryingVehicle)) return true;
-                
-                if (WaitingVehicles.Count > 0 && tryingVehicle != WaitingVehicles[0] && !IsInterSectionPassable(tryingVehicle.Route!, WaitingVehicles[0].Route!))
+                if (observedVehicle == tryingVehicle) continue;
+                if (!IsInterSectionPassable(tryingVehicle.Route!, observedVehicle.Route!))
                 { 
                     return false;
                 }
             }
             
+            if(Vehicles.Contains(tryingVehicle)) return true;
             
+            if (WaitingVehicles.Count > 0 && tryingVehicle != WaitingVehicles[0] && !IsInterSectionPassable(tryingVehicle.Route!, WaitingVehicles[0].Route!))
+            { 
+                return false;
+            }
         }
         
         return true;
     }
-    
+
     private bool IsInterSectionPassable(Route tryingVehicleRoute, Route otherVehiclesRoute)
     {
         //jobb kanyar
@@ -169,5 +158,21 @@ public class RoadCell : Cell, IPurchasable, IHighlightable, IDestroyable
         } //vissza fordulas - ha ures a lista
         
         return false;
+    }
+    
+    private bool LampedInterSectionPassable(Vehicle tryingVehicle, TrafficLamp currentLamp)
+    {
+        if (!currentLamp.PassingDirection.Contains(tryingVehicle.Route!.CurrentDirection.Opposite())) return false;
+                
+        foreach (var observedVehicle in Vehicles)
+        {
+            if (observedVehicle == tryingVehicle) continue;
+            if (!IsInterSectionPassable(tryingVehicle.Route!, observedVehicle.Route!))
+            { 
+                return false;
+            }
+        }
+
+        return true;
     }
 }
