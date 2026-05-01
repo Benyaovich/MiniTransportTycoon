@@ -977,6 +977,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 64c745aa6820205458b7974547482b52, type: 2}
   - {fileID: 11400000, guid: cdca146c20f4b7247876b43cb1abe721, type: 2}
   - {fileID: 11400000, guid: 224fbac54c181a84e84e20d9e1fa494c, type: 2}
+  - {fileID: 11400000, guid: 7b395833d9ad4c841bd309c272ce9384, type: 2}
+  - {fileID: 11400000, guid: 5648f048029b8e04080679c0fe13db8f, type: 2}
   roadCellObjectsTypeSos:
   - {fileID: 11400000, guid: 7f79699ec2b07844180a9f32eb6f6401, type: 2}
   - {fileID: 11400000, guid: cc34fc6c69997d241a74cf4ffd553416, type: 2}
