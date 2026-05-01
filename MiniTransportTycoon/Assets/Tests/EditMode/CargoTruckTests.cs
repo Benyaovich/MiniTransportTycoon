@@ -577,7 +577,7 @@ public class CargoTruckTests
         gridsetup2();
 
         FourWay keresztezodes = _grid.GetGridObject(1, 1).Model as FourWay;
-        TrafficLamp tl = new TrafficLamp();
+        TrafficLamp tl = new TrafficLamp(new Location(1,1));
         tl.SetTrafficLight(isUDonFirst: false);
         
         Assert.IsTrue(tl.IsLightOn);

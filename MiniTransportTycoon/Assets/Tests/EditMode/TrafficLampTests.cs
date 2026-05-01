@@ -9,7 +9,7 @@ public class TraficLampTests
     [Test]
     public void TraficLampSetLights()
     {
-        TrafficLamp trafficLamp = new TrafficLamp();
+        TrafficLamp trafficLamp = new TrafficLamp(new Location(1,1));
         
         Assert.IsFalse(trafficLamp.IsLightOn);
         
@@ -30,7 +30,7 @@ public class TraficLampTests
     [Test]
     public void TraficLampSetTrafficLightsCustomTime()
     {
-        TrafficLamp trafficLamp = new TrafficLamp();
+        TrafficLamp trafficLamp = new TrafficLamp(new Location(1,1));
         trafficLamp.SetTrafficLight(1, 3, false);
         
         Assert.IsFalse(trafficLamp.UDLightActive);
