@@ -61,6 +61,7 @@ public class GridManager : MonoBehaviour
     private CellVisualService? _cellVisualService;
     private DynamicRoadVisualService _dynamicRoadVisualService = null!;
     private ForestSpreadManager _forestSpreadManager = null!;
+    private GridInteractionHandler _gridInteractionHandler = null!;
 
     #endregion
 
@@ -86,6 +87,11 @@ public class GridManager : MonoBehaviour
             _advancables);
 
         _forestSpreadManager = new ForestSpreadManager(Grid, CellBuildingManager);
+        _gridInteractionHandler = new GridInteractionHandler(
+            _grid,
+            CellBuildingManager,
+            _dynamicRoadBuildingManager,
+            _forestSpreadManager);
         
         _cellVisualService = new CellVisualService(_grid, CellBuildingManager, transform,
             BuildSelectionManager.Instance.CellLookup);
@@ -111,14 +117,12 @@ public class GridManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GameInput.Instance.OnLeftClickPressed += GameInputOnLeftClickPressed;
-        GameInput.Instance.OnDeleteKeyPressed += GameInputOnDeleteKeyPressed;
+        _gridInteractionHandler.Bind(GameInput.Instance);
     }
 
     private void OnDisable()
     {
-        GameInput.Instance.OnDeleteKeyPressed -= GameInputOnDeleteKeyPressed;
-        GameInput.Instance.OnLeftClickPressed -= GameInputOnLeftClickPressed;
+        _gridInteractionHandler.Unbind(GameInput.Instance);
     }
 
     private void OnDestroy()
@@ -136,106 +140,19 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    
-
     private void BuildSelectionManagerOnSelectedObjectChanged(object? sender, Transform? selectedVisual)
     {
         OnSelectedObjectChanged?.Invoke(this, selectedVisual);
     }
-    
-    
-
-    private void GameInputOnLeftClickPressed(object? sender, EventArgs e)
-    {
-        if (Utils.IsPointerOverBlockingUI()) return;
-        if (RouteCreationManager.Instance.InRouteCreation) return;
-        if (CellBuildingManager is null) return;
-        if (BuildSelectionManager.Instance.SelectedObjectType is null) return;
-
-        BuildOnCurrentMousePosition();
-    }
-
-    public void BuildOnLoad(List<SModelGridObject> gridObjects)
-    {
-        Debug.Log("hahaoi epiteni kene");
-        foreach (var item in gridObjects)
-        {
-            if (item.model is SForest sForest)
-            {
-                Forest forest = new Forest(new Location(sForest.origin.x,sForest.origin.y),numOfTrees: sForest.numOfTrees);
-                CellBuildingManager!.TryBuild(forest);
-            }
-        }
-    }
-
-    public void BuildOnCurrentMousePosition()
-    {
-        UniVector3 mousePos = Utils.GetMouseWorldPosition();
-        if (mousePos == Vector3.zero) return;
-        _grid.GetXY(mousePos.SV3(), out int x, out int y);
-
-        
-        if (BuildSelectionManager.Instance!.SelectedObjectType!.CellType == typeof(DynamicRoadCell)){
-            _dynamicRoadBuildingManager.TryBuildRoad(new Location(x,y));
-            return;
-        }
-
-        Cell cell = BuildSelectionManager.Instance.SelectedObjectType.Create(new Location(x, y));
-        if (cell is Forest forest)
-        {
-            _forestSpreadManager.AddForest(forest);
-        }
-        CellBuildingManager!.TryBuild(cell);
-        
-    }
 
     public void BuildOnLocations(List<Location> locations)
     {
-        foreach (Location location in locations)
-        {
-            if (BuildSelectionManager.Instance.SelectedObjectType == null) return;
-            if (BuildSelectionManager.Instance.SelectedObjectType.CellType == typeof(DynamicRoadCell))
-            {
-                _dynamicRoadBuildingManager.TryBuildRoad(location);
-            }
-        }
-    }
-
-    private void GameInputOnDeleteKeyPressed(object? sender, EventArgs e)
-    {
-        if (Utils.IsPointerOverBlockingUI()) return;
-        if (CellBuildingManager is null) return;
-        if (RouteCreationManager.Instance.InRouteCreation) return;
-        
-        UniVector3 mousePos = Utils.GetMouseWorldPosition();
-        _grid.GetXY(mousePos.SV3(), out int x, out int y);
-
-        ModelGridObject gridObject = _grid.GetGridObject(x, y);
-        if (gridObject.Model == null) return;
-        
-        if (gridObject.Model is IDestroyable { CanDestroy: false }) return;
-
-        if (gridObject.Model is Forest forest)
-        {
-            _forestSpreadManager.RemoveForest(forest);
-        }
-        
-        if (gridObject.Model is DynamicRoadCell)
-        {
-            _dynamicRoadBuildingManager.TryDemolishRoad(new Location(x,y));
-        }
-        else
-        {
-            CellBuildingManager.TryDemolish(new Location(x, y));
-        }
-        
+        _gridInteractionHandler.BuildOnLocations(locations);
     }
 
     public UniVector3 GetMousePosSnappedToGrid()
     {
-        UniVector3 mousePos = Utils.GetMouseWorldPosition();
-        _grid.GetXY(mousePos.SV3(), out int x, out int y);
-        return _grid.GetWorldPosition(x, y).UVXZ3();
+        return _gridInteractionHandler.GetMousePosSnappedToGrid();
     }
     private void DebugGridData()
     {
