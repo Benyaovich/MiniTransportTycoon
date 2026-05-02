@@ -36,7 +36,7 @@ public class ForestCellTests
         forest.OnSpread += (sender,e) => { isSpread = true; };
         forest.Tick(1);
         forest.Tick(1);
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 2000; i++) //5%-ba csak benne lesz
         {
             forest.Tick(1);
         }

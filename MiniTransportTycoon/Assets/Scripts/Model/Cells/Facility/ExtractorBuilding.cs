@@ -3,7 +3,7 @@ using System;
 public class ExtractorBuilding : Facility
 {
     public ExtractorBuilding(Resource prodRes, int maxCap, Location loc, 
-        float prodInterval = 10, Size size = null, 
+        float prodInterval = 60, Size size = null, 
         bool destroyable = false, RateChangeHandler rch = null, int resourceAmount = 0) 
         : base(prodRes, maxCap, loc, prodInterval, size, destroyable, rch, resourceAmount)
     {

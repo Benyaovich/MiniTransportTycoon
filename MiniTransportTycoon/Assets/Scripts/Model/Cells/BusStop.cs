@@ -16,7 +16,7 @@ public class BusStop : Cell, IAdvancable, IPurchasable, IVisitableBuiling, IDepo
     [CanBeNull] private CityService _cityService;
 
     public BusStop(Location location, [CanBeNull] CityService cityService = null, [CanBeNull] Size size = null, bool destroyable = true,
-        float interval = 15, int buildPrice = 1000,
+        float interval = 15, int buildPrice = 350,
         int range = 5, int maxNumOfPeople = 50, int numOfPeople = 0) :
         base(location, size, destroyable)
     {

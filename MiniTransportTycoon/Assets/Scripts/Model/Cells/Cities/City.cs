@@ -7,7 +7,7 @@ public class City : Cell, IAdvancable
         : base(origin, size, destroyable)
     {
         NumOfPeople = numOfPeople;
-        travelDemandRCH = rch ?? new RateChangeHandler();
+        travelDemandRCH = rch ?? new RateChangeHandler(minRate: 0, maxRate: 10, rateChange: 1, currentRate: 5);
     }
 
     public int ProvidePeopleToBusStop()

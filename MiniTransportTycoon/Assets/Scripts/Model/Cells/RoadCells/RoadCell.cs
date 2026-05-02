@@ -18,7 +18,7 @@ public class RoadCell : Cell, IPurchasable, IHighlightable, IDestroyable
     
     public bool Highlighted { get; protected set; }
 
-    public int Price { get; set; } = 100;
+    public int Price { get; set; } = 25;
     public bool CanDestroy => Vehicles.Count == 0 && WaitingVehicles.Count == 0;
     public int DestroyPrice => Price / 2;
 

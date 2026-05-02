@@ -8,7 +8,7 @@ public class ProcessingBuilding : Facility, IDepositPoint
     public int RequiredResourceCapacity { get; }
 
     public ProcessingBuilding(Resource prodRes, Resource reqRes, int maxCap,
-        Location loc, float prodInterval = 10, Size size = null, 
+        Location loc, float prodInterval = 70, Size size = null, 
         bool destroyable = false, RateChangeHandler rch = null, int requiredResourceAmount = 0, int resourceAmount = 0)
         : base(prodRes, maxCap, loc, prodInterval, size, destroyable, rch, resourceAmount)
     {

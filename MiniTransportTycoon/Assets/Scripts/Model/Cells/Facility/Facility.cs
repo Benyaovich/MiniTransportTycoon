@@ -10,14 +10,14 @@ public abstract class Facility : Cell, IAdvancable, IVisitableBuiling, IResource
     private readonly Timer _productionTimer;
     public RateChangeHandler Rch { get; }
 
-    internal Facility(Resource prodRes, int maxCap, Location loc, float prodInterval = 10f, 
+    internal Facility(Resource prodRes, int maxCap, Location loc, float prodInterval = 60, 
         Size size = null, bool destroyable = false, RateChangeHandler rch = null, int resourceAmount = 0) : base(loc, size, destroyable)
     {
         ProducedResource = prodRes;
         MaxCapacity = maxCap;
         _productionTimer = new Timer(prodInterval);
         ResourceAmount = resourceAmount;
-        Rch = rch ?? new RateChangeHandler();
+        Rch = rch ?? new RateChangeHandler(maxRate: 10, rateChange: 1, currentRate: 5);
         Size = size ?? new Size(2, 2);
         
         _productionTimer.OnTimerElapsed += Produce;
