@@ -16,5 +16,5 @@ MonoBehaviour:
   displayName: Cargo Truck - Iron
   speed: 2
   price: 1000
-  maintenanceCost: 200
+  maintenanceCost: 80
   maxCarryCapacity: 50

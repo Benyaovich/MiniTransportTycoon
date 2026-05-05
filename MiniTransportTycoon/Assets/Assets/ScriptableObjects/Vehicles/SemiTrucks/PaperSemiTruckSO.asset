@@ -16,5 +16,5 @@ MonoBehaviour:
   displayName: Semi Truck - Paper
   speed: 4
   price: 500
-  maintenanceCost: 60
+  maintenanceCost: 50
   maxCarryCapacity: 25

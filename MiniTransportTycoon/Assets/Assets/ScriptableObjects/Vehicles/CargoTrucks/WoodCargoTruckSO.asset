@@ -16,5 +16,5 @@ MonoBehaviour:
   displayName: Cargo Truck - Wood
   speed: 2
   price: 1000
-  maintenanceCost: 200
+  maintenanceCost: 80
   maxCarryCapacity: 50
