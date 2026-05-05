@@ -1,10 +1,12 @@
  
+#nullable enable
 using System.Collections.Generic;
+using System.Linq;
 using Model.Interfaces;
 
 public class Bus : Vehicle
 {
-    private bool _visitedAStation = false;
+    private BusStop? _visitedStation;
     
     public Bus(Grid<ModelGridObject> grid, Resource resource = Resource.People, float speed = 1.8f, int maintenanceCost = 100, int purchaseCost = 800, int maxCarryCapacity = 40,int resourceAmount = 0, Route? route = null, float maintenanceRemainingTime = 0, float? moveRemainingTime = null) 
         : base(grid, resource, speed, maintenanceCost, purchaseCost, maxCarryCapacity,resourceAmount: resourceAmount, route: route, maintenanceRemainingTime: maintenanceRemainingTime, moveRemainingTime: moveRemainingTime) { }
@@ -21,24 +23,27 @@ public class Bus : Vehicle
     
     protected override bool HandleStationAction(List<Cell> neighbouringCells)
     {
-        if (_visitedAStation)
+        if (_visitedStation is not null && neighbouringCells.Contains(_visitedStation))
         {
-            _visitedAStation = false;
             return false;
         }
         
         bool unloaded = TryDepositToNeighbours(neighbouringCells);
         bool loaded = TryLoadFromNeighbours(neighbouringCells);
-        
-        _visitedAStation = unloaded || loaded;
 
-        return _visitedAStation;
+        if (unloaded || loaded)
+        {
+            _visitedStation = neighbouringCells[0] as BusStop;
+            return true;
+        }
+
+        return false;
     }
 
     protected override List<Cell> GetNeighbouringCells()
     {
         List<Cell> neighbours = new();
-        if(_grid.GetGridObject(CurrentLocation + _route.CurrentDirection.TurnRightClockwise().ToLocation())?.Model is Cell up) {neighbours.Add(up);}
+        if(_grid.GetGridObject(CurrentLocation + _route!.CurrentDirection.TurnRightClockwise().ToLocation())?.Model is {} up) {neighbours.Add(up);}
         return neighbours;
     }
 }

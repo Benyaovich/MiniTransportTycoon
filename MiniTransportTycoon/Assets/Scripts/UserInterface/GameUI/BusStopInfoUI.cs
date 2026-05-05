@@ -7,6 +7,7 @@ namespace UserInterface.GameUI
     public class BusStopInfoUI : MonoBehaviour
     {
         [SerializeField] private UIDocument uiDocument;
+        private BusStop _busStop;
         
         private VisualElement _panel;
         private Label _resourceType;
@@ -32,8 +33,17 @@ namespace UserInterface.GameUI
             _closeBtn.clicked -= Hide;
         }
 
+        private void Update()
+        {
+            if (_busStop == null) return;
+            if (!_panel.IsEnabled()) return;
+
+            Refresh(_busStop);
+        }
+
         public void Show(BusStop busStop)
         {
+            _busStop = busStop;
             Refresh(busStop);
             _panel.Enable();
         }
@@ -44,6 +54,10 @@ namespace UserInterface.GameUI
             _resourceAmount.text = $"Amount of people: {busStop.NumOfPeople}/{busStop.MaxNumOfPeople}";
         }
 
-        public void Hide() => _panel.Disable();
+        public void Hide()
+        {
+            _busStop = null;
+            _panel.Disable();
+        }
     }
 }

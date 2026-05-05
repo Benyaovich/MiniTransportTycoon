@@ -18,10 +18,12 @@ namespace Model
         {
             switch (resource)
             {
-                case Resource.Iron or Resource.Coal or Resource.Wood or Resource.People:
+                case Resource.Iron or Resource.Coal or Resource.Wood:
                     return 10;
+                case Resource.People:
+                    return 13;
                 case Resource.Steel or Resource.Paper:
-                    return 20;
+                    return 15;
             }
 
             return 0;

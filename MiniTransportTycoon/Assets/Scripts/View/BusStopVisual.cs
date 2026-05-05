@@ -1,4 +1,5 @@
 using Controller.Interfaces;
+using Controller;
 using UnityEngine;
 
 namespace View
@@ -10,6 +11,11 @@ namespace View
         public void Setup(BusStop busStop)
         {
             BusStop = busStop;
+        }
+
+        public void ShowSelectionUI()
+        {
+            SelectionUIManager.Instance.ShowBusStop(BusStop);
         }
     }
 }

@@ -7,6 +7,7 @@ namespace UserInterface.GameUI
     public class VehicleInfoUI : MonoBehaviour
     {
         [SerializeField] private UIDocument uiDocument;
+        private Vehicle _vehicle;
         
         private VisualElement _panel;
         private Label _resourceType;
@@ -36,8 +37,17 @@ namespace UserInterface.GameUI
             _closeBtn.clicked -= Hide;
         }
 
+        private void Update()
+        {
+            if (_vehicle == null) return;
+            if (!_panel.IsEnabled()) return;
+
+            Refresh(_vehicle);
+        }
+
         public void Show(Vehicle vehicle)
         {
+            _vehicle = vehicle;
             Refresh(vehicle);
             _panel.Enable();
         }
@@ -50,6 +60,10 @@ namespace UserInterface.GameUI
             _moveSpeed.text = $"Move speed: {vehicle.MoveSpeed}";
         }
 
-        public void Hide() => _panel.Disable();
+        public void Hide()
+        {
+            _vehicle = null;
+            _panel.Disable();
+        }
     }
 }

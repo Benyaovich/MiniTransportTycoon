@@ -47,7 +47,7 @@ public class GameInput : MonoBehaviour
         _playerInputActions.Player.Move.performed -= MoveOnPerformed;
         
         _playerInputActions.Player.LeftClick.canceled -= LeftClickOnCanceled;
-        _playerInputActions.Player.LeftClick.performed -= LeftClickOnStarted;
+        _playerInputActions.Player.LeftClick.started -= LeftClickOnStarted;
         _playerInputActions.Player.LeftClick.performed -= LeftClickOnPerformed;
         
         _playerInputActions.Player.RightClick.performed -= RightClickOnPerformed;

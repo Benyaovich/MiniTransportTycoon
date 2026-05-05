@@ -11,6 +11,8 @@ public class GameUI : MonoBehaviour
     public static GameUI Instance { get; private set; }
     [SerializeField] public UIDocument uiDocument;
     [SerializeField] private VehicleOwnedListUI vehicleOwnedListUI;
+    [SerializeField] private CameraController cameraController;
+    [SerializeField] private Camera minimapCamera;
     private Button _menuBtn;
     private VisualElement _menuPanel;
     private Button _resumeBtn;
@@ -35,10 +37,16 @@ public class GameUI : MonoBehaviour
     private Button _gameOverMainMenuBtn;
     private Button _saveGameBtn;
 
+    private VisualElement _minimap;
+
     private float _previousGameSpeedMultiplier;
+    
+    private bool _isMouseDownOnMinimap;
+    private LayerMask _floorLayer;
     private void Awake()
     {
         Instance = this;
+        _floorLayer = LayerMask.GetMask("Default");
     }
 
     private void OnEnable()
@@ -70,6 +78,7 @@ public class GameUI : MonoBehaviour
         _gameOverMainMenuBtn = root.Q<Button>("GameOverMainMenuBtn");
         _saveGameBtn = root.Q<Button>("SaveBtn");
 
+        _minimap = root.Q<VisualElement>("Minimap");
         
 
         _menuBtn.clicked += ToggleMenu;
@@ -93,6 +102,11 @@ public class GameUI : MonoBehaviour
         _gameOverMainMenuBtn.clicked += MainMenuBtnOnClicked;
         _saveGameBtn.clicked += SaveGameBtnOnclicked;
         
+        _minimap.RegisterCallback<MouseDownEvent>(HandleMinimapMouseDown);
+        _minimap.RegisterCallback<MouseUpEvent>(HandleMinimapMouseUp);
+        _minimap.RegisterCallback<MouseMoveEvent>(HandleMinimapMouseMove);
+        _minimap.RegisterCallback<MouseLeaveEvent>(HandleMinimapMouseLeave);
+        
         _vehiclePurchasePanel.Disable();
         _vehicleOwnedPanel.Disable();
         _menuPanel.Disable();
@@ -101,6 +115,8 @@ public class GameUI : MonoBehaviour
     }
 
     
+
+
     private void OnDisable()
     {
         _menuBtn.clicked -= ToggleMenu;
@@ -123,6 +139,11 @@ public class GameUI : MonoBehaviour
         PlayerState.Instance.OnGameOver -= PlayerStateOnGameOver;
         _gameOverMainMenuBtn.clicked -= MainMenuBtnOnClicked;
         _saveGameBtn.clicked -= SaveGameBtnOnclicked;
+        
+        _minimap.UnregisterCallback<MouseDownEvent>(HandleMinimapMouseDown);
+        _minimap.UnregisterCallback<MouseUpEvent>(HandleMinimapMouseUp);
+        _minimap.UnregisterCallback<MouseMoveEvent>(HandleMinimapMouseMove);
+        _minimap.UnregisterCallback<MouseLeaveEvent>(HandleMinimapMouseLeave);
     }
 
     private void ToggleOwnedVehicleListView()
@@ -200,4 +221,40 @@ public class GameUI : MonoBehaviour
     {
         PersistenceManager.Instance.OnClickSave();
     }
+
+    private void HandleMinimapMouseDown(MouseDownEvent evt)
+    {
+        _isMouseDownOnMinimap = true;
+        MoveCameraToPosition(evt.mousePosition);
+    }
+    
+
+    private void HandleMinimapMouseMove(MouseMoveEvent evt)
+    {
+        if (!_isMouseDownOnMinimap) return;
+        MoveCameraToPosition(evt.mousePosition);
+    }
+
+    private void HandleMinimapMouseUp(MouseUpEvent evt) => _isMouseDownOnMinimap = false;
+    private void HandleMinimapMouseLeave(MouseLeaveEvent evt) => _isMouseDownOnMinimap = false;
+    
+    private void MoveCameraToPosition(Vector2 mousePosition)
+    {
+        float widthMultiplier = (minimapCamera.scaledPixelWidth / _minimap.layout.width);
+        float heightMultiplier = (minimapCamera.scaledPixelHeight / _minimap.layout.height);
+
+        Vector2 convertedMousePosition = new(
+            x: (_minimap.layout.width - (Screen.width - mousePosition.x)) * widthMultiplier,
+            y: (_minimap.layout.height - mousePosition.y) * heightMultiplier
+        );
+
+        Ray cameraRay = minimapCamera.ScreenPointToRay(convertedMousePosition);
+
+        if (Physics.Raycast(cameraRay, out RaycastHit hit, maxDistance: float.MaxValue, _floorLayer))
+        {
+            cameraController.SetPosition(hit.point);
+        }
+        
+    }
+
 }

@@ -1,4 +1,5 @@
 using System;
+using Controller;
 using Controller.Interfaces;
 using Model.Enumerations;
 using UnityEngine;
@@ -47,6 +48,11 @@ namespace View
             _vehicle.OnRouteSet += VehicleOnRouteSet;
             if (vehicle.Route == null) return;
             _vehicle.SetRoute(_vehicle.Route!);
+        }
+
+        public void ShowSelectionUI()
+        {
+            SelectionUIManager.Instance.ShowVehicle(_vehicle);
         }
 
         private void OnDisable()

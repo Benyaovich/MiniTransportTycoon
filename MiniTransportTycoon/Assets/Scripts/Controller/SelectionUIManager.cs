@@ -39,20 +39,14 @@ namespace Controller
         public void ShowFor(IViewable viewable)
         {
             HideAll();
-
-            if (viewable is FacilityVisual factoryView)
-            {
-                facilityInfoUI.Show(factoryView.Facility);
-            }
-            else if (viewable is BusStopVisual busStopView)
-            {
-                busStopInfoUI.Show(busStopView.BusStop);
-            }
-            else if (viewable is VehicleVisual vehicleView)
-            {
-                vehicleInfoUI.Show(vehicleView.Vehicle);
-            }
+            viewable.ShowSelectionUI();
         }
+
+        public void ShowFacility(Facility facility) => facilityInfoUI.Show(facility);
+
+        public void ShowBusStop(BusStop busStop) => busStopInfoUI.Show(busStop);
+
+        public void ShowVehicle(Vehicle vehicle) => vehicleInfoUI.Show(vehicle);
 
         public void HideAll()
         {
