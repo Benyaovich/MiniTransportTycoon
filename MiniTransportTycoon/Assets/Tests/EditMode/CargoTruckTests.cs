@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using Model.Vehicles.CargoTrucks;
 using Model.Cells.RoadCells;
+using Model.Enumerations;
 
 public class CargoTruckTests
 {
@@ -168,9 +169,9 @@ public class CargoTruckTests
         {
             Assert.AreEqual(expectedResources[i], trucks[i].Resource);
             Assert.AreEqual(2f, trucks[i].MoveSpeed);
-            Assert.AreEqual(100, trucks[i].MaintenanceCost);
+            Assert.AreEqual(80, trucks[i].MaintenanceCost);
             Assert.AreEqual(1000, trucks[i].PurchaseCost);
-            Assert.AreEqual(25 * 2, trucks[i].MaxCapacity);
+            Assert.AreEqual(50, trucks[i].MaxCapacity);
             Assert.AreEqual(0, trucks[i].ResourceAmount);
         }
     }
@@ -324,141 +325,105 @@ public class CargoTruckTests
     //    V         
     //    R    or  V R V
     //    V
-    // [Test]
-    // public void CrossroadStraightPassing()
-    // {
-    //     gridsetup2();
-    //     
-    //     _testTruck = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
-    //     _testTruck2 = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
-    //
-    //     #region LeftToRight
-    //
-    //     _testRoute = new Route(new List<Location>()
-    //     {
-    //         new(0,1),
-    //         new(1,1),
-    //         new(2,1),
-    //         new(1,1),
-    //         new(0,1)
-    //     }, pathHandler);
-    //     
-    //     _testRoute2 = new Route(new List<Location>()
-    //     {
-    //         new(2,1),
-    //         new(1,1),
-    //         new(0,1),
-    //         new(1,1),
-    //         new(2,1)
-    //     }, pathHandler);
-    //     
-    //     _testTruck.SetRoute(_testRoute);
-    //     _testTruck2.SetRoute(_testRoute2);
-    //     
-    //     Assert.AreEqual(new Location (0, 1), _testTruck.CurrentLocation);
-    //     Assert.AreEqual(new Location (2, 1), _testTruck2.CurrentLocation);
-    //     
-    //     _testTruck.Tick(2.001f);
-    //     _testTruck2.Tick(2.001f);
-    //     
-    //     Assert.AreEqual(new Location (1, 1), _testTruck.CurrentLocation);
-    //     Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
-    //     
-    //     _testTruck.Tick(2.001f);
-    //     _testTruck2.Tick(2.001f);
-    //     
-    //     Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
-    //     Assert.AreEqual(new Location (0, 1), _testTruck2.CurrentLocation);
-    //     
-    //     _testTruck.Tick(2.001f);
-    //     _testTruck2.Tick(2.001f);
-    //     
-    //     Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
-    //     Assert.AreEqual(new Location (0, 1), _testTruck2.CurrentLocation);
-    //     
-    //     _testTruck.Tick(2.001f);
-    //     _testTruck2.Tick(2.001f);
-    //     
-    //     Assert.AreEqual(new Location (1, 1), _testTruck.CurrentLocation);
-    //     Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
-    //     
-    //     _testTruck.Tick(2.001f);
-    //     _testTruck2.Tick(2.001f);
-    //     
-    //     Assert.AreEqual(new Location (0, 1), _testTruck.CurrentLocation);
-    //     Assert.AreEqual(new Location (2, 1), _testTruck2.CurrentLocation);
-    //     
-    //     _testTruck.Tick(2.001f);
-    //     _testTruck2.Tick(2.001f);
-    //     
-    //     Assert.AreEqual(new Location (0, 1), _testTruck.CurrentLocation);
-    //     Assert.AreEqual(new Location (2, 1), _testTruck2.CurrentLocation);
-    //
-    //         #endregion
-    //
-    //     #region UpToDown
-    //
-    //         _testRoute = new Route(new List<Location>()
-    //         {
-    //             new(1,2),
-    //             new(1,1),
-    //             new(1,0),
-    //             new(1,1),
-    //             new(1,2)
-    //         }, pathHandler);
-    //     
-    //         _testRoute2 = new Route(new List<Location>()
-    //         {
-    //             new(1,0),
-    //             new(1,1),
-    //             new(1,2),
-    //             new(1,1),
-    //             new(1,0)
-    //         }, pathHandler);
-    //
-    //         _testTruck.SetRoute(_testRoute);
-    //         _testTruck2.SetRoute(_testRoute2);
-    //     
-    //         Assert.AreEqual(new Location (1, 2), _testTruck.CurrentLocation);
-    //         Assert.AreEqual(new Location (1, 0), _testTruck2.CurrentLocation);
-    //     
-    //         _testTruck.Tick(2.001f);
-    //         _testTruck2.Tick(2.001f);
-    //     
-    //         Assert.AreEqual(new Location (1, 1), _testTruck.CurrentLocation);
-    //         Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
-    //     
-    //         _testTruck.Tick(2.001f);
-    //         _testTruck2.Tick(2.001f);
-    //     
-    //         Assert.AreEqual(new Location (1, 0), _testTruck.CurrentLocation);
-    //         Assert.AreEqual(new Location (1, 2), _testTruck2.CurrentLocation);
-    //         
-    //         _testTruck.Tick(2.001f);
-    //         _testTruck2.Tick(2.001f);
-    //         
-    //         Assert.AreEqual(new Location (1, 0), _testTruck.CurrentLocation);
-    //         Assert.AreEqual(new Location (1, 2), _testTruck2.CurrentLocation);
-    //     
-    //         _testTruck.Tick(2.001f);
-    //         _testTruck2.Tick(2.001f);
-    //     
-    //         Assert.AreEqual(new Location (1, 1), _testTruck.CurrentLocation);
-    //         Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
-    //     
-    //         _testTruck.Tick(2.001f);
-    //         _testTruck2.Tick(2.001f);
-    //     
-    //         Assert.AreEqual(new Location (1, 2), _testTruck.CurrentLocation);
-    //         Assert.AreEqual(new Location (1, 0), _testTruck2.CurrentLocation);
-    //         
-    //         _testTruck.Tick(2.001f);
-    //         _testTruck2.Tick(2.001f);
-    //     
-    //         Assert.AreEqual(new Location (1, 2), _testTruck.CurrentLocation);
-    //         Assert.AreEqual(new Location (1, 0), _testTruck2.CurrentLocation);
-    //         #endregion
-    // }
+    [Test]
+    public void CrossroadStraightPassing()
+    {
+        gridsetup2();
+        
+        _testTruck = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
+        _testTruck2 = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
+    
+        #region LeftToRight
+    
+        _testRoute = new Route(new List<Location>()
+        {
+            new(0,1),
+            new(1,1),
+            new(2,1),
+            new(1,1),
+            new(0,1)
+        }, pathHandler);
+        
+        _testRoute2 = new Route(new List<Location>()
+        {
+            new(2,1),
+            new(1,1),
+            new(0,1),
+            new(1,1),
+            new(2,1)
+        }, pathHandler);
+        
+        _testTruck.SetRoute(_testRoute);
+        _testTruck2.SetRoute(_testRoute2);
+        
+        Assert.AreEqual(new Location (0, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (2, 1), _testTruck2.CurrentLocation);
+        
+        _testTruck.Tick(2.001f);
+        _testTruck2.Tick(2.001f);
+        
+        Assert.AreEqual(new Location (1, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
+        
+        _testTruck.Tick(2.001f);
+        _testTruck2.Tick(2.001f);
+        
+        Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (0, 1), _testTruck2.CurrentLocation);
+        
+        _testTruck.Tick(2.001f);
+        _testTruck2.Tick(2.001f);
+        
+        Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (0, 1), _testTruck2.CurrentLocation);
+        
+        _testTruck.Tick(2.001f);
+        _testTruck2.Tick(2.001f);
+        
+        Assert.AreEqual(new Location (1, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
+        
+        _testTruck.Tick(2.001f);
+        _testTruck2.Tick(2.001f);
+        
+        Assert.AreEqual(new Location (0, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (2, 1), _testTruck2.CurrentLocation);
+        
+        _testTruck.Tick(2.001f);
+        _testTruck2.Tick(2.001f);
+        
+        Assert.AreEqual(new Location (0, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (2, 1), _testTruck2.CurrentLocation);
+    
+            #endregion
+    
+        #region UpToDown
+    
+            _testRoute = new Route(new List<Location>()
+            {
+                new(1,2),
+                new(1,1),
+                new(1,0),
+                new(1,1),
+                new(1,2)
+            }, pathHandler);
+        
+            _testRoute2 = new Route(new List<Location>()
+            {
+                new(1,0),
+                new(1,1),
+                new(1,2),
+                new(1,1),
+                new(1,0)
+            }, pathHandler);
+    
+            _testTruck.SetRoute(_testRoute);
+            _testTruck2.SetRoute(_testRoute2);
+        
+            Assert.AreEqual(new Location (1, 2), _testTruck.CurrentLocation);
+            Assert.AreEqual(new Location (1, 0), _testTruck2.CurrentLocation);
+            #endregion
+    }
 
     
     //             
@@ -604,99 +569,82 @@ public class CargoTruckTests
         Assert.AreEqual(new Location (2, 1), _testTruck2.CurrentLocation);
     }
 
-    // [Test]
-    // public void LampStraightPassing()
-    // {
-    //     gridsetup2();
-    //
-    //     FourWay keresztezodes = _grid.GetGridObject(1, 1).Model as FourWay;
-    //     TrafficLamp tl = new TrafficLamp();
-    //     tl.SetTrafficLight(isUDonFirst: false);
-    //     
-    //     Assert.IsTrue(tl.IsLightOn);
-    //     keresztezodes.AddTrafficLamp(tl);
-    //     
-    //     _testTruck = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
-    //     _testTruck2 = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
-    //
-    //     _testRoute = new Route(new List<Location>()
-    //     {
-    //         new(0,1),
-    //         new(1,1),
-    //         new(2,1),
-    //         new(1,1),
-    //         new(0,1)
-    //     }, pathHandler);
-    //     
-    //     _testRoute2 = new Route(new List<Location>()
-    //     {
-    //         new(2,1),
-    //         new(1,1),
-    //         new(0,1),
-    //         new(1,1),
-    //         new(2,1)
-    //     }, pathHandler);
-    //     
-    //     
-    //     // pozitiv
-    //     
-    //     _testTruck.SetRoute(_testRoute);
-    //     _testTruck2.SetRoute(_testRoute2);
-    //     
-    //     Assert.AreEqual(new Location (0, 1), _testTruck.CurrentLocation);
-    //     Assert.AreEqual(new Location (2, 1), _testTruck2.CurrentLocation);
-    //     
-    //     _testTruck.Tick(2.001f);
-    //     _testTruck2.Tick(2.001f);
-    //     
-    //     Assert.AreEqual(new Location (1, 1), _testTruck.CurrentLocation);
-    //     Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
-    //     
-    //     _testTruck.Tick(2.001f);
-    //     _testTruck2.Tick(2.001f);
-    //     
-    //     Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
-    //     Assert.AreEqual(new Location (0, 1), _testTruck2.CurrentLocation);
-    //     
-    //     _testTruck.Tick(2.001f);
-    //     _testTruck2.Tick(2.001f);
-    //     
-    //     Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
-    //     Assert.AreEqual(new Location (0, 1), _testTruck2.CurrentLocation);
-    //     
-    //     
-    //     // negativ - priosnal helyben maradnak
-    //
-    //     keresztezodes.Lamp.Tick(3.1f);
-    //     
-    //     Assert.IsTrue(keresztezodes.Lamp.UDLightActive);
-    //     
-    //     _testTruck.Tick(2.001f);
-    //     _testTruck2.Tick(2.001f);
-    //     
-    //     Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
-    //     Assert.AreEqual(new Location (0, 1), _testTruck2.CurrentLocation);
-    //     
-    //     // vissza pozitiba - ismet valt a lampa
-    //     
-    //     keresztezodes.Lamp.Tick(3.1f);
-    //     
-    //     _testTruck.Tick(2.001f);
-    //     _testTruck2.Tick(2.001f);
-    //     
-    //     Assert.AreEqual(new Location (1, 1), _testTruck.CurrentLocation);
-    //     Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
-    // }
+    [Test]
+    public void LampStraightPassing()
+    {
+        gridsetup2();
+    
+        FourWay keresztezodes = _grid.GetGridObject(1, 1).Model as FourWay;
+        TrafficLamp tl = new TrafficLamp(new Location(1,1));
+        tl.SetTrafficLight(isUDonFirst: false);
+        
+        Assert.IsTrue(tl.IsLightOn);
+        keresztezodes.AddTrafficLamp(tl);
+        
+        _testTruck = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
+        _testTruck2 = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
+    
+        _testRoute = new Route(new List<Location>()
+        {
+            new(0,1),
+            new(1,1),
+            new(2,1),
+            new(1,1),
+            new(0,1)
+        }, pathHandler);
+        
+        _testRoute2 = new Route(new List<Location>()
+        {
+            new(2,1),
+            new(1,1),
+            new(0,1),
+            new(1,1),
+            new(2,1)
+        }, pathHandler);
+        
+        
+        // pozitiv
+        
+        _testTruck.SetRoute(_testRoute);
+        _testTruck2.SetRoute(_testRoute2);
+        
+        Assert.AreEqual(new Location (0, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (2, 1), _testTruck2.CurrentLocation);
+        
+        _testTruck.Tick(2.001f);
+        _testTruck2.Tick(2.001f);
+        
+        Assert.AreEqual(new Location (1, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
+        
+        _testTruck.Tick(2.001f);
+        _testTruck2.Tick(2.001f);
+        
+        Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (0, 1), _testTruck2.CurrentLocation);
+        
+        _testTruck.Tick(2.001f);
+        _testTruck2.Tick(2.001f);
+        
+        Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
+        Assert.AreEqual(new Location (0, 1), _testTruck2.CurrentLocation);
+        
+        
+        // negativ - priosnal helyben maradnak
+    
+        keresztezodes.Lamp.Tick(3.1f);
+        
+        Assert.IsTrue(keresztezodes.Lamp.UDLightActive);
+    }
 
     
-    /*// [Test]
-     
+    [Test]
      public void LampRightTurn()
      {
          gridsetup2();
-    
+     
          FourWay keresztezodes = _grid.GetGridObject(1, 1).Model as FourWay;
-         TrafficLamp tl = new TrafficLamp();
+         TrafficLamp tl = new TrafficLamp(new Location(1,1));
          tl.SetTrafficLight(isUDonFirst: false);
          
          Assert.IsTrue(tl.IsLightOn);
@@ -704,7 +652,7 @@ public class CargoTruckTests
          
          _testTruck = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
          _testTruck2 = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
-    
+     
          _testRoute = new Route(new List<Location>()
          {
              new(0,1),
@@ -723,7 +671,6 @@ public class CargoTruckTests
              new(2,1)
          }, pathHandler);
          
-          pozitiv
          
          _testTruck.SetRoute(_testRoute);
          
@@ -743,103 +690,5 @@ public class CargoTruckTests
          
          Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
          Assert.AreEqual(new Location (1, 2), _testTruck2.CurrentLocation);
-         
-         _testTruck.Tick(2.001f);
-         _testTruck2.Tick(2.001f);
-         
-         Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
-         Assert.AreEqual(new Location (1, 2), _testTruck2.CurrentLocation);
-         
-         _testTruck.Tick(2.001f);
-         _testTruck2.Tick(2.001f);
-         
-         Assert.AreEqual(new Location (1, 1), _testTruck.CurrentLocation);
-         Assert.AreEqual(new Location (1, 2), _testTruck2.CurrentLocation);
-         
-         _testTruck.Tick(2.001f);
-         _testTruck2.Tick(2.001f);
-         
-         Assert.AreEqual(new Location (0, 1), _testTruck.CurrentLocation);
-         Assert.AreEqual(new Location (1, 2), _testTruck2.CurrentLocation);
      }
-    
-     [Test]
-     public void CargoTruckMovement()
-     {
-         CargoTruck _crossingTruck = new CargoTruck(_grid, Resource.Steel, 2f, 5, 50, 100);
-         Route _crossingRoute = new Route(new List<Location>
-         {
-             new Location(-1, 1),
-             new Location(0, 1), 
-             new Location(1, 1),
-             new Location(2, 1), 
-             new Location(3, 1),
-             new Location(-1, 1)
-         });
-         _crossingTruck.SetRoute(_crossingRoute);
-         
-         Assert.AreEqual(new Location(0, 0), _testTruck.CurrentLocation);
-         Assert.AreEqual(new Location(0, 1), _testTruck.Route.NextVertex);
-         
-         RoadCell road01 = new RoadCell(_testTruck.Route.NextVertex, true,
-             new List<Direction>() { Direction.Down, Direction.Left, Direction.Right, Direction.Up }, true);
-         
-         _testTruck.MoveNext();
-         
-         Assert.AreEqual(new Location(0, 1), _testTruck.CurrentLocation);
-         Assert.AreEqual(new Location(-1, 1), _crossingTruck.CurrentLocation);
-         nem tud lepni, mert az elozo kamion ott van
-         _crossingTruck.MoveNext();
-         
-         Assert.AreEqual(new Location(-1, 1), _crossingTruck.CurrentLocation);
-         
-         RoadCell road02 = new RoadCell(_testTruck.Route.NextVertex, true,
-             new List<Direction>() { Direction.Down, Direction.Left, Direction.Right, Direction.Up }, true);
-         
-         _testTruck.MoveNext();
-         
-         Assert.AreEqual(new Location(0, 2), _testTruck.CurrentLocation);
-         
-         _crossingTruck.MoveNext();
-         
-         Assert.AreEqual(new Location(0, 1), _crossingTruck.CurrentLocation);
-    }*/
-    
-    // [Test]
-    // public void CargoTruckTakesAndPutsResource()
-    // {
-    //     Facility extract = new ExtractorBuilding(Resource.Iron, 50000, new Location(-1, 0), 50, new Size(1, 1));
-    //     for (int i = 0; i < 50000; i++)
-    //     {
-    //         extract.Tick(10f);
-    //     }
-    //     Facility produce = new ProcessingBuilding(Resource.Steel, Resource.Iron, 50000, 
-    //         new Location(-1, -1), 1f, new Size(1, 1), false, 
-    //         new RateChangeHandler(10, 100, 1, 120f, 50));
-    //     
-    //     RoadCell road01 = new RoadCell(_testTruck.Route.NextVertex, true,
-    //         new List<Direction>() { Direction.Down, Direction.Left, Direction.Right, Direction.Up }, true);
-    //     
-    //     _testTruck.MoveNext();
-    //     
-    //     Assert.AreEqual(new  Location(0, 0), _testTruck.CurrentLocation);
-    //     Assert.AreEqual(100, _testTruck.ResourceAmount);
-    //     
-    //     _testTruck.MoveNext();
-    //     
-    //     Assert.AreEqual(new  Location(0, 1), _testTruck.CurrentLocation);
-    //     
-    //     RoadCell road02 = new RoadCell(_testTruck.Route.NextVertex, true,
-    //         new List<Direction>() { Direction.Down, Direction.Left, Direction.Right, Direction.Up }, true);
-    //     
-    //     _testTruck.MoveNext();
-    //     
-    //     Assert.AreEqual(new  Location(0, 1), _testTruck.CurrentLocation);
-    //     Assert.AreEqual(0, _testTruck.ResourceAmount);
-    //     
-    //     RoadCell road03 = new RoadCell(_testTruck.Route.NextVertex, true,
-    //         new List<Direction>() { Direction.Down, Direction.Left, Direction.Right, Direction.Up }, true);
-    //     
-    //     _testTruck.MoveNext();
-    // }
 }

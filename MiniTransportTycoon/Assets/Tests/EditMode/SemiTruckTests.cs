@@ -38,7 +38,7 @@ public class SemiTruckTests
         {
             Assert.AreEqual(expectedResources[i], trucks[i].Resource);
             Assert.AreEqual(1f, trucks[i].MoveSpeed);
-            Assert.AreEqual(60, trucks[i].MaintenanceCost);
+            Assert.AreEqual(50, trucks[i].MaintenanceCost);
             Assert.AreEqual(500, trucks[i].PurchaseCost);
             Assert.AreEqual(25, trucks[i].MaxCapacity);
             Assert.AreEqual(0, trucks[i].ResourceAmount);
