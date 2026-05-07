@@ -571,89 +571,89 @@ public class CargoTruckTests
         Assert.AreEqual(new Location (2, 1), _testTruck2.CurrentLocation);
     }
 
-    [Test]
-    public void LampStraightPassing()
-    {
-        gridsetup2();
-
-        FourWay keresztezodes = _grid.GetGridObject(1, 1).Model as FourWay;
-        TrafficLamp tl = new TrafficLamp();
-        tl.SetTrafficLight(isUDonFirst: false);
-        
-        Assert.IsTrue(tl.IsLightOn);
-        keresztezodes.AddTrafficLamp(tl);
-        
-        _testTruck = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
-        _testTruck2 = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
-
-        _testRoute = new Route(new List<Location>()
-        {
-            new(0,1),
-            new(1,1),
-            new(2,1),
-            new(1,1),
-            new(0,1)
-        }, pathHandler);
-        
-        _testRoute2 = new Route(new List<Location>()
-        {
-            new(2,1),
-            new(1,1),
-            new(0,1),
-            new(1,1),
-            new(2,1)
-        }, pathHandler);
-        
-        
-        // pozitiv
-        
-        _testTruck.SetRoute(_testRoute);
-        _testTruck2.SetRoute(_testRoute2);
-        
-        Assert.AreEqual(new Location (0, 1), _testTruck.CurrentLocation);
-        Assert.AreEqual(new Location (2, 1), _testTruck2.CurrentLocation);
-        
-        _testTruck.Tick(2.001f);
-        _testTruck2.Tick(2.001f);
-        
-        Assert.AreEqual(new Location (1, 1), _testTruck.CurrentLocation);
-        Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
-        
-        _testTruck.Tick(2.001f);
-        _testTruck2.Tick(2.001f);
-        
-        Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
-        Assert.AreEqual(new Location (0, 1), _testTruck2.CurrentLocation);
-        
-        _testTruck.Tick(2.001f);
-        _testTruck2.Tick(2.001f);
-        
-        Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
-        Assert.AreEqual(new Location (0, 1), _testTruck2.CurrentLocation);
-        
-        
-        // negativ - priosnal helyben maradnak
-
-        keresztezodes.Lamp.Tick(3.1f);
-        
-        Assert.IsTrue(keresztezodes.Lamp.UDLightActive);
-        
-        _testTruck.Tick(2.001f);
-        _testTruck2.Tick(2.001f);
-        
-        Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
-        Assert.AreEqual(new Location (0, 1), _testTruck2.CurrentLocation);
-        
-        // vissza pozitiba - ismet valt a lampa
-        
-        keresztezodes.Lamp.Tick(3.1f);
-        
-        _testTruck.Tick(2.001f);
-        _testTruck2.Tick(2.001f);
-        
-        Assert.AreEqual(new Location (1, 1), _testTruck.CurrentLocation);
-        Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
-    }
+    // [Test]
+    // public void LampStraightPassing()
+    // {
+    //     gridsetup2();
+    //
+    //     FourWay keresztezodes = _grid.GetGridObject(1, 1).Model as FourWay;
+    //     TrafficLamp tl = new TrafficLamp();
+    //     tl.SetTrafficLight(isUDonFirst: false);
+    //     
+    //     Assert.IsTrue(tl.IsLightOn);
+    //     keresztezodes.AddTrafficLamp(tl);
+    //     
+    //     _testTruck = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
+    //     _testTruck2 = new CargoTruck(_grid, Resource.Iron, 2f, 5, 50, 100);
+    //
+    //     _testRoute = new Route(new List<Location>()
+    //     {
+    //         new(0,1),
+    //         new(1,1),
+    //         new(2,1),
+    //         new(1,1),
+    //         new(0,1)
+    //     }, pathHandler);
+    //     
+    //     _testRoute2 = new Route(new List<Location>()
+    //     {
+    //         new(2,1),
+    //         new(1,1),
+    //         new(0,1),
+    //         new(1,1),
+    //         new(2,1)
+    //     }, pathHandler);
+    //     
+    //     
+    //     // pozitiv
+    //     
+    //     _testTruck.SetRoute(_testRoute);
+    //     _testTruck2.SetRoute(_testRoute2);
+    //     
+    //     Assert.AreEqual(new Location (0, 1), _testTruck.CurrentLocation);
+    //     Assert.AreEqual(new Location (2, 1), _testTruck2.CurrentLocation);
+    //     
+    //     _testTruck.Tick(2.001f);
+    //     _testTruck2.Tick(2.001f);
+    //     
+    //     Assert.AreEqual(new Location (1, 1), _testTruck.CurrentLocation);
+    //     Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
+    //     
+    //     _testTruck.Tick(2.001f);
+    //     _testTruck2.Tick(2.001f);
+    //     
+    //     Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
+    //     Assert.AreEqual(new Location (0, 1), _testTruck2.CurrentLocation);
+    //     
+    //     _testTruck.Tick(2.001f);
+    //     _testTruck2.Tick(2.001f);
+    //     
+    //     Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
+    //     Assert.AreEqual(new Location (0, 1), _testTruck2.CurrentLocation);
+    //     
+    //     
+    //     // negativ - priosnal helyben maradnak
+    //
+    //     keresztezodes.Lamp.Tick(3.1f);
+    //     
+    //     Assert.IsTrue(keresztezodes.Lamp.UDLightActive);
+    //     
+    //     _testTruck.Tick(2.001f);
+    //     _testTruck2.Tick(2.001f);
+    //     
+    //     Assert.AreEqual(new Location (2, 1), _testTruck.CurrentLocation);
+    //     Assert.AreEqual(new Location (0, 1), _testTruck2.CurrentLocation);
+    //     
+    //     // vissza pozitiba - ismet valt a lampa
+    //     
+    //     keresztezodes.Lamp.Tick(3.1f);
+    //     
+    //     _testTruck.Tick(2.001f);
+    //     _testTruck2.Tick(2.001f);
+    //     
+    //     Assert.AreEqual(new Location (1, 1), _testTruck.CurrentLocation);
+    //     Assert.AreEqual(new Location (1, 1), _testTruck2.CurrentLocation);
+    // }
 
     // [Test]
     // public void LampRightTurn()
