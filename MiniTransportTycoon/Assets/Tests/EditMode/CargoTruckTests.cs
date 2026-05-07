@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using Model.Vehicles.CargoTrucks;
 using Model.Cells.RoadCells;
 
 public class CargoTruckTests
@@ -140,6 +141,38 @@ public class CargoTruckTests
         Assert.AreEqual(_testTruck.MaintenanceCost, 5);
         Assert.AreEqual(_testTruck.PurchaseCost, 50);
         Assert.AreEqual(_testTruck.ResourceAmount, 0);
+    }
+
+    [Test]
+    public void SpecializedCargoTruckConstructorsSetExpectedDefaults()
+    {
+        CargoTruck[] trucks =
+        {
+            new CoalCargoTruck(_grid),
+            new IronCargoTruck(_grid),
+            new PaperCargoTruck(_grid),
+            new SteelCargoTruck(_grid),
+            new WoodCargoTruck(_grid)
+        };
+
+        Resource[] expectedResources =
+        {
+            Resource.Coal,
+            Resource.Iron,
+            Resource.Paper,
+            Resource.Steel,
+            Resource.Wood
+        };
+
+        for (int i = 0; i < trucks.Length; i++)
+        {
+            Assert.AreEqual(expectedResources[i], trucks[i].Resource);
+            Assert.AreEqual(2f, trucks[i].MoveSpeed);
+            Assert.AreEqual(100, trucks[i].MaintenanceCost);
+            Assert.AreEqual(1000, trucks[i].PurchaseCost);
+            Assert.AreEqual(25 * 2, trucks[i].MaxCapacity);
+            Assert.AreEqual(0, trucks[i].ResourceAmount);
+        }
     }
 
 
