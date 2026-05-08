@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using UnityEngine.InputSystem;
 
 namespace Controller.Grid
 {
@@ -9,6 +10,7 @@ namespace Controller.Grid
         private readonly GridBuildService _gridBuildService;
         private readonly GridDemolishService _gridDemolishService;
         private readonly Func<bool> _isRouteCreationActive;
+        private Location? _lastDemolishedLocation;
 
         public GridInputHandler(
             IBuildSelectionManager buildSelectionManager,
@@ -25,13 +27,33 @@ namespace Controller.Grid
         public void Bind(GameInput gameInput)
         {
             gameInput.OnLeftClickPressed += GameInputOnLeftClickPressed;
-            gameInput.OnDeleteKeyPressed += GameInputOnDeleteKeyPressed;
         }
 
         public void Unbind(GameInput gameInput)
         {
-            gameInput.OnDeleteKeyPressed -= GameInputOnDeleteKeyPressed;
             gameInput.OnLeftClickPressed -= GameInputOnLeftClickPressed;
+        }
+
+        public void HandleHeldInput()
+        {
+            Keyboard? keyboard = Keyboard.current;
+            if (keyboard == null)
+            {
+                _lastDemolishedLocation = null;
+                return;
+            }
+
+            if (!keyboard.deleteKey.isPressed)
+            {
+                _lastDemolishedLocation = null;
+                return;
+            }
+
+            if (!GridManager.Instance!.TryGetMouseGridLocation(out Location location)) return;
+            if (_lastDemolishedLocation == location) return;
+
+            GameInputOnDeleteKeyPressed(this, EventArgs.Empty);
+            _lastDemolishedLocation = location;
         }
 
         private void GameInputOnLeftClickPressed(object? sender, EventArgs e)

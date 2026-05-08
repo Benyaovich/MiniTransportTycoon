@@ -153,6 +153,8 @@ namespace Controller.Grid
 
         private void Update()
         {
+            _gridInputHandler.HandleHeldInput();
+
             foreach (IAdvancable advancable in _advancables.ToList())
             {
                 advancable.Tick(GameManager.Instance.DeltaTime);
