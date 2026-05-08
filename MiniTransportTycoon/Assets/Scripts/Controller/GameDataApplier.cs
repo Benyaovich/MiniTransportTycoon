@@ -3,6 +3,7 @@ using Controller.Grid;
 using Controller.Vehicles;
 using JetBrains.Annotations;
 using Model;
+using Model.Cells.Cities.Houses;
 using Model.Cells.Facility;
 using Model.Vehicles.Buses;
 using Model.Vehicles.CargoTrucks;
@@ -27,7 +28,6 @@ public class GameDataApplier
                 Build(new SmallCity(
                     origin: ToLocation(city.origin),
                     size: ToSize(city.size),
-                    destroyable: city.destroyable,
                     numOfPeople: city.numOfPeople
                 ));
             }
@@ -44,7 +44,6 @@ public class GameDataApplier
                     Build(new Forest(
                         origin: ToLocation(forest.origin),
                         size: ToSize(forest.size),
-                        destroyable: forest.destroyable,
                         numOfTrees: forest.numOfTrees
                     ));
                     break;
@@ -53,7 +52,6 @@ public class GameDataApplier
                     Build(new BusStop(
                         location: ToLocation(busStop.origin),
                         size: ToSize(busStop.size),
-                        destroyable: busStop.destroyable,
                         numOfPeople: busStop.numOfPeople
                     ));
                     break;
@@ -62,7 +60,6 @@ public class GameDataApplier
                     Build(new ExtractorBuildingIron(
                         loc: ToLocation(iron.origin),
                         size: ToSize(iron.size),
-                        destroyable: iron.destroyable,
                         resourceAmount: iron.resourceAmount
                     ));
                     break;
@@ -71,7 +68,6 @@ public class GameDataApplier
                     Build(new ExtractorBuildingWood(
                         loc: ToLocation(wood.origin),
                         size: ToSize(wood.size),
-                        destroyable: wood.destroyable,
                         resourceAmount: wood.resourceAmount
                     ));
                     break;
@@ -80,7 +76,6 @@ public class GameDataApplier
                     Build(new ExtractorBuildingCoal(
                         loc: ToLocation(coal.origin),
                         size: ToSize(coal.size),
-                        destroyable: coal.destroyable,
                         resourceAmount: coal.resourceAmount
                     ));
                     break;
@@ -89,7 +84,6 @@ public class GameDataApplier
                     Build(new ProcessingBuildingPaper(
                         loc: ToLocation(paper.origin),
                         size: ToSize(paper.size),
-                        destroyable: paper.destroyable,
                         requiredResourceAmount: paper.requiredResourceAmount,
                         resourceAmount: paper.resourceAmount
                     ));
@@ -99,15 +93,29 @@ public class GameDataApplier
                     Build(new ProcessingBuildingSteel(
                         loc: ToLocation(steel.origin),
                         size: ToSize(steel.size),
-                        destroyable: steel.destroyable,
                         requiredResourceAmount: steel.requiredResourceAmount,
                         resourceAmount: steel.resourceAmount
                     ));
                     break;
+                
+                case SResidentialBuilding1 building:
+                    Build(new ResidentialBuilding1(
+                        origin: ToLocation(building.origin),
+                        size: ToSize(building.size)
+                    ));              
+                    break;
+                
+                case SResidentialBuilding2 building:
+                    Build(new ResidentialBuilding2(
+                        origin: ToLocation(building.origin),
+                        size: ToSize(building.size)
+                    ));              
+                    break;
 
                 case SRoadCell road:
-                    GridManager.Instance.DynamicRoadBuildingManager
-                        .TryBuildRoad(ToLocation(road.origin));
+                    if (GridManager.Instance != null)
+                        GridManager.Instance.DynamicRoadBuildingManager
+                            .TryBuildRoad(ToLocation(road.origin));
                     break;
             }
         }
@@ -311,6 +319,9 @@ public class GameDataApplier
 
     private static void Build(Cell building)
     {
-        GridManager.Instance.CellBuildingManager.TryBuild(building);
+        if(GridManager.Instance && GridManager.Instance.CellBuildingManager != null)
+        {
+            GridManager.Instance.CellBuildingManager.TryBuild(building);
+        }
     }
 }

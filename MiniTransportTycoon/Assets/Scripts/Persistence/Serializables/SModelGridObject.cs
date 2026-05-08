@@ -1,4 +1,5 @@
 using System;
+using Model.Cells.Cities.Houses;
 using Model.Cells.Facility;
 using UnityEngine;
 
@@ -26,6 +27,10 @@ public class SModelGridObject
             model = new SProcessingBuildingPaper(processingBuildingPaper);
         if (modelGridObject.Model is RoadCell roadCell)
             model = new SRoadCell(roadCell);
+        if (modelGridObject.Model is ResidentialBuilding1 residentialBuilding1)
+            model = new SResidentialBuilding1(residentialBuilding1);
+        if (modelGridObject.Model is ResidentialBuilding2 residentialBuilding2)
+            model = new SResidentialBuilding2(residentialBuilding2);
         modelType = modelGridObject.Model!.GetType().ToString();
     }
 
