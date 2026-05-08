@@ -1561,6 +1561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UserInterface.GameUI.VehicleInfoUI
   uiDocument: {fileID: 1900220783}
+  vehicleManager: {fileID: 1135533725}
 --- !u!114 &1900220783
 MonoBehaviour:
   m_ObjectHideFlags: 0
