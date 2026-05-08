@@ -1,6 +1,7 @@
 public class City : Cell, IAdvancable
 {
     public int NumOfPeople { get; private set; }
+    public RateChangeHandler Rch => travelDemandRCH;
     private RateChangeHandler travelDemandRCH;
     
     public City(Location origin, Size size = null, bool destroyable = true,RateChangeHandler rch = null,int numOfPeople = 100)
