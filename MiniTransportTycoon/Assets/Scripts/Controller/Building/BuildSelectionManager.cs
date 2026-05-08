@@ -32,12 +32,20 @@ public class BuildSelectionManager : MonoBehaviour, IBuildSelectionManager
     {
         if (Keyboard.current.digit1Key.wasPressedThisFrame)
         {
-            CycleSelection(buildingCellObjectTypeSos!);
-            InvokeBuildingSelected();
+            SelectBusStopObjectTypeSo();
         }
         else if (Keyboard.current.digit2Key.wasPressedThisFrame)
         {
             SelectDynamicRoadObjectTypeSo();
+        }
+        else if (Keyboard.current.digit3Key.wasPressedThisFrame)
+        {
+            ClearSelectedObjectType();
+        }
+        else if (Keyboard.current.digit4Key.wasPressedThisFrame)
+        {
+            CycleSelection(buildingCellObjectTypeSos!);
+            InvokeBuildingSelected();
         }
     }
     
