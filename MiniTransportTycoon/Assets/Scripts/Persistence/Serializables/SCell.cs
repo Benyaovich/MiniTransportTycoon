@@ -8,11 +8,13 @@ public class SCell
     
     public SLocation origin;
     public SSize size;
+    public int rotationDegrees;
         
     public SCell(Cell cell)
     {
         origin = new SLocation(cell.Origin);
         size = new SSize(cell.Size);
+        rotationDegrees = cell.RotationDegrees;
     }
 
     public SCell()

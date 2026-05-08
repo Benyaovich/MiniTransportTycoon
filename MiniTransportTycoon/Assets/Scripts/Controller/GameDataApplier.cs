@@ -25,11 +25,13 @@ public class GameDataApplier
         {
             if (item is SSmallCity city)
             {
-                Build(new SmallCity(
+                SmallCity loadedCity = new SmallCity(
                     origin: ToLocation(city.origin),
                     size: ToSize(city.size),
                     numOfPeople: city.numOfPeople
-                ));
+                );
+                loadedCity.SetRotation(city.rotationDegrees);
+                Build(loadedCity);
             }
         }
     }
@@ -41,75 +43,93 @@ public class GameDataApplier
             switch (item.model)
             {
                 case SForest forest:
-                    Build(new Forest(
+                    Forest loadedForest = new Forest(
                         origin: ToLocation(forest.origin),
                         size: ToSize(forest.size),
                         numOfTrees: forest.numOfTrees
-                    ));
+                    );
+                    loadedForest.SetRotation(forest.rotationDegrees);
+                    Build(loadedForest);
                     break;
 
                 case SBusStop busStop:
-                    Build(new BusStop(
+                    BusStop loadedBusStop = new BusStop(
                         location: ToLocation(busStop.origin),
                         size: ToSize(busStop.size),
                         numOfPeople: busStop.numOfPeople
-                    ));
+                    );
+                    loadedBusStop.SetRotation(busStop.rotationDegrees);
+                    Build(loadedBusStop);
                     break;
 
                 case SExtractorBuildingIron iron:
-                    Build(new ExtractorBuildingIron(
+                    ExtractorBuildingIron loadedIron = new ExtractorBuildingIron(
                         loc: ToLocation(iron.origin),
                         size: ToSize(iron.size),
                         resourceAmount: iron.resourceAmount
-                    ));
+                    );
+                    loadedIron.SetRotation(iron.rotationDegrees);
+                    Build(loadedIron);
                     break;
 
                 case SExtractorBuildingWood wood:
-                    Build(new ExtractorBuildingWood(
+                    ExtractorBuildingWood loadedWood = new ExtractorBuildingWood(
                         loc: ToLocation(wood.origin),
                         size: ToSize(wood.size),
                         resourceAmount: wood.resourceAmount
-                    ));
+                    );
+                    loadedWood.SetRotation(wood.rotationDegrees);
+                    Build(loadedWood);
                     break;
 
                 case SExtractorBuildingCoal coal:
-                    Build(new ExtractorBuildingCoal(
+                    ExtractorBuildingCoal loadedCoal = new ExtractorBuildingCoal(
                         loc: ToLocation(coal.origin),
                         size: ToSize(coal.size),
                         resourceAmount: coal.resourceAmount
-                    ));
+                    );
+                    loadedCoal.SetRotation(coal.rotationDegrees);
+                    Build(loadedCoal);
                     break;
 
                 case SProcessingBuildingPaper paper:
-                    Build(new ProcessingBuildingPaper(
+                    ProcessingBuildingPaper loadedPaper = new ProcessingBuildingPaper(
                         loc: ToLocation(paper.origin),
                         size: ToSize(paper.size),
                         requiredResourceAmount: paper.requiredResourceAmount,
                         resourceAmount: paper.resourceAmount
-                    ));
+                    );
+                    loadedPaper.SetRotation(paper.rotationDegrees);
+                    Build(loadedPaper);
                     break;
 
                 case SProcessingBuildingSteel steel:
-                    Build(new ProcessingBuildingSteel(
+                    ProcessingBuildingSteel loadedSteel = new ProcessingBuildingSteel(
                         loc: ToLocation(steel.origin),
                         size: ToSize(steel.size),
                         requiredResourceAmount: steel.requiredResourceAmount,
                         resourceAmount: steel.resourceAmount
-                    ));
+                    );
+                    loadedSteel.SetRotation(steel.rotationDegrees);
+                    Build(loadedSteel);
                     break;
                 
                 case SResidentialBuilding1 building:
-                    Build(new ResidentialBuilding1(
+                    ResidentialBuilding1 loadedResidential1 = new ResidentialBuilding1(
                         origin: ToLocation(building.origin),
                         size: ToSize(building.size)
-                    ));              
+                    );
+                    loadedResidential1.SetRotation(building.rotationDegrees);
+                    Build(loadedResidential1);
                     break;
                 
                 case SResidentialBuilding2 building:
-                    Build(new ResidentialBuilding2(
+                    ResidentialBuilding2 loadedResidential2 = new ResidentialBuilding2(
                         origin: ToLocation(building.origin),
                         size: ToSize(building.size)
-                    ));              
+                    );
+                    loadedResidential2.SetRotation(building.rotationDegrees);
+                    Build(loadedResidential2);
                     break;
 
                 case SRoadCell road:
