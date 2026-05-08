@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using Model;
 using Scene;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using UserInterface;
 
@@ -148,6 +149,14 @@ public class GameUI : MonoBehaviour
         _minimap.UnregisterCallback<MouseUpEvent>(HandleMinimapMouseUp);
         _minimap.UnregisterCallback<MouseMoveEvent>(HandleMinimapMouseMove);
         _minimap.UnregisterCallback<MouseLeaveEvent>(HandleMinimapMouseLeave);
+    }
+
+    private void Update()
+    {
+        if(Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            ToggleMenu();
+        }
     }
 
     private void ToggleOwnedVehicleListView()
