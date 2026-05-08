@@ -1,6 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI%20Toolkit/USS/GameUIVisualTreeStyle.uss?fileID=7433441132597879392&amp;guid=d594cda548d638443a4cd751fc3e73b9&amp;type=3"/>
-    <Style src="project://database/Assets/UI%20Toolkit/USS/UniversalStyle.uss?fileID=7433441132597879392&amp;guid=1858bf694d9c92140ab802dc915d4236&amp;type=3"/>
+    <Style src="project://database/Assets/UI%20Toolkit/USS/GameUIVisualTreeStyle.uss?fileID=7433441132597879392&amp;guid=d594cda548d638443a4cd751fc3e73b9&amp;type=3#GameUIVisualTreeStyle"/>
+    <Style src="project://database/Assets/UI%20Toolkit/USS/UniversalStyle.uss?fileID=7433441132597879392&amp;guid=1858bf694d9c92140ab802dc915d4236&amp;type=3#UniversalStyle"/>
     <ui:VisualElement name="NavBar" style="flex-grow: 0; flex-direction: row; min-height: auto; width: auto; align-items: center; align-content: center; margin-top: 0; margin-bottom: 10px; flex-shrink: 1; background-color: rgba(140, 140, 140, 0.31); padding-top: 10px; padding-bottom: 10px; max-width: 1401px; margin-left: 0; padding-left: 20px;">
         <ui:VisualElement name="VisualElement" class="blocksGameInput" style="flex-grow: 0; flex-direction: row; margin-right: 15px; align-self: flex-start;">
             <ui:Button text="Menu" name="MenuBtn" class="navBarButton"/>
@@ -10,19 +10,28 @@
             <ui:Button text="Owned Vehicles" name="OwnedVehiclesBtn" class="navBarButton"/>
         </ui:VisualElement>
         <ui:VisualElement class="blocksGameInput" style="flex-grow: 0; flex-direction: row; margin-left: 15px; align-self: flex-start; margin-right: 15px;">
-            <ui:Button text="Roads" name="SelectRoadBtn" class="navBarButton" style="margin-bottom: 2px; margin-top: 2px; color: rgb(0, 0, 0);"/>
             <ui:Button text="Bus Station" name="SelectBusStopBtn" parse-escape-sequences="false" class="navBarButton" style="color: rgb(0, 0, 0);"/>
+            <ui:Button text="Roads" name="SelectRoadBtn" class="navBarButton" style="margin-bottom: 2px; margin-top: 2px; color: rgb(0, 0, 0);"/>
             <ui:Button text="Clear Selection" name="ClearSelectionBtn" parse-escape-sequences="false" class="navBarButton" style="color: rgb(0, 0, 0);"/>
         </ui:VisualElement>
         <ui:VisualElement name="VisualElement" class="blocksGameInput" style="flex-grow: 0; flex-direction: row; margin-left: 15px; align-self: center; margin-right: 15px; align-content: auto; background-color: rgba(229, 229, 229, 0.84); color: rgb(0, 0, 0); padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; right: auto; left: 0; position: relative; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px;">
             <ui:Label text="Money: 10000$" name="Money" style="font-size: 24px;"/>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="ControlsHelpOverlay" class="ControlsHelpOverlay">
-        <ui:Label text="Move: WASD" class="ControlsHelpOverlayLabel"/>
-        <ui:Label text="Rotate camera: Right click drag" class="ControlsHelpOverlayLabel"/>
-        <ui:Label text="Select buildings: 1,2,3" class="ControlsHelpOverlayLabel"/>
-        <ui:Label text="Delete building: DEL" class="ControlsHelpOverlayLabel"/>
+    <ui:VisualElement name="ControlsHelpOverlay" class="ControlsHelpOverlay" style="padding-left: 20px; flex-direction: row; width: 493px; height: auto; flex-wrap: wrap;">
+        <ui:Label text="Move: WASD" class="ControlsHelpOverlayLabel" style="font-size: 20px;"/>
+        <ui:Label text="|" name="Separator" class="ControlsHelpOverlayLabel" style="font-size: 20px;"/>
+        <ui:Label text="Rotate camera: Right click drag" class="ControlsHelpOverlayLabel" style="font-size: 20px;"/>
+        <ui:Label text="|" name="Separator" class="ControlsHelpOverlayLabel" style="font-size: 20px;"/>
+        <ui:Label text="Select bus station: 1" parse-escape-sequences="false" class="ControlsHelpOverlayLabel" style="font-size: 20px;"/>
+        <ui:Label text="|" name="Separator" class="ControlsHelpOverlayLabel" style="font-size: 20px;"/>
+        <ui:Label text="Select road: 2" parse-escape-sequences="false" class="ControlsHelpOverlayLabel" style="font-size: 20px;"/>
+        <ui:Label text="|" name="Separator" class="ControlsHelpOverlayLabel" style="font-size: 20px;"/>
+        <ui:Label text="Clear selection: 3" parse-escape-sequences="false" class="ControlsHelpOverlayLabel" style="font-size: 20px;"/>
+        <ui:Label text="|" name="Separator" class="ControlsHelpOverlayLabel" style="font-size: 20px;"/>
+        <ui:Label text="Delete: DEL" class="ControlsHelpOverlayLabel" style="font-size: 20px;"/>
+        <ui:Label text="|" name="Separator" class="ControlsHelpOverlayLabel" style="font-size: 20px;"/>
+        <ui:Label text="Menu: ESC" class="ControlsHelpOverlayLabel" style="font-size: 20px;"/>
     </ui:VisualElement>
     <ui:VisualElement name="VehiclePurchasePanel" class="blocksGameInput" style="flex-grow: 1; position: absolute; right: auto; bottom: 0; top: 175px; min-height: 200px; max-height: 600px; left: 450px;">
         <ui:ScrollView horizontal-scroller-visibility="Hidden" name="VehiclePurchaseList" style="position: absolute; right: 0; top: 0; max-height: 600px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-color: rgb(106, 106, 106); padding-left: 3px; padding-top: 3px; padding-right: 3px; padding-bottom: 3px;"/>
