@@ -44,6 +44,12 @@ public class CellBuildingManager : BuildingManagerBase
         return true;
     }
 
+    public bool CanBuild(Cell cell)
+    {
+        List<Location> gridPositionList = cell.GetGridPositionList();
+        return cell is City || CheckIfCanBuild(gridPositionList);
+    }
+
     public void TryDemolish(Location location)
     {
         ModelGridObject go = Grid.GetGridObject(location.X, location.Y);
