@@ -1465,6 +1465,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildingPreviewManager
   previewLayerIndex: 6
+  validPreviewColor: {r: 0.19999999, g: 0.83536565, b: 1, a: 0.09803922}
+  invalidPreviewColor: {r: 1, g: 0.2, b: 0.2, a: 0.09803922}
 --- !u!4 &1608755515
 Transform:
   m_ObjectHideFlags: 0

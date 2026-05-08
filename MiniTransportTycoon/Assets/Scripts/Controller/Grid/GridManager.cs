@@ -169,6 +169,16 @@ namespace Controller.Grid
             _gridBuildService.BuildOnLocations(locations);
         }
 
+        public bool TryGetMouseGridLocation(out Location location)
+        {
+            return _gridMouseService.TryGetMouseGridLocation(out location);
+        }
+
+        public bool CanBuildSelectedObjectAt(Location location)
+        {
+            return _gridBuildService.CanBuildAt(location);
+        }
+
         public UniVector3 GetMousePosSnappedToGrid()
         {
             return _gridMouseService.GetMousePosSnappedToGrid();
