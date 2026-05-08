@@ -7,7 +7,7 @@ public class ResidentialBuilding2CellObjectTypeSO : CellObjectTypeSO
 {
     public override Cell Create(Location location)
     {
-        return new ResidentialBuilding2(location);
+        return new ResidentialBuilding2(location, destroyable: true);
     }
 
     public override Type CellType => typeof(ResidentialBuilding2);
