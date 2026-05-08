@@ -140,7 +140,7 @@ public class CargoTruckTests
         Assert.AreEqual(_testTruck.Resource, Resource.Iron);
         Assert.AreEqual(_testTruck.MoveSpeed, 2f);
         Assert.AreEqual(_testTruck.MaintenanceCost, 5);
-        Assert.AreEqual(_testTruck.PurchaseCost, 50);
+        Assert.AreEqual(_testTruck.Price, 50);
         Assert.AreEqual(_testTruck.ResourceAmount, 0);
     }
 
@@ -170,7 +170,7 @@ public class CargoTruckTests
             Assert.AreEqual(expectedResources[i], trucks[i].Resource);
             Assert.AreEqual(2f, trucks[i].MoveSpeed);
             Assert.AreEqual(80, trucks[i].MaintenanceCost);
-            Assert.AreEqual(1000, trucks[i].PurchaseCost);
+            Assert.AreEqual(1000, trucks[i].Price);
             Assert.AreEqual(50, trucks[i].MaxCapacity);
             Assert.AreEqual(0, trucks[i].ResourceAmount);
         }
