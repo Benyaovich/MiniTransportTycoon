@@ -32,7 +32,6 @@ namespace Controller.Grid
 
             ModelGridObject gridObject = _grid.GetGridObject(location.X, location.Y);
             if (gridObject.Model == null) return;
-            if (gridObject.Model is IDestroyable { CanDestroy: false }) return;
 
             if (gridObject.Model is Forest forest)
             {

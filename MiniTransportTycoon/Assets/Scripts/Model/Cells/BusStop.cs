@@ -3,11 +3,12 @@ using System;
 using JetBrains.Annotations;
 using Model.Interfaces;
 
-public class BusStop : Cell, IAdvancable, IPurchasable, IVisitableBuiling, IDepositPoint, IResourceProvider
+public class BusStop : Cell, IAdvancable, IPurchasable, IVisitableBuiling, IDepositPoint, IResourceProvider, IDestroyable
 {
     public int NumOfPeople { get; private set; }
     [CanBeNull] public City City { get; private set; }
     public int Price { get; set; }
+    public int DestroyPrice => Price / 2;
     public Resource ProducedResource => Resource.People;
     public Resource RequiredResource => Resource.People;
     private readonly Timer _timer;
