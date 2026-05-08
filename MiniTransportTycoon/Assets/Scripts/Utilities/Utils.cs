@@ -10,6 +10,13 @@ public static class Utils
     
     public static UniVector3 UVXZ3(this SysVector3 v3) => new UniVector3(v3.X,0 , v3.Y);
     public static SysVector3 SV3( this UniVector3 v3) => new SysVector3(v3.x,v3.z,v3.y);
+    public static UniVector3 GetRotatedPlacementPosition(UniVector3 originWorldPosition, Size size, float cellSize, int rotationDegrees)
+    {
+        UniVector3 footprintCenterOffset = new UniVector3(size.Width * cellSize, 0f, size.Height * cellSize) * 0.5f;
+        Quaternion rotation = Quaternion.Euler(0f, rotationDegrees, 0f);
+        return originWorldPosition + footprintCenterOffset - rotation * footprintCenterOffset;
+    }
+
     public static TextMesh CreateWorldText(string text, Transform parent = null, Vector3 localPosition = default(Vector3), int fontSize = 40, Color? color = null, TextAnchor textAnchor = TextAnchor.UpperLeft, TextAlignment textAlignment = TextAlignment.Left, int sortingOrder = sortingOrderDefault) {
         if (color == null) color = Color.white;
         return CreateWorldText(parent, text, localPosition, fontSize, (Color)color, textAnchor, textAlignment, sortingOrder);

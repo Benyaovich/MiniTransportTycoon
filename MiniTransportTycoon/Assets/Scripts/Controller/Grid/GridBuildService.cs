@@ -54,6 +54,7 @@ namespace Controller.Grid
             }
 
             Cell cell = _buildSelectionManager.SelectedObjectType.Create(location);
+            cell.SetRotation(_buildSelectionManager.CurrentRotationDegrees);
 
             if (cell is Forest forest)
             {
