@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Controller.Grid;
+using Model;
 using Model.Interfaces;
 using Model.Vehicles;
 using ScriptableObjects.Vehicles;
@@ -47,6 +48,7 @@ namespace Controller.Vehicles
         {
             Vehicle vehicle = vehicleSo.Create(GridManager.Instance!.Grid);
             _vehicleStorage.AddVehicle(vehicle);
+            PlayerState.Instance.SpendMoney(vehicle.Price);
             OnVehicleBought?.Invoke(this, EventArgs.Empty);
         }
 
