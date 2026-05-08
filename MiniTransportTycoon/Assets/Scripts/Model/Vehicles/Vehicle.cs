@@ -104,7 +104,7 @@ public abstract class Vehicle : IAdvancable
     protected bool TryDepositToNeighbours(List<Cell> neighbouringCells)
     {
         if (_route == null) return false;
-
+        
         foreach (var neighbouringCell in neighbouringCells)
         {
             if (neighbouringCell is not IDepositPoint depositPoint) continue;
@@ -132,6 +132,7 @@ public abstract class Vehicle : IAdvancable
 
     private bool TryDepositToCurrentCity()
     {
+        if (this is Bus) return false;
         if (_cityService == null || CurrentLocation == null || ResourceAmount <= 0)
         {
             return false;
