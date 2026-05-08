@@ -91,8 +91,10 @@ public class PersistenceManager : MonoBehaviour
 
         try
         {
+            PlayerState.Instance.SetIsMapLoadingFromPersistence(true);
             GameData gameData = _fileManager.Deserialize(www.downloadHandler.text);
             _gameDataApplier.Apply(gameData);
+            PlayerState.Instance.SetIsMapLoadingFromPersistence(false);
             Debug.Log("Loaded save file.");
         }
         catch (System.Exception ex)

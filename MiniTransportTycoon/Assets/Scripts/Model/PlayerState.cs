@@ -6,7 +6,7 @@ namespace Model
     public class PlayerState
     {
         private static PlayerState? _instance;
-
+        
         public static PlayerState Instance
         {
             get
@@ -42,6 +42,7 @@ namespace Model
 
         public void SpendMoney(int amount)
         {
+            if (_isMapLoadingFromPersistence) return;
             Money -= amount;
 
             if (Money <= 0)
@@ -52,5 +53,12 @@ namespace Model
 
             OnMoneyChanged?.Invoke(EventArgs.Empty, Money);
         }
+
+        public void SetIsMapLoadingFromPersistence(bool isLoading)
+        {
+            _isMapLoadingFromPersistence = isLoading;
+        }
+
+        private bool _isMapLoadingFromPersistence;
     }
 }
