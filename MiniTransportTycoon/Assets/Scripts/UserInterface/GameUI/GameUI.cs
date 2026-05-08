@@ -20,6 +20,7 @@ public class GameUI : MonoBehaviour
     private Button _buyVehiclesBtn;
     private Button _ownedVehiclesBtn;
     private Button _selectRoadBtn;
+    private Button _clearSelectionBtn;
     private Button _selectBusStopBtn;
 
     private Button _selectedSpeed;
@@ -70,6 +71,7 @@ public class GameUI : MonoBehaviour
         _selectedSpeed = _speed1Btn;
 
         _selectRoadBtn = root.Q<Button>("SelectRoadBtn");
+        _clearSelectionBtn = root.Q<Button>("ClearSelectionBtn");
         _selectBusStopBtn = root.Q<Button>("SelectBusStopBtn");
 
         _money = root.Q<Label>("Money");
@@ -94,6 +96,7 @@ public class GameUI : MonoBehaviour
         _speed4Btn.clicked += Speed4BtnOnClicked;
         
         _selectRoadBtn.clicked += BuildSelectionManager.Instance.SelectDynamicRoadObjectTypeSo;
+        _clearSelectionBtn.clicked += BuildSelectionManager.Instance.ClearSelectedObjectType;
         _selectBusStopBtn.clicked += BuildSelectionManager.Instance.SelectBusStopObjectTypeSo;
         
         PlayerState.Instance.OnMoneyChanged += SetMoneyLabelText;
@@ -132,6 +135,7 @@ public class GameUI : MonoBehaviour
         _speed4Btn.clicked -= Speed4BtnOnClicked;
        
         _selectRoadBtn.clicked -= BuildSelectionManager.Instance.SelectDynamicRoadObjectTypeSo;
+        _clearSelectionBtn.clicked -= BuildSelectionManager.Instance.ClearSelectedObjectType;
         _selectBusStopBtn.clicked -= BuildSelectionManager.Instance.SelectBusStopObjectTypeSo;
         
         PlayerState.Instance.OnMoneyChanged -= SetMoneyLabelText;
