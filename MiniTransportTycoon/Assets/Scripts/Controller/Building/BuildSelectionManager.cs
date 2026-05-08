@@ -12,6 +12,8 @@ public class BuildSelectionManager : MonoBehaviour, IBuildSelectionManager
     public event EventHandler? OnBuildingSelected; 
 
     public CellObjectTypeSO? SelectedObjectType { get; private set; }
+    public int CurrentRotationDegrees { get; private set; }
+    public Size CurrentSelectionSize { get; private set; } = new Size(1, 1);
     
     private List<CellObjectTypeSO> _cellObjectTypeSos = new();
     public Dictionary<Type, CellObjectTypeSO> CellLookup { get; private set; } = new();
@@ -30,28 +32,53 @@ public class BuildSelectionManager : MonoBehaviour, IBuildSelectionManager
     
     public void HandleBuildSelectionInput()
     {
-        if (Keyboard.current.digit1Key.wasPressedThisFrame)
+        Keyboard? keyboard = Keyboard.current;
+        if (keyboard == null) return;
+
+        HandleRotationInput(keyboard);
+
+        if (keyboard.digit1Key.wasPressedThisFrame)
         {
             SelectBusStopObjectTypeSo();
         }
-        else if (Keyboard.current.digit2Key.wasPressedThisFrame)
+        else if (keyboard.digit2Key.wasPressedThisFrame)
         {
             SelectDynamicRoadObjectTypeSo();
         }
-        else if (Keyboard.current.digit3Key.wasPressedThisFrame)
+        else if (keyboard.digit3Key.wasPressedThisFrame)
         {
             ClearSelectedObjectType();
         }
-        else if (Keyboard.current.digit4Key.wasPressedThisFrame)
+        else if (keyboard.digit4Key.wasPressedThisFrame)
         {
             CycleSelection(buildingCellObjectTypeSos!);
             InvokeBuildingSelected();
+        }
+    }
+
+    private void HandleRotationInput(Keyboard keyboard)
+    {
+        if (SelectedObjectType == null) return;
+        if (SelectedObjectType.CellType == typeof(DynamicRoadCell)) return;
+        if (!keyboard.rKey.wasPressedThisFrame) return;
+
+        RotateCurrentPlacement90();
+    }
+
+    public void RotateCurrentPlacement90()
+    {
+        CurrentRotationDegrees += 90;
+        if (CurrentRotationDegrees >= 360)
+        {
+            CurrentRotationDegrees = 0;
         }
     }
     
     public void ClearSelectedObjectType()
     {
         SelectedObjectType = null;
+        CurrentRotationDegrees = 0;
+        CurrentSelectionSize = new Size(1, 1);
         RaiseSelectedObjectChanged();
     }
 
@@ -76,11 +103,18 @@ public class BuildSelectionManager : MonoBehaviour, IBuildSelectionManager
     private void SetSelectedObjectType(CellObjectTypeSO cellObjectTypeSo)
     {
         SelectedObjectType = cellObjectTypeSo;
+        if (cellObjectTypeSo.CellType == typeof(DynamicRoadCell)){
+            CurrentSelectionSize = new Size(1, 1);
+        }
+        else{
+            CurrentSelectionSize = cellObjectTypeSo.Create(new Location(0, 0)).Size;
+        }
         RaiseSelectedObjectChanged();
     }
 
     public void SelectDynamicRoadObjectTypeSo()
     {
+        CurrentRotationDegrees = 0;
         SetSelectedObjectType(dynamicRoadCellObjectTypeSo);
         InvokeDynamicRoadSelected();
     }
