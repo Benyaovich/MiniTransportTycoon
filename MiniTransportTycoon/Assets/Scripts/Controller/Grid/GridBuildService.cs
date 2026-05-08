@@ -32,6 +32,20 @@ namespace Controller.Grid
             BuildAt(location);
         }
 
+        public bool CanBuildAt(Location location)
+        {
+            if (_buildSelectionManager.SelectedObjectType == null) return false;
+
+            if (_buildSelectionManager.SelectedObjectType.CellType == typeof(DynamicRoadCell))
+            {
+                return _dynamicRoadBuildingManager.CanBuildRoad(location);
+            }
+
+            Cell cell = _buildSelectionManager.SelectedObjectType.Create(location);
+            cell.SetRotation(_buildSelectionManager.CurrentRotationDegrees);
+            return _cellBuildingManager.CanBuild(cell);
+        }
+
         public void BuildOnLocations(List<Location> locations)
         {
             foreach (Location location in locations)
