@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using Model;
@@ -101,5 +103,12 @@ public class PersistenceManager : MonoBehaviour
         {
             Debug.LogError($"Failed to load save file: {ex}");
         }
+    }
+    
+    public void LoadDefaultNewGame()
+    {
+        string path = Path.Combine(Application.streamingAssetsPath, "basic_map.json");
+        string uri = new Uri(path).AbsoluteUri;
+        StartCoroutine(OutputRoutineOpen(uri));
     }
 }
