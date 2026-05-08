@@ -2,44 +2,55 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Linq;
+using Model;
 using Model.Interfaces;
 using UnityEngine;
 
 public class Bus : Vehicle
 {
     public BusStop? VisitedStationThisTurn { get; set; }
-    private int _peopleAtBusStop;
 
     public Bus(Grid<ModelGridObject> grid, Resource resource = Resource.People, float speed = 1.8f, int maintenanceCost = 100, int purchaseCost = 800, int maxCarryCapacity = 40,int resourceAmount = 0, Route? route = null, float maintenanceRemainingTime = 0, float? moveRemainingTime = null, CityService? cityService = null) 
         : base(grid, resource, speed, maintenanceCost, purchaseCost, maxCarryCapacity,resourceAmount: resourceAmount, route: route, maintenanceRemainingTime: maintenanceRemainingTime, moveRemainingTime: moveRemainingTime, cityService: cityService) { }
 
     protected override void LoadResource(IResourceProvider resourceProvider)
     {
-        _peopleAtBusStop = resourceProvider.GetResource(MaxCapacity);
+        ResourceAmount += resourceProvider.GetResource(MaxCapacity - ResourceAmount);
     }
 
     protected override void UnloadResource(IDepositPoint depositPoint)
     {
-        depositPoint.AddResource(ResourceAmount);
-        ResourceAmount = _peopleAtBusStop;
-        int overflow = ResourceAmount - MaxCapacity;
-        if (overflow > 0)
-        {
-            ResourceAmount = MaxCapacity;
-            depositPoint.AddResource(overflow);
-        }
+        ResourceAmount = depositPoint.AddResource(ResourceAmount);
     }
     
     protected override bool HandleStationAction(List<Cell> neighbouringCells)
     {
-        BusStop? currentVisitedBusStop = neighbouringCells.FirstOrDefault(x=>x is BusStop) as BusStop;
-        if (VisitedStationThisTurn == currentVisitedBusStop){ return false; }
-        
-        bool loaded = TryLoadFromNeighbours(neighbouringCells);
-        bool unloaded = TryDepositToNeighbours(neighbouringCells);
+        BusStop? currentVisitedBusStop = neighbouringCells.FirstOrDefault(x => x is BusStop) as BusStop;
+        if (currentVisitedBusStop == null) return false;
+        if (VisitedStationThisTurn == currentVisitedBusStop) return false;
 
+        int passengersBefore = ResourceAmount;
+        int peopleAtStopBefore = currentVisitedBusStop.NumOfPeople;
 
-        VisitedStationThisTurn = currentVisitedBusStop;
-        return loaded || unloaded;
+        UnloadResource(currentVisitedBusStop);
+        int depositedAmount = passengersBefore - ResourceAmount;
+        if (depositedAmount > 0)
+        {
+            PlayerState.Instance.AddMoney(
+                GameEconomy.Instance.GetResourcePrice(Resource) * depositedAmount
+            );
+        }
+
+        LoadResource(currentVisitedBusStop);
+
+        bool interacted = ResourceAmount != passengersBefore ||
+                          currentVisitedBusStop.NumOfPeople != peopleAtStopBefore;
+
+        if (interacted)
+        {
+            VisitedStationThisTurn = currentVisitedBusStop;
+        }
+
+        return interacted;
     }
 }
