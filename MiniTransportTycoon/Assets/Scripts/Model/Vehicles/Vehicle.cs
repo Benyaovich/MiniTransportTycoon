@@ -12,6 +12,7 @@ public abstract class Vehicle : IAdvancable
     public int MaintenanceCost { get; private set; }
     public int PurchaseCost { get; private set; }
     public int ResourceAmount { get; protected set; }
+    public int DepositPerCellInCity { get; protected set; } = 5;
     protected Route? _route;
     public Route? Route => _route;
     public Location? CurrentLocation => _route?.CurrentPosition;
@@ -67,6 +68,7 @@ public abstract class Vehicle : IAdvancable
     public void MoveNext()
     {
         List<Cell> neighbouringCells = GetNeighbouringCells();
+        TryDepositToCurrentCity();
         if (HandleStationAction(neighbouringCells)) return;
         
         if (_route == null) return;
@@ -126,6 +128,28 @@ public abstract class Vehicle : IAdvancable
         }
 
         return false;
+    }
+
+    private bool TryDepositToCurrentCity()
+    {
+        if (_cityService == null || CurrentLocation == null || ResourceAmount <= 0)
+        {
+            return false;
+        }
+
+        if (!_cityService.CityByLocationMap.ContainsKey(CurrentLocation))
+        {
+            return false;
+        }
+
+        int depositedAmount = Math.Min(DepositPerCellInCity, ResourceAmount);
+        ResourceAmount -= depositedAmount;
+
+        PlayerState.Instance.AddMoney(
+            GameEconomy.Instance.GetResourcePrice(Resource) * depositedAmount
+        );
+
+        return true;
     }
 
     protected bool TryLoadFromNeighbours(List<Cell> neighbouringCells)
