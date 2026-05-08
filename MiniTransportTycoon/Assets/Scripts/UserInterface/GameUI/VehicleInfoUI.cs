@@ -1,4 +1,6 @@
+#nullable enable
 using System;
+using Controller.Vehicles;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -6,41 +8,64 @@ namespace UserInterface.GameUI
 {
     public class VehicleInfoUI : MonoBehaviour
     {
-        [SerializeField] private UIDocument uiDocument;
-        private Vehicle _vehicle;
-        
-        private VisualElement _panel;
-        private Label _resourceType;
-        private Label _resourceAmount;
-        private Label _maintenanceCost;
-        private Label _moveSpeed;
-        private Button _closeBtn;
-        
+        [SerializeField] private UIDocument uiDocument = null!;
+        [SerializeField] private VehicleManager vehicleManager = null!;
+        private VehicleOwnedListUI _vehicleOwnedListUI = null!;
+
+        private Vehicle? _vehicle;
+
+        private VisualElement _panel = null!;
+
+        private Label _resourceType = null!;
+        private Label _resourceAmount = null!;
+        private Label _maintenanceCost = null!;
+        private Label _moveSpeed = null!;
+
+        private Button _closeBtn = null!;
+        private Button _routeBtn = null!;
+        private Button _sellBtn = null!;
+
         private void Awake()
         {
-            var root = uiDocument.rootVisualElement;
+            VisualElement root = uiDocument.rootVisualElement;
 
             _panel = root.Q<VisualElement>("VehicleInfoPanel");
+
             _resourceType = root.Q<Label>("ResourceType");
             _resourceAmount = root.Q<Label>("ResourceAmount");
             _maintenanceCost = root.Q<Label>("MaintenanceCost");
             _moveSpeed = root.Q<Label>("MoveSpeed");
-            _closeBtn = root.Q<Button>("CloseBtn");
-            
-            _closeBtn.clicked += Hide;
 
-            _panel.Disable();
+            _closeBtn = root.Q<Button>("CloseBtn");
+            _routeBtn = root.Q<Button>("RouteBtn");
+            _sellBtn = root.Q<Button>("SellBtn");
+
+            _closeBtn.clicked += Hide;
+            _routeBtn.clicked += StartRouteCreation;
+            _sellBtn.clicked += SellVehicle;
+
+            _panel.style.display = DisplayStyle.None;
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             _closeBtn.clicked -= Hide;
+            _routeBtn.clicked -= StartRouteCreation;
+            _sellBtn.clicked -= SellVehicle;
+        }
+
+        private void Start()
+        {
+            _vehicleOwnedListUI = global::GameUI.Instance.VehicleOwnedListUI;
         }
 
         private void Update()
         {
-            if (_vehicle == null) return;
-            if (!_panel.IsEnabled()) return;
+            if (_vehicle == null)
+                return;
+
+            if (_panel.style.display == DisplayStyle.None)
+                return;
 
             Refresh(_vehicle);
         }
@@ -48,13 +73,15 @@ namespace UserInterface.GameUI
         public void Show(Vehicle vehicle)
         {
             _vehicle = vehicle;
+
             Refresh(vehicle);
-            _panel.Enable();
+
+            _panel.style.display = DisplayStyle.Flex;
         }
 
         public void Refresh(Vehicle vehicle)
         {
-            _resourceType.text = "Resource type:" + vehicle.Resource;
+            _resourceType.text = $"Resource type: {vehicle.Resource}";
             _resourceAmount.text = $"Resource amount: {vehicle.ResourceAmount}/{vehicle.MaxCapacity}";
             _maintenanceCost.text = $"Maintenance cost: {vehicle.MaintenanceCost}";
             _moveSpeed.text = $"Move speed: {vehicle.MoveSpeed}";
@@ -63,7 +90,28 @@ namespace UserInterface.GameUI
         public void Hide()
         {
             _vehicle = null;
-            _panel.Disable();
+
+            _panel.style.display = DisplayStyle.None;
+        }
+
+        private void StartRouteCreation()
+        {
+            if (_vehicle == null)
+                return;
+
+            _vehicleOwnedListUI.BeginRouteCreationForVehicle(_vehicle);
+        }
+
+        private void SellVehicle()
+        {
+            if (_vehicle == null)
+                return;
+
+            _vehicleOwnedListUI.CancelRouteCreation();
+
+            vehicleManager.SellVehicle(_vehicle);
+
+            Hide();
         }
     }
 }

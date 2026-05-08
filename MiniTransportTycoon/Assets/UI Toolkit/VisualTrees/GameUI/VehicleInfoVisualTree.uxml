@@ -1,11 +1,15 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/USS/UniversalStyle.uss?fileID=7433441132597879392&amp;guid=1858bf694d9c92140ab802dc915d4236&amp;type=3#UniversalStyle"/>
     <Style src="project://database/Assets/UI%20Toolkit/USS/GameUIVisualTreeStyle.uss?fileID=7433441132597879392&amp;guid=d594cda548d638443a4cd751fc3e73b9&amp;type=3#GameUIVisualTreeStyle"/>
-    <ui:VisualElement name="VehicleInfoPanel" class="blocksGameInput infoCardContainer">
+    <ui:VisualElement name="VehicleInfoPanel" class="blocksGameInput infoCardContainer" style="height: 270px;">
         <ui:Label text="Resource Type: Iron" name="ResourceType"/>
         <ui:Label text="Resource Amount: 45/100" name="ResourceAmount"/>
         <ui:Label text="Maintenance cost: 300" name="MaintenanceCost"/>
         <ui:Label text="Move speed: 60" name="MoveSpeed"/>
         <ui:Button text="X" name="CloseBtn" enabled="true" class="navBarButton" style="position: absolute; right: 0; min-width: auto; min-height: auto; visibility: visible; display: flex; top: 0; margin-top: 10px; margin-bottom: 10px; font-size: 20px; padding-left: 10px; padding-right: 10px;"/>
+        <ui:VisualElement style="flex-grow: 0; flex-direction: row; max-width: none; align-items: center; justify-content: space-around; width: 100%; height: 60px; margin-top: 12px;">
+            <ui:Button text="Edit Path" name="RouteBtn" class="button navBarButton" style="width: auto; height: 50px; bottom: auto; right: auto; top: auto; left: auto; position: relative; align-items: auto; align-self: center; align-content: center; font-size: 24px; background-color: rgb(255, 255, 255); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; color: rgb(0, 0, 0); transition-property: scale; transition-duration: 0.2s; flex-shrink: 1; flex-grow: 1; max-width: 125px; padding-top: 5px; padding-bottom: 5px; padding-left: 6px; padding-right: 6px;"/>
+            <ui:Button text="Sell" name="SellBtn" class="navBarButton" style="width: auto; height: 50px; bottom: auto; right: auto; top: auto; left: auto; position: relative; align-items: auto; align-self: center; align-content: center; font-size: 24px; background-color: rgb(255, 255, 255); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; color: rgb(0, 0, 0); transition-property: scale; transition-duration: 0.2s; flex-shrink: 1; flex-grow: 1; max-width: 125px;"/>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

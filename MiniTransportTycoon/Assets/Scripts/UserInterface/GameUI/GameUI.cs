@@ -10,6 +10,7 @@ using UserInterface;
 public class GameUI : MonoBehaviour
 {
     public static GameUI Instance { get; private set; }
+    public VehicleOwnedListUI VehicleOwnedListUI => vehicleOwnedListUI;
     [SerializeField] public UIDocument uiDocument;
     [SerializeField] private VehicleOwnedListUI vehicleOwnedListUI;
     [SerializeField] private CameraController cameraController;

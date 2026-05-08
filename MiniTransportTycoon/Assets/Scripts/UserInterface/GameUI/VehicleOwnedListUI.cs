@@ -22,6 +22,7 @@ public class VehicleOwnedListUI : MonoBehaviour
     private readonly Dictionary<Button, Action> _pathButtonHandlers = new();
 
     private EventHandler<List<Location>>? _routeCreatedHandler;
+    private Vehicle? _vehicleInRouteCreation;
 
     private void Awake()
     {
@@ -34,7 +35,12 @@ public class VehicleOwnedListUI : MonoBehaviour
 
         _vehicleList = root.Q<ScrollView>("VehicleOwnedList");
         _infoPanel = root.Q<VisualElement>("NoVehiclesOwnedInfoPanel");
-        _infoPanel.Q<Label>("Text").text = "You don't have any vehicles.";
+
+        Label? infoText = _infoPanel.Q<Label>("Text");
+        if (infoText is not null)
+        {
+            infoText.text = "You don't have any vehicles.";
+        }
 
         vehicleManager.OnVehicleSold += HandleVehicleChanged;
         vehicleManager.OnVehicleBought += HandleVehicleChanged;
@@ -53,11 +59,7 @@ public class VehicleOwnedListUI : MonoBehaviour
     public void InitialState()
     {
         CleanupPathButtonHandlers();
-        CleanupRouteCreation();
-        if (_routeCreationManager.InRouteCreation)
-        {
-            _routeCreationManager.ExitRouteCreation();
-        }
+        CancelRouteCreation();
     }
 
     private void HandleVehicleChanged(object? sender, EventArgs e)
@@ -76,62 +78,59 @@ public class VehicleOwnedListUI : MonoBehaviour
 
         foreach (Vehicle vehicle in vehicleManager.VehicleStorage.Vehicles)
         {
-            VehicleSO? vehicleSo = vehicleManager.VehicleSos.Find(x => x.VehicleType == vehicle.GetType());
-            if (vehicleSo is null)
-            {
-                throw new NullReferenceException($"Nincs VehicleSO ehhez: {vehicle.GetType().Name}");
-            }
-
-            VisualElement element = listItemTemplate.Instantiate();
-
-            element.Q<Label>("Name").text = vehicleSo.displayName;
-            element.Q<Label>("Capacity").text = $"Capacity: {vehicleSo.maxCarryCapacity}";
-            element.Q<Label>("Speed").text = $"Speed: {Math.Round(1.0 / vehicleSo.speed * 150):0}";
-            element.Q<Label>("Maintenance").text = $"Maintenance: {vehicleSo.maintenanceCost}";
-
-            Button pathBtn = element.Q<Button>("PathBtn");
-            Button sellBtn = element.Q<Button>("SellBtn");
-
-            _pathCreationButtons.Add(pathBtn);
-
-            Action pathHandler = () => OnPathButtonClicked(pathBtn, vehicle);
-            _pathButtonHandlers[pathBtn] = pathHandler;
-            pathBtn.clicked += pathHandler;
-
-            sellBtn.clicked += SellBtnClicked;
-
-            void SellBtnClicked()
-            {
-                sellBtn.clicked -= SellBtnClicked;
-
-                if (_pathButtonHandlers.TryGetValue(pathBtn, out Action? storedPathHandler))
-                {
-                    pathBtn.clicked -= storedPathHandler;
-                    _pathButtonHandlers.Remove(pathBtn);
-                }
-
-                _pathCreationButtons.Remove(pathBtn);
-
-                if (_routeCreationManager.InRouteCreation)
-                {
-                    CleanupRouteCreation();
-                    _routeCreationManager.ExitRouteCreation();
-                }
-
-                vehicleManager.SellVehicle(vehicle);
-            }
-
-            
-            _vehicleList.Add(element);
+            CreateVehicleListItem(vehicle);
         }
+    }
+
+    private void CreateVehicleListItem(Vehicle vehicle)
+    {
+        VehicleSO vehicleSo = GetVehicleSO(vehicle);
+
+        VisualElement element = listItemTemplate.Instantiate();
+
+        element.Q<Label>("Name").text = vehicleSo.displayName;
+        element.Q<Label>("Capacity").text = $"Capacity: {vehicleSo.maxCarryCapacity}";
+        element.Q<Label>("Speed").text = $"Speed: {Math.Round(1.0 / vehicleSo.speed * 150):0}";
+        element.Q<Label>("Maintenance").text = $"Maintenance: {vehicleSo.maintenanceCost}";
+
+        Button pathBtn = element.Q<Button>("PathBtn");
+        Button sellBtn = element.Q<Button>("SellBtn");
+
+        RegisterPathButton(pathBtn, vehicle);
+
+        sellBtn.clicked += () => SellVehicle(vehicle);
+
+        _vehicleList.Add(element);
+    }
+
+    private VehicleSO GetVehicleSO(Vehicle vehicle)
+    {
+        VehicleSO? vehicleSo = vehicleManager.VehicleSos
+            .Find(x => x.VehicleType == vehicle.GetType());
+
+        if (vehicleSo is null)
+        {
+            throw new NullReferenceException($"Nincs VehicleSO ehhez: {vehicle.GetType().Name}");
+        }
+
+        return vehicleSo;
+    }
+
+    private void RegisterPathButton(Button pathBtn, Vehicle vehicle)
+    {
+        _pathCreationButtons.Add(pathBtn);
+
+        Action handler = () => OnPathButtonClicked(pathBtn, vehicle);
+
+        _pathButtonHandlers[pathBtn] = handler;
+        pathBtn.clicked += handler;
     }
 
     private void OnPathButtonClicked(Button pathBtn, Vehicle vehicle)
     {
         if (_routeCreationManager.InRouteCreation)
         {
-            CleanupRouteCreation();
-            _routeCreationManager.ExitRouteCreation();
+            CancelRouteCreation();
             RefreshList();
             return;
         }
@@ -139,17 +138,58 @@ public class VehicleOwnedListUI : MonoBehaviour
         DisableOtherPathButtons(pathBtn);
         pathBtn.text = "Cancel";
 
+        BeginRouteCreationForVehicle(vehicle);
+    }
+
+    public void BeginRouteCreationForVehicle(Vehicle vehicle)
+    {
+        if (_routeCreationManager.InRouteCreation)
+        {
+            CancelRouteCreation();
+            RefreshList();
+            return;
+        }
+
+        _vehicleInRouteCreation = vehicle;
+
+        CleanupRouteCreation();
+
         _routeCreationManager.StartRouteCreation();
 
-        _routeCreatedHandler = OnRouteCreated;
-        _routeCreationManager.OnRouteCreated += _routeCreatedHandler;
-
-        void OnRouteCreated(object? sender, List<Location> route)
+        _routeCreatedHandler = (_, route) =>
         {
             CleanupRouteCreation();
+
             vehicle.SetRoute(new Route(route, _routeCreationManager.PathHandler));
+
+            _vehicleInRouteCreation = null;
+
             RefreshList();
+        };
+
+        _routeCreationManager.OnRouteCreated += _routeCreatedHandler;
+    }
+
+    public void CancelRouteCreation()
+    {
+        CleanupRouteCreation();
+
+        _vehicleInRouteCreation = null;
+
+        if (_routeCreationManager.InRouteCreation)
+        {
+            _routeCreationManager.ExitRouteCreation();
         }
+    }
+
+    private void SellVehicle(Vehicle vehicle)
+    {
+        if (_vehicleInRouteCreation == vehicle)
+        {
+            CancelRouteCreation();
+        }
+
+        vehicleManager.SellVehicle(vehicle);
     }
 
     private void DisableOtherPathButtons(Button current)
@@ -162,7 +202,8 @@ public class VehicleOwnedListUI : MonoBehaviour
 
     private void UpdateInfoPanel()
     {
-        if (vehicleManager.VehicleStorage.Vehicles.Count == 0)
+        bool hasNoVehicles = vehicleManager.VehicleStorage.Vehicles.Count == 0;
+        if (hasNoVehicles)
         {
             _infoPanel.Enable();
         }
