@@ -26,8 +26,16 @@ public class BuildingPreviewManager : MonoBehaviour
     private void LateUpdate()
     {
         Vector3 mousePosSnapped = GridManager.Instance!.GetMousePosSnappedToGrid();
-        mousePosSnapped.y = 0.2f;
-        transform.position = Vector3.Lerp(transform.position, mousePosSnapped, Time.deltaTime * 15f);
+        int rotationDegrees = BuildSelectionManager.Instance.CurrentRotationDegrees;
+        Vector3 adjustedPreviewPosition = Utils.GetRotatedPlacementPosition(
+            mousePosSnapped,
+            BuildSelectionManager.Instance.CurrentSelectionSize,
+            GridManager.Instance.Grid.CellSize,
+            rotationDegrees);
+
+        adjustedPreviewPosition.y = 0.2f;
+        transform.position = Vector3.Lerp(transform.position, adjustedPreviewPosition, Time.deltaTime * 15f);
+        transform.rotation = Quaternion.Euler(0f, rotationDegrees, 0f);
         
     }
 
