@@ -117,7 +117,7 @@ namespace Controller.Grid
                 BuildSelectionManager.Instance.CellLookup);
         
             var firstGridObjectsPosition = _grid.GetWorldPosition(0, 0);
-            mapFloor!.position = new UniVector3(firstGridObjectsPosition.X, -0.01f, firstGridObjectsPosition.Y);
+            mapFloor!.position = new UniVector3(firstGridObjectsPosition.X, -0.1f, firstGridObjectsPosition.Y);
             mapFloor!.localScale = new UniVector3(_grid.Size.Width * _grid.CellSize, 0, _grid.Size.Height * _grid.CellSize);
         
             if (showDebug)

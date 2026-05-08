@@ -26,7 +26,7 @@ public class BuildingPreviewManager : MonoBehaviour
     private void LateUpdate()
     {
         Vector3 mousePosSnapped = GridManager.Instance!.GetMousePosSnappedToGrid();
-        mousePosSnapped.y = 0.1f;
+        mousePosSnapped.y = 0.2f;
         transform.position = Vector3.Lerp(transform.position, mousePosSnapped, Time.deltaTime * 15f);
         
     }
