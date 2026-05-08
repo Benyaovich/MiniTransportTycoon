@@ -70,7 +70,12 @@ public class BusStop : Cell, IAdvancable, IPurchasable, IVisitableBuiling, IDepo
 
     public int AddResource(int amount)
     {
-        if (City is null) return 0;
+        if (City is null)
+        {
+            int correctAmountToAdd = Math.Min(MaxNumOfPeople - NumOfPeople, amount);
+            NumOfPeople += correctAmountToAdd;
+            return amount - correctAmountToAdd;
+        }
         
         City.AddPeople(amount);
         return 0;

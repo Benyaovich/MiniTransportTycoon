@@ -99,8 +99,8 @@ public abstract class Vehicle : IAdvancable
         {
             if (neighbouringCell is not IDepositPoint depositPoint) continue;
 
-            if (depositPoint.RequiredResource != Resource || ResourceAmount <= 0) continue;
-            
+            if (this is not Bus && (depositPoint.RequiredResource != Resource || ResourceAmount <= 0)) continue;
+
             int resourceAmountBefore = ResourceAmount;
 
             UnloadResource(depositPoint);
