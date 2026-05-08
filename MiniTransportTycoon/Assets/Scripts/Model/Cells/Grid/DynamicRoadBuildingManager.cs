@@ -37,6 +37,13 @@ namespace Model.Cells.Grid
             InvokeRoadCellBuilt(roadCell);
         }
 
+        public bool CanBuildRoad(Location location)
+        {
+            Dictionary<Direction, Cell?> neighbours = GetNeighbours(location);
+            DynamicRoadCell roadCell = new DynamicRoadCell(location, neighbours);
+            return CheckIfCanBuild(roadCell.GetGridPositionList());
+        }
+
 
         public void TryDemolishRoad(Location location)
         {
