@@ -37,6 +37,7 @@ namespace UserInterface.MainMenuUI
         {
             PlayerState.Instance.ResetPlayerState();
             await SceneLoader.LoadSceneWithLoadingScreen("GameScene", "LoadingScene");
+            PersistenceManager.Instance.LoadDefaultNewGame();
         }
         
         private void ExitGameBtnOnClicked()
