@@ -31,10 +31,18 @@ namespace Controller.Building
         
         protected Transform InstantiatePrefab(ModelGridObject gridObject, CellObjectTypeSO cellObjectTypeSo)
         {
+            Vector3 originWorldPosition = gridObject.Grid.GetWorldPosition(gridObject.Location.X, gridObject.Location.Y).UVXZ3();
+            int rotationDegrees = gridObject.Model!.RotationDegrees;
+            Vector3 placementPosition = Utils.GetRotatedPlacementPosition(
+                originWorldPosition,
+                gridObject.Model.Size,
+                gridObject.Grid.CellSize,
+                rotationDegrees);
+
             return UnityEngine.Object.Instantiate(
                 cellObjectTypeSo.prefab,
-                gridObject.Grid.GetWorldPosition(gridObject.Location.X, gridObject.Location.Y).UVXZ3(),
-                Quaternion.identity,
+                placementPosition,
+                Quaternion.Euler(0f, rotationDegrees, 0f),
                 ParentTransform);
         }
         
