@@ -20,6 +20,7 @@ namespace UserInterface.GameUI
         private Label _resourceAmount = null!;
         private Label _maintenanceCost = null!;
         private Label _moveSpeed = null!;
+        private Label _depositePerTile = null!;
 
         private Button _closeBtn = null!;
         private Button _routeBtn = null!;
@@ -35,6 +36,7 @@ namespace UserInterface.GameUI
             _resourceAmount = root.Q<Label>("ResourceAmount");
             _maintenanceCost = root.Q<Label>("MaintenanceCost");
             _moveSpeed = root.Q<Label>("MoveSpeed");
+            _depositePerTile = root.Q<Label>("DepositPerCell");
 
             _closeBtn = root.Q<Button>("CloseBtn");
             _routeBtn = root.Q<Button>("RouteBtn");
@@ -85,6 +87,7 @@ namespace UserInterface.GameUI
             _resourceAmount.text = $"Resource amount: {vehicle.ResourceAmount}/{vehicle.MaxCapacity}";
             _maintenanceCost.text = $"Maintenance cost: {vehicle.MaintenanceCost}";
             _moveSpeed.text = $"Move speed: {vehicle.MoveSpeed}";
+            _depositePerTile.text = $"Deposits {vehicle.DepositPerCellInCity} each tile in cities";
         }
 
         public void Hide()
