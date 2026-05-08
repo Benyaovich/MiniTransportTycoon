@@ -21,7 +21,7 @@ namespace Model
                 case Resource.Iron or Resource.Coal or Resource.Wood:
                     return 10;
                 case Resource.People:
-                    return 13;
+                    return 2;
                 case Resource.Steel or Resource.Paper:
                     return 15;
             }
