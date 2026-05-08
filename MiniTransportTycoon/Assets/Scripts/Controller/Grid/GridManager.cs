@@ -28,6 +28,7 @@ namespace Controller.Grid
 
         public DynamicRoadBuildingManager DynamicRoadBuildingManager => _dynamicRoadBuildingManager;
         public Grid<ModelGridObject> Grid => _grid;
+        public CityService CityService => _cityService!;
     
         #endregion
 

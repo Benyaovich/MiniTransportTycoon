@@ -148,147 +148,147 @@ public class GameDataApplier
             switch (item)
             {
                 case SSlowBus slowBus:
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(
-                        new SlowBus(
-                            GridManager.Instance.Grid,
-                            resourceAmount: slowBus.resourceAmount,
-                            route: ToRoute(slowBus.route),
-                            maintenanceRemainingTime: slowBus.maintenanceRemainingTime,
-                            moveRemainingTime: slowBus.moveRemainingTime
-                        )
+                    SlowBus loadedSlowBus = new SlowBus(
+                        GridManager.Instance.Grid,
+                        resourceAmount: slowBus.resourceAmount,
+                        route: ToRoute(slowBus.route),
+                        maintenanceRemainingTime: slowBus.maintenanceRemainingTime,
+                        moveRemainingTime: slowBus.moveRemainingTime
                     );
+                    loadedSlowBus.SetCityService(VehicleManager.Instance.CityService);
+                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedSlowBus);
                     break;
 
                 case SFastBus fastBus:
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(
-                        new FastBus(
-                            GridManager.Instance.Grid,
-                            resourceAmount: fastBus.resourceAmount,
-                            route: ToRoute(fastBus.route),
-                            maintenanceRemainingTime: fastBus.maintenanceRemainingTime,
-                            moveRemainingTime: fastBus.moveRemainingTime
-                        )
+                    FastBus loadedFastBus = new FastBus(
+                        GridManager.Instance.Grid,
+                        resourceAmount: fastBus.resourceAmount,
+                        route: ToRoute(fastBus.route),
+                        maintenanceRemainingTime: fastBus.maintenanceRemainingTime,
+                        moveRemainingTime: fastBus.moveRemainingTime
                     );
+                    loadedFastBus.SetCityService(VehicleManager.Instance.CityService);
+                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedFastBus);
                     break;
 
                 case SCoalCargoTruck coalCargoTruck:
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(
-                        new CoalCargoTruck(
-                            GridManager.Instance.Grid,
-                            resourceAmount: coalCargoTruck.resourceAmount,
-                            route: ToRoute(coalCargoTruck.route),
-                            maintenanceRemainingTime: coalCargoTruck.maintenanceRemainingTime,
-                            moveRemainingTime: coalCargoTruck.moveRemainingTime
-                        )
+                    CoalCargoTruck loadedCoalCargoTruck = new CoalCargoTruck(
+                        GridManager.Instance.Grid,
+                        resourceAmount: coalCargoTruck.resourceAmount,
+                        route: ToRoute(coalCargoTruck.route),
+                        maintenanceRemainingTime: coalCargoTruck.maintenanceRemainingTime,
+                        moveRemainingTime: coalCargoTruck.moveRemainingTime
                     );
+                    loadedCoalCargoTruck.SetCityService(VehicleManager.Instance.CityService);
+                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedCoalCargoTruck);
                     break;
 
                 case SIronCargoTruck ironCargoTruck:
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(
-                        new IronCargoTruck(
-                            GridManager.Instance.Grid,
-                            resourceAmount: ironCargoTruck.resourceAmount,
-                            route: ToRoute(ironCargoTruck.route),
-                            maintenanceRemainingTime: ironCargoTruck.maintenanceRemainingTime,
-                            moveRemainingTime: ironCargoTruck.moveRemainingTime
-                        )
+                    IronCargoTruck loadedIronCargoTruck = new IronCargoTruck(
+                        GridManager.Instance.Grid,
+                        resourceAmount: ironCargoTruck.resourceAmount,
+                        route: ToRoute(ironCargoTruck.route),
+                        maintenanceRemainingTime: ironCargoTruck.maintenanceRemainingTime,
+                        moveRemainingTime: ironCargoTruck.moveRemainingTime
                     );
+                    loadedIronCargoTruck.SetCityService(VehicleManager.Instance.CityService);
+                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedIronCargoTruck);
                     break;
 
                 case SPaperCargoTruck paperCargoTruck:
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(
-                        new PaperCargoTruck(
-                            GridManager.Instance.Grid,
-                            resourceAmount: paperCargoTruck.resourceAmount,
-                            route: ToRoute(paperCargoTruck.route),
-                            maintenanceRemainingTime: paperCargoTruck.maintenanceRemainingTime,
-                            moveRemainingTime: paperCargoTruck.moveRemainingTime
-                        )
+                    PaperCargoTruck loadedPaperCargoTruck = new PaperCargoTruck(
+                        GridManager.Instance.Grid,
+                        resourceAmount: paperCargoTruck.resourceAmount,
+                        route: ToRoute(paperCargoTruck.route),
+                        maintenanceRemainingTime: paperCargoTruck.maintenanceRemainingTime,
+                        moveRemainingTime: paperCargoTruck.moveRemainingTime
                     );
+                    loadedPaperCargoTruck.SetCityService(VehicleManager.Instance.CityService);
+                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedPaperCargoTruck);
                     break;
 
                 case SSteelCargoTruck steelCargoTruck:
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(
-                        new SteelCargoTruck(
-                            GridManager.Instance.Grid,
-                            resourceAmount: steelCargoTruck.resourceAmount,
-                            route: ToRoute(steelCargoTruck.route),
-                            maintenanceRemainingTime: steelCargoTruck.maintenanceRemainingTime,
-                            moveRemainingTime: steelCargoTruck.moveRemainingTime
-                        )
+                    SteelCargoTruck loadedSteelCargoTruck = new SteelCargoTruck(
+                        GridManager.Instance.Grid,
+                        resourceAmount: steelCargoTruck.resourceAmount,
+                        route: ToRoute(steelCargoTruck.route),
+                        maintenanceRemainingTime: steelCargoTruck.maintenanceRemainingTime,
+                        moveRemainingTime: steelCargoTruck.moveRemainingTime
                     );
+                    loadedSteelCargoTruck.SetCityService(VehicleManager.Instance.CityService);
+                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedSteelCargoTruck);
                     break;
 
                 case SWoodCargoTruck woodCargoTruck:
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(
-                        new WoodCargoTruck(
-                            GridManager.Instance.Grid,
-                            resourceAmount: woodCargoTruck.resourceAmount,
-                            route: ToRoute(woodCargoTruck.route),
-                            maintenanceRemainingTime: woodCargoTruck.maintenanceRemainingTime,
-                            moveRemainingTime: woodCargoTruck.moveRemainingTime
-                        )
+                    WoodCargoTruck loadedWoodCargoTruck = new WoodCargoTruck(
+                        GridManager.Instance.Grid,
+                        resourceAmount: woodCargoTruck.resourceAmount,
+                        route: ToRoute(woodCargoTruck.route),
+                        maintenanceRemainingTime: woodCargoTruck.maintenanceRemainingTime,
+                        moveRemainingTime: woodCargoTruck.moveRemainingTime
                     );
+                    loadedWoodCargoTruck.SetCityService(VehicleManager.Instance.CityService);
+                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedWoodCargoTruck);
                     break;
 
                 case SCoalSemiTruck coalSemiTruck:
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(
-                        new CoalSemiTruck(
-                            GridManager.Instance.Grid,
-                            resourceAmount: coalSemiTruck.resourceAmount,
-                            route: ToRoute(coalSemiTruck.route),
-                            maintenanceRemainingTime: coalSemiTruck.maintenanceRemainingTime,
-                            moveRemainingTime: coalSemiTruck.moveRemainingTime
-                        )
+                    CoalSemiTruck loadedCoalSemiTruck = new CoalSemiTruck(
+                        GridManager.Instance.Grid,
+                        resourceAmount: coalSemiTruck.resourceAmount,
+                        route: ToRoute(coalSemiTruck.route),
+                        maintenanceRemainingTime: coalSemiTruck.maintenanceRemainingTime,
+                        moveRemainingTime: coalSemiTruck.moveRemainingTime
                     );
+                    loadedCoalSemiTruck.SetCityService(VehicleManager.Instance.CityService);
+                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedCoalSemiTruck);
                     break;
 
                 case SIronSemiTruck ironSemiTruck:
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(
-                        new IronSemiTruck(
-                            GridManager.Instance.Grid,
-                            resourceAmount: ironSemiTruck.resourceAmount,
-                            route: ToRoute(ironSemiTruck.route),
-                            maintenanceRemainingTime: ironSemiTruck.maintenanceRemainingTime,
-                            moveRemainingTime: ironSemiTruck.moveRemainingTime
-                        )
+                    IronSemiTruck loadedIronSemiTruck = new IronSemiTruck(
+                        GridManager.Instance.Grid,
+                        resourceAmount: ironSemiTruck.resourceAmount,
+                        route: ToRoute(ironSemiTruck.route),
+                        maintenanceRemainingTime: ironSemiTruck.maintenanceRemainingTime,
+                        moveRemainingTime: ironSemiTruck.moveRemainingTime
                     );
+                    loadedIronSemiTruck.SetCityService(VehicleManager.Instance.CityService);
+                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedIronSemiTruck);
                     break;
 
                 case SPaperSemiTruck paperSemiTruck:
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(
-                        new PaperSemiTruck(
-                            GridManager.Instance.Grid,
-                            resourceAmount: paperSemiTruck.resourceAmount,
-                            route: ToRoute(paperSemiTruck.route),
-                            maintenanceRemainingTime: paperSemiTruck.maintenanceRemainingTime,
-                            moveRemainingTime: paperSemiTruck.moveRemainingTime
-                        )
+                    PaperSemiTruck loadedPaperSemiTruck = new PaperSemiTruck(
+                        GridManager.Instance.Grid,
+                        resourceAmount: paperSemiTruck.resourceAmount,
+                        route: ToRoute(paperSemiTruck.route),
+                        maintenanceRemainingTime: paperSemiTruck.maintenanceRemainingTime,
+                        moveRemainingTime: paperSemiTruck.moveRemainingTime
                     );
+                    loadedPaperSemiTruck.SetCityService(VehicleManager.Instance.CityService);
+                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedPaperSemiTruck);
                     break;
 
                 case SSteelSemiTruck steelSemiTruck:
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(
-                        new SteelSemiTruck(
-                            GridManager.Instance.Grid,
-                            resourceAmount: steelSemiTruck.resourceAmount,
-                            route: ToRoute(steelSemiTruck.route),
-                            maintenanceRemainingTime: steelSemiTruck.maintenanceRemainingTime,
-                            moveRemainingTime: steelSemiTruck.moveRemainingTime
-                        )
+                    SteelSemiTruck loadedSteelSemiTruck = new SteelSemiTruck(
+                        GridManager.Instance.Grid,
+                        resourceAmount: steelSemiTruck.resourceAmount,
+                        route: ToRoute(steelSemiTruck.route),
+                        maintenanceRemainingTime: steelSemiTruck.maintenanceRemainingTime,
+                        moveRemainingTime: steelSemiTruck.moveRemainingTime
                     );
+                    loadedSteelSemiTruck.SetCityService(VehicleManager.Instance.CityService);
+                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedSteelSemiTruck);
                     break;
 
                 case SWoodSemiTruck woodSemiTruck:
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(
-                        new WoodSemiTruck(
-                            GridManager.Instance.Grid,
-                            resourceAmount: woodSemiTruck.resourceAmount,
-                            route: ToRoute(woodSemiTruck.route),
-                            maintenanceRemainingTime: woodSemiTruck.maintenanceRemainingTime,
-                            moveRemainingTime: woodSemiTruck.moveRemainingTime
-                        )
+                    WoodSemiTruck loadedWoodSemiTruck = new WoodSemiTruck(
+                        GridManager.Instance.Grid,
+                        resourceAmount: woodSemiTruck.resourceAmount,
+                        route: ToRoute(woodSemiTruck.route),
+                        maintenanceRemainingTime: woodSemiTruck.maintenanceRemainingTime,
+                        moveRemainingTime: woodSemiTruck.moveRemainingTime
                     );
+                    loadedWoodSemiTruck.SetCityService(VehicleManager.Instance.CityService);
+                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedWoodSemiTruck);
                     break;
             }
         }

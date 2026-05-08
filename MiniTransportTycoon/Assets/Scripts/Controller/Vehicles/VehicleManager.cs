@@ -19,13 +19,16 @@ namespace Controller.Vehicles
         [SerializeField] private List<VehicleSO> vehicleSos = new();
         public IVehicleStorage VehicleStorage => _vehicleStorage;
         public List<VehicleSO> VehicleSos => vehicleSos;
+        public CityService CityService => _cityService;
         
         private IVehicleStorage _vehicleStorage;
         private VehicleVisualService _vehicleVisualService;
+        private CityService _cityService = null!;
         
         private void Awake()
         {
             Instance = this;
+            _cityService = GridManager.Instance!.CityService;
             _vehicleStorage = new VehicleStorage();
             _vehicleVisualService = new VehicleVisualService(_vehicleStorage, transform, vehicleSos);
         }
@@ -46,6 +49,7 @@ namespace Controller.Vehicles
         public void BuyVehicle(VehicleSO vehicleSo)
         {
             Vehicle vehicle = vehicleSo.Create(GridManager.Instance!.Grid);
+            vehicle.SetCityService(_cityService);
             _vehicleStorage.AddVehicle(vehicle);
             OnVehicleBought?.Invoke(this, EventArgs.Empty);
         }

@@ -18,6 +18,8 @@ public abstract class Vehicle : IAdvancable
     
     protected IGrid<ModelGridObject> _grid;
     public IGrid<ModelGridObject> Grid => _grid;
+    protected CityService? _cityService;
+    public CityService? CityService => _cityService;
     public int MaxCapacity { get; protected set; }
     public Timer MaintenanceTimer { get; private set; }
     public Timer? MoveTimer { get; private set; }
@@ -26,9 +28,10 @@ public abstract class Vehicle : IAdvancable
     public event EventHandler? OnRouteSet;
 
     protected Vehicle(Grid<ModelGridObject> grid, Resource resource, float speed, int maintenanceCost,
-        int purchaseCost, int maxCapacity, float maintenanceInterval = 100,int resourceAmount = 0, Route? route = null, float maintenanceRemainingTime = 0, float? moveRemainingTime = null)
+        int purchaseCost, int maxCapacity, float maintenanceInterval = 100,int resourceAmount = 0, Route? route = null, float maintenanceRemainingTime = 0, float? moveRemainingTime = null, CityService? cityService = null)
     {
         _grid = grid;
+        _cityService = cityService;
         Resource = resource;
         MoveSpeed = speed;
         MaintenanceCost = maintenanceCost;
@@ -47,6 +50,11 @@ public abstract class Vehicle : IAdvancable
         
         
         MaintenanceTimer.OnTimerElapsed += MaintenanceTimerOnTimerElapsed;
+    }
+
+    public void SetCityService(CityService cityService)
+    {
+        _cityService = cityService;
     }
 
     
