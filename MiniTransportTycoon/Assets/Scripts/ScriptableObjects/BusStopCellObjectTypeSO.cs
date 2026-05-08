@@ -6,7 +6,7 @@ public class BusStopCellObjectTypeSO : CellObjectTypeSO
 {
     public override Cell Create(Location location)
     {
-        return new BusStop(location, interval: 2);
+        return new BusStop(location);
     }
 
     public override Type CellType => typeof(BusStop);
