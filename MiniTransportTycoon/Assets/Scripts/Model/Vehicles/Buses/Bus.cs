@@ -10,7 +10,7 @@ public class Bus : Vehicle
 {
     public BusStop? VisitedStationThisTurn { get; set; }
 
-    public Bus(Grid<ModelGridObject> grid, Resource resource = Resource.People, float speed = 1.8f, int maintenanceCost = 100, int purchaseCost = 800, int maxCarryCapacity = 40,int resourceAmount = 0, Route? route = null, float maintenanceRemainingTime = 0, float? moveRemainingTime = null, CityService? cityService = null) 
+    public Bus(Grid<ModelGridObject> grid, Resource resource = Resource.People, float speed = 1.8f, int maintenanceCost = 100, int purchaseCost = 800, int maxCarryCapacity = 40,int resourceAmount = 0, Route? route = null, float maintenanceRemainingTime = 100, float? moveRemainingTime = null, CityService? cityService = null) 
         : base(grid, resource, speed, maintenanceCost, purchaseCost, maxCarryCapacity,resourceAmount: resourceAmount, route: route, maintenanceRemainingTime: maintenanceRemainingTime, moveRemainingTime: moveRemainingTime, cityService: cityService) { }
 
     protected override void LoadResource(IResourceProvider resourceProvider)

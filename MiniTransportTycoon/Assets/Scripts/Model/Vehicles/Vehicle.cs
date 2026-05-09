@@ -29,7 +29,7 @@ public abstract class Vehicle : IAdvancable
     public event EventHandler? OnRouteSet;
 
     protected Vehicle(Grid<ModelGridObject> grid, Resource resource, float speed, int maintenanceCost,
-        int purchaseCost, int maxCapacity, float maintenanceInterval = 100,int resourceAmount = 0, Route? route = null, float maintenanceRemainingTime = 0, float? moveRemainingTime = null, CityService? cityService = null)
+        int purchaseCost, int maxCapacity, float maintenanceInterval = 100,int resourceAmount = 0, Route? route = null, float maintenanceRemainingTime = 100, float? moveRemainingTime = null, CityService? cityService = null)
     {
         _grid = grid;
         _cityService = cityService;
