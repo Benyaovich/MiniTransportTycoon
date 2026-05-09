@@ -7,7 +7,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    public float DeltaTime => Time.deltaTime * _gameSpeedMultiplier;
+    public float DeltaTime => Time.deltaTime * _gameSpeedMultiplier * _dinamicGameSpeedAdjust;
     public float GameSpeedMultiplier => _gameSpeedMultiplier;
     
     private float _gameSpeedMultiplier = 1;
@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     private HighlightService _highlightService;
 
     private GameplayState _gameplayState;
+    private readonly int _dinamicGameSpeedAdjust = 2;
 
     
     private void Awake()
