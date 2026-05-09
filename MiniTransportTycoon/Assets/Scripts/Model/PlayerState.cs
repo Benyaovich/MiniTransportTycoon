@@ -51,7 +51,7 @@ namespace Model
                 OnGameOver?.Invoke(this,EventArgs.Empty);
             }
 
-            OnMoneyChanged?.Invoke(EventArgs.Empty, Money);
+            OnMoneyChanged?.Invoke(this, Money);
         }
 
         public void SetIsMapLoadingFromPersistence(bool isLoading)

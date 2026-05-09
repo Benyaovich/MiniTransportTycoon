@@ -5,15 +5,15 @@ using Model;
 using Model.Enumerations;
 using Model.Interfaces;
 
-public abstract class Vehicle : IAdvancable
+public abstract class Vehicle : IAdvancable, IPurchasable
 {
     public Resource Resource { get; private set;}
     public float MoveSpeed { get; private set; }
     public int MaintenanceCost { get; private set; }
-    public int PurchaseCost { get; private set; }
+    public int Price { get; private set; }
     public int ResourceAmount { get; protected set; }
     public int DepositPerCellInCity { get; protected set; } = 5;
-    protected Route? _route;
+    private Route? _route;
     public Route? Route => _route;
     public Location? CurrentLocation => _route?.CurrentPosition;
     
@@ -29,14 +29,14 @@ public abstract class Vehicle : IAdvancable
     public event EventHandler? OnRouteSet;
 
     protected Vehicle(Grid<ModelGridObject> grid, Resource resource, float speed, int maintenanceCost,
-        int purchaseCost, int maxCapacity, float maintenanceInterval = 100,int resourceAmount = 0, Route? route = null, float maintenanceRemainingTime = 100, float? moveRemainingTime = null, CityService? cityService = null)
+        int price, int maxCapacity, float maintenanceInterval = 100,int resourceAmount = 0, Route? route = null, float maintenanceRemainingTime = 100, float? moveRemainingTime = null, CityService? cityService = null)
     {
         _grid = grid;
         _cityService = cityService;
         Resource = resource;
         MoveSpeed = speed;
         MaintenanceCost = maintenanceCost;
-        PurchaseCost = purchaseCost;
+        Price = price;
         MaxCapacity = maxCapacity;
         ResourceAmount = resourceAmount;
         
