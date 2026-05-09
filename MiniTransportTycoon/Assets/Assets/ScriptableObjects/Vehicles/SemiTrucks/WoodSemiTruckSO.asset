@@ -16,5 +16,5 @@ MonoBehaviour:
   displayName: Semi Truck - Wood
   speed: 4
   price: 500
-  maintenanceCost: 50
+  maintenanceCost: 5
   maxCarryCapacity: 25

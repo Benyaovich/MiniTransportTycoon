@@ -16,5 +16,5 @@ MonoBehaviour:
   displayName: Cargo Truck - Paper
   speed: 2
   price: 1000
-  maintenanceCost: 80
+  maintenanceCost: 8
   maxCarryCapacity: 50
