@@ -16,5 +16,5 @@ MonoBehaviour:
   displayName: Slow Bus - People
   speed: 4
   price: 500
-  maintenanceCost: 60
+  maintenanceCost: 6
   maxCarryCapacity: 25

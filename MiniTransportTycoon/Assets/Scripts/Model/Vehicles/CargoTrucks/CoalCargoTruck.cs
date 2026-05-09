@@ -3,7 +3,7 @@ namespace Model.Vehicles.CargoTrucks
 {
     public class CoalCargoTruck : CargoTruck
     {
-        public CoalCargoTruck(Grid<ModelGridObject> grid, Resource resource = Resource.Coal, float speed = 2, int maintenanceCost = 80,
+        public CoalCargoTruck(Grid<ModelGridObject> grid, Resource resource = Resource.Coal, float speed = 2, int maintenanceCost = 8,
             int purchaseCost = 1000, int maxCarryCapacity = 50,int resourceAmount = 0, Route? route = null, float maintenanceRemainingTime = 100, float? moveRemainingTime = null, CityService? cityService = null)
             : base(grid, resource, speed, maintenanceCost, purchaseCost, maxCarryCapacity,resourceAmount: resourceAmount, route: route, maintenanceRemainingTime: maintenanceRemainingTime, moveRemainingTime: moveRemainingTime, cityService: cityService)
         {
