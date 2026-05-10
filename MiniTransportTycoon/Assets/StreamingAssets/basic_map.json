@@ -34,6 +34,22 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 156,
+          "y": 62
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SExtractorBuildingCoal, Persistence",
         "resourceAmount": 0,
         "origin": {
@@ -66,6 +82,86 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 156,
+          "y": 64
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 157,
+          "y": 65
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 150,
+          "y": 66
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 151,
+          "y": 67
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 158,
+          "y": 68
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SExtractorBuildingWood, Persistence",
         "resourceAmount": 0,
         "origin": {
@@ -191,6 +287,198 @@
         "rotationDegrees": 0
       },
       "modelType": "Model.Cells.Facility.ExtractorBuildingCoal"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 126,
+          "y": 72
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 135,
+          "y": 72
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 152,
+          "y": 72
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 132,
+          "y": 73
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 133,
+          "y": 73
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 130,
+          "y": 74
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 127,
+          "y": 75
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 128,
+          "y": 75
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 133,
+          "y": 75
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 136,
+          "y": 75
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 129,
+          "y": 76
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 147,
+          "y": 76
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -269,6 +557,22 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 163,
+          "y": 77
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SRoadCell, Persistence",
         "origin": {
           "x": 181,
@@ -311,6 +615,38 @@
         "rotationDegrees": 0
       },
       "modelType": "DynamicRoadCell"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 121,
+          "y": 78
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 170,
+          "y": 78
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -691,6 +1027,22 @@
         "rotationDegrees": 90
       },
       "modelType": "Model.Cells.Facility.ExtractorBuildingIron"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 161,
+          "y": 80
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -889,6 +1241,38 @@
         "rotationDegrees": 0
       },
       "modelType": "DynamicRoadCell"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 156,
+          "y": 81
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 168,
+          "y": 81
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -1163,6 +1547,38 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 122,
+          "y": 82
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 124,
+          "y": 82
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SRoadCell, Persistence",
         "origin": {
           "x": 179,
@@ -1387,6 +1803,22 @@
         "rotationDegrees": 0
       },
       "modelType": "DynamicRoadCell"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 121,
+          "y": 83
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -1982,6 +2414,38 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 148,
+          "y": 85
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 160,
+          "y": 85
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SRoadCell, Persistence",
         "origin": {
           "x": 175,
@@ -2358,6 +2822,38 @@
         "rotationDegrees": 0
       },
       "modelType": "DynamicRoadCell"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 118,
+          "y": 86
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 142,
+          "y": 86
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -2750,6 +3246,38 @@
         "rotationDegrees": 0
       },
       "modelType": "DynamicRoadCell"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 117,
+          "y": 87
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 152,
+          "y": 87
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -3219,6 +3747,54 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 121,
+          "y": 88
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 148,
+          "y": 88
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 159,
+          "y": 88
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SProcessingBuildingSteel, Persistence",
         "requiredResourceAmount": 0,
         "resourceAmount": 0,
@@ -3940,6 +4516,70 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 141,
+          "y": 90
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 149,
+          "y": 90
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 150,
+          "y": 90
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 167,
+          "y": 90
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SRoadCell, Persistence",
         "origin": {
           "x": 179,
@@ -4165,6 +4805,22 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 55,
+          "y": 91
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SRoadCell, Persistence",
         "origin": {
           "x": 86,
@@ -4285,6 +4941,22 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 145,
+          "y": 91
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SRoadCell, Persistence",
         "origin": {
           "x": 179,
@@ -4327,6 +4999,22 @@
         "rotationDegrees": 0
       },
       "modelType": "DynamicRoadCell"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 58,
+          "y": 92
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -4420,6 +5108,22 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 152,
+          "y": 92
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SRoadCell, Persistence",
         "origin": {
           "x": 179,
@@ -4507,6 +5211,22 @@
         "rotationDegrees": 0
       },
       "modelType": "DynamicRoadCell"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 47,
+          "y": 93
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -4600,6 +5320,38 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 145,
+          "y": 93
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 58,
+          "y": 94
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SRoadCell, Persistence",
         "origin": {
           "x": 93,
@@ -4615,6 +5367,54 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 103,
+          "y": 94
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 139,
+          "y": 94
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 154,
+          "y": 94
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SRoadCell, Persistence",
         "origin": {
           "x": 93,
@@ -4630,20 +5430,19 @@
     },
     {
       "model": {
-        "$type": "SProcessingBuildingSteel, Persistence",
-        "requiredResourceAmount": 0,
-        "resourceAmount": 0,
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
         "origin": {
-          "x": 195,
+          "x": 95,
           "y": 95
         },
         "size": {
-          "width": 2,
-          "height": 2
+          "width": 1,
+          "height": 1
         },
-        "rotationDegrees": 270
+        "rotationDegrees": 0
       },
-      "modelType": "ProcessingBuildingSteel"
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -4695,6 +5494,231 @@
         "rotationDegrees": 270
       },
       "modelType": "ProcessingBuildingSteel"
+    },
+    {
+      "model": {
+        "$type": "SProcessingBuildingSteel, Persistence",
+        "requiredResourceAmount": 0,
+        "resourceAmount": 0,
+        "origin": {
+          "x": 195,
+          "y": 95
+        },
+        "size": {
+          "width": 2,
+          "height": 2
+        },
+        "rotationDegrees": 270
+      },
+      "modelType": "ProcessingBuildingSteel"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 55,
+          "y": 97
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 101,
+          "y": 97
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 107,
+          "y": 97
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 149,
+          "y": 97
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 54,
+          "y": 98
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 143,
+          "y": 98
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 154,
+          "y": 98
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 46,
+          "y": 99
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 93,
+          "y": 100
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 99,
+          "y": 100
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 100,
+          "y": 100
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 135,
+          "y": 100
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 64,
+          "y": 102
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -4823,6 +5847,22 @@
         "rotationDegrees": 270
       },
       "modelType": "Model.Cells.Facility.ExtractorBuildingCoal"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 100,
+          "y": 106
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -5216,6 +6256,54 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 147,
+          "y": 110
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 153,
+          "y": 110
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 157,
+          "y": 110
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SRoadCell, Persistence",
         "origin": {
           "x": 210,
@@ -5471,6 +6559,22 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 141,
+          "y": 112
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SRoadCell, Persistence",
         "origin": {
           "x": 210,
@@ -5558,6 +6662,22 @@
         "rotationDegrees": 0
       },
       "modelType": "DynamicRoadCell"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 151,
+          "y": 113
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -5681,6 +6801,22 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 150,
+          "y": 115
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SRoadCell, Persistence",
         "origin": {
           "x": 109,
@@ -5693,6 +6829,22 @@
         "rotationDegrees": 0
       },
       "modelType": "DynamicRoadCell"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 152,
+          "y": 116
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -5711,19 +6863,67 @@
     },
     {
       "model": {
-        "$type": "SExtractorBuildingWood, Persistence",
-        "resourceAmount": 0,
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
         "origin": {
-          "x": 114,
-          "y": 119
+          "x": 136,
+          "y": 117
         },
         "size": {
-          "width": 2,
-          "height": 2
+          "width": 1,
+          "height": 1
         },
-        "rotationDegrees": 270
+        "rotationDegrees": 0
       },
-      "modelType": "Model.Cells.Facility.ExtractorBuildingWood"
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 159,
+          "y": 117
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 134,
+          "y": 118
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 143,
+          "y": 118
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -5775,12 +6975,11 @@
     },
     {
       "model": {
-        "$type": "SProcessingBuildingPaper, Persistence",
-        "requiredResourceAmount": 0,
+        "$type": "SExtractorBuildingWood, Persistence",
         "resourceAmount": 0,
         "origin": {
-          "x": 168,
-          "y": 120
+          "x": 114,
+          "y": 119
         },
         "size": {
           "width": 2,
@@ -5788,7 +6987,23 @@
         },
         "rotationDegrees": 270
       },
-      "modelType": "ProcessingBuildingPaper"
+      "modelType": "Model.Cells.Facility.ExtractorBuildingWood"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 158,
+          "y": 120
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -5826,6 +7041,38 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 69,
+          "y": 121
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 144,
+          "y": 121
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SProcessingBuildingPaper, Persistence",
         "requiredResourceAmount": 0,
         "resourceAmount": 0,
@@ -5840,6 +7087,167 @@
         "rotationDegrees": 270
       },
       "modelType": "ProcessingBuildingPaper"
+    },
+    {
+      "model": {
+        "$type": "SProcessingBuildingPaper, Persistence",
+        "requiredResourceAmount": 0,
+        "resourceAmount": 0,
+        "origin": {
+          "x": 168,
+          "y": 120
+        },
+        "size": {
+          "width": 2,
+          "height": 2
+        },
+        "rotationDegrees": 270
+      },
+      "modelType": "ProcessingBuildingPaper"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 129,
+          "y": 122
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 64,
+          "y": 124
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 71,
+          "y": 124
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 73,
+          "y": 124
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 154,
+          "y": 124
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 133,
+          "y": 125
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 68,
+          "y": 126
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 159,
+          "y": 126
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 127,
+          "y": 127
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -5875,6 +7283,22 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 69,
+          "y": 128
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SExtractorBuildingCoal, Persistence",
         "resourceAmount": 0,
         "origin": {
@@ -5904,6 +7328,86 @@
         "rotationDegrees": 270
       },
       "modelType": "Model.Cells.Facility.ExtractorBuildingCoal"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 70,
+          "y": 129
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 123,
+          "y": 129
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 77,
+          "y": 130
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 77,
+          "y": 131
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 162,
+          "y": 131
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -5971,19 +7475,19 @@
     },
     {
       "model": {
-        "$type": "SExtractorBuildingCoal, Persistence",
-        "resourceAmount": 0,
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
         "origin": {
-          "x": 171,
+          "x": 128,
           "y": 133
         },
         "size": {
-          "width": 2,
-          "height": 2
+          "width": 1,
+          "height": 1
         },
         "rotationDegrees": 0
       },
-      "modelType": "Model.Cells.Facility.ExtractorBuildingCoal"
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -6019,6 +7523,22 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 73,
+          "y": 134
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SExtractorBuildingCoal, Persistence",
         "resourceAmount": 0,
         "origin": {
@@ -6032,6 +7552,150 @@
         "rotationDegrees": 0
       },
       "modelType": "Model.Cells.Facility.ExtractorBuildingCoal"
+    },
+    {
+      "model": {
+        "$type": "SExtractorBuildingCoal, Persistence",
+        "resourceAmount": 0,
+        "origin": {
+          "x": 171,
+          "y": 133
+        },
+        "size": {
+          "width": 2,
+          "height": 2
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Model.Cells.Facility.ExtractorBuildingCoal"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 108,
+          "y": 135
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 114,
+          "y": 135
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 154,
+          "y": 135
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 65,
+          "y": 137
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 113,
+          "y": 137
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 118,
+          "y": 137
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 169,
+          "y": 137
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 123,
+          "y": 138
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -6067,6 +7731,54 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 238,
+          "y": 138
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 66,
+          "y": 139
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 117,
+          "y": 139
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SExtractorBuildingIron, Persistence",
         "resourceAmount": 0,
         "origin": {
@@ -6096,6 +7808,150 @@
         "rotationDegrees": 270
       },
       "modelType": "Model.Cells.Facility.ExtractorBuildingIron"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 170,
+          "y": 139
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 76,
+          "y": 140
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 107,
+          "y": 140
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 116,
+          "y": 140
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 121,
+          "y": 140
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 164,
+          "y": 140
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 177,
+          "y": 140
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 240,
+          "y": 140
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 173,
+          "y": 141
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -6129,6 +7985,86 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 172,
+          "y": 142
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 238,
+          "y": 142
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 241,
+          "y": 142
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 242,
+          "y": 142
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 61,
+          "y": 143
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SRoadCell, Persistence",
         "origin": {
           "x": 145,
@@ -6156,6 +8092,54 @@
         "rotationDegrees": 0
       },
       "modelType": "DynamicRoadCell"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 174,
+          "y": 143
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 238,
+          "y": 143
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 243,
+          "y": 143
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -6201,6 +8185,38 @@
         "rotationDegrees": 0
       },
       "modelType": "DynamicRoadCell"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 108,
+          "y": 144
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 120,
+          "y": 144
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -6321,6 +8337,86 @@
         "rotationDegrees": 0
       },
       "modelType": "DynamicRoadCell"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 167,
+          "y": 144
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 175,
+          "y": 144
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 236,
+          "y": 144
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 239,
+          "y": 144
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 241,
+          "y": 144
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -6518,6 +8614,102 @@
         "rotationDegrees": 270
       },
       "modelType": "Model.Cells.Facility.ExtractorBuildingWood"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 238,
+          "y": 145
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 239,
+          "y": 145
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 240,
+          "y": 145
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 242,
+          "y": 145
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 246,
+          "y": 145
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 67,
+          "y": 146
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -6763,6 +8955,70 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 240,
+          "y": 146
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 241,
+          "y": 146
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 242,
+          "y": 146
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 243,
+          "y": 146
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SResidentialBuilding1, Persistence",
         "origin": {
           "x": 86,
@@ -7000,6 +9256,70 @@
         "rotationDegrees": 0
       },
       "modelType": "DynamicRoadCell"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 167,
+          "y": 147
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 236,
+          "y": 147
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 239,
+          "y": 147
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 240,
+          "y": 147
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -7261,6 +9581,70 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 170,
+          "y": 148
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 238,
+          "y": 148
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 240,
+          "y": 148
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 242,
+          "y": 148
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SExtractorBuildingCoal, Persistence",
         "resourceAmount": 0,
         "origin": {
@@ -7488,6 +9872,22 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 65,
+          "y": 150
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SResidentialBuilding1, Persistence",
         "origin": {
           "x": 86,
@@ -7623,6 +10023,38 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 162,
+          "y": 150
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 249,
+          "y": 150
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SRoadCell, Persistence",
         "origin": {
           "x": 87,
@@ -7635,6 +10067,22 @@
         "rotationDegrees": 0
       },
       "modelType": "DynamicRoadCell"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 114,
+          "y": 151
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -7665,6 +10113,38 @@
         "rotationDegrees": 0
       },
       "modelType": "DynamicRoadCell"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 236,
+          "y": 151
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 241,
+          "y": 151
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -7773,6 +10253,54 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 168,
+          "y": 152
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 176,
+          "y": 152
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 246,
+          "y": 152
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SRoadCell, Persistence",
         "origin": {
           "x": 145,
@@ -7788,19 +10316,275 @@
     },
     {
       "model": {
-        "$type": "SExtractorBuildingWood, Persistence",
-        "resourceAmount": 0,
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
         "origin": {
-          "x": 103,
+          "x": 167,
+          "y": 153
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 239,
+          "y": 153
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 74,
+          "y": 155
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 127,
+          "y": 156
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 128,
+          "y": 156
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 127,
+          "y": 157
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 128,
+          "y": 157
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 129,
+          "y": 157
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 130,
+          "y": 157
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 131,
+          "y": 157
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 132,
+          "y": 157
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 62,
+          "y": 158
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 128,
+          "y": 158
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 129,
+          "y": 158
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 131,
+          "y": 159
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 71,
+          "y": 162
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 78,
           "y": 163
         },
         "size": {
-          "width": 2,
-          "height": 2
+          "width": 1,
+          "height": 1
         },
-        "rotationDegrees": 270
+        "rotationDegrees": 0
       },
-      "modelType": "Model.Cells.Facility.ExtractorBuildingWood"
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -7836,6 +10620,22 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 67,
+          "y": 164
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SExtractorBuildingWood, Persistence",
         "resourceAmount": 0,
         "origin": {
@@ -7849,6 +10649,38 @@
         "rotationDegrees": 270
       },
       "modelType": "Model.Cells.Facility.ExtractorBuildingWood"
+    },
+    {
+      "model": {
+        "$type": "SExtractorBuildingWood, Persistence",
+        "resourceAmount": 0,
+        "origin": {
+          "x": 103,
+          "y": 163
+        },
+        "size": {
+          "width": 2,
+          "height": 2
+        },
+        "rotationDegrees": 270
+      },
+      "modelType": "Model.Cells.Facility.ExtractorBuildingWood"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 60,
+          "y": 165
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -8109,6 +10941,38 @@
         "rotationDegrees": 270
       },
       "modelType": "Model.Cells.Facility.ExtractorBuildingIron"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 98,
+          "y": 171
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 101,
+          "y": 171
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -8187,6 +11051,22 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 54,
+          "y": 173
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SRoadCell, Persistence",
         "origin": {
           "x": 185,
@@ -8248,6 +11128,54 @@
         "rotationDegrees": 180
       },
       "modelType": "ProcessingBuildingPaper"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 94,
+          "y": 174
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 103,
+          "y": 174
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 106,
+          "y": 174
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -8386,6 +11314,38 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 60,
+          "y": 175
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 68,
+          "y": 175
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SProcessingBuildingPaper, Persistence",
         "requiredResourceAmount": 0,
         "resourceAmount": 0,
@@ -8417,6 +11377,22 @@
         "rotationDegrees": 180
       },
       "modelType": "ProcessingBuildingPaper"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 169,
+          "y": 175
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -8601,6 +11577,70 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 58,
+          "y": 177
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 62,
+          "y": 177
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 65,
+          "y": 177
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 99,
+          "y": 177
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SResidentialBuilding2, Persistence",
         "origin": {
           "x": 184,
@@ -8688,6 +11728,38 @@
         "rotationDegrees": 0
       },
       "modelType": "DynamicRoadCell"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 98,
+          "y": 178
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 100,
+          "y": 178
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -8873,6 +11945,22 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 55,
+          "y": 179
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SExtractorBuildingIron, Persistence",
         "resourceAmount": 0,
         "origin": {
@@ -8902,6 +11990,38 @@
         "rotationDegrees": 270
       },
       "modelType": "Model.Cells.Facility.ExtractorBuildingIron"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 162,
+          "y": 179
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 165,
+          "y": 179
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -9070,6 +12190,22 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 155,
+          "y": 180
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SResidentialBuilding1, Persistence",
         "origin": {
           "x": 184,
@@ -9175,6 +12311,54 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 104,
+          "y": 181
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 106,
+          "y": 181
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 172,
+          "y": 181
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SRoadCell, Persistence",
         "origin": {
           "x": 187,
@@ -9232,6 +12416,38 @@
         "rotationDegrees": 0
       },
       "modelType": "DynamicRoadCell"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 55,
+          "y": 182
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 160,
+          "y": 182
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -9419,19 +12635,99 @@
     },
     {
       "model": {
-        "$type": "SExtractorBuildingWood, Persistence",
-        "resourceAmount": 0,
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
         "origin": {
-          "x": 61,
-          "y": 188
+          "x": 168,
+          "y": 185
         },
         "size": {
-          "width": 2,
-          "height": 2
+          "width": 1,
+          "height": 1
         },
-        "rotationDegrees": 90
+        "rotationDegrees": 0
       },
-      "modelType": "Model.Cells.Facility.ExtractorBuildingWood"
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 48,
+          "y": 186
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 60,
+          "y": 186
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 74,
+          "y": 187
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 153,
+          "y": 187
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 159,
+          "y": 187
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -9467,6 +12763,54 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 74,
+          "y": 188
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 77,
+          "y": 188
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 163,
+          "y": 188
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SExtractorBuildingWood, Persistence",
         "resourceAmount": 0,
         "origin": {
@@ -9480,6 +12824,406 @@
         "rotationDegrees": 90
       },
       "modelType": "Model.Cells.Facility.ExtractorBuildingWood"
+    },
+    {
+      "model": {
+        "$type": "SExtractorBuildingWood, Persistence",
+        "resourceAmount": 0,
+        "origin": {
+          "x": 61,
+          "y": 188
+        },
+        "size": {
+          "width": 2,
+          "height": 2
+        },
+        "rotationDegrees": 90
+      },
+      "modelType": "Model.Cells.Facility.ExtractorBuildingWood"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 74,
+          "y": 189
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 75,
+          "y": 189
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 78,
+          "y": 189
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 48,
+          "y": 190
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 73,
+          "y": 190
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 77,
+          "y": 190
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 55,
+          "y": 191
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 72,
+          "y": 191
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 75,
+          "y": 191
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 76,
+          "y": 191
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 77,
+          "y": 191
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 74,
+          "y": 192
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 75,
+          "y": 192
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 76,
+          "y": 192
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 45,
+          "y": 193
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 78,
+          "y": 193
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 73,
+          "y": 194
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 74,
+          "y": 194
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 51,
+          "y": 196
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 61,
+          "y": 197
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 63,
+          "y": 197
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 46,
+          "y": 199
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 59,
+          "y": 199
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 51,
+          "y": 201
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -9592,6 +13336,22 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 52,
+          "y": 204
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SRoadCell, Persistence",
         "origin": {
           "x": 99,
@@ -9799,6 +13559,22 @@
         "rotationDegrees": 270
       },
       "modelType": "Model.Cells.Cities.Houses.ResidentialBuilding2"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 57,
+          "y": 206
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -10335,6 +14111,38 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 45,
+          "y": 209
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 65,
+          "y": 209
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SRoadCell, Persistence",
         "origin": {
           "x": 99,
@@ -10452,6 +14260,22 @@
         "rotationDegrees": 0
       },
       "modelType": "DynamicRoadCell"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 59,
+          "y": 210
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -10577,6 +14401,22 @@
         "rotationDegrees": 270
       },
       "modelType": "Model.Cells.Cities.Houses.ResidentialBuilding2"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 54,
+          "y": 211
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -10915,6 +14755,22 @@
         "rotationDegrees": 0
       },
       "modelType": "Model.Cells.Cities.Houses.ResidentialBuilding2"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 50,
+          "y": 215
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -11097,6 +14953,22 @@
         "rotationDegrees": 270
       },
       "modelType": "Model.Cells.Facility.ExtractorBuildingCoal"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 63,
+          "y": 216
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -11643,6 +15515,22 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 58,
+          "y": 220
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SRoadCell, Persistence",
         "origin": {
           "x": 138,
@@ -11808,6 +15696,22 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 50,
+          "y": 221
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SRoadCell, Persistence",
         "origin": {
           "x": 142,
@@ -11820,6 +15724,22 @@
         "rotationDegrees": 0
       },
       "modelType": "DynamicRoadCell"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 62,
+          "y": 222
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -11838,6 +15758,22 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 201,
+          "y": 222
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SRoadCell, Persistence",
         "origin": {
           "x": 142,
@@ -11850,6 +15786,22 @@
         "rotationDegrees": 0
       },
       "modelType": "DynamicRoadCell"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 182,
+          "y": 223
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -11868,6 +15820,54 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 176,
+          "y": 224
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 186,
+          "y": 224
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 205,
+          "y": 224
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SExtractorBuildingWood, Persistence",
         "resourceAmount": 0,
         "origin": {
@@ -11915,6 +15915,38 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 158,
+          "y": 225
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 174,
+          "y": 225
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SExtractorBuildingWood, Persistence",
         "resourceAmount": 0,
         "origin": {
@@ -11947,19 +15979,163 @@
     },
     {
       "model": {
-        "$type": "SExtractorBuildingCoal, Persistence",
-        "resourceAmount": 0,
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
         "origin": {
-          "x": 94,
+          "x": 149,
+          "y": 226
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 198,
+          "y": 226
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 66,
+          "y": 227
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 166,
+          "y": 227
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 181,
+          "y": 227
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 187,
+          "y": 227
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 204,
+          "y": 227
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 62,
+          "y": 228
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 153,
+          "y": 228
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 64,
           "y": 229
         },
         "size": {
-          "width": 2,
-          "height": 2
+          "width": 1,
+          "height": 1
         },
-        "rotationDegrees": 180
+        "rotationDegrees": 0
       },
-      "modelType": "Model.Cells.Facility.ExtractorBuildingCoal"
+      "modelType": "Forest"
     },
     {
       "model": {
@@ -11995,6 +16171,134 @@
     },
     {
       "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 161,
+          "y": 229
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 169,
+          "y": 229
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 179,
+          "y": 229
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 63,
+          "y": 230
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 65,
+          "y": 230
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 67,
+          "y": 230
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 68,
+          "y": 230
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 69,
+          "y": 230
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
         "$type": "SExtractorBuildingCoal, Persistence",
         "resourceAmount": 0,
         "origin": {
@@ -12008,6 +16312,1126 @@
         "rotationDegrees": 180
       },
       "modelType": "Model.Cells.Facility.ExtractorBuildingCoal"
+    },
+    {
+      "model": {
+        "$type": "SExtractorBuildingCoal, Persistence",
+        "resourceAmount": 0,
+        "origin": {
+          "x": 94,
+          "y": 229
+        },
+        "size": {
+          "width": 2,
+          "height": 2
+        },
+        "rotationDegrees": 180
+      },
+      "modelType": "Model.Cells.Facility.ExtractorBuildingCoal"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 192,
+          "y": 230
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 62,
+          "y": 231
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 65,
+          "y": 231
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 66,
+          "y": 231
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 69,
+          "y": 231
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 174,
+          "y": 231
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 60,
+          "y": 232
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 64,
+          "y": 232
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 65,
+          "y": 232
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 67,
+          "y": 232
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 68,
+          "y": 232
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 197,
+          "y": 232
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 61,
+          "y": 233
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 64,
+          "y": 233
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 66,
+          "y": 233
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 67,
+          "y": 233
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 69,
+          "y": 233
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 160,
+          "y": 233
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 205,
+          "y": 233
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 63,
+          "y": 234
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 64,
+          "y": 234
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 65,
+          "y": 234
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 66,
+          "y": 234
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 68,
+          "y": 234
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 152,
+          "y": 234
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 193,
+          "y": 234
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 65,
+          "y": 235
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 67,
+          "y": 235
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 69,
+          "y": 235
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 70,
+          "y": 235
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 171,
+          "y": 235
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 189,
+          "y": 235
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 63,
+          "y": 236
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 64,
+          "y": 236
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 66,
+          "y": 236
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 68,
+          "y": 236
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 160,
+          "y": 236
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 157,
+          "y": 237
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 167,
+          "y": 237
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 176,
+          "y": 237
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 228,
+          "y": 237
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 63,
+          "y": 238
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 65,
+          "y": 238
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 67,
+          "y": 238
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 71,
+          "y": 238
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 219,
+          "y": 238
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 230,
+          "y": 238
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 231,
+          "y": 238
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 163,
+          "y": 239
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 227,
+          "y": 239
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 68,
+          "y": 240
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 148,
+          "y": 240
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 158,
+          "y": 240
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 216,
+          "y": 240
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 221,
+          "y": 240
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 225,
+          "y": 240
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 159,
+          "y": 241
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 162,
+          "y": 241
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 226,
+          "y": 241
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 228,
+          "y": 241
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 230,
+          "y": 241
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 233,
+          "y": 242
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 210,
+          "y": 243
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 227,
+          "y": 243
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 230,
+          "y": 243
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 216,
+          "y": 244
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 180,
+          "y": 245
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 220,
+          "y": 245
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
+    },
+    {
+      "model": {
+        "$type": "SForest, Persistence",
+        "numOfTrees": 1,
+        "origin": {
+          "x": 211,
+          "y": 246
+        },
+        "size": {
+          "width": 1,
+          "height": 1
+        },
+        "rotationDegrees": 0
+      },
+      "modelType": "Forest"
     },
     {
       "model": {
