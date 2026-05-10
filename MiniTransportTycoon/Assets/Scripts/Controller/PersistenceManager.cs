@@ -72,6 +72,12 @@ public class PersistenceManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
         _fileManager = new JsonFileManager();
         _gameDataCollector = new GameDataCollector();
@@ -91,24 +97,32 @@ public class PersistenceManager : MonoBehaviour
             yield break;
         }
 
+        PlayerState.Instance.SetIsMapLoadingFromPersistence(true);
+
         try
         {
-            PlayerState.Instance.SetIsMapLoadingFromPersistence(true);
             GameData gameData = _fileManager.Deserialize(www.downloadHandler.text);
             _gameDataApplier.Apply(gameData);
-            PlayerState.Instance.SetIsMapLoadingFromPersistence(false);
             Debug.Log("Loaded save file.");
         }
         catch (System.Exception ex)
         {
             Debug.LogError($"Failed to load save file: {ex}");
         }
+        finally
+        {
+            PlayerState.Instance.SetIsMapLoadingFromPersistence(false);
+        }
     }
     
     public void LoadDefaultNewGame()
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        string uri = $"{Application.streamingAssetsPath.TrimEnd('/')}/basic_map.json";
+#else
         string path = Path.Combine(Application.streamingAssetsPath, "basic_map.json");
         string uri = new Uri(path).AbsoluteUri;
+#endif
         StartCoroutine(OutputRoutineOpen(uri));
     }
 }

@@ -25,8 +25,14 @@ namespace Scene
             LoadingProgress = 100;
 
             op.allowSceneActivation = true;
-            LoadingProgress = 0;
+
+            while (!op.isDone)
+            {
+                await Task.Yield();
+            }
+
             await Task.Yield();
+            LoadingProgress = 0;
         }
     }
 }
