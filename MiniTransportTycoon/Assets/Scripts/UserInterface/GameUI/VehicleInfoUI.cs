@@ -87,13 +87,19 @@ namespace UserInterface.GameUI
 
         public void Refresh(Vehicle vehicle)
         {
+            bool routeCreationActiveForVehicle = _vehicleOwnedListUI.IsRouteCreationActiveFor(vehicle);
+            bool routeCreationInProgress = _vehicleOwnedListUI.IsRouteCreationInProgress();
+
             _vehicleName.text = vehicleManager.GetVehicleDisplayLabel(vehicle);
             _resourceType.text = $"Resource type: {vehicle.Resource}";
             _resourceAmount.text = $"Resource amount: {vehicle.ResourceAmount}/{vehicle.MaxCapacity}";
             _maintenanceCost.text = $"Maintenance cost: {vehicle.MaintenanceCost}";
             _moveSpeed.text = $"Move speed: {vehicle.MoveSpeed}";
             _depositePerTile.text = $"Deposits {vehicle.DepositPerCellInCity} each tile in cities";
-            _routeBtn.text = vehicle.Route is null ? "Assign Route" : "Edit Route";
+            _routeBtn.text = routeCreationActiveForVehicle
+                ? "Cancel"
+                : vehicle.Route is null ? "Assign Route" : "Edit Route";
+            _routeBtn.SetEnabled(!routeCreationInProgress || routeCreationActiveForVehicle);
         }
 
         public void Hide()

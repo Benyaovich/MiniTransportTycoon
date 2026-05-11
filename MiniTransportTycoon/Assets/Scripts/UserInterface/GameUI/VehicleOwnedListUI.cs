@@ -108,6 +108,7 @@ public class VehicleOwnedListUI : MonoBehaviour
         pathBtn.text = hasAssignedRoute ? "Edit Route" : "Assign Route";
 
         RegisterPathButton(pathBtn, vehicle);
+        ApplyRouteCreationState(pathBtn, vehicle);
 
         sellBtn.clicked += () => SellVehicle(vehicle);
 
@@ -166,6 +167,7 @@ public class VehicleOwnedListUI : MonoBehaviour
         CleanupRouteCreation();
 
         _routeCreationManager.StartRouteCreation();
+        RefreshList();
 
         _routeCreatedHandler = (_, route) =>
         {
@@ -191,6 +193,32 @@ public class VehicleOwnedListUI : MonoBehaviour
         {
             _routeCreationManager.ExitRouteCreation();
         }
+    }
+
+    public bool IsRouteCreationInProgress()
+    {
+        return _routeCreationManager.InRouteCreation;
+    }
+
+    public bool IsRouteCreationActiveFor(Vehicle vehicle)
+    {
+        return _routeCreationManager.InRouteCreation && _vehicleInRouteCreation == vehicle;
+    }
+
+    private void ApplyRouteCreationState(Button pathBtn, Vehicle vehicle)
+    {
+        if (!_routeCreationManager.InRouteCreation || _vehicleInRouteCreation is null)
+        {
+            return;
+        }
+
+        if (_vehicleInRouteCreation == vehicle)
+        {
+            pathBtn.text = "Cancel";
+            return;
+        }
+
+        pathBtn.SetEnabled(false);
     }
 
     private void SellVehicle(Vehicle vehicle)
