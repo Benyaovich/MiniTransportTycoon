@@ -107,11 +107,18 @@ public class CellBuildingManager : BuildingManagerBase
 
     private void Demolish(ModelGridObject go, List<Location> gridPositionList)
     {
-        Location origin = go.Model!.Origin;
+        Cell demolishedCell = go.Model!;
+        Location origin = demolishedCell.Origin;
         RemoveFromIAdvancablesList(go);
         go.ClearModel();
         ClearModelFromGridObjects(gridPositionList);
-        InvokeOnModelChanged(go.Model, origin);
+        
+        if (demolishedCell is IVisitableBuiling)
+        {
+            RefreshRoadsAroundCell(demolishedCell);
+        }
+        
+        InvokeOnModelChanged(null, origin);
     }
 
     private void RemoveFromIAdvancablesList(ModelGridObject go)
@@ -149,6 +156,28 @@ public class CellBuildingManager : BuildingManagerBase
                 
                 roadCell.SetIsVertexPoint(true);
                 if(roadCell is not DynamicRoadCell dynamicRoadCell) continue;
+                _dynamicRoadBuildingManager.RefreshRoad(dynamicRoadCell);
+            }
+        }
+    }
+
+    private void RefreshRoadsAroundCell(Cell cell)
+    {
+        int yFrom = cell.Origin.Y - 1;
+        int yTo = cell.Origin.Y + cell.Size.Height;
+        int xFrom = cell.Origin.X - 1;
+        int xTo = cell.Origin.X + cell.Size.Width;
+        
+        for (int y = yFrom; y <= yTo; y++)
+        {
+            for (int x = xFrom; x <= xTo; x++)
+            {
+                if((x == xFrom && y == yFrom) || (x == xTo && y == yTo) ||
+                   (x == xFrom && y == yTo) || (x == xTo && y == yFrom)) continue;
+
+                ModelGridObject gridObject = Grid.GetGridObject(x, y);
+                if (gridObject?.Model is not DynamicRoadCell dynamicRoadCell) continue;
+                
                 _dynamicRoadBuildingManager.RefreshRoad(dynamicRoadCell);
             }
         }

@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     private float _gameSpeedMultiplier = 1;
     private DynamicRoadBuildingManager _dynamicRoadBuildingManager;
     private IGraphBuilder _graphBuilder;
+    private Graph _graph;
     private HighlightService _highlightService;
 
     private GameplayState _gameplayState;
@@ -23,9 +24,9 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         _dynamicRoadBuildingManager = GridManager.Instance!.DynamicRoadBuildingManager;
-        Graph graph = new Graph();
-        PathHandler pathHandler = new PathHandler(graph);
-        _graphBuilder = new GraphBuilder(GridManager.Instance.Grid, graph);
+        _graph = new Graph();
+        PathHandler pathHandler = new PathHandler(_graph);
+        _graphBuilder = new GraphBuilder(GridManager.Instance.Grid, _graph);
         RouteCreationManager.Instance.Setup(pathHandler);
         
         _gameplayState = GameplayState.Building;
