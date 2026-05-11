@@ -104,7 +104,9 @@ A játék böngészőből is kipróbálható az alábbi linken:
 
 Gameplay videó a játékról (UI rework előtt):
 
-[Mini Transport Tycoon Gameplay Video](https://www.youtube.com/watch?v=x5_ILxdACd8)
+[![Gameplay Video](Images/video_cover_image.png)](https://www.youtube.com/watch?v=x5_ILxdACd8)
+
+[Watch on YouTube](https://www.youtube.com/watch?v=x5_ILxdACd8)
 
 ## Felhasznált assetek
 
