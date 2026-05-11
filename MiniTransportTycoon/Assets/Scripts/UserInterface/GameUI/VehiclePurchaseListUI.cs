@@ -22,6 +22,8 @@ public class VehiclePurchaseListUI : MonoBehaviour
 
     private void RefreshList()
     {
+        _vehicleList.Clear();
+
         foreach (VehicleSO vehicleSo in vehicleManager.VehicleSos)
         {
             VisualElement element = listItemTemplate.Instantiate();
@@ -32,7 +34,7 @@ public class VehiclePurchaseListUI : MonoBehaviour
             
             
             Button buyBtn = element.Q<Button>("BuyBtn");
-            buyBtn.text = vehicleSo.price.ToString();
+            buyBtn.text = $"Buy {vehicleSo.price}$";
             buyBtn.clicked += () => vehicleManager.BuyVehicle(vehicleSo);
             
             _vehicleList.Add(element);

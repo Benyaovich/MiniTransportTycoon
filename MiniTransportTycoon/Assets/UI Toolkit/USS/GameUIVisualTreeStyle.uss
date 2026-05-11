@@ -1,117 +1,543 @@
-#ControlsHelpOverlay > Label {
-    font-size: 24px;
-}
-
-.ControlsHelpOverlay:hover {
-    background-color: rgb(166, 166, 166);
-    transition-property: all;
-    bottom: 0;
-    left: 0;
-    position: absolute;
+.topBar {
+    flex-direction: row;
+    align-items: center;
+    padding-top: 12px;
+    padding-right: 14px;
+    padding-bottom: 12px;
+    padding-left: 14px;
+    background-color: rgba(18, 26, 33, 0.82);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 16px;
     border-top-width: 1px;
     border-right-width: 1px;
     border-bottom-width: 1px;
     border-left-width: 1px;
-    border-left-color: rgb(0, 0, 0);
-    border-right-color: rgb(0, 0, 0);
-    border-top-color: rgb(0, 0, 0);
-    border-bottom-color: rgb(0, 0, 0);
-    padding-top: 15px;
-    padding-right: 15px;
-    padding-bottom: 15px;
-    padding-left: 15px;
+    border-left-color: rgba(255, 255, 255, 0.06);
+    border-right-color: rgba(255, 255, 255, 0.06);
+    border-top-color: rgba(255, 255, 255, 0.06);
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.topBarTitleBlock {
+    margin-left: 12px;
+    margin-right: 16px;
+    min-width: 220px;
+}
+
+.topBarTitle {
+    color: rgb(246, 246, 240);
+    font-size: 21px;
+    -unity-font-style: bold;
+}
+
+.topBarSubtitle {
+    color: rgba(220, 226, 232, 0.72);
+    font-size: 13px;
+    margin-top: 2px;
+}
+
+.toolbarActions {
+    flex-direction: row;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.toolbarGroup {
+    flex-direction: row;
+    align-items: center;
+    margin-right: 8px;
+}
+
+.moneyPill {
+    min-width: 190px;
+    align-items: flex-end;
+    padding-top: 8px;
+    padding-right: 14px;
+    padding-bottom: 8px;
+    padding-left: 14px;
+    background-color: rgba(82, 131, 102, 0.28);
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    border-bottom-right-radius: 14px;
+    border-bottom-left-radius: 14px;
+}
+
+.moneyLabelSmall {
+    color: rgba(224, 241, 215, 0.78);
+    font-size: 11px;
+}
+
+#Money {
+    color: rgb(244, 255, 239);
+    font-size: 26px;
+    -unity-font-style: bold;
+    margin-top: 2px;
+}
+
+.sidePanelAnchor {
+    position: absolute;
+    left: 18px;
+    top: 106px;
+    bottom: 108px;
+    width: 430px;
+}
+
+.sidePanelCard {
+    flex-grow: 1;
+    padding-top: 14px;
+    padding-right: 14px;
+    padding-bottom: 14px;
+    padding-left: 14px;
+    background-color: rgba(18, 26, 33, 0.84);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 16px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgba(255, 255, 255, 0.06);
+    border-right-color: rgba(255, 255, 255, 0.06);
+    border-top-color: rgba(255, 255, 255, 0.06);
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.sidePanelHeader {
+    margin-bottom: 10px;
+}
+
+.sidePanelTitle {
+    color: rgb(246, 246, 241);
+    font-size: 25px;
+    -unity-font-style: bold;
+}
+
+.sidePanelSubtitle {
+    color: rgba(214, 222, 228, 0.72);
+    font-size: 14px;
+    margin-top: 3px;
+}
+
+.fleetScroll {
+    flex-grow: 1;
+    background-color: rgba(255, 255, 255, 0.04);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    padding-top: 6px;
+    padding-right: 6px;
+    padding-bottom: 6px;
+    padding-left: 6px;
+}
+
+.emptyStateCard {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    top: 82px;
+    bottom: 14px;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    background-color: rgba(255, 255, 255, 0.04);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+.emptyStateTitle {
+    color: rgb(245, 246, 240);
+    font-size: 24px;
+    -unity-font-style: bold;
+}
+
+.emptyStateText {
+    color: rgba(221, 228, 234, 0.72);
+    font-size: 16px;
+    margin-top: 6px;
+    white-space: normal;
+    -unity-text-align: middle-center;
+}
+
+.bottomHud {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 18px;
+    justify-content: center;
+    align-items: center;
+}
+
+.speedPanel {
+    flex-direction: row;
+    align-items: center;
+    padding-top: 10px;
+    padding-right: 12px;
+    padding-bottom: 10px;
+    padding-left: 12px;
+    background-color: rgba(18, 26, 33, 0.84);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 16px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgba(255, 255, 255, 0.06);
+    border-right-color: rgba(255, 255, 255, 0.06);
+    border-top-color: rgba(255, 255, 255, 0.06);
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.speedPanelInfo {
+    margin-right: 12px;
+}
+
+.speedPanelTitle {
+    color: rgb(245, 246, 240);
+    font-size: 19px;
+    -unity-font-style: bold;
+}
+
+.speedPanelSubtitle {
+    color: rgba(214, 222, 228, 0.68);
+    font-size: 13px;
+    margin-top: 2px;
+}
+
+.speedButtonRow {
+    flex-direction: row;
+    align-items: center;
+}
+
+.menuOverlay {
+    background-color: rgba(8, 12, 16, 0.76);
+}
+
+.overlayCard {
+    width: 360px;
+    padding-top: 24px;
+    padding-right: 24px;
+    padding-bottom: 24px;
+    padding-left: 24px;
+    background-color: rgba(18, 26, 33, 0.94);
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+    border-bottom-left-radius: 18px;
+}
+
+.overlayEyebrow {
+    color: rgba(184, 198, 210, 0.7);
+    font-size: 11px;
+}
+
+.overlayTitle {
+    color: rgb(245, 246, 240);
+    font-size: 32px;
+    -unity-font-style: bold;
+    margin-top: 6px;
+}
+
+.overlaySubtitle {
+    color: rgba(216, 224, 230, 0.75);
+    font-size: 14px;
+    margin-top: 8px;
+    margin-bottom: 14px;
+    white-space: normal;
+}
+
+.overlayActionButton {
+    width: 100%;
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+.minimapCard {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 300px;
+    padding-top: 12px;
+    padding-right: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    background-color: rgba(18, 26, 33, 0.88);
+    border-bottom-left-radius: 18px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgba(255, 255, 255, 0.08);
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.minimapTitle {
+    color: rgb(245, 246, 240);
+    font-size: 18px;
+    -unity-font-style: bold;
+}
+
+.minimapHint {
+    color: rgba(214, 222, 228, 0.7);
+    font-size: 11px;
+    margin-top: 3px;
+    margin-bottom: 8px;
+}
+
+.minimapViewport {
+    flex-grow: 1;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .ControlsHelpOverlay {
-    background-color: rgba(140, 140, 140, 0.31);
-    transition-property: background-color;
-    bottom: 0;
-    left: 0;
     position: absolute;
-    transition-duration: 0.2s;
-    padding-top: 15px;
-    padding-right: 15px;
-    padding-bottom: 15px;
-    padding-left: 15px;
-    border-top-right-radius: 10px;
+    left: 18px;
+    bottom: 18px;
+    width: 430px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-top: 10px;
+    padding-right: 12px;
+    padding-bottom: 10px;
+    padding-left: 12px;
+    background-color: rgba(18, 26, 33, 0.84);
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    border-bottom-right-radius: 14px;
+    border-bottom-left-radius: 14px;
     border-top-width: 1px;
     border-right-width: 1px;
     border-bottom-width: 1px;
     border-left-width: 1px;
-    border-left-color: rgba(140, 140, 140, 0.31);
-    border-right-color: rgba(140, 140, 140, 0.31);
-    border-top-color: rgba(140, 140, 140, 0.31);
-    border-bottom-color: rgba(140, 140, 140, 0.31);
-    font-size: 12px;
+    border-left-color: rgba(255, 255, 255, 0.06);
+    border-right-color: rgba(255, 255, 255, 0.06);
+    border-top-color: rgba(255, 255, 255, 0.06);
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.ControlsHelpOverlayLabel {
+    color: rgb(232, 236, 240);
+    font-size: 15px;
+    margin-right: 6px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.ControlsHelpOverlaySeparator {
+    color: rgba(156, 170, 182, 0.56);
 }
 
 .navBarButton {
-    font-size: 24px;
-    background-color: rgb(255, 255, 255);
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-top-width: 0;
-    border-top-color: rgb(0, 0, 0);
-    letter-spacing: 0;
-    -unity-text-align: middle-center;
-    margin-left: 10px;
-    margin-right: 10px;
-    rotate: 0;
-    min-width: 100px;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    min-height: 50px;
-    transition-duration: 0.2s;
-}
-
-.navBarButton:hover {
-    font-size: 24px;
-    background-color: rgb(255, 255, 255);
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-top-width: 0;
-    border-top-color: rgb(0, 0, 0);
-    letter-spacing: 0;
-    -unity-text-align: middle-center;
-    margin-left: 10px;
-    margin-right: 10px;
-    scale: 1.1 1.1;
-    rotate: 1deg;
-}
-
-.selectedBtn {
-    scale: 1.2 1.2 1.2;
-    -unity-font-style: normal;
-}
-
-.infoCardContainer {
-    flex-grow: 1;
-    width: 340px;
-    background-color: rgb(197, 197, 197);
-    height: 200px;
-    position: absolute;
-    right: 0;
-    top: 350px;
-    bottom: 0;
-    font-size: 20px;
-    padding-top: 10px;
-    padding-left: 10px;
-    padding-bottom: 10px;
-    padding-right: 10px;
-    flex-shrink: 1;
-    justify-content: center;
+    min-width: 88px;
+    min-height: 45px;
+    margin-left: 4px;
+    margin-right: 4px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    font-size: 18px;
+    color: rgb(20, 28, 36);
+    background-color: rgb(236, 239, 242);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
+    transition-duration: 0.14s;
 }
 
-.ControlsHelpOverlayLabel {
+.navBarButton:hover {
+    scale: 1.03 1.03;
+    background-color: rgb(246, 248, 250);
+    translate: 0 -5px;
+}
+
+.primaryActionButton {
+    color: rgb(245, 246, 240);
+    background-color: rgb(76, 123, 95);
+}
+
+.primaryActionButton:hover {
+    background-color: rgb(89, 138, 109);
+}
+
+.secondaryActionButton {
+    background-color: rgb(223, 229, 235);
+}
+
+.secondaryActionButton:hover {
+    background-color: rgb(236, 240, 244);
+}
+
+.dangerActionButton {
+    color: rgb(252, 245, 243);
+    background-color: rgb(161, 81, 68);
+}
+
+.dangerActionButton:hover {
+    background-color: rgb(180, 92, 78);
+}
+
+.selectedBtn {
+    color: rgb(245, 246, 240);
+    background-color: rgb(76, 123, 95);
+    -unity-font-style: bold;
+}
+
+.selectedBtn:hover {
+    color: rgb(245, 246, 240);
+    background-color: rgb(89, 138, 109);
+}
+
+.infoCardContainer {
+    width: 300px;
+    padding-top: 14px;
+    padding-right: 14px;
+    padding-bottom: 14px;
+    padding-left: 14px;
+    background-color: rgba(18, 26, 33, 0.88);
+    position: absolute;
+    right: 18px;
+    top: 322px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 16px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgba(255, 255, 255, 0.06);
+    border-right-color: rgba(255, 255, 255, 0.06);
+    border-top-color: rgba(255, 255, 255, 0.06);
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.infoCardEyebrow {
+    color: rgba(184, 198, 210, 0.7);
+    font-size: 10px;
+}
+
+.infoCardTitle {
+    color: rgb(245, 246, 240);
+    font-size: 21px;
+    -unity-font-style: bold;
+    margin-top: 4px;
+    margin-bottom: 10px;
+}
+
+.infoDataLabel {
+    color: rgb(226, 232, 238);
+    font-size: 16px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.infoActionRow {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+.closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    min-width: 72px;
+    min-height: 34px;
+    font-size: 14px;
+    color: rgb(250, 245, 243);
+    background-color: rgb(196, 92, 77);
+}
+
+.closeButton:hover {
+    background-color: rgb(214, 102, 86);
+}
+
+.fleetCard {
+    width: 100%;
+    min-height: 132px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding-top: 12px;
+    padding-right: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+.fleetCardPurchase {
+    min-height: 112px;
+}
+
+.fleetCardHeader {
+    margin-bottom: 8px;
+}
+
+.fleetCardTitle {
+    color: rgb(245, 246, 240);
     font-size: 20px;
+    -unity-font-style: bold;
+}
+
+.fleetCardSubtle {
+    color: rgba(209, 218, 226, 0.68);
+    font-size: 13px;
+    margin-top: 2px;
+}
+
+.fleetStatRow {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.fleetStat {
+    min-width: 110px;
+    color: rgb(223, 230, 236);
+    font-size: 15px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.fleetStatus {
+    color: rgb(255, 245, 189);
+    font-size: 15px;
+    -unity-font-style: bold;
+    margin-top: 8px;
+}
+
+.fleetActionRow {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.fleetActionButtons {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.buyActionButton {
+    min-width: 120px;
 }

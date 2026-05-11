@@ -93,6 +93,7 @@ namespace UserInterface.GameUI
             _maintenanceCost.text = $"Maintenance cost: {vehicle.MaintenanceCost}";
             _moveSpeed.text = $"Move speed: {vehicle.MoveSpeed}";
             _depositePerTile.text = $"Deposits {vehicle.DepositPerCellInCity} each tile in cities";
+            _routeBtn.text = vehicle.Route is null ? "Assign Route" : "Edit Route";
         }
 
         public void Hide()

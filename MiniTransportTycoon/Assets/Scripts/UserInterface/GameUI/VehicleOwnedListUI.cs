@@ -105,7 +105,7 @@ public class VehicleOwnedListUI : MonoBehaviour
 
         Button pathBtn = element.Q<Button>("PathBtn");
         Button sellBtn = element.Q<Button>("SellBtn");
-        pathBtn.text = hasAssignedRoute ? "Edit Path" : "Set Path";
+        pathBtn.text = hasAssignedRoute ? "Edit Route" : "Assign Route";
 
         RegisterPathButton(pathBtn, vehicle);
 

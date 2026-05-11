@@ -1,14 +1,18 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/USS/GameUIVisualTreeStyle.uss?fileID=7433441132597879392&amp;guid=d594cda548d638443a4cd751fc3e73b9&amp;type=3"/>
-    <ui:VisualElement name="VehicleListItemTemplate" style="flex-grow: 0; width: 400px; height: auto; flex-basis: auto; flex-shrink: 0; flex-direction: row; justify-content: space-between; padding-left: 15px; padding-right: 15px; align-items: center; align-content: center; color: rgb(255, 255, 255); background-color: rgb(140, 140, 140); max-height: 200px; margin-top: 2px; margin-right: 2px; margin-bottom: 2px; margin-left: 2px; padding-top: 5px; padding-bottom: 5px;">
-        <ui:VisualElement name="Container" style="flex-grow: 1; max-height: 200px; height: auto;">
-            <ui:Label text="Cargo Truck - Iron" name="Name" style="align-self: center; align-content: center; font-size: 24px;"/>
-            <ui:VisualElement name="VisualElement" style="flex-grow: 0; flex-direction: row; font-size: 12px; justify-content: space-around; flex-wrap: wrap; margin-bottom: 0; padding-bottom: 0;">
-                <ui:Label text="Capacity: 50" name="Capacity" style="align-self: center; align-content: center; font-size: 14px; -unity-font-style: normal;"/>
-                <ui:Label text="Speed: 100" name="Speed" style="align-self: center; align-content: center; font-size: 14px; -unity-font-style: normal;"/>
-                <ui:Label text="Maintenance: 2000" name="Maintenance" style="align-self: center; align-content: center; font-size: 14px; -unity-font-style: normal; flex-wrap: nowrap;"/>
-            </ui:VisualElement>
+    <ui:VisualElement name="VehicleListItemTemplate" class="fleetCard fleetCardPurchase">
+        <ui:VisualElement name="Container" class="fleetCardHeader">
+            <ui:Label text="Cargo Truck - Iron" name="Name" class="fleetCardTitle"/>
+            <ui:Label text="Available for purchase" class="fleetCardSubtle"/>
         </ui:VisualElement>
-        <ui:Button text="1000" name="BuyBtn" class="navBarButton" style="width: auto; height: 60px; bottom: auto; right: auto; top: auto; left: auto; position: relative; align-items: auto; align-self: center; align-content: center; font-size: 24px; background-color: rgb(255, 255, 255); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; color: rgb(0, 0, 0); transition-property: scale; transition-duration: 0.2s; flex-shrink: 1; flex-grow: 1; max-width: 125px;"/>
+        <ui:VisualElement class="fleetStatRow">
+            <ui:Label text="Capacity: 50" name="Capacity" class="fleetStat"/>
+            <ui:Label text="Speed: 100" name="Speed" class="fleetStat"/>
+            <ui:Label text="Maintenance: 2000" name="Maintenance" class="fleetStat"/>
+        </ui:VisualElement>
+        <ui:VisualElement class="fleetActionRow">
+            <ui:Label text="Fresh from the depot" class="fleetStatus"/>
+            <ui:Button text="1000$" name="BuyBtn" class="navBarButton primaryActionButton buyActionButton"/>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
