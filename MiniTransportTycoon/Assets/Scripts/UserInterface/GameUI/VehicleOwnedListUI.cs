@@ -76,7 +76,10 @@ public class VehicleOwnedListUI : MonoBehaviour
 
         UpdateInfoPanel();
 
-        foreach (Vehicle vehicle in vehicleManager.VehicleStorage.Vehicles)
+        foreach (Vehicle vehicle in vehicleManager.VehicleStorage.Vehicles
+                     .OrderBy(x => x.Resource)
+                     .ThenByDescending(x => x.MoveSpeed)
+                     .ThenBy(x => x.Identifier))
         {
             CreateVehicleListItem(vehicle);
         }
