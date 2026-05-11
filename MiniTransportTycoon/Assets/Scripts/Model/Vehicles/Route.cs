@@ -70,14 +70,26 @@ public class Route
 
     public void SetUp(List<Location> vertices)
     {
-        //ha a palyanak elso es utolso eleme egyezik
-        if (vertices[0] == vertices[^1])
+        List<Location> normalizedVertices = new();
+        foreach (Location vertex in vertices)
         {
-            vertices.RemoveAt(vertices.Count - 1);
+            if (normalizedVertices.Count > 0 && normalizedVertices[^1] == vertex) continue;
+            normalizedVertices.Add(vertex);
+        }
+
+        //ha a palyanak elso es utolso eleme egyezik
+        if (normalizedVertices[0] == normalizedVertices[^1])
+        {
+            normalizedVertices.RemoveAt(normalizedVertices.Count - 1);
+        }
+
+        if (normalizedVertices.Count < 2)
+        {
+            throw new ArgumentException("Route setup requires at least two different vertices.");
         }
         
         Vertices = new Queue<Location>();
-        foreach (var vertex in vertices)
+        foreach (var vertex in normalizedVertices)
         {
             Vertices.Enqueue(vertex);
         }
@@ -96,11 +108,13 @@ public class Route
         if (CurrentlyStuck)
         {
             StepVertex();
+            if (CurrentlyStuck) return;
         }
         
         if (Turns180Happened)
         {
             StepVertex();
+            if (CurrentlyStuck) return;
             Turns180Happened = false;
             Turns180Finished = true;
             PreviousPosition = CurrentPosition;
@@ -124,6 +138,7 @@ public class Route
             }
             
             StepVertex();
+            if (CurrentlyStuck) return;
         }
         NextPosition = CurrentPosition + CurrentDirection;
         Turns180Finished = false;
@@ -136,7 +151,14 @@ public class Route
     {
         if (!_pathHandler.Graph.ContainsVertex(NextVertex) || !_pathHandler.Graph.Edges.Contains(new Edge(CurrentVertex, NextVertex)))
         {
-            CurrentlyStuck = true;
+            if (!TryRecalculateRouteFromCurrentState())
+            {
+                CurrentlyStuck = true;
+                return;
+            }
+
+            // A successful recalculation already positions the route at the
+            // reached vertex and assigns the next target vertex.
             return;
         }
         
@@ -149,21 +171,38 @@ public class Route
         
     }
 
-    private void RecalculateRoute()
+    private bool TryRecalculateRouteFromCurrentState()
     {
         try
         {
-            List<Location> newLocs = _pathHandler.GetPathFromRoute(_pathHandler.Graph.Vertices);
+            Location previousPositionBeforeRepath = PreviousPosition;
+            Location currentPositionBeforeRepath = CurrentPosition;
 
+            List<Location> newLocs = _pathHandler.GetPathFromRoute(BuildRouteCycleForRepath());
             SetUp(newLocs);
+
+            PreviousPosition = previousPositionBeforeRepath;
+            CurrentPosition = currentPositionBeforeRepath;
+            NextPosition = CurrentPosition + CurrentDirection;
+            SetIsTurning();
+
+            CurrentlyStuck = false;
+            return true;
         }
-        catch (ArgumentException ex)
+        catch (Exception)
         {
             CurrentlyStuck = true;
-            throw new InvalidOperationException("Nem lehet utat csinalni a letezo csucsokbol. Ennek oka: " + ex.Message);
+            return false;
         }
-        
-        CurrentlyStuck = false;
+    }
+
+    private List<Location> BuildRouteCycleForRepath()
+    {
+        List<Location> routeCycle = new() { NextVertex };
+        routeCycle.AddRange(Vertices);
+        routeCycle.Add(CurrentVertex);
+        routeCycle.Add(NextVertex);
+        return routeCycle;
     }
 
     public bool ContainsVertex(Location location)
@@ -173,6 +212,12 @@ public class Route
     
     private void SetIsTurning()
     {
+        if (CurrentPosition == PreviousPosition || NextPosition == CurrentPosition)
+        {
+            IsTurning = false;
+            return;
+        }
+
         Direction currDir = (CurrentPosition - PreviousPosition).ToDirection();
         Direction nextDir = (NextPosition - CurrentPosition).ToDirection();
         IsTurning = currDir != nextDir;

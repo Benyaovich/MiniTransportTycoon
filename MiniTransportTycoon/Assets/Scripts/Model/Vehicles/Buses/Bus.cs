@@ -1,5 +1,6 @@
  
 #nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Model;
@@ -41,16 +42,12 @@ public class Bus : Vehicle
             );
         }
 
-        LoadResource(currentVisitedBusStop);
+        int freeCapacity = MaxCapacity - ResourceAmount;
+        int peopleToLoad = Math.Min(freeCapacity, peopleAtStopBefore);
+        ResourceAmount += currentVisitedBusStop.GetResource(peopleToLoad);
 
-        bool interacted = ResourceAmount != passengersBefore ||
-                          currentVisitedBusStop.NumOfPeople != peopleAtStopBefore;
+        VisitedStationThisTurn = currentVisitedBusStop;
 
-        if (interacted)
-        {
-            VisitedStationThisTurn = currentVisitedBusStop;
-        }
-
-        return interacted;
+        return true;
     }
 }
