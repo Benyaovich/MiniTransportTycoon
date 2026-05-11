@@ -7,6 +7,7 @@ using Model.Vehicles.SemiTrucks;
 [Serializable]
 public class SVehicle
 {
+    public int identifier;
     public int resourceAmount;
     [CanBeNull] public SRoute route;
     public float maintenanceRemainingTime;
@@ -14,6 +15,7 @@ public class SVehicle
     
     public SVehicle(Vehicle vehicle)
     {
+        identifier = vehicle.Identifier;
         resourceAmount = vehicle.ResourceAmount;
         if (vehicle.Route != null)
             route = new SRoute(vehicle.Route);

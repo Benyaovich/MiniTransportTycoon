@@ -88,7 +88,7 @@ public class VehicleOwnedListUI : MonoBehaviour
 
         VisualElement element = listItemTemplate.Instantiate();
 
-        element.Q<Label>("Name").text = vehicleSo.displayName;
+        element.Q<Label>("Name").text = vehicleManager.GetVehicleDisplayLabel(vehicle);
         element.Q<Label>("Capacity").text = $"Capacity: {vehicleSo.maxCarryCapacity}";
         element.Q<Label>("Speed").text = $"Speed: {Math.Round(1.0 / vehicleSo.speed * 150):0}";
         element.Q<Label>("Maintenance").text = $"Maintenance: {vehicleSo.maintenanceCost}";

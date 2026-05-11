@@ -155,8 +155,7 @@ public class GameDataApplier
                         maintenanceRemainingTime: slowBus.maintenanceRemainingTime,
                         moveRemainingTime: slowBus.moveRemainingTime
                     );
-                    loadedSlowBus.SetCityService(VehicleManager.Instance.CityService);
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedSlowBus);
+                    FinalizeLoadedVehicle(loadedSlowBus, slowBus);
                     break;
 
                 case SFastBus fastBus:
@@ -167,8 +166,7 @@ public class GameDataApplier
                         maintenanceRemainingTime: fastBus.maintenanceRemainingTime,
                         moveRemainingTime: fastBus.moveRemainingTime
                     );
-                    loadedFastBus.SetCityService(VehicleManager.Instance.CityService);
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedFastBus);
+                    FinalizeLoadedVehicle(loadedFastBus, fastBus);
                     break;
 
                 case SCoalCargoTruck coalCargoTruck:
@@ -179,8 +177,7 @@ public class GameDataApplier
                         maintenanceRemainingTime: coalCargoTruck.maintenanceRemainingTime,
                         moveRemainingTime: coalCargoTruck.moveRemainingTime
                     );
-                    loadedCoalCargoTruck.SetCityService(VehicleManager.Instance.CityService);
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedCoalCargoTruck);
+                    FinalizeLoadedVehicle(loadedCoalCargoTruck, coalCargoTruck);
                     break;
 
                 case SIronCargoTruck ironCargoTruck:
@@ -191,8 +188,7 @@ public class GameDataApplier
                         maintenanceRemainingTime: ironCargoTruck.maintenanceRemainingTime,
                         moveRemainingTime: ironCargoTruck.moveRemainingTime
                     );
-                    loadedIronCargoTruck.SetCityService(VehicleManager.Instance.CityService);
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedIronCargoTruck);
+                    FinalizeLoadedVehicle(loadedIronCargoTruck, ironCargoTruck);
                     break;
 
                 case SPaperCargoTruck paperCargoTruck:
@@ -203,8 +199,7 @@ public class GameDataApplier
                         maintenanceRemainingTime: paperCargoTruck.maintenanceRemainingTime,
                         moveRemainingTime: paperCargoTruck.moveRemainingTime
                     );
-                    loadedPaperCargoTruck.SetCityService(VehicleManager.Instance.CityService);
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedPaperCargoTruck);
+                    FinalizeLoadedVehicle(loadedPaperCargoTruck, paperCargoTruck);
                     break;
 
                 case SSteelCargoTruck steelCargoTruck:
@@ -215,8 +210,7 @@ public class GameDataApplier
                         maintenanceRemainingTime: steelCargoTruck.maintenanceRemainingTime,
                         moveRemainingTime: steelCargoTruck.moveRemainingTime
                     );
-                    loadedSteelCargoTruck.SetCityService(VehicleManager.Instance.CityService);
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedSteelCargoTruck);
+                    FinalizeLoadedVehicle(loadedSteelCargoTruck, steelCargoTruck);
                     break;
 
                 case SWoodCargoTruck woodCargoTruck:
@@ -227,8 +221,7 @@ public class GameDataApplier
                         maintenanceRemainingTime: woodCargoTruck.maintenanceRemainingTime,
                         moveRemainingTime: woodCargoTruck.moveRemainingTime
                     );
-                    loadedWoodCargoTruck.SetCityService(VehicleManager.Instance.CityService);
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedWoodCargoTruck);
+                    FinalizeLoadedVehicle(loadedWoodCargoTruck, woodCargoTruck);
                     break;
 
                 case SCoalSemiTruck coalSemiTruck:
@@ -239,8 +232,7 @@ public class GameDataApplier
                         maintenanceRemainingTime: coalSemiTruck.maintenanceRemainingTime,
                         moveRemainingTime: coalSemiTruck.moveRemainingTime
                     );
-                    loadedCoalSemiTruck.SetCityService(VehicleManager.Instance.CityService);
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedCoalSemiTruck);
+                    FinalizeLoadedVehicle(loadedCoalSemiTruck, coalSemiTruck);
                     break;
 
                 case SIronSemiTruck ironSemiTruck:
@@ -251,8 +243,7 @@ public class GameDataApplier
                         maintenanceRemainingTime: ironSemiTruck.maintenanceRemainingTime,
                         moveRemainingTime: ironSemiTruck.moveRemainingTime
                     );
-                    loadedIronSemiTruck.SetCityService(VehicleManager.Instance.CityService);
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedIronSemiTruck);
+                    FinalizeLoadedVehicle(loadedIronSemiTruck, ironSemiTruck);
                     break;
 
                 case SPaperSemiTruck paperSemiTruck:
@@ -263,8 +254,7 @@ public class GameDataApplier
                         maintenanceRemainingTime: paperSemiTruck.maintenanceRemainingTime,
                         moveRemainingTime: paperSemiTruck.moveRemainingTime
                     );
-                    loadedPaperSemiTruck.SetCityService(VehicleManager.Instance.CityService);
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedPaperSemiTruck);
+                    FinalizeLoadedVehicle(loadedPaperSemiTruck, paperSemiTruck);
                     break;
 
                 case SSteelSemiTruck steelSemiTruck:
@@ -275,8 +265,7 @@ public class GameDataApplier
                         maintenanceRemainingTime: steelSemiTruck.maintenanceRemainingTime,
                         moveRemainingTime: steelSemiTruck.moveRemainingTime
                     );
-                    loadedSteelSemiTruck.SetCityService(VehicleManager.Instance.CityService);
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedSteelSemiTruck);
+                    FinalizeLoadedVehicle(loadedSteelSemiTruck, steelSemiTruck);
                     break;
 
                 case SWoodSemiTruck woodSemiTruck:
@@ -287,11 +276,17 @@ public class GameDataApplier
                         maintenanceRemainingTime: woodSemiTruck.maintenanceRemainingTime,
                         moveRemainingTime: woodSemiTruck.moveRemainingTime
                     );
-                    loadedWoodSemiTruck.SetCityService(VehicleManager.Instance.CityService);
-                    VehicleManager.Instance.VehicleStorage.AddVehicle(loadedWoodSemiTruck);
+                    FinalizeLoadedVehicle(loadedWoodSemiTruck, woodSemiTruck);
                     break;
             }
         }
+    }
+
+    private static void FinalizeLoadedVehicle(Vehicle vehicle, SVehicle serializedVehicle)
+    {
+        vehicle.RestoreIdentifier(serializedVehicle.identifier);
+        vehicle.SetCityService(VehicleManager.Instance.CityService);
+        VehicleManager.Instance.VehicleStorage.AddVehicle(vehicle);
     }
 
     private static Location ToLocation(SLocation location)

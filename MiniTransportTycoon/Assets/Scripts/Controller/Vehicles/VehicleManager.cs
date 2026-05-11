@@ -61,5 +61,16 @@ namespace Controller.Vehicles
             _vehicleStorage.RemoveVehicle(vehicle);
             OnVehicleSold?.Invoke(this, EventArgs.Empty);
         }
+
+        public string GetVehicleDisplayName(Vehicle vehicle)
+        {
+            VehicleSO? vehicleSo = vehicleSos.Find(x => x.VehicleType == vehicle.GetType());
+            return vehicleSo?.displayName ?? vehicle.GetType().Name;
+        }
+
+        public string GetVehicleDisplayLabel(Vehicle vehicle)
+        {
+            return $"{GetVehicleDisplayName(vehicle)} #{vehicle.Identifier}";
+        }
     }
 }

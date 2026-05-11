@@ -16,6 +16,7 @@ namespace UserInterface.GameUI
 
         private VisualElement _panel = null!;
 
+        private Label _vehicleName = null!;
         private Label _resourceType = null!;
         private Label _resourceAmount = null!;
         private Label _maintenanceCost = null!;
@@ -32,6 +33,7 @@ namespace UserInterface.GameUI
 
             _panel = root.Q<VisualElement>("VehicleInfoPanel");
 
+            _vehicleName = root.Q<Label>("VehicleName");
             _resourceType = root.Q<Label>("ResourceType");
             _resourceAmount = root.Q<Label>("ResourceAmount");
             _maintenanceCost = root.Q<Label>("MaintenanceCost");
@@ -85,6 +87,7 @@ namespace UserInterface.GameUI
 
         public void Refresh(Vehicle vehicle)
         {
+            _vehicleName.text = vehicleManager.GetVehicleDisplayLabel(vehicle);
             _resourceType.text = $"Resource type: {vehicle.Resource}";
             _resourceAmount.text = $"Resource amount: {vehicle.ResourceAmount}/{vehicle.MaxCapacity}";
             _maintenanceCost.text = $"Maintenance cost: {vehicle.MaintenanceCost}";

@@ -62,4 +62,25 @@ public class VehicleStorageTests
         Assert.AreEqual(1, removeEventCount);
         Assert.AreSame(vehicle, removedVehicle);
     }
+
+    [Test]
+    public void VehiclesReceiveUniquePersistentIdentifiers()
+    {
+        Bus firstVehicle = new Bus(_grid);
+        Bus secondVehicle = new Bus(_grid);
+
+        Assert.AreNotEqual(firstVehicle.Identifier, secondVehicle.Identifier);
+    }
+
+    [Test]
+    public void RestoredIdentifierAdvancesNextVehicleIdentifier()
+    {
+        Bus loadedVehicle = new Bus(_grid);
+        loadedVehicle.RestoreIdentifier(42);
+
+        Bus nextVehicle = new Bus(_grid);
+
+        Assert.AreEqual(42, loadedVehicle.Identifier);
+        Assert.Greater(nextVehicle.Identifier, loadedVehicle.Identifier);
+    }
 }

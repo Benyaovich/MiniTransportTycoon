@@ -7,6 +7,9 @@ using Model.Interfaces;
 
 public abstract class Vehicle : IAdvancable, IPurchasable
 {
+    private static int _nextIdentifier = 1;
+
+    public int Identifier { get; private set; }
     public Resource Resource { get; private set;}
     public float MoveSpeed { get; private set; }
     public int MaintenanceCost { get; private set; }
@@ -31,6 +34,7 @@ public abstract class Vehicle : IAdvancable, IPurchasable
     protected Vehicle(Grid<ModelGridObject> grid, Resource resource, float speed, int maintenanceCost,
         int price, int maxCapacity, float maintenanceInterval = 100,int resourceAmount = 0, Route? route = null, float maintenanceRemainingTime = 100, float? moveRemainingTime = null, CityService? cityService = null)
     {
+        Identifier = _nextIdentifier++;
         _grid = grid;
         _cityService = cityService;
         Resource = resource;
@@ -51,6 +55,17 @@ public abstract class Vehicle : IAdvancable, IPurchasable
         
         
         MaintenanceTimer.OnTimerElapsed += MaintenanceTimerOnTimerElapsed;
+    }
+
+    public void RestoreIdentifier(int identifier)
+    {
+        if (identifier <= 0)
+        {
+            return;
+        }
+
+        Identifier = identifier;
+        _nextIdentifier = Math.Max(_nextIdentifier, identifier + 1);
     }
 
     public void SetCityService(CityService cityService)
