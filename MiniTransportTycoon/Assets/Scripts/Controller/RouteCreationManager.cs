@@ -70,6 +70,7 @@ public class RouteCreationManager : MonoBehaviour
         if (!roadCell.IsVertexPoint) return;
         
         TryAddVertexLocation(new Location(x, y));
+        if (_selectedVertices.Count == 0) return;
         
         bool finished = IsRouteCreationProcessFinished();
         
@@ -87,9 +88,10 @@ public class RouteCreationManager : MonoBehaviour
     {
         if (_selectedVertices.Count == 0)
         {
-            _selectedVertices.Add(location);
             _availableVertices = GraphAlgorithms.GetReachableGraphFromBfsTable(_pathHandler.Graph,
                 GraphAlgorithms.Bfs(location, _pathHandler.Graph)).Vertices;
+            if (_availableVertices.Count == 1) return;
+            _selectedVertices.Add(location);
         }
         else
         {
