@@ -1,9 +1,37 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/USS/MainMenuUIStyle.uss?fileID=7433441132597879392&amp;guid=d80955213eac810458a98946e5211984&amp;type=3#MainMenuUIStyle"/>
-    <ui:VisualElement name="Background" style="flex-grow: 1; background-color: rgb(51, 55, 53); position: absolute; translate: 0 0; width: 100%; height: 100%;"/>
-    <ui:VisualElement name="BtnContainer" style="flex-grow: 0; width: auto; height: auto; bottom: 0; left: 0; align-self: auto; top: auto; right: auto; position: absolute; align-items: flex-start; padding-left: 3%; padding-right: 0; margin-bottom: 10%;">
-        <ui:Button text="New Game" name="NewGameBtn" class="navBarButton"/>
-        <ui:Button text="Load Game" name="LoadGameBtn" parse-escape-sequences="false" class="navBarButton"/>
-        <ui:Button text="Exit" name="ExitGameBtn" enable-rich-text="true" class="navBarButton" style="width: 200px; align-self: auto;"/>
+    <ui:VisualElement name="Background" class="mainMenuRoot">
+        <ui:VisualElement class="mainMenuBackdrop"/>
+        <ui:VisualElement class="mainMenuTopGlow"/>
+        <ui:VisualElement class="mainMenuBottomGlow"/>
+        <ui:VisualElement class="mainMenuContent">
+            <ui:VisualElement name="BtnContainer" class="mainMenuPanel" style="margin-left: 30px; width: 365px;">
+                <ui:Label text="Start Playing" class="mainMenuPanelTitle"/>
+                <ui:Label text="Choose how you want to enter the game." class="mainMenuPanelSubtitle"/>
+                <ui:Button text="New Game" name="NewGameBtn" class="mainMenuButton mainMenuPrimaryButton"/>
+                <ui:Button text="Load Game" name="LoadGameBtn" parse-escape-sequences="false" class="mainMenuButton mainMenuSecondaryButton"/>
+                <ui:Button text="Exit" name="ExitGameBtn" enable-rich-text="true" class="mainMenuButton mainMenuDangerButton"/>
+                <ui:Label text="Use your fleet, your roads and your timing wisely." class="mainMenuFooter"/>
+            </ui:VisualElement>
+            <ui:VisualElement class="mainMenuHero" style="margin-right: 175px;">
+                <ui:Label text="TRANSPORT MANAGEMENT SIM" class="mainMenuEyebrow"/>
+                <ui:Label text="Mini Transport Tycoon" class="mainMenuTitle"/>
+                <ui:Label text="Build roads, set routes, connect cities and turn a tiny fleet into a thriving transport empire." class="mainMenuSubtitle"/>
+                <ui:VisualElement class="mainMenuFeatureStrip">
+                    <ui:VisualElement class="mainMenuFeatureCard">
+                        <ui:Label text="Plan" class="mainMenuFeatureTitle"/>
+                        <ui:Label text="Lay out roads and shape the backbone of your network." class="mainMenuFeatureText"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="mainMenuFeatureCard">
+                        <ui:Label text="Route" class="mainMenuFeatureTitle"/>
+                        <ui:Label text="Assign vehicles clearly and keep every line under control." class="mainMenuFeatureText"/>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="mainMenuFeatureCard">
+                        <ui:Label text="Grow" class="mainMenuFeatureTitle"/>
+                        <ui:Label text="Move people and goods efficiently to grow your company." class="mainMenuFeatureText"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

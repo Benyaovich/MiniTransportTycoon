@@ -1,46 +1,205 @@
-:root {
+.mainMenuRoot {
+    flex-grow: 1;
+    background-color: rgb(18, 26, 33);
 }
 
-.navBarButton {
-    font-size: 24px;
-    background-color: rgb(255, 255, 255);
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-top-width: 0;
-    border-top-color: rgb(0, 0, 0);
-    letter-spacing: 0;
-    -unity-text-align: middle-center;
-    margin-left: 10px;
-    margin-right: 10px;
-    rotate: 0;
-    min-width: 100px;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    min-height: 60px;
-    transition-duration: 0.2s;
-    width: 300px;
-    margin-bottom: 10px;
+.mainMenuBackdrop {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(9, 14, 20, 0.28);
+}
+
+.mainMenuTopGlow {
+    position: absolute;
+    left: -120px;
+    top: -80px;
+    width: 720px;
+    height: 340px;
+    background-color: rgba(71, 119, 94, 0.22);
+    border-top-left-radius: 200px;
+    border-top-right-radius: 200px;
+    border-bottom-right-radius: 200px;
+    border-bottom-left-radius: 200px;
+}
+
+.mainMenuBottomGlow {
+    position: absolute;
+    right: -160px;
+    bottom: -140px;
+    width: 560px;
+    height: 360px;
+    background-color: rgba(170, 90, 72, 0.18);
+    border-top-left-radius: 220px;
+    border-top-right-radius: 220px;
+    border-bottom-right-radius: 220px;
+    border-bottom-left-radius: 220px;
+}
+
+.mainMenuContent {
+    flex-grow: 1;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 72px;
+    padding-right: 72px;
+    padding-top: 48px;
+    padding-bottom: 48px;
+}
+
+.mainMenuHero {
+    width: 640px;
+    margin-right: 40px;
+}
+
+.mainMenuEyebrow {
+    color: rgba(184, 199, 210, 0.74);
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+.mainMenuTitle {
+    color: rgb(246, 247, 241);
+    font-size: 56px;
+    -unity-font-style: bold;
     margin-top: 10px;
 }
 
-.navBarButton:hover {
-    font-size: 24px;
-    background-color: rgb(255, 255, 255);
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-top-width: 0;
-    border-top-color: rgb(0, 0, 0);
-    letter-spacing: 0;
-    -unity-text-align: middle-center;
-    margin-left: 10px;
-    margin-right: 10px;
-    scale: 1.1 1.1;
-    rotate: 1deg;
+.mainMenuSubtitle {
+    color: rgba(222, 229, 235, 0.78);
+    font-size: 20px;
+    margin-top: 14px;
+    white-space: normal;
+    max-width: 600px;
+}
+
+.mainMenuFeatureStrip {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 28px;
+}
+
+.mainMenuFeatureCard {
+    width: 180px;
+    margin-right: 14px;
+    margin-bottom: 14px;
+    padding-top: 14px;
+    padding-right: 14px;
+    padding-bottom: 14px;
+    padding-left: 14px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    border-bottom-right-radius: 14px;
+    border-bottom-left-radius: 14px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgba(255, 255, 255, 0.06);
+    border-right-color: rgba(255, 255, 255, 0.06);
+    border-top-color: rgba(255, 255, 255, 0.06);
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.mainMenuFeatureTitle {
+    color: rgb(245, 246, 240);
+    font-size: 18px;
     -unity-font-style: bold;
+}
+
+.mainMenuFeatureText {
+    color: rgba(214, 222, 228, 0.72);
+    font-size: 13px;
+    margin-top: 6px;
+    white-space: normal;
+}
+
+.mainMenuPanel {
+    width: 360px;
+    padding-top: 24px;
+    padding-right: 24px;
+    padding-bottom: 24px;
+    padding-left: 24px;
+    background-color: rgba(18, 26, 33, 0.92);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgba(255, 255, 255, 0.06);
+    border-right-color: rgba(255, 255, 255, 0.06);
+    border-top-color: rgba(255, 255, 255, 0.06);
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.mainMenuPanelTitle {
+    color: rgb(246, 247, 241);
+    font-size: 28px;
+    -unity-font-style: bold;
+}
+
+.mainMenuPanelSubtitle {
+    color: rgba(214, 222, 228, 0.74);
+    font-size: 14px;
+    margin-top: 8px;
+    margin-bottom: 18px;
+    white-space: normal;
+}
+
+.mainMenuButton {
+    width: 100%;
+    min-height: 58px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-size: 19px;
+    color: rgb(20, 28, 36);
+    background-color: rgb(236, 239, 242);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+.mainMenuButton:hover {
+    scale: 1.02 1.02;
+    translate: 0 -4px;
+    background-color: rgb(245, 247, 249);
+}
+
+.mainMenuPrimaryButton {
+    color: rgb(245, 246, 240);
+    background-color: rgb(76, 123, 95);
+}
+
+.mainMenuPrimaryButton:hover {
+    background-color: rgb(89, 138, 109);
+}
+
+.mainMenuSecondaryButton {
+    background-color: rgb(223, 229, 235);
+}
+
+.mainMenuSecondaryButton:hover {
+    background-color: rgb(236, 240, 244);
+}
+
+.mainMenuDangerButton {
+    color: rgb(252, 245, 243);
+    background-color: rgb(161, 81, 68);
+}
+
+.mainMenuDangerButton:hover {
+    background-color: rgb(180, 92, 78);
+}
+
+.mainMenuFooter {
+    color: rgba(184, 199, 210, 0.62);
+    font-size: 12px;
+    margin-top: 18px;
 }
