@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Model.Enumerations;
 using Model.Interfaces;
+using UnityEngine;
 
 public class RoadCell : Cell, IPurchasable, IHighlightable, IDestroyable
 {
@@ -17,6 +18,7 @@ public class RoadCell : Cell, IPurchasable, IHighlightable, IDestroyable
     public List<Vehicle> WaitingVehicles { get; private set; } = new(); // amik fel beakarnak hajtani
     
     public bool Highlighted { get; protected set; }
+    public Color HighlightColor { get; private set; } = new(0f, 0.3f, 1f, 0.95f);
 
     public int Price { get; set; } = 25;
     public bool CanDestroy => Vehicles.Count == 0 && WaitingVehicles.Count == 0;
@@ -65,6 +67,11 @@ public class RoadCell : Cell, IPurchasable, IHighlightable, IDestroyable
         Highlighted = value;
         if(Highlighted) { OnHighlightEnabled?.Invoke(this, Origin); }
         else{ OnHighlightDisabled?.Invoke(this, Origin); }
+    }
+
+    public void SetHighlightColor(Color color)
+    {
+        HighlightColor = color;
     }
 
     public void SetIsVertexPoint(bool value)

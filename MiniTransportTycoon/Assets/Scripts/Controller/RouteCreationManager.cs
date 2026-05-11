@@ -14,6 +14,9 @@ public class RouteCreationManager : MonoBehaviour
     public event EventHandler OnRouteCreationFinished; 
     public bool InRouteCreation { get; private set; }
     public PathHandler PathHandler => _pathHandler;
+
+    [SerializeField] private Color startVertexHighlightColor = new(0f, 1f, 0.1f, 0.9f);
+    [SerializeField] private Color availableVertexHighlightColor = new(0f, 0.34f, 1f, 0.9f);
     
     private PathHandler _pathHandler;
     private Grid<ModelGridObject> _grid;
@@ -47,8 +50,8 @@ public class RouteCreationManager : MonoBehaviour
     {
         _selectedVertices.Clear();
         _availableVertices.Clear();
-        HighlightManager.Instance.HighlightService.EnableHighlight(_pathHandler.Graph.Vertices);
         InRouteCreation = true;
+        RefreshHighlights();
         OnRouteCreationStarted?.Invoke(this, EventArgs.Empty);
     }
 
@@ -70,7 +73,6 @@ public class RouteCreationManager : MonoBehaviour
         if (!roadCell.IsVertexPoint) return;
         
         TryAddVertexLocation(new Location(x, y));
-        if (_selectedVertices.Count == 0) return;
         
         bool finished = IsRouteCreationProcessFinished();
         
@@ -88,10 +90,9 @@ public class RouteCreationManager : MonoBehaviour
     {
         if (_selectedVertices.Count == 0)
         {
+            _selectedVertices.Add(location);
             _availableVertices = GraphAlgorithms.GetReachableGraphFromBfsTable(_pathHandler.Graph,
                 GraphAlgorithms.Bfs(location, _pathHandler.Graph)).Vertices;
-            if (_availableVertices.Count == 1) return;
-            _selectedVertices.Add(location);
         }
         else
         {
@@ -112,13 +113,36 @@ public class RouteCreationManager : MonoBehaviour
 
     private List<Location> GetHighlightableVertices()
     {
-        return _availableVertices.Where(x => x != _selectedVertices[^1]).ToList();
+        if (_selectedVertices.Count == 0)
+        {
+            return _availableVertices;
+        }
+
+        return _availableVertices
+            .Where(x => x != _selectedVertices[^1])
+            .ToList();
     }
 
     private void RefreshHighlights()
     {
         HighlightManager.Instance.HighlightService.DisableHighlight(_pathHandler.Graph.Vertices);
-        HighlightManager.Instance.HighlightService.EnableHighlight(GetHighlightableVertices());
+
+        if (_selectedVertices.Count == 0)
+        {
+            HighlightManager.Instance.HighlightService.EnableHighlight(_pathHandler.Graph.Vertices, availableVertexHighlightColor);
+            return;
+        }
+
+        List<Location> highlightableVertices = GetHighlightableVertices();
+        if (highlightableVertices.Count > 0)
+        {
+            HighlightManager.Instance.HighlightService.EnableHighlight(highlightableVertices, availableVertexHighlightColor);
+        }
+
+        if (_selectedVertices.Count > 1)
+        {
+            HighlightManager.Instance.HighlightService.EnableHighlight(new List<Location> { _selectedVertices[0] }, startVertexHighlightColor);
+        }
     }
 
 

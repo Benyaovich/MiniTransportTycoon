@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class HighlightService
 {
@@ -12,16 +13,26 @@ public class HighlightService
         _grid = grid;
     }
     
-    private void EnableHighlight(List<IHighlightable> highlightables)
+    private void EnableHighlight(List<IHighlightable> highlightables, Color? color = null)
     {
         foreach (IHighlightable highlightable in highlightables)    
         {
+            if (color.HasValue)
+            {
+                highlightable.SetHighlightColor(color.Value);
+            }
+
             highlightable.SetHighlighted(true);
         }
     }
     public void EnableHighlight(List<Location> locations)
     {
         EnableHighlight(GetHighlightableList(locations));
+    }
+
+    public void EnableHighlight(List<Location> locations, Color color)
+    {
+        EnableHighlight(GetHighlightableList(locations), color);
     }
 
     public void HighlightFor(List<Location> locations, float duration)
