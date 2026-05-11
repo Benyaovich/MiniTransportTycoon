@@ -68,6 +68,11 @@ public abstract class Vehicle : IAdvancable, IPurchasable
         _nextIdentifier = Math.Max(_nextIdentifier, identifier + 1);
     }
 
+    public static void ResetIdentifierSequence()
+    {
+        _nextIdentifier = 1;
+    }
+
     public void SetCityService(CityService cityService)
     {
         _cityService = cityService;

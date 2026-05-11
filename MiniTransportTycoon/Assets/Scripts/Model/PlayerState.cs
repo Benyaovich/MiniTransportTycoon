@@ -26,6 +26,7 @@ namespace Model
         {
             Money = 10000;
             IsGameOver = false;
+            Vehicle.ResetIdentifierSequence();
         }
         
         public void AddMoney(int amount)

@@ -1,4 +1,5 @@
 
+#nullable enable
 using System;
 using System.Collections.Generic;
 using Controller.Grid;
@@ -13,17 +14,17 @@ namespace Controller.Vehicles
 {
     public class VehicleManager : MonoBehaviour
     {
-        public static VehicleManager Instance { get;private set; }
-        public event EventHandler OnVehicleBought;
-        public event EventHandler OnVehicleSold;
+        public static VehicleManager Instance { get; private set; } = null!;
+        public event EventHandler? OnVehicleBought;
+        public event EventHandler? OnVehicleSold;
         
         [SerializeField] private List<VehicleSO> vehicleSos = new();
         public IVehicleStorage VehicleStorage => _vehicleStorage;
         public List<VehicleSO> VehicleSos => vehicleSos;
         public CityService CityService => _cityService;
         
-        private IVehicleStorage _vehicleStorage;
-        private VehicleVisualService _vehicleVisualService;
+        private IVehicleStorage _vehicleStorage = null!;
+        private VehicleVisualService _vehicleVisualService = null!;
         private CityService _cityService = null!;
         
         private void Awake()

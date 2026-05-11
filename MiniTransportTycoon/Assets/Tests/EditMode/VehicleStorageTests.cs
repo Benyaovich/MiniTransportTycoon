@@ -9,6 +9,7 @@ public class VehicleStorageTests
     [SetUp]
     public void Init()
     {
+        Vehicle.ResetIdentifierSequence();
         _grid = new Grid<ModelGridObject>(new Size(2, 1), 1, Vector3.Zero,
             (grid, location) => new ModelGridObject(grid, location));
     }
@@ -82,5 +83,18 @@ public class VehicleStorageTests
 
         Assert.AreEqual(42, loadedVehicle.Identifier);
         Assert.Greater(nextVehicle.Identifier, loadedVehicle.Identifier);
+    }
+
+    [Test]
+    public void ResetIdentifierSequenceStartsIdsFromOneAgain()
+    {
+        Bus firstVehicle = new Bus(_grid);
+
+        Vehicle.ResetIdentifierSequence();
+
+        Bus resetVehicle = new Bus(_grid);
+
+        Assert.AreEqual(1, firstVehicle.Identifier);
+        Assert.AreEqual(1, resetVehicle.Identifier);
     }
 }
