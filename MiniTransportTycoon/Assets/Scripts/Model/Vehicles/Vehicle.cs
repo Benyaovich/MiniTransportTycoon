@@ -88,9 +88,8 @@ public abstract class Vehicle : IAdvancable, IPurchasable
         nextRoadCell.AddVehicle(this);
         
         
-         if (_grid.GetGridObject(_route.NextPosition).Model is not RoadCell nextNextRoadCell) return;
+        if (_grid.GetGridObject(_route.NextPosition).Model is not RoadCell nextNextRoadCell) return;
         nextNextRoadCell.AddWaitingVehicle(this);
-        
         OnMove?.Invoke(this, this);
     }
     
