@@ -31,6 +31,7 @@ public class GameUI : MonoBehaviour
     private Button _speed2Btn;
     private Button _speed4Btn;
     
+    private VisualElement _root = null!;
     private VisualElement _vehiclePurchasePanel;
     private VisualElement _vehicleOwnedPanel;
 
@@ -45,7 +46,9 @@ public class GameUI : MonoBehaviour
     private float _previousGameSpeedMultiplier;
     
     private bool _isMouseDownOnMinimap;
+    private bool _isGameplayUIHidden;
     private LayerMask _floorLayer;
+
     private void Awake()
     {
         Instance = this;
@@ -54,35 +57,35 @@ public class GameUI : MonoBehaviour
 
     private void OnEnable()
     {
-        VisualElement root = uiDocument.rootVisualElement;
+        _root = uiDocument.rootVisualElement;
 
-        _menuPanel = root.Q<VisualElement>("Menu");
-        _menuBtn = root.Q<Button>("MenuBtn");
-        _resumeBtn = root.Q<Button>("ResumeBtn");
-        _mainMenuBtn = root.Q<Button>("MainMenuBtn");
+        _menuPanel = _root.Q<VisualElement>("Menu");
+        _menuBtn = _root.Q<Button>("MenuBtn");
+        _resumeBtn = _root.Q<Button>("ResumeBtn");
+        _mainMenuBtn = _root.Q<Button>("MainMenuBtn");
         
-        _buyVehiclesBtn = root.Q<Button>("BuyVehiclesBtn");
-        _ownedVehiclesBtn = root.Q<Button>("OwnedVehiclesBtn");
-        _vehiclePurchasePanel = root.Q<VisualElement>("VehiclePurchasePanel");
-        _vehicleOwnedPanel = root.Q<VisualElement>("VehicleOwnedPanel");
+        _buyVehiclesBtn = _root.Q<Button>("BuyVehiclesBtn");
+        _ownedVehiclesBtn = _root.Q<Button>("OwnedVehiclesBtn");
+        _vehiclePurchasePanel = _root.Q<VisualElement>("VehiclePurchasePanel");
+        _vehicleOwnedPanel = _root.Q<VisualElement>("VehicleOwnedPanel");
         
-        _speedPauseBtn = root.Q<Button>("SpeedPauseBtn");
-        _speed1Btn = root.Q<Button>("Speed1Btn");
-        _speed2Btn = root.Q<Button>("Speed2Btn");
-        _speed4Btn = root.Q<Button>("Speed4Btn");
+        _speedPauseBtn = _root.Q<Button>("SpeedPauseBtn");
+        _speed1Btn = _root.Q<Button>("Speed1Btn");
+        _speed2Btn = _root.Q<Button>("Speed2Btn");
+        _speed4Btn = _root.Q<Button>("Speed4Btn");
         _selectedSpeed = _speed1Btn;
 
-        _selectRoadBtn = root.Q<Button>("SelectRoadBtn");
-        _clearSelectionBtn = root.Q<Button>("ClearSelectionBtn");
-        _selectBusStopBtn = root.Q<Button>("SelectBusStopBtn");
+        _selectRoadBtn = _root.Q<Button>("SelectRoadBtn");
+        _clearSelectionBtn = _root.Q<Button>("ClearSelectionBtn");
+        _selectBusStopBtn = _root.Q<Button>("SelectBusStopBtn");
 
-        _money = root.Q<Label>("Money");
+        _money = _root.Q<Label>("Money");
 
-        _gameOverMenuPanel = root.Q<VisualElement>("GameOverMenu");
-        _gameOverMainMenuBtn = root.Q<Button>("GameOverMainMenuBtn");
-        _saveGameBtn = root.Q<Button>("SaveBtn");
+        _gameOverMenuPanel = _root.Q<VisualElement>("GameOverMenu");
+        _gameOverMainMenuBtn = _root.Q<Button>("GameOverMainMenuBtn");
+        _saveGameBtn = _root.Q<Button>("SaveBtn");
 
-        _minimap = root.Q<VisualElement>("Minimap");
+        _minimap = _root.Q<VisualElement>("Minimap");
         
 
         _menuBtn.clicked += ToggleMenu;
@@ -117,6 +120,8 @@ public class GameUI : MonoBehaviour
         _menuPanel.Disable();
         SetMoneyLabelText(PlayerState.Instance, PlayerState.Instance.Money);
         _gameOverMenuPanel.Disable();
+        _isGameplayUIHidden = false;
+        _root.Enable();
     }
 
     
@@ -154,8 +159,19 @@ public class GameUI : MonoBehaviour
 
     private void Update()
     {
+        if (Keyboard.current.tabKey.wasPressedThisFrame)
+        {
+            ToggleGameplayUI();
+        }
+
         if(Keyboard.current.escapeKey.wasPressedThisFrame)
         {
+            if (_isGameplayUIHidden)
+            {
+                ShowGameplayUI();
+                return;
+            }
+
             ToggleMenu();
         }
     }
@@ -188,6 +204,30 @@ public class GameUI : MonoBehaviour
             _previousGameSpeedMultiplier = GameManager.Instance.GameSpeedMultiplier;
             SetGameSpeed(0);
         }
+    }
+
+    private void ToggleGameplayUI()
+    {
+        if (_isGameplayUIHidden)
+        {
+            ShowGameplayUI();
+        }
+        else
+        {
+            HideGameplayUI();
+        }
+    }
+
+    private void HideGameplayUI()
+    {
+        _root.Disable();
+        _isGameplayUIHidden = true;
+    }
+
+    private void ShowGameplayUI()
+    {
+        _root.Enable();
+        _isGameplayUIHidden = false;
     }
     
     
@@ -224,6 +264,7 @@ public class GameUI : MonoBehaviour
     
     private void PlayerStateOnGameOver(object sender, EventArgs e)
     {
+        ShowGameplayUI();
         GameManager.Instance.SetGameSpeedMultiplier(0);
         _vehiclePurchasePanel.Disable();
         _vehicleOwnedPanel.Disable();

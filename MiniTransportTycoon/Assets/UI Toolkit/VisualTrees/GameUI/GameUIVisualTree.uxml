@@ -1,7 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/USS/GameUIVisualTreeStyle.uss?fileID=7433441132597879392&amp;guid=d594cda548d638443a4cd751fc3e73b9&amp;type=3#GameUIVisualTreeStyle"/>
     <Style src="project://database/Assets/UI%20Toolkit/USS/UniversalStyle.uss?fileID=7433441132597879392&amp;guid=1858bf694d9c92140ab802dc915d4236&amp;type=3#UniversalStyle"/>
-    <ui:VisualElement name="NavBar" style="flex-grow: 0; flex-direction: row; min-height: auto; width: auto; align-items: center; align-content: center; margin-top: 0; margin-bottom: 10px; flex-shrink: 1; background-color: rgba(140, 140, 140, 0.31); padding-top: 10px; padding-bottom: 10px; max-width: 1401px; margin-left: 0; padding-left: 20px;">
+    <ui:VisualElement name="NavBar" style="flex-grow: 0; flex-direction: row; min-height: auto; width: auto; align-items: center; align-content: center; margin-top: 0; margin-bottom: 10px; flex-shrink: 1; background-color: rgba(140, 140, 140, 0.31); padding-top: 10px; padding-bottom: 10px; max-width: 1405px; margin-left: 0; padding-left: 20px;">
         <ui:VisualElement name="VisualElement" class="blocksGameInput" style="flex-grow: 0; flex-direction: row; margin-right: 15px; align-self: flex-start;">
             <ui:Button text="Menu" name="MenuBtn" class="navBarButton"/>
         </ui:VisualElement>
@@ -65,5 +65,7 @@
         <ui:Label text="Menu: ESC" class="ControlsHelpOverlayLabel" style="font-size: 20px;"/>
         <ui:Label text="|" name="Separator" class="ControlsHelpOverlayLabel" style="font-size: 20px;"/>
         <ui:Label text="Rotate: R" class="ControlsHelpOverlayLabel" style="font-size: 20px;"/>
+        <ui:Label text="|" name="Separator" class="ControlsHelpOverlayLabel" style="font-size: 20px;"/>
+        <ui:Label text="Toggle UI: TAB" class="ControlsHelpOverlayLabel" style="font-size: 20px;"/>
     </ui:VisualElement>
 </ui:UXML>
