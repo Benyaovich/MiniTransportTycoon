@@ -1,7 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/USS/UniversalStyle.uss?fileID=7433441132597879392&amp;guid=1858bf694d9c92140ab802dc915d4236&amp;type=3#UniversalStyle"/>
     <Style src="project://database/Assets/UI%20Toolkit/USS/GameUIVisualTreeStyle.uss?fileID=7433441132597879392&amp;guid=d594cda548d638443a4cd751fc3e73b9&amp;type=3#GameUIVisualTreeStyle"/>
-    <ui:VisualElement name="BusStopInfoPanel" class="blocksGameInput infoCardContainer" style="width: 365px; height: 242px;">
+    <ui:VisualElement name="BusStopInfoPanel" class="blocksGameInput infoCardContainer" style="width: 365px;">
         <ui:Label text="BUS STOP DETAILS" class="infoCardEyebrow"/>
         <ui:Label text="Passenger Flow" class="infoCardTitle"/>
         <ui:Label text="Provides people" name="ResourceType" class="infoDataLabel"/>

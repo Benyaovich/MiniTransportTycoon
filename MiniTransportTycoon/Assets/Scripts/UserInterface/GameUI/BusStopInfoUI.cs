@@ -41,17 +41,6 @@ namespace UserInterface.GameUI
         {
             if (_busStop == null) return;
             if (!_panel.IsEnabled()) return;
-
-            if (_busStop.City == null)
-            {
-                _efficiencyPercentage.Disable();
-                _panel.style.height = 140;
-            }
-            else
-            {
-                _efficiencyPercentage.Enable();
-                _panel.style.height = 220;
-            }
             
             Refresh(_busStop);
         }
@@ -65,10 +54,12 @@ namespace UserInterface.GameUI
 
         public void Refresh(BusStop busStop)
         {
+            _panel.style.height = StyleKeyword.Auto;
             _resourceType.text = "Provides and accepts: " + busStop.ProducedResource;
             _resourceAmount.text = $"Amount of people: {busStop.NumOfPeople}/{busStop.MaxNumOfPeople}";
             if (busStop.City != null)
             {
+                _efficiencyPercentage.Enable();
                 _currentlyProduces.text = $"People arrive between:" +
                                           $" {busStop.City.Rch.CurrentRate - busStop.City.Rch.RateChange}" +
                                           $" and" +
@@ -77,6 +68,7 @@ namespace UserInterface.GameUI
             }
             else
             {
+                _efficiencyPercentage.Disable();
                 _currentlyProduces.text = "!! Not connected to city. !!";
             }
         }
