@@ -93,8 +93,16 @@ public class VehicleOwnedListUI : MonoBehaviour
         element.Q<Label>("Speed").text = $"Speed: {Math.Round(1.0 / vehicleSo.speed * 150):0}";
         element.Q<Label>("Maintenance").text = $"Maintenance: {vehicleSo.maintenanceCost}";
 
+        Label routeStatus = element.Q<Label>("RouteStatus");
+        bool hasAssignedRoute = vehicle.Route is not null;
+        routeStatus.text = hasAssignedRoute ? "Route: assigned" : "Route: not set";
+        routeStatus.style.color = hasAssignedRoute
+            ? new StyleColor(new Color(0.55f, 0.9f, 0.55f))
+            : new StyleColor(new Color(1f, 0.96f, 0.7f));
+
         Button pathBtn = element.Q<Button>("PathBtn");
         Button sellBtn = element.Q<Button>("SellBtn");
+        pathBtn.text = hasAssignedRoute ? "Edit Path" : "Set Path";
 
         RegisterPathButton(pathBtn, vehicle);
 
