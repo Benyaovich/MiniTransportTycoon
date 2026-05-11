@@ -1,16 +1,134 @@
-:root {
+.loadingRoot {
+    flex-grow: 1;
+    background-color: rgb(18, 26, 33);
+}
+
+.loadingBackdrop {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(8, 12, 16, 0.32);
+}
+
+.loadingGlowTop {
+    position: absolute;
+    left: -100px;
+    top: -60px;
+    width: 620px;
+    height: 280px;
+    background-color: rgba(71, 119, 94, 0.2);
+    border-top-left-radius: 180px;
+    border-top-right-radius: 180px;
+    border-bottom-right-radius: 180px;
+    border-bottom-left-radius: 180px;
+}
+
+.loadingGlowBottom {
+    position: absolute;
+    right: -120px;
+    bottom: -100px;
+    width: 460px;
+    height: 280px;
+    background-color: rgba(170, 90, 72, 0.18);
+    border-top-left-radius: 180px;
+    border-top-right-radius: 180px;
+    border-bottom-right-radius: 180px;
+    border-bottom-left-radius: 180px;
+}
+
+.loadingContent {
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    padding-left: 32px;
+    padding-right: 32px;
+}
+
+.loadingCard {
+    width: 540px;
+    padding-top: 28px;
+    padding-right: 28px;
+    padding-bottom: 28px;
+    padding-left: 28px;
+    background-color: rgba(18, 26, 33, 0.92);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgba(255, 255, 255, 0.06);
+    border-right-color: rgba(255, 255, 255, 0.06);
+    border-top-color: rgba(255, 255, 255, 0.06);
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.loadingEyebrow {
+    color: rgba(184, 199, 210, 0.72);
+    font-size: 13px;
+    letter-spacing: 2px;
+}
+
+.loadingTitle {
+    color: rgb(246, 247, 241);
+    font-size: 36px;
+    -unity-font-style: bold;
+    margin-top: 10px;
+}
+
+.loadingSubtitle {
+    color: rgba(221, 228, 234, 0.76);
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 18px;
+    white-space: normal;
+}
+
+.loadingStatus {
+    color: rgba(200, 214, 224, 0.8);
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+#LoadingProgressBar {
+    min-height: 56px;
+    font-size: 18px;
+    color: rgb(242, 245, 238);
+    -unity-font-style: bold;
+    background-color: rgba(255, 255, 255, 0.06);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    padding-top: 4px;
+    padding-right: 4px;
+    padding-bottom: 4px;
+    padding-left: 4px;
 }
 
 #LoadingProgressBar > #unity-progress-bar {
-    margin-top: 3px;
-    margin-right: 3px;
-    margin-bottom: 3px;
-    margin-left: 3px;
-    flex-grow: 1;
-    height: 40px;
+    margin-top: 4px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    margin-left: 4px;
+    min-height: 20px;
 }
 
 #LoadingProgressBar > #unity-progress-bar > .unity-progress-bar__background {
-    min-height: 40px;
-    flex-grow: 1;
+    min-height: 20px;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+#LoadingProgressBar > #unity-progress-bar > .unity-progress-bar__progress {
+    background-color: rgb(76, 123, 95);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
 }

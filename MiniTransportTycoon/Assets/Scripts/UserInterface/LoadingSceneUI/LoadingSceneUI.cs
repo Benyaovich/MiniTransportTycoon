@@ -20,6 +20,7 @@ namespace UserInterface.LoadingSceneUI
         private void LateUpdate()
         {
             _loadingProgressBar.value = SceneLoader.LoadingProgress;
+            _loadingProgressBar.title = $"Loading... {SceneLoader.LoadingProgress:0}%";
         }
     }
 }
