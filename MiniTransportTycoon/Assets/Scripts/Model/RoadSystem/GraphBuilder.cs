@@ -31,7 +31,11 @@ public class GraphBuilder : IGraphBuilder
 
     public void RefreshConnectionsAt(RoadCell roadCell)
     {
-        RemoveConnectionsAt(roadCell);
+        Dictionary<Direction, Location?> vertexInDirectionMap = GetConnectedVertices(roadCell);
+        
+        _graph.RemoveVertex(roadCell.Origin);
+        RemoveEdgeIfRoadIsNotVertex(vertexInDirectionMap);
+
         CreateConnectionsAt(roadCell);
     }
 
