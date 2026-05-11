@@ -45,8 +45,8 @@ namespace UserInterface.GameUI
             _closeBtn.clicked += Hide;
             _routeBtn.clicked += StartRouteCreation;
             _sellBtn.clicked += SellVehicle;
-
-            _panel.style.display = DisplayStyle.None;
+            
+            _panel.Disable();
         }
 
         private void OnDestroy()
@@ -75,10 +75,12 @@ namespace UserInterface.GameUI
         public void Show(Vehicle vehicle)
         {
             _vehicle = vehicle;
-
+            
+            if(_vehicle is Bus){ _depositePerTile.Disable(); }
+            else{ _depositePerTile.Enable(); }
             Refresh(vehicle);
 
-            _panel.style.display = DisplayStyle.Flex;
+            _panel.Enable();
         }
 
         public void Refresh(Vehicle vehicle)
@@ -94,7 +96,7 @@ namespace UserInterface.GameUI
         {
             _vehicle = null;
 
-            _panel.style.display = DisplayStyle.None;
+            _panel.Disable();
         }
 
         private void StartRouteCreation()
