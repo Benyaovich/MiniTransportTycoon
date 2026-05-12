@@ -2,8 +2,6 @@
     <Style src="project://database/Assets/UI%20Toolkit/USS/LoadingSceneUI.uss?fileID=7433441132597879392&amp;guid=bc396403c04b234439585bbaea2ddb46&amp;type=3#LoadingSceneUI"/>
     <ui:VisualElement name="Background" class="loadingRoot">
         <ui:VisualElement class="loadingBackdrop"/>
-        <ui:VisualElement class="loadingGlowTop"/>
-        <ui:VisualElement class="loadingGlowBottom"/>
         <ui:VisualElement class="loadingContent">
             <ui:VisualElement class="loadingCard" style="width: 693px;">
                 <ui:Label text="PREPARING SESSION" class="loadingEyebrow"/>

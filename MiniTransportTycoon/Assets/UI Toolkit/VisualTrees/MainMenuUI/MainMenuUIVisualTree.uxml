@@ -2,10 +2,8 @@
     <Style src="project://database/Assets/UI%20Toolkit/USS/MainMenuUIStyle.uss?fileID=7433441132597879392&amp;guid=d80955213eac810458a98946e5211984&amp;type=3#MainMenuUIStyle"/>
     <ui:VisualElement name="Background" class="mainMenuRoot">
         <ui:VisualElement class="mainMenuBackdrop"/>
-        <ui:VisualElement class="mainMenuTopGlow"/>
-        <ui:VisualElement class="mainMenuBottomGlow"/>
         <ui:VisualElement class="mainMenuContent">
-            <ui:VisualElement name="BtnContainer" class="mainMenuPanel" style="margin-left: 30px; width: 365px;">
+            <ui:VisualElement name="BtnContainer" class="mainMenuPanel" style="margin-left: 103px; width: 365px;">
                 <ui:Label text="Start Playing" class="mainMenuPanelTitle"/>
                 <ui:Label text="Choose how you want to enter the game." class="mainMenuPanelSubtitle"/>
                 <ui:Button text="New Game" name="NewGameBtn" class="mainMenuButton mainMenuPrimaryButton"/>
