@@ -49,7 +49,10 @@ public class GameDataApplier
                         numOfTrees: forest.numOfTrees
                     );
                     loadedForest.SetRotation(forest.rotationDegrees);
-                    Build(loadedForest);
+                    if (Build(loadedForest))
+                    {
+                        GridManager.Instance.RegisterForest(loadedForest);
+                    }
                     break;
 
                 case SBusStop busStop:
@@ -332,11 +335,13 @@ public class GameDataApplier
         );
     }
 
-    private static void Build(Cell building)
+    private static bool Build(Cell building)
     {
         if(GridManager.Instance && GridManager.Instance.CellBuildingManager != null)
         {
-            GridManager.Instance.CellBuildingManager.TryBuild(building);
+            return GridManager.Instance.CellBuildingManager.TryBuild(building);
         }
+
+        return false;
     }
 }

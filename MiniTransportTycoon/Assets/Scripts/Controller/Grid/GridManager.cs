@@ -29,6 +29,8 @@ namespace Controller.Grid
         public DynamicRoadBuildingManager DynamicRoadBuildingManager => _dynamicRoadBuildingManager;
         public Grid<ModelGridObject> Grid => _grid;
         public CityService CityService => _cityService!;
+        public void RegisterForest(Forest forest) => _forestSpreadManager.AddForest(forest);
+        public void UnregisterForest(Forest forest) => _forestSpreadManager.RemoveForest(forest);
     
         #endregion
 
