@@ -2,6 +2,8 @@
 
 set -e
 set -x
+mkdir -p "${HOME}/.cache/unity3d"
+mkdir -p "${HOME}/.local/share/unity3d/Unity/"
 mkdir -p /root/.cache/unity3d
 mkdir -p /root/.local/share/unity3d/Unity/
 set +x
@@ -35,7 +37,13 @@ then
     exit 1
 fi
 
-echo "Writing $LICENSE to license file /root/.local/share/unity3d/Unity/Unity_lic.ulf"
-echo "${!LICENSE}" | tr -d '\r' > /root/.local/share/unity3d/Unity/Unity_lic.ulf
+echo "Writing $LICENSE to license file ${HOME}/.local/share/unity3d/Unity/Unity_lic.ulf"
+echo "${!LICENSE}" | tr -d '\r' > "${HOME}/.local/share/unity3d/Unity/Unity_lic.ulf"
+
+if [ "${HOME}" != "/root" ]
+then
+    echo "Writing $LICENSE to fallback license file /root/.local/share/unity3d/Unity/Unity_lic.ulf"
+    echo "${!LICENSE}" | tr -d '\r' > /root/.local/share/unity3d/Unity/Unity_lic.ulf
+fi
 
 set -x
