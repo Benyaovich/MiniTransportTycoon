@@ -72,33 +72,13 @@ A játék támogatja a mentést és a korábbi állapot visszatöltését. Új j
 - Unity verzió: `6000.3.7f1`
 - Nyelv: C#
 - UI: UI Toolkit
-- CI/CD: GitHub Actions
 - Web demo: GitHub Pages, WebGL buildből
 
-## GitHub Actions és Pages
+## Online demo
 
-A projekt GitHub Actions alapú CI/CD beállítást tartalmaz:
+A játék böngészőből is kipróbálható:
 
-- `Unity CI`: editmode és playmode tesztek, desktop buildek, WebGL build, Roslynator elemzés és GitHub Pages deploy.
-- `Unity Activation File`: kézzel indítható workflow Unity aktivációs fájl generálásához.
-
-A CI futtatásához a GitHub repositoryban add hozzá ezeket a secret értékeket:
-
-- `UNITY_LICENSE`: a Unity licencfájl teljes tartalma.
-- `UNITY_USERNAME`: Unity fiók felhasználónév vagy email, csak az aktivációs fájl generálásához.
-- `UNITY_PASSWORD`: Unity fiók jelszó, csak az aktivációs fájl generálásához.
-
-GitHub Pages beállítása:
-
-1. Nyisd meg a repository `Settings > Pages` oldalát.
-2. A `Build and deployment` résznél a source legyen `GitHub Actions`.
-3. Futtasd a `Unity CI` workflow-t a default branchon.
-
-Sikeres WebGL build után a demo a következő formátumú URL-en lesz elérhető:
-
-```text
-https://<github-felhasznalonev>.github.io/<repository-nev>/
-```
+[Mini Transport Tycoon Web Demo](https://benyaovich.github.io/MiniTransportTycoon/)
 
 ## Helyi futtatás
 
