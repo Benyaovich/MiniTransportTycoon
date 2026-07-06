@@ -216,7 +216,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: webgl-build
-          path: public/demo
+          path: public
 
       - name: Download editmode coverage
         uses: actions/download-artifact@v4

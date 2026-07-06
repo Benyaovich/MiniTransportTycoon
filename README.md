@@ -97,7 +97,7 @@ GitHub Pages beállítása:
 Sikeres WebGL build után a demo a következő formátumú URL-en lesz elérhető:
 
 ```text
-https://<github-felhasznalonev>.github.io/<repository-nev>/demo/
+https://<github-felhasznalonev>.github.io/<repository-nev>/
 ```
 
 ## Helyi futtatás
