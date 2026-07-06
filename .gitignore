@@ -10,6 +10,13 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
+MiniTransportTycoon/[Ll]ibrary/
+MiniTransportTycoon/[Tt]emp/
+MiniTransportTycoon/[Oo]bj/
+MiniTransportTycoon/[Bb]uild/
+MiniTransportTycoon/[Bb]uilds/
+MiniTransportTycoon/[Ll]ogs/
+MiniTransportTycoon/[Uu]ser[Ss]ettings/
 *.log
 
 # Unity API/Project Upgrade Logs

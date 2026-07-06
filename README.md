@@ -69,22 +69,51 @@ A játék támogatja a mentést és a korábbi állapot visszatöltését. Új j
 ## Technikai háttér
 
 - Játékmotor: Unity 6
-- Verzió: `6000.3.7f1`
+- Unity verzió: `6000.3.7f1`
 - Nyelv: C#
 - UI: UI Toolkit
+- CI/CD: GitHub Actions
+- Web demo: GitHub Pages, WebGL buildből
 
-## Online elérés / Játék indítása
+## GitHub Actions és Pages
 
-A játék böngészőből is kipróbálható az alábbi linken:
+A projekt GitHub Actions alapú CI/CD beállítást tartalmaz:
 
-[Mini Transport Tycoon Web Demo](https://bl-studio-c61c9a.szofttech.gitlab-pages.hu/demo/)
+- `Unity CI`: editmode és playmode tesztek, desktop buildek, WebGL build, Roslynator elemzés és GitHub Pages deploy.
+- `Unity Activation File`: kézzel indítható workflow Unity aktivációs fájl generálásához.
+
+A CI futtatásához a GitHub repositoryban add hozzá ezeket a secret értékeket:
+
+- `UNITY_LICENSE`: a Unity licencfájl teljes tartalma.
+- `UNITY_USERNAME`: Unity fiók felhasználónév vagy email, csak az aktivációs fájl generálásához.
+- `UNITY_PASSWORD`: Unity fiók jelszó, csak az aktivációs fájl generálásához.
+
+GitHub Pages beállítása:
+
+1. Nyisd meg a repository `Settings > Pages` oldalát.
+2. A `Build and deployment` résznél a source legyen `GitHub Actions`.
+3. Futtasd a `Unity CI` workflow-t a default branchon.
+
+Sikeres WebGL build után a demo a következő formátumú URL-en lesz elérhető:
+
+```text
+https://<github-felhasznalonev>.github.io/<repository-nev>/demo/
+```
+
+## Helyi futtatás
+
+1. Nyisd meg a `MiniTransportTycoon` mappát Unity `6000.3.7f1` verzióval.
+2. Várj, amíg a Unity importálja a csomagokat és asseteket.
+3. Indítsd a játékot a `MainMenu` sceneből, vagy készíts buildet a Unity Build Settings ablakából.
 
 ## Képek
 
 ### Főmenü
+
 ![Main Menu](Images/main_menu.png)
 
 ### Játékbeli képek UI-al
+
 ![Gameplay Image With UI 1](Images/gameplay_2.png)
 
 ![Gameplay Image With UI 2](Images/gameplay_3.png)
@@ -92,17 +121,16 @@ A játék böngészőből is kipróbálható az alábbi linken:
 ![Gameplay Image With UI 3](Images/gameplay_6.png)
 
 ### Játékbeli képek UI nélkül
-![Gameplay Image Without UI 3](Images/gameplay_1.png)
 
-![Gameplay Image Without UI 3](Images/gameplay_4.png)
+![Gameplay Image Without UI 1](Images/gameplay_1.png)
+
+![Gameplay Image Without UI 2](Images/gameplay_4.png)
 
 ![Gameplay Image Without UI 3](Images/gameplay_5.png)
 
-
-
 ## Videó
 
-Gameplay videó a játékról (UI rework előtt):
+Gameplay videó a játékról:
 
 [![Gameplay Video](Images/video_cover_image.png)](https://www.youtube.com/watch?v=x5_ILxdACd8)
 

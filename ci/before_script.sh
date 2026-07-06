@@ -6,11 +6,11 @@ mkdir -p /root/.cache/unity3d
 mkdir -p /root/.local/share/unity3d/Unity/
 set +x
 
-UPPERCASE_BUILD_TARGET=${BUILD_TARGET^^};
+UPPERCASE_BUILD_TARGET=${BUILD_TARGET^^}
 
-if [ $UPPERCASE_BUILD_TARGET = "ANDROID" ]
+if [ "$UPPERCASE_BUILD_TARGET" = "ANDROID" ]
 then
-    if [ -n $ANDROID_KEYSTORE_BASE64 ]
+    if [ -n "${ANDROID_KEYSTORE_BASE64:-}" ]
 	then
         echo '$ANDROID_KEYSTORE_BASE64 found, decoding content into keystore.keystore'
         echo $ANDROID_KEYSTORE_BASE64 | base64 --decode > keystore.keystore
@@ -21,12 +21,18 @@ fi
 
 LICENSE="UNITY_LICENSE_"$UPPERCASE_BUILD_TARGET
 
-if [ -z "${!LICENSE}" ]
+if [ -z "${!LICENSE:-}" ]
 then
     echo "$LICENSE env var not found, using default UNITY_LICENSE env var"
     LICENSE=UNITY_LICENSE
 else
     echo "Using $LICENSE env var"
+fi
+
+if [ -z "${!LICENSE:-}" ]
+then
+    echo "$LICENSE env var is not set. Add UNITY_LICENSE to GitHub repository secrets."
+    exit 1
 fi
 
 echo "Writing $LICENSE to license file /root/.local/share/unity3d/Unity/Unity_lic.ulf"

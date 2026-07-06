@@ -1,0 +1,32 @@
+name: Unity Activation File
+
+on:
+  workflow_dispatch:
+
+env:
+  UNITY_VERSION: 6000.3.7f1
+  IMAGE_VERSION: 3
+  UNITY_ACTIVATION_FILE: ./unity3d.alf
+
+jobs:
+  activation-file:
+    name: Generate Unity activation file
+    runs-on: ubuntu-latest
+    container:
+      image: unityci/editor:6000.3.7f1-base-3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate activation file
+        env:
+          UNITY_USERNAME: ${{ secrets.UNITY_USERNAME }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        run: chmod +x ./ci/get_activation_file.sh && ./ci/get_activation_file.sh
+
+      - name: Upload activation file
+        uses: actions/upload-artifact@v4
+        with:
+          name: unity-activation-file
+          path: ${{ env.UNITY_ACTIVATION_FILE }}
+          retention-days: 1
